@@ -1,109 +1,177 @@
+<div align="center">
+
 # CleanSplit
 
-Local-first six-stem separation with **artifact-aware analysis** and **mixture-consistent, region-restricted restoration**.
+**Local-first stem separation that measures itself honestly — and is built to prove its own ideas wrong.**
 
-CleanSplit is built to answer one question experimentally, and to be able to answer "no":
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)](pyproject.toml)
+[![Tests](https://img.shields.io/badge/tests-93%20(83%20CPU%20%2B%2010%20GPU)-brightgreen.svg)](cleansplit/tests)
+[![Benchmark](https://img.shields.io/badge/benchmark-MUSDB18--HQ%2020%20songs-orange.svg)](docs/04_results.md)
+[![VRAM](https://img.shields.io/badge/VRAM-8%20GB-lightgrey.svg)](docs/02_hardware_measurements.md)
+[![Offline](https://img.shields.io/badge/inference-100%25%20local-success.svg)](#requirements)
 
-> Can generative, artifact-aware restoration improve AI-separated six-stem audio while remaining faithful to the original mix?
+[Quick start](#quick-start) · [Quality tiers](#quality-tiers) · [Results](#results) · [What didn't work](#what-didnt-work) · [Docs](#documentation)
 
-It is not an "AI enhancer". Every change to a stem must stay inside a detected time-frequency region, leave all other samples bit-identical, and pass a mixture-consistency test against the original mixture. Otherwise it is rejected automatically.
+</div>
 
-## Status
+---
 
-| Phase | State |
+## What this is
+
+A six-stem separator (vocals · drums · bass · guitar · piano · other) with **artifact-aware analysis** and
+**mixture-consistent, region-restricted restoration**. Everything runs on your machine. No uploads, no API calls.
+
+It exists to answer one question experimentally — and to be able to answer **"no"**:
+
+> Can generative, artifact-aware restoration improve AI-separated audio while staying faithful to the original mix?
+
+So far the measured answer is **no**, and that answer is the deliverable. Seven restoration and ensembling ideas have
+been tested and rejected on real studio truth. [What didn't work](#what-didnt-work) is the most useful section here.
+
+## Why it's built this way
+
+This is not an "AI enhancer" with a confident README. Four rules are enforced in code, not in prose:
+
+| Rule | How it's enforced |
 |---|---|
-| 1 Research & decisions | done: [`docs/01_research_decision_report.md`](docs/01_research_decision_report.md) |
-| 2–3 Skeleton, audio pipeline | done, tested |
-| 4 Separation (BS-RoFormer SW, local UVR checkpoint) | done, runs on RTX 2080 Super Max-Q (8 GB): [`docs/02_hardware_measurements.md`](docs/02_hardware_measurements.md). Also available: `--tta`, BS-RoFormer ep_317, HTDemucs_ft, and **`--separator ensemble`** (vocals = mean of SW+TTA and ep_317; exactly mixture-consistent). **Measured on 20 MUSDB18-HQ songs with real studio stems: +0.39 dB vocals median vs SW, better on 18/20.** The earlier one-song estimate (+1.8…+2.1 dB) was ~5× too optimistic; MDX23C and Demucs averaging did not survive real truth ([`docs/04_results.md` §11](docs/04_results.md)) |
-| 5 Reconstruction / residual | done, tested |
-| 6 Artifact detectors | V0 deterministic detectors plus a synthetic ground-truth benchmark: [`docs/03_artifact_detectors.md`](docs/03_artifact_detectors.md) |
-| 7 Metrics / evaluation | done (mixture metrics, compare, reference-stem evaluation, detection benchmark) |
-| 8 Restoration | interface, projection, acceptance gate, non-generative baselines, and a **ground-truth restoration experiment** done. A2SB integrated as `a2sb` (raw inpainting) and `a2sb_consistent` (generative allocation prior); fits 8 GB at fp16 (≈75 s per stereo 3 s window). **Measured on real music with known stems: no restorer beat doing nothing** (A2SB raw rejected 23/23 by the gate; the accepted restorers ended +1.2…+2.1 dB further from truth, and 61 of their 67 accepted changes were worse). Results: [`docs/04_results.md`](docs/04_results.md). **Apollo** (codec restoration, the one candidate aimed at genuinely lost information) added as `apollo`: 2.1 GB VRAM, 5x realtime, and **worse than doing nothing in 24 of 24 ground-truth measurements**; the gate rejected all 13 proposals on a real song ([`docs/04_results.md` §9](docs/04_results.md)) |
+| **Clean audio stays untouched** | A restoration may only alter samples inside a detected time-frequency region. Everything else is bit-identical, and that is asserted. |
+| **The mix must still add up** | Stems sum to the mixture sample-for-sample: `other` is the exact remainder. A restoration that breaks mixture consistency is **auto-rejected**. |
+| **Decision rules are written before the run** | Every experiment's adoption rule lives in its script's docstring, pre-registered, with a falsifiable prediction and an explicit falsification condition. |
+| **Comparisons are paired, with win counts** | Median-of-A minus median-of-B is banned. It manufactured two false results here before being caught ([§14.7](docs/04_results.md)) and is now blocked by [tests](cleansplit/tests/test_paired_statistics.py). |
 
-## Requirements
+Gains below **+0.02 dB** are not adopted no matter how consistent they are, because a bar of "better than zero" buys
+inaudible gains at unbounded cost. That floor cost overlap-8 its place in the default recipe.
 
-- Windows 10/11 (Linux should work, but is untested), Python 3.10+
-- NVIDIA GPU recommended (CPU fallback works, but is slow); ffmpeg on PATH for non-WAV/FLAC inputs
-- **BS-Rofo-SW-Fixed** checkpoint from an existing Ultimate Vocal Remover 5.6 install. CleanSplit never downloads or redistributes these weights: their license is unknown and the trainer is unidentified.
+## Quick start
 
 ```bash
 uv venv .venv --python 3.11
+```
+```bash
 uv pip install --python .venv/Scripts/python.exe torch torchaudio --index-url https://download.pytorch.org/whl/cu128
+```
+```bash
 uv pip install --python .venv/Scripts/python.exe -e ".[separation,dev]"
 ```
-
-## Usage
-
 ```bash
 cleansplit doctor
 ```
+
+Separate a song at the best measured quality (this is the default — you don't pass anything):
+
 ```bash
-cleansplit analyze song.wav
+cleansplit separate "song.wav"
 ```
+
+Four times faster, keeping 95% of the vocal gain:
+
 ```bash
-cleansplit analyze song.wav --stems-dir path/to/uvr_exported_stems
+cleansplit separate "song.wav" --quality balanced
 ```
+
+Inspect it in the desktop UI — lanes, solo/mute, A/B compare, flagged artifact regions:
+
 ```bash
-cleansplit separate song.wav        # defaults are the best measured settings, not the fastest
-```
-```bash
-cleansplit restore song.wav --restorer residual_reallocation
-```
-```bash
-cleansplit evaluate --synthetic --seeds 0 1 2
-```
-```bash
-cleansplit evaluate --restoration-experiment --seeds 0 1 2
-```
-```bash
-cleansplit compare outputs/song/original.wav outputs/song/reconstruction/reconstructed.wav
+cleansplit ui
 ```
 
-Separated stems are cached (keyed by the input audio hash plus the separator configuration), so re-running `analyze` does not re-separate.
+## Quality tiers
 
-### Outputs
+Compute is counted in **forward passes**, not timed, so the ratios hold on any machine
+(`step = chunk // num_overlap`, so cost is linear in overlap; TTA is exactly 3 passes).
+
+| `--quality` | Recipe | Compute | Vocals vs `fast` | Notes |
+|---|---|---|---|---|
+| `fast` | SW alone, overlap 2 | **2 units** | — | 8× cheaper than `best` |
+| `balanced` | SW + ep317, overlap 2, no TTA | **4 units** | **+0.442 dB** (18/20) | **95% of best's gain.** Drums/bass identical to `fast` |
+| `best` *(default)* | SW+TTA + ep317, overlap 4 | **16 units** | **+0.464 dB** (18/20) | Also +0.11 dB drums, +0.10 dB bass |
+
+No tier advertises a single dB figure, because **per-song it ranges from −0.09 dB to +5.12 dB**
+([§14.11](docs/04_results.md)). Usually `fast` is close; occasionally it collapses. Any explicit
+`--separator` / `--overlap` / `--tta` overrides the tier.
+
+> **Why `balanced` works:** ranked by dB per doubling of compute, averaging a second model is **~40× better value than
+> TTA** and ~12× better than doubling the overlap ([§14.8](docs/04_results.md)). `balanced` keeps the lever that pays and
+> drops the two that barely do.
+
+## Results
+
+MUSDB18-HQ test set, 20 songs, real studio stems, 30 s excerpt centred on each track's midpoint — no content selection.
+All deltas are **paired medians** with win counts. Full protocol and numbers: [`docs/04_results.md`](docs/04_results.md).
+
+| Measurement | Result |
+|---|---|
+| Shipped ensemble vocals vs single-pass SW | **+0.45 dB**, 18/20 songs |
+| Same, on artifact-only SAR | **+1.12 dB** — the largest quality gain in the project |
+| Chunk overlap 2 → 4 | +0.08 dB vocals, +0.09 drums, +0.07 bass (14–19/20) |
+| Artifacts vs bleed | SIR sits **10–11 dB above SAR** on every stem: bleed is solved, **artifacts are the remaining error** |
+| Misallocation vs lost information | **~97%** of the error is audio filed under the wrong stem, not missing audio |
+
+That last line is why single-stem generative repair cannot work here: the information is present in the mix, just in the
+wrong place, so it cancels in the sum and no amount of "imagining" the missing part helps.
+
+### Ceilings, measured before building anything
+
+Both are computed by **reading the ground truth** — they cannot ship, they exist to decide whether a feature is worth
+writing at all.
+
+| Idea | Oracle ceiling | Verdict |
+|---|---|---|
+| Per-song / adaptive ensemble **weighting** | **+0.013 dB** | Axis closed permanently. Equal weighting is *exactly* optimal. |
+| Per-TF-tile **selector** ("listen and pick the better model") | **+0.38 dB** | Real budget — but unreachable without an external prior. |
+
+## What didn't work
+
+Published because a negative result measured properly is worth more than a positive result measured loosely.
+
+| Candidate | Outcome |
+|---|---|
+| **A2SB** generative inpainting | Rejected 23/23 by the mixture-consistency gate |
+| **Apollo** codec restoration | Worse than doing nothing in **24 of 24** ground-truth measurements |
+| **MDX23C** in the vocal ensemble | Worse on 16/20 songs once real truth was used |
+| **HTDemucs_ft** averaged into drums/bass | −0.55 dB drums on **20/20** songs |
+| **Wiener** post-filtering (3 variants) | −2.4 to −4.6 dB. Fails *by construction*: stems already sum to the mixture |
+| **Overlap 8** | Real but +0.01 dB, for 2× the render time — below the adoption floor |
+| **4 truth-free tile combiners** | All rejected. Disagreement says *how much* error, never *which model* has it |
+
+Two of these were nearly adopted on bad statistics, and both near-misses are written up rather than quietly deleted:
+[§14.7](docs/04_results.md) traces a "+0.32 dB" gain that was an artefact of an unpaired median, and explains why the
+sophisticated explanation I reached for twice was wrong.
+
+## How it works
 
 ```
-outputs/<song>/
-  original.wav                      44.1 kHz stereo float mixture that everything is compared against
-  stems/{vocals,drums,bass,guitar,piano,other}.wav + manifest.json
-  reconstruction/reconstructed.wav  R = sum of stems (float64 sum, float32 WAV, never clipped)
-  reconstruction/residual.wav       E = O - R
-  reconstruction/residual_model_matched.wav   O_ref - R (O with the separator's DC-bin removal applied)
-  analysis/artifact_map.json        time-frequency regions with per-detector evidence
-  analysis/metrics.json             mixture fidelity, per-band residual, peaks, alignment, chunk-seam diagnostics
-  analysis/report.json              summary, warnings, environment, limitations
-  restoration/<restorer>/           restored stems, reconstructed, residual, restoration_report.json (every accept/reject with reasons)
+input ─▶ separate ─▶ reconstruct ─▶ detect artifacts ─▶ propose restoration ─▶ GATE ─▶ accept / reject
+             │            │                │                                     │
+      ensemble of     residual vs      deterministic                    mixture consistency
+      independent     the mixture      TF detectors +                   + region containment
+      models                           synthetic benchmark             + bit-identical elsewhere
 ```
 
-## Architecture
+The gate is the point. It is designed to say no, and it says no to almost everything.
 
-```
-cleansplit/
-  audio/           decoding (soundfile -> ffmpeg), validation/conform, STFT (torch-compatible), region TF edits, synthetic songs
-  separation/      Separator interface + registry; BS-RoFormer SW (vendored MIT code, own overlap-add); stem-folder and oracle separators
-  reconstruction/  alignment (lag / polarity / gain / length, all reported), float64 sum, residual, model-matched reference
-  analysis/        shared feature context, V0 pipeline orchestration
-  artifacts/       ArtifactRegion / ArtifactMap schema, detectors (registry), evidence -> region extraction, corruption injectors
-  restoration/     Restorer interface, baselines, projection + acceptance engine, restore pipeline
-  metrics/         SNR / SI-SDR / Multi-Mel-SNR / LSD / band residual, compare, reference evaluation, detection benchmark
-  models/          device probing, local checkpoint discovery + SHA-256 pinning
-  config/          all thresholds, with units
-  cli/             command-line entry point
-  tests/           unit, synthetic ground-truth and restoration-gate tests
-```
+## Requirements
 
-Swapping components: register a separator (`separation.registry.register`), a detector (`artifacts.detectors.register`, which only has to emit `EvidenceMap`s), or a restorer (`restoration.baselines.RESTORERS`). The pipeline, region extraction, projection and gate are shared.
+- Windows 10/11 (Linux likely fine, untested), Python 3.10+
+- NVIDIA GPU recommended; measured on an **RTX 2080 Super Max-Q, 8 GB** ([`docs/02`](docs/02_hardware_measurements.md)).
+  CPU works but is slow. `ffmpeg` on PATH for non-WAV/FLAC input.
+- **Model weights are not included or downloaded.** `BS-Rofo-SW-Fixed` comes from an existing Ultimate Vocal Remover 5.6
+  install. Their licence is unknown and the trainer unidentified, so CleanSplit never redistributes them.
 
-## Honest limitations (V0)
+## Documentation
 
-- Detector `confidence` is a heuristic evidence score, **not** a calibrated probability.
-- The mixture residual only measures mask-sum error. Energy placed in the wrong stem is invisible to it, which is why cancellation, modulation-consistency and leakage detectors exist.
-- Without ground-truth stems, real-song findings are hypotheses. The synthetic benchmark checks the mechanics, not real-world accuracy.
-- `hf_noise` and `musical_noise` detectors are registered but disabled: they failed the synthetic benchmark. `modulation` (warble) is weak: 5/10 recall at 19.5 false-positive regions/min, confidence capped at 0.7.
-- **The mixture-consistency gate is necessary but not sufficient**: a restorer can pass it while making stems less faithful (measured, `docs/04_results.md`).
-- **No generative restorer is enabled by default, because none has earned it.** A2SB and Apollo are both integrated and both measured worse than leaving the stems alone. Apollo restores a plausible top octave (right amount of energy, wrong content), which is a listening preference, not a fidelity gain.
+| Document | Contents |
+|---|---|
+| [`docs/01_research_decision_report.md`](docs/01_research_decision_report.md) | Architecture research, model survey, primary sources |
+| [`docs/02_hardware_measurements.md`](docs/02_hardware_measurements.md) | Real throughput and VRAM on 8 GB |
+| [`docs/03_artifact_detectors.md`](docs/03_artifact_detectors.md) | Detectors + synthetic ground-truth benchmark |
+| [`docs/04_results.md`](docs/04_results.md) | **Every measurement, including the failures.** Start at §14 |
+| [`HANDOFF.md`](HANDOFF.md) | Running engineering log, newest first |
+| [`QUICKSTART.md`](QUICKSTART.md) | Command reference |
 
-## Licensing
+## Licence
 
-CleanSplit code is MIT. `cleansplit/separation/bs_roformer/model.py` is adapted from ZFTurbo/Music-Source-Separation-Training (MIT, see `LICENSE_MSST.txt`) and lucidrains/BS-RoFormer (MIT). `third_party/apollo/` is vendored from [JusperLee/Apollo](https://github.com/JusperLee/Apollo) under **CC BY-SA 4.0** (attribution: Kai Li; pinned commit and the two deviations are documented in the file headers). `third_party/diffusion-audio-restoration/` is NVIDIA A2SB under the NVIDIA Source Code License-NC (non-commercial). Model weights are not included and carry their own terms: the Apollo checkpoints are CC BY-SA 4.0 and are read from an existing UVR install, never downloaded.
+MIT for CleanSplit's own code — see [`LICENSE`](LICENSE), which also lists the vendored third-party components
+(`bs_roformer/`, `mdx23c/`, `scnet/` MIT; `ui/static/vendor/` BSD-3; `third_party/apollo/` CC BY-SA 4.0) and states
+plainly that model weights are not redistributed.
