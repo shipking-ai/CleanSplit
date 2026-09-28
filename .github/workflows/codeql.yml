@@ -1,0 +1,64 @@
+name: CodeQL
+
+# Code scanning needs a GitHub Code Security licence on private repositories, so this could only be added once the
+# repository went public (2026-09-28).
+#
+# Honest expectation, recorded so nobody reads a green badge as more than it is: the `python` queries will probably find
+# very little here. CleanSplit takes no network input, has no auth, no database and no deserialisation of untrusted
+# data -- the classic taint sinks are absent. The `actions` language is the half that earns its place: it analyses the
+# workflows themselves, which are the only files in this repository that run with a credential attached. zizmor covers
+# similar ground more cheaply, and the two disagree often enough to be worth running both.
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+  schedule:
+    # Weekly, because CodeQL's value is mostly in NEW queries arriving for unchanged code.
+    - cron: "37 5 * * 1"
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref_name }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: true
+
+jobs:
+  analyze:
+    name: analyze ${{ matrix.language }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      security-events: write   # upload the SARIF results to the Security tab
+      contents: read
+      actions: read            # required to read workflow run data for the `actions` language
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [python, actions]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@7999b86c43a865dc79d8923397f35af22de63401 # v4
+        with:
+          languages: ${{ matrix.language }}
+          queries: security-and-quality
+          # Vendored upstream model code is kept byte-for-byte so it can be diffed against its source (see LICENSE);
+          # findings in it are not ours to fix and would drown anything that is.
+          config: |
+            paths-ignore:
+              - cleansplit/separation/bs_roformer
+              - cleansplit/separation/mdx23c
+              - cleansplit/separation/scnet
+              - third_party
+
+      # No autobuild step: Python and Actions are interpreted, so there is nothing to compile. Leaving autobuild in is
+      # a common copy-paste that just adds a minute per run.
+      - name: Perform CodeQL analysis
+        uses: github/codeql-action/analyze@7999b86c43a865dc79d8923397f35af22de63401 # v4
+        with:
+          category: /language:${{ matrix.language }}

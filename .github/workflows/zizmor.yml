@@ -23,14 +23,14 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     permissions:
+      security-events: write   # SARIF upload to the Security tab (needs a public repo or Code Security)
       contents: read
+      actions: read            # zizmor's online audits read workflow/action metadata
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
       - uses: zizmorcore/zizmor-action@cc914d7f3750a2d13d75c7f184a1060aa0e9d482 # v0.6.4
-        with:
-          # No SARIF upload: that writes to the Security tab, which needs GitHub Code Security on a private
-          # repository. Findings go to the job log instead. Turn this on, and add `security-events: write` above,
-          # when the repository goes public.
-          advanced-security: false
+        # SARIF now goes to the Security tab: the repository went public on 2026-09-28, which is what code scanning
+        # uploads require (they need Code Security on a private repo). Findings appear as code-scanning alerts with
+        # history, instead of scrolling past in a job log.

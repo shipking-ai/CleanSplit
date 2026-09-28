@@ -57,7 +57,7 @@ def banner(theme: str) -> None:
     svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="img" aria-label="CleanSplit">
 <text x="60" y="150" font-family="ui-sans-serif,-apple-system,Segoe UI,Helvetica,Arial" font-size="78" font-weight="700" fill="{ink}" letter-spacing="-2.5">CleanSplit</text>
 <text x="64" y="188" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="15" fill="{mute}">local-first stem separation, measured honestly</text>
-<text x="64" y="216" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="13" fill="{ACCENT}">+0.45 dB vocals &#183; 18/20 songs &#183; 7 ideas rejected on the evidence</text>
+<text x="64" y="216" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="13" fill="{ACCENT}">+0.45 dB vocals &#183; 18/20 songs &#183; 9 ideas rejected on the evidence</text>
 {mix}{fan}{lanes}{tags}
 </svg>'''
     (OUT / f"banner-{theme}.svg").write_text(svg, encoding="utf-8")
@@ -151,9 +151,85 @@ def spectrograms(theme: str) -> None:
     print("wrote", OUT / f"spectrograms-{theme}.png")
 
 
+def social(_theme: str = "dark") -> None:
+    """The GitHub social preview card: 1280x640 PNG, one theme, opaque background.
+
+    Separate from banner() on purpose. A social card is not a wide banner: GitHub, Slack and every link unfurler crop
+    and downscale it, so the text has to survive being read at about half size, the background cannot be transparent
+    (unfurlers composite onto white OR black and a transparent card looks broken in one of them), and there is no
+    prefers-color-scheme to switch on -- it is a flat image sent to strangers.
+
+    Rendered at 100 dpi, NOT a higher one, and the reason is worth stating because the first attempt got it wrong:
+    font sizes are in points, so at 200 dpi a 58-point heading is ~160 px tall on a 640 px card and everything
+    collides. figsize x dpi fixes the pixel dimensions; dpi alone fixes how large type is inside them.
+
+    Layout is two columns that never overlap -- text left of x=620, artwork right of it -- so nothing depends on the
+    exact width of a rendered string. Every figure on it is measured; see the module docstring.
+    """
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+
+    BG, FG, DIM = "#0d1117", "#e6edf3", "#8b949e"
+    W, H, DPI = 1280, 640, 100
+    fig = plt.figure(figsize=(W / DPI, H / DPI), dpi=DPI)
+    fig.patch.set_facecolor(BG)
+    ax = fig.add_axes((0, 0, 1, 1))
+    ax.set_xlim(0, W)
+    ax.set_ylim(H, 0)
+    ax.axis("off")
+    ax.add_patch(plt.Rectangle((0, 0), W, H, color=BG, zorder=0))
+    ax.add_patch(plt.Rectangle((0, 0), W, 7, color=ACCENT, zorder=3))  # keeps it identifiable when cropped square
+
+    ax.text(70, 118, "CleanSplit", color=FG, fontsize=46, fontweight="bold", va="center", zorder=4)
+    ax.text(73, 178, "Local-first AI stem separation,", color=DIM, fontsize=16, va="center", zorder=4)
+    ax.text(73, 206, "measured honestly", color=DIM, fontsize=16, va="center", zorder=4)
+
+    # Three measured claims, numbers only and no adjectives -- each is checkable in docs/04_results.md.
+    for i, (big, small, col) in enumerate((
+        ("+0.46 dB", "vocals vs fast, 18/20", ACCENT),
+        ("8", "passes in the default", FG),
+        ("9", "ideas rejected", FG),
+    )):
+        y = 300 + i * 74
+        ax.text(73, y, big, color=col, fontsize=25, fontweight="bold", va="center", zorder=4)
+        ax.text(255, y + 2, small, color=DIM, fontsize=12, va="center", zorder=4)
+
+    # The mixture waveform fanning into four stem lanes: the README banner's motif, so the project looks like one
+    # thing across the places people meet it. Right column only, clear of every string above.
+    rng = np.random.default_rng(7)
+    lanes = ((196, 22, COOL, "vocals"), (286, 16, ACCENT, "drums"), (376, 12, "#d29922", "bass"), (452, 8, DIM, "other"))
+    lx0, lx1 = 880, 1160
+    xs = np.linspace(lx0, lx1, 240)
+    env = np.sin(np.linspace(0, np.pi, 240)) ** 0.5
+    for y, amp, col, name in lanes:
+        v = np.convolve(rng.standard_normal(240) * amp * env, np.ones(5) / 5, mode="same")
+        ax.plot(xs, y + v, color=col, lw=1.4, solid_capstyle="round", zorder=4)
+        ax.text(lx1 + 16, y + 4, name, color=col, fontsize=10.5, family="monospace", alpha=0.95, zorder=4)
+    mx = np.linspace(672, 812, 150)
+    mv = np.convolve(rng.standard_normal(150) * 34 * (np.sin(np.linspace(0, np.pi, 150)) ** 0.5), np.ones(5) / 5, mode="same")
+    ax.plot(mx, 324 + mv, color=FG, lw=1.6, solid_capstyle="round", zorder=4)
+    ax.text(672, 250, "mixture", color=FG, fontsize=10.5, family="monospace", alpha=0.7, zorder=4)
+    for y, _, col, _ in lanes:
+        ax.plot([822, 872], [324, y], color=col, lw=1.0, alpha=0.5, zorder=3)
+
+    ax.plot([70, 1210], [548, 548], color=DIM, lw=0.8, alpha=0.35, zorder=3)
+    ax.text(70, 578, "MUSDB18-HQ  ·  20 real multitracks  ·  paired medians  ·  100% local",
+            color=DIM, fontsize=12.5, va="center", zorder=4)
+    ax.text(70, 606, "github.com/shipking-ai/CleanSplit", color=COOL, fontsize=12.5, family="monospace",
+            va="center", zorder=4)
+
+    p = OUT / "social-preview.png"
+    fig.savefig(p, facecolor=BG, dpi=DPI)
+    plt.close(fig)
+    w, h = plt.imread(p).shape[1], plt.imread(p).shape[0]
+    print(f"wrote {p} ({w}x{h}, {p.stat().st_size / 1024:.0f} kB; GitHub wants 1280x640 and under 1 MB)")
+
+
 if __name__ == "__main__":
     which = sys.argv[1] if len(sys.argv) > 1 else "all"
     for theme in ("light", "dark"):
         if which in ("all", "banner"): banner(theme)
         if which in ("all", "tiers"): tiers(theme)
         if which in ("all", "spectrograms"): spectrograms(theme)
+    if which in ("all", "social"): social()   # one theme only: a social card cannot switch on prefers-color-scheme
