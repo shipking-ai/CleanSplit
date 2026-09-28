@@ -6,7 +6,7 @@
 
 ---
 
-## Current state (2026-09-21)
+## Current state (2026-09-28) — git: `d1dfc6c` (first commit; working tree clean)
 
 | Area | State |
 |---|---|
@@ -18,7 +18,7 @@
 | MDX23C InstVoc HQ | **removed from the ensemble again** after MUSDB (worse on 16/20 real songs). Still available as `--separator mdx23c_instvoc_hq` |
 | Real multitrack truth | **MUSDB18-HQ, 20 songs, done** (docs/04 §11). `ensemble` vocals +0.39 dB median vs SW, 18/20. `ensemble_demucs` worse on a typical song, useful when SW misses an instrument |
 | Artifacts vs bleed (SAR/SIR) | **measured, 20 songs** (docs/04 §14). Artifacts dominate: SIR is 10–11 dB cleaner than SAR everywhere. 4 reduction candidates **all rejected**; Wiener post-filtering fails on its own terms. **`--overlap 4` passes both gates** (§14.5) — first thing in this project to clear one. **Now the default, along with `ensemble` and TTA** (user: best quality wins over speed). ov8 measuring |
-| Tests | **84** (74 non-GPU + 10 gpu-marked). 2026-09-28: 74 non-GPU passed in 83 s AND **all 10 GPU tests passed in 47 min** on the new best-quality defaults. `PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe -m pytest -q` |
+| Tests | **85** (75 non-GPU + 10 gpu-marked). 2026-09-28: 75 non-GPU passed in 82 s AND **all 10 GPU tests passed in 47 min** on the new best-quality defaults. `PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe -m pytest -q` |
 
 Python: `C:\AI\CleanSplit\.venv\Scripts\python.exe` (uv-managed, **no pip** — use
 `uv pip install --python .venv/Scripts/python.exe <pkg>`). Set `PYTHONIOENCODING=utf-8` for anything that prints Δ or dB.
@@ -48,6 +48,53 @@ median**, not the +1.8…+2.1 dB that one song suggested.
 ---
 
 ## Recently changed
+
+### 2026-09-28 (4) — Answers acted on: committed, SCNet XL IHF integrated, licence audit
+User answered the popup: download **SCNet XL + MelBand drums**; **"I do want to make this project public"**; time budget
+**"1 and 3"** (whatever it takes AND give me a quality switch); **commit everything now**.
+
+**1. Committed. `d1dfc6c`, 164 files, 36,964 lines, clean tree.** First commit in the repo's life; two weeks of work had
+been untracked. `.gitignore` excludes weights (`*.ckpt/*.pth/*.onnx`), `data/` (42 GB) and `outputs/` (4.6 GB) but
+**force-includes `outputs/_benchmarks/*.json`** (4.9 MB, 31 files) — those are the measured record that makes docs/04
+checkable. Two things fixed while staging: a stale `main.py.tmp.8656.*` from 12 Sept (deleted), and
+`third_party/diffusion-audio-restoration` was an **embedded git clone** that would have committed as a broken gitlink
+(now ignored, with the pinned commit + clone command recorded in the new `third_party/README.md`).
+
+**2. Licence audit for going public** (`third_party/README.md`, pyproject already declares MIT for our code):
+
+| component | licence | public-release status |
+|---|---|---|
+| CleanSplit code | MIT | fine |
+| `bs_roformer/model.py`, `mdx23c/model.py`, `scnet/` | MIT (ZFTurbo/MSST) | fine, MIT-compatible |
+| **`third_party/apollo/`** | **CC BY-SA 4.0** | **share-alike clash with an MIT repo — needs a decision** |
+| `ui/static/vendor/wavesurfer.esm.js` | BSD-3 per docs/05 | **no copyright header in the vendored file — must add one** |
+| all model weights | various / none | not redistributed, correct |
+Apollo lost every measurement (§9) and is off by default, so deleting it in favour of a fetch script (as A2SB already
+is) is the clean fix. **Not done unilaterally — it removes working code behind a published result.**
+
+**3. SCNet XL IHF integrated** — the four-stem CONVOLUTIONAL partner for drums/bass/other, which have never had one.
+- Downloaded from MSST release v1.0.15 (214 MB, sha256 `ac25975f…b74f`), config + weights in `data/models/`.
+  **MIT-licensed weights — the only separator here whose weights carry an explicit permissive licence.**
+- `cleansplit/separation/scnet/` vendored byte-for-byte from MSST @ `a8a86223…` (MIT). Upstream's SCNet passes no
+  window to `torch.stft/istft`; that raises a UserWarning and is **left alone on purpose** — "fixing" it would deviate
+  from the numerics behind the author's reported SDR.
+- `scnet_sep.py` mirrors `roformer.py`/`mdx23c_sep.py` overlap-add exactly, so the separators differ only in the model.
+- `checkpoints.py` gained `SCNET_XL_IHF` and `cleansplit_models_dir()` (`CLEANSPLIT_MODELS` or `data/models`), searched
+  before the UVR trees — our downloads stay out of someone else's install.
+- Smoke test on 15 s: **2.1 GB peak VRAM** (comfortable on 8 GB), ~0.5x realtime, loads `strict=True`.
+- `tools/stem_ensemble_experiment.py` — **pre-registered** per stem: adopt `mean(SW+TTA, SCNet)` only if paired median
+  full-band SNR improves AND it wins >half the songs AND median SAR does not drop. It also records a **falsifiable
+  prediction**: SCNet's drums are ~0.6 dB below SW's, inside the 1-2 dB band, so the comparable-strength rule predicts
+  it HELPS on drums — and the script prints `** RULE CONTRADICTED **` if a within-2 dB member hurts instead.
+- Queued behind the overlap/vocal-recipe work (`tools/dev/scnet_queue.sh`); one GPU job at a time.
+- **85 tests**, 75 non-GPU passing. New `test_scnet_config_and_checkpoint_are_the_ones_measured` pins the sha256 and the
+  four source names, because a silently swapped checkpoint would look like a working ensemble while actually averaging
+  two band-split transformers — the thing already measured not to work.
+
+Still owed from the answers: the `--quality` switch (tiers can only be written once the SCNet and overlap-8 verdicts
+are in, so the printed dB costs are real), and MelBand drums (MSST lists **no** drums-dedicated mel_band model; the
+MVSep ensemble's MelBand member is a 4-stem model that still needs identifying).
+
 
 ### 2026-09-28 (3) — Research pass: what would actually raise the ceiling (docs/01 section 8)
 Sources: MVSep Multisong leaderboard (100+ commercial tracks, independent of our 20 MUSDB songs) and

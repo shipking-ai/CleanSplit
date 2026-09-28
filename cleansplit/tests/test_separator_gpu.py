@@ -127,3 +127,23 @@ def test_overlap_reaches_both_roformer_members_of_the_ensemble_and_the_cache_key
     d = registry.create("ensemble")
     assert d.sw.num_overlap == 4 and d.voc.num_overlap == 4  # default is the best measured, not the fastest
     assert ens.cache_key()["sw"]["num_overlap"] == 2  # a re-run at another overlap must not reuse the cache
+
+
+def test_scnet_config_and_checkpoint_are_the_ones_measured():
+    """SCNet XL IHF is the ensemble partner for drums/bass/other (docs/01 §8.1). No GPU: metadata only.
+
+    Pinning both the sha256 and the four source names matters because the whole point of this model is that it is a
+    DIFFERENT architecture from SW; a silently swapped checkpoint would look like a working ensemble while actually
+    averaging two band-split transformers, which is the thing measured NOT to help.
+    """
+    from cleansplit.models import checkpoints
+    from cleansplit.separation import registry
+
+    s = registry.create("scnet_xl_ihf")
+    assert s.stems == ("drums", "bass", "other", "vocals")
+    assert s.sample_rate == 44100 and s.channels == 2
+    assert s.chunk_size == 485100  # 11 s, from the model's own config
+    assert s.ck.sha256 == "ac25975f0f5704f3d1a3c3c251505b7a0f417a22eafe82773440ee4f7e14b74f"
+    assert "MIT" in s.ck.license_note  # the only separator here whose WEIGHTS carry an explicit licence
+    assert checkpoints.cleansplit_models_dir().name == "models"
+    assert s.cache_key()["checkpoint_sha256"] == s.ck.sha256

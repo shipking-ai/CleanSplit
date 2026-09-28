@@ -50,7 +50,14 @@ def _mdx23c(**kw):
 register("bs_roformer_sw", _roformer)
 register("bs_roformer_ep317", lambda **kw: _roformer(**{**kw, "model": "bs_roformer_ep317"}))
 register("htdemucs_ft", _htdemucs)
+def _scnet(**kw):
+    from .scnet_sep import SCNetSeparator
+
+    return SCNetSeparator(**{k: v for k, v in kw.items() if k in ("checkpoint", "device", "num_overlap")})
+
+
 register("mdx23c_instvoc_hq", _mdx23c)
+register("scnet_xl_ihf", _scnet)
 register("stem_folder", _folder)
 
 
