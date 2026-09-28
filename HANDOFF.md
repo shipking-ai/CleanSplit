@@ -6,6 +6,52 @@
 
 ---
 
+## 2026-09-28 (latest) — CodeQL suite narrowed, 18 alerts dismissed with reasons, and a real cache race fixed
+
+**Security tab is now empty, and that is a claim about 18 written justifications, not about silence.**
+
+`queries: security-and-quality` → **`security-extended`** in `.github/workflows/codeql.yml` (a3204ca). The broad
+suite reported decisions this project has already recorded: `py/file-not-closed` on the probes is the exact pattern
+`pyproject.toml` deliberately ignores `SIM115` for. Style is ruff's job and it runs on every push. That change alone
+closed roughly ten quality alerts, leaving 18 `py/path-injection`.
+
+**All 18 dismissed individually**, each with its own comment (`tools/`-free, done over the API; the script is not
+tracked). Two different claims, so two different reasons:
+- **15 × "false positive"** — `service.py` (12), `server.py` (3). CodeQL does not model `_stem_name()` or
+  `is_relative_to()` as sanitisers, so it keeps tracing a flow that is guarded. Nine of the twelve sit **on the guard
+  lines themselves** (`resolve()`, `is_relative_to()`, `is_file()`), which is the clearest evidence of the limitation.
+- **3 × "won't fix"** — `server.py:41` (`create_job` takes the path of the file to separate: that IS the feature, on a
+  127.0.0.1-bound local tool), `io.py:87` (`load_audio(path)`) and `region.py:113` (`ArtifactMap.load(path)`). A
+  function whose sole parameter is the file to open cannot be fixed by validating it; the trust boundary is the
+  caller's, and the UI caller does enforce one.
+
+If a genuine alert ever appears it will now be the only thing in that tab. Re-open any of these with the API if the
+reasoning stops holding.
+
+**A flaky CI failure turned out to be a real bug in the shipped UI** (f9b307a). The ubuntu/py3.10 leg of run
+36480845648 failed with `json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)` from
+`peaks()` and passed on rerun. The empty string it decoded was the point: `peaks` wrote ~58 kB of JSON with
+`write_text`, which creates the file and then fills it, while the read side trusted `is_file()`. FastAPI serves those
+handlers from a threadpool, so two requests for one song do overlap — this was never only a test problem. Writes now
+go via a temp file plus `os.replace`; reads treat undecodable JSON as a cache miss and recompute.
+
+Two things worth keeping from fixing it:
+- **`os.replace` is atomic on Windows but fails outright if any other handle has the destination open** (WinError 5) —
+  a concurrent reader, antivirus, or the search indexer. The first version of the fix broke on Windows, and
+  `test_concurrent_peaks_requests_never_observe_a_partial_cache` (8 threads, cold cache) is what caught it. Suppressed
+  now, which is safe because these peaks are a pure function of (audio, buckets), so losing the race costs nothing.
+- **`test_a_half_written_peaks_cache_is_recomputed_rather_than_raising` reproduces the CI message verbatim** against
+  the old read path. Verified by temporarily removing the fix, not assumed.
+
+Also made the backslash traversal string in `test_ui.py` raw — it built the intended text only by accident, through
+invalid escape sequences Python already warns about.
+
+**Still outstanding:** the social preview card (`docs/assets/social-preview.png`) has to be uploaded by hand at
+Settings → General → Social preview; GitHub exposes no API for it. Unreleased song titles remain in 9 tracked files
+and in history (renaming is offered but needs a history rewrite on a now-public repo). 30 MUSDB test songs unrendered.
+
+---
+
 ## 2026-09-28 (later) — public, and code scanning immediately found a real path-traversal bug
 
 Repo is **public**: https://github.com/shipking-ai/CleanSplit. Pre-publication audit found no audio, weights or
