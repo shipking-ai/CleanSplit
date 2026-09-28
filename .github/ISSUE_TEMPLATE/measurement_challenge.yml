@@ -1,0 +1,17 @@
+name: Challenge a measurement
+description: You think a number in docs/04_results.md is wrong. This is the most welcome kind of issue.
+labels: [measurement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Every published number here is meant to be falsifiable. If one is wrong, that is a real finding — two results
+        in this project were already overturned this way (docs/04 sections 14.6 and 14.7).
+  - type: input
+    id: claim
+    attributes: { label: Which claim, placeholder: "docs/04 section 14.12, balanced recovers 95%" }
+    validations: { required: true }
+  - type: textarea
+    id: why
+    attributes: { label: Why you think it is wrong, description: Ideally a paired comparison with win counts, on named songs. }
+    validations: { required: true }

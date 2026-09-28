@@ -33,7 +33,7 @@ Full song, `cleansplit analyze` (native chunk, overlap 2, fp32):
 **Conclusion:** SW runs comfortably on 8 GB, using less than a quarter of VRAM at its native context. fp32 is the default because fp16 adds rounding noise to exactly the residuals CleanSplit measures. `--fp16` exists for smaller GPUs. CPU fallback is implemented but was not timed; expect it to be far slower than realtime.
 
 ## A2SB (NVIDIA Audio-to-Audio Schrödinger Bridge): measured 2026-09-16
-Code: `third_party/diffusion-audio-restoration` @ `02ddff01` (NVIDIA Source Code License-NC). Weights: `models/a2sb/` (NVIDIA OneWay Noncommercial License). Probe: `tools/a2sb_probe.py`; raw results in `outputs/_benchmarks/a2sb_vram_probe.json`.
+Code: `third_party/diffusion-audio-restoration` @ `02ddff01` (NVIDIA Source Code License-NC). Weights: `models/a2sb/` (NVIDIA OneWay Noncommercial License). Probe: `tools/probes/a2sb_probe.py`; raw results in `outputs/_benchmarks/a2sb_vram_probe.json`.
 
 | Item | Result |
 |---|---|
@@ -66,7 +66,7 @@ Findings:
 16.54 M parameters, 66.5 MB fp32 weights, both released checkpoints identical in shape (`sr 44100, win 20 ms,
 feature_dim 256, layer 6`). Loaded from UVR's `models/Apollo_Models`, SHA-256 pinned, `weights_only=True`.
 
-Single forward pass, stereo, fp32, `tools/apollo_probe.py` (RTX 2080 Super Max-Q, 8 GB):
+Single forward pass, stereo, fp32, `tools/probes/apollo_probe.py` (RTX 2080 Super Max-Q, 8 GB):
 
 | Chunk | Peak allocated | Peak reserved | Seconds | Speed |
 |---|---|---|---|---|

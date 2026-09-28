@@ -1,6 +1,6 @@
 """Ground-truth tests: inject known corruptions into synthetic stems and check the analysis finds them.
 
-These encode behaviour demonstrated on the synthetic benchmark (tools/dev/explore_detectors.py), including known
+These encode behaviour demonstrated on the synthetic benchmark (tools/probes/explore_detectors.py), including known
 blind spots, which are asserted explicitly so a future change that alters them is noticed.
 """
 

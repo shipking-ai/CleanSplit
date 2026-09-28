@@ -57,7 +57,7 @@ Meaning: the physically grounded detectors (residual, cancellation, transient) a
   - `region_wiener` (non-generative)
   - `a2sb`: raw generative inpainting of each affected stem's TF box, 50 steps, fp16
   - `a2sb_consistent`: A2SB's inpainted magnitudes decide the mixture split, and stems are re-derived from O_ref; the matching control is `region_wiener`
-- **Score:** stem error vs. truth inside each region's TF box, summed over groups, floored at −30 dB of truth energy, pooled as 10·log10(Σ after / Σ before). **Negative = closer to truth; 0 dB = identity.** Every proposal is scored, including ones the gate rejected (`tools/run_real_stem_experiment.py`, `tools/summarize_experiments.py`).
+- **Score:** stem error vs. truth inside each region's TF box, summed over groups, floored at −30 dB of truth energy, pooled as 10·log10(Σ after / Σ before). **Negative = closer to truth; 0 dB = identity.** Every proposal is scored, including ones the gate rejected (`tools/experiments/run_real_stem_experiment.py`, `tools/eval/summarize_experiments.py`).
 
 ### Results: mixture-level (missing-energy) regions, 20 regions over two excerpts
 | Restorer | Gate accepted | Pooled error vs truth | Regions closer / worse | vocals group | drums group |
@@ -82,7 +82,7 @@ Real SW output produced **0** per-stem regions in excerpt 60 s and **3** (warble
 One track, two 30 s excerpts, 23 regions, and a "truth" produced by another separator. A2SB was used as released (trained on time-gap and high-band masks, mono, 50 steps), not fine-tuned for stems or TF-box masks. This is evidence **against** off-the-shelf generative inpainting of SW stems on this material, not proof that no generative approach could work.
 
 ## 5. Why residual-based restoration cannot do much for SW: error decomposition
-`tools/diagnose_missing_energy.py` (same BUH excerpts, whole 30 s, STFT domain, bin 0 excluded).
+`tools/experiments/diagnose_missing_energy.py` (same BUH excerpts, whole 30 s, STFT domain, bin 0 excluded).
 With truth groups Tᵢ and SW group estimates Sᵢ: Mᵢ = Tᵢ − Sᵢ, and the mixture residual E = Σ Mᵢ.
 
 | | excerpt 60 s | excerpt 120 s |
@@ -97,7 +97,7 @@ With truth groups Tᵢ and SW group estimates Sᵢ: Mᵢ = Tᵢ − Sᵢ, and th
 **About 97% of SW's stem error is misallocation between stems, which cancels in the sum and is invisible to the mixture.** Any method that only redistributes the mixture residual addresses a few percent of the error. Even with perfect knowledge of the owner at the restorer's resolution, the gain would be about 0.55 dB. Restricting to "confident owner" cells does not remove the harm to vocals. This explains the negative results in section 4 at the root.
 
 ## 6. Test-time augmentation (improves allocation; not restoration)
-`tools/tta_experiment.py`: SW on transformed inputs, outputs mapped back and averaged. SDR gain vs single pass:
+`tools/experiments/tta_experiment.py`: SW on transformed inputs, outputs mapped back and averaged. SDR gain vs single pass:
 
 | Averaged passes | vocals | drums | bass | other |
 |---|---|---|---|---|
@@ -112,7 +112,7 @@ With truth groups Tᵢ and SW group estimates Sᵢ: Mᵢ = Tᵢ − Sᵢ, and th
 
 > **Largely superseded by section 11.** On 20 real multitracks the vocal gain is +0.39 dB median (not ~2 dB), and
 > averaging drums and bass with Demucs is worse on a typical song. The BUH reference exaggerated both.
-`tools/ensemble_experiment.py`: same two BUH excerpts and truth groups, equal weights only (nothing tuned).
+`tools/experiments/ensemble_experiment.py`: same two BUH excerpts and truth groups, equal weights only (nothing tuned).
 Additional local models, all hash-verified against the public `Politrees/UVR_resources` mirror:
 - **BS-RoFormer ep_317** (viperx, vocals/instrumental; same vendored architecture, STFT hop 441). 1.6 GB VRAM, 23 s per 30 s.
 - **HTDemucs_ft** (Meta, 4 stems; `demucs` 4.0.1). Loaded with `weights_only` plus an explicit allowlist of exactly the four globals the pickles contain. 0.55 GB VRAM, 10 s per 30 s. Its stems do not sum to the mix (27.5 dB).
@@ -164,7 +164,7 @@ A2SB failed because it attacks missing information while ~97% of the error is mi
 the opposite case: it is trained to restore what an MP3 encoder actually deleted. If any off-the-shelf generative
 restorer belongs in this pipeline, it is this one, so it was measured the same way everything else was.
 
-Setup: `tools/apollo_experiment.py`. The reference is the truth; damage is applied by me with LAME at 320 / 128 /
+Setup: `tools/experiments/apollo_experiment.py`. The reference is the truth; damage is applied by me with LAME at 320 / 128 /
 96 kbps, decoded back, delay-aligned by cross-correlation (measured lag 0 in every run, correlation 1.00000), then
 scored. **96 and 128 kbps are the control**: they are the damage Apollo was trained on, so if the harness cannot
 see an improvement there, a null result at 320 kbps would say nothing. Both released checkpoints, four references,
@@ -262,7 +262,7 @@ Section 7 found that averaging two vocal models gains ~2 dB because their errors
 ep_317 are both BS-RoFormers, so the obvious question is whether a model with a different architecture adds more.
 MDX23C InstVoc HQ is a convolutional TFC-TDF U-Net on an 8192-point STFT; its weights ship with UVR.
 
-Setup: `tools/vocal_ensemble_experiment.py`. BUH vocal truth (the reliable stem, see section 7), **five** 30 s
+Setup: `tools/experiments/vocal_ensemble_experiment.py`. BUH vocal truth (the reliable stem, see section 7), **five** 30 s
 excerpts at 30/60/90/120/150 s — more than section 7's two. Every equal-weight combination was scored; nothing was
 tuned. **Decision rule, written into the script before it ran:** MDX23C joins the default ensemble only if the
 three-model average beats the current two-model average on the pooled score *and* on a majority of excerpts.
@@ -301,7 +301,7 @@ Observations:
 Every ensemble number above came from **one** song (BUH) whose "truth" was produced by an undisclosed commercial
 separator. MUSDB18-HQ (Zenodo 3338373, md5 verified, educational/non-commercial licence) has the real studio stems.
 
-Protocol (`tools/musdb_eval.py`, written and smoke-tested before any MUSDB song was scored): the first 20 test songs
+Protocol (`tools/eval/musdb_eval.py`, written and smoke-tested before any MUSDB song was scored): the first 20 test songs
 in alphabetical order (scope cut from 50 at the user's request; alphabetical order is content-blind), one 30 s
 excerpt centred on each track's midpoint, SDR per song, equal-weight averages only, nothing tuned. A "yes" needs a
 better median **and** wins on more than half the songs. Raw data: `outputs/_benchmarks/musdb18hq_test.json`.
@@ -369,7 +369,7 @@ Idea: two strong separators that disagree about a stem cannot both be right. agr
 Developed on MUSDB18-HQ test songs 1–20: Spearman(agreement, SW's true SDR) = **0.79** over 80 song-stems; all 8 SW
 failures (SDR < 3 dB) rank among the 17 lowest. Threshold chosen there: **6 dB** (catches 7/8, flags 13/80).
 
-Held-out test on songs 21–50 (`tools/disagreement_eval.py`), criteria written into the script before those songs
+Held-out test on songs 21–50 (`tools/eval/disagreement_eval.py`), criteria written into the script before those songs
 were separated: recall ≥ 0.5 **and** precision ≥ 0.4 **and** Spearman ≥ 0.5.
 
 | | Result | Required |
@@ -400,7 +400,7 @@ account) and **Transkun** v2 (piano specialist with velocities; MIT; SHA-256 pin
 
 Truth: **BabySlakh** (Zenodo 4603870, CC BY 4.0) — 20 tracks rendered from MIDI, so the exact notes are known.
 One 30 s excerpt per track, centred on the midpoint. mir_eval, 50 ms onset tolerance, offsets ignored.
-`tools/transcription_eval.py`; questions and pass rules written into it before any route was transcribed.
+`tools/eval/transcription_eval.py`; questions and pass rules written into it before any route was transcribed.
 
 Pooled F1 over 20 tracks:
 
@@ -470,7 +470,7 @@ target + interference + artifacts and scores them separately:
 **Protocol.** MUSDB18-HQ test songs 1–20 in alphabetical order, the same 30 s mid-song excerpts and the same cached
 estimates as section 11 — no new separation, so this is a re-reading of results already on disk, not a new sample.
 Downsampled to 16 kHz because bss_eval's filter projections are O(n²)-ish; this lowers absolute numbers slightly and
-band-limits the comparison to ≤ 8 kHz (see §14.3). Median over songs. `tools/artifact_metrics.py`.
+band-limits the comparison to ≤ 8 kHz (see §14.3). Median over songs. `tools/eval/artifact_metrics.py`.
 
 ### 14.1 Baseline
 
@@ -502,7 +502,7 @@ Two adoption decisions get independent confirmation on this axis:
 
 ### 14.2 Can the artifacts be reduced? Four candidates, all rejected
 
-`tools/artifact_reduction.py`, pre-registered in the script's docstring **before the run**: *a candidate replaces the
+`tools/experiments/artifact_reduction.py`, pre-registered in the script's docstring **before the run**: *a candidate replaces the
 default only if median SAR improves on the vocals, drums AND bass stems, and median SDR drops by no more than
 0.10 dB on any of them.* The SDR guard exists because §4 already measured this exact trap — a mixture-consistent
 re-weighting that sounds smoother while moving further from the truth.
@@ -541,7 +541,7 @@ failure mode this project is built to avoid.
 
 ### 14.4 The band hypothesis is falsified — and that changes how §14 must be read
 
-`tools/dev/mdx23c_band_probe.py`, hypothesis and prediction written into the docstring before the run: *MDX23C helps
+`tools/probes/mdx23c_band_probe.py`, hypothesis and prediction written into the docstring before the run: *MDX23C helps
 below 8 kHz and hurts above, so §11 and §14 are each right about the band they can see.* Falsification condition
 stated up front: the delta has the same sign in both bands.
 
@@ -587,7 +587,7 @@ between neighbours. Raising `num_overlap` makes every output sample the average 
 cancellation that makes model ensembling remove artifacts (§14.1), applied within a single model.
 
 Isolated deliberately: SW+TTA **alone**, not the shipped ensemble, so the overlap factor is the only difference
-between arms. All four stems come from the one model. `tools/overlap_experiment.py`, cache per overlap, resumable.
+between arms. All four stems come from the one model. `tools/experiments/overlap_experiment.py`, cache per overlap, resumable.
 
 **Both gates, 20 songs, `num_overlap` 4 vs the shipped 2:**
 
@@ -600,7 +600,7 @@ between arms. All four stems come from the one model. `tools/overlap_experiment.
 
 * Pre-registered artifact rule (§14.2): SAR up on vocals, drums and bass, SDR down no more than 0.10 dB on each →
   **PASS** (SAR up on all four stems; SDR up on all four, so the guard never binds).
-* Filter-free full-band gate (`tools/fullband_check.py`, required by §14.4 and written *before* these SAR numbers were
+* Filter-free full-band gate (`tools/eval/fullband_check.py`, required by §14.4 and written *before* these SAR numbers were
   computed) → **PASS**, positive on every stem, better on 18/20 and 19/20 songs for vocals and drums.
 
 **This is the first candidate in the entire artifact and restoration line of work to clear a gate** — after two
@@ -660,7 +660,7 @@ result here, and it is why the section 14.4 gate is mandatory rather than adviso
 
 **This section's first version then got its own verdict right for the wrong reason, and the correction is instructive.**
 It reported the two overlaps as "identical to two decimal places", concluding the benefit *saturates* at 4. Two defects
-produced that: `tools/fullband_check.py` computed its deltas as median-of-arm minus median-of-baseline (unpaired) while
+produced that: `tools/eval/fullband_check.py` computed its deltas as median-of-arm minus median-of-baseline (unpaired) while
 only its win counts were paired, and it matched songs **by list position**, so the overlap-8 arm — which had 9 of 20
 songs cached at the time — was lined up against whichever songs happened to occupy the same slots. Both are fixed; the
 statistic is now `paired()` in that file, matched by song name, covered by `cleansplit/tests/test_paired_statistics.py`.
@@ -684,7 +684,7 @@ passes**, and would have doubled every render.
 
 That is a flaw in the gate, not in overlap 8: with enough songs, any arbitrarily small consistent gain clears a
 "greater than zero" bar, and cost is unbounded. The gate now carries an effect-size floor of **+0.02 dB**, taken from
-the rule already pre-registered in `tools/cache_arm.py` before this run rather than invented for this verdict. Stated
+the rule already pre-registered in `tools/render/cache_arm.py` before this run rather than invented for this verdict. Stated
 plainly, because the order matters: the floor was added *after* seeing overlap 8 pass, and it is the reason the verdict
 stands.
 
@@ -708,8 +708,8 @@ Two anomalies in §14 were reported as evidence that `bss_eval`'s optimal distor
 * overlap 8 gaining **+0.32 dB** vocal SAR while the full-band metric did not move (§14.6, first version).
 
 Both attributions were wrong, and the real cause is the same in both cases: the **unpaired** statistic. Every row in
-`tools/artifact_reduction.py` and `tools/overlap_experiment.py` carries its song name, so the pairing can be recovered
-from the JSON they already wrote, with no GPU work — `tools/paired_rescore.py` does exactly that. Re-derived from the
+`tools/experiments/artifact_reduction.py` and `tools/experiments/overlap_experiment.py` carries its song name, so the pairing can be recovered
+from the JSON they already wrote, with no GPU work — `tools/eval/paired_rescore.py` does exactly that. Re-derived from the
 **same `bss_eval` SAR numbers**, matched per song:
 
 | candidate | stem | unpaired ΔSAR | paired ΔSAR | won |
@@ -746,7 +746,7 @@ The two metrics never actually disagreed. An unpaired median was making one of t
   a misattribution on my part: I reached for the sophisticated explanation and did not check the boring one first.
 * **The filter-free full-band gate stays.** It was right in both disputed cases, it is the metric that tracks what a
   listener hears, and an independent check is worth keeping regardless of which mechanism motivated it.
-* **Paired statistics are now enforced in code, not policy** — `paired()` in `tools/fullband_check.py`, matched by song
+* **Paired statistics are now enforced in code, not policy** — `paired()` in `tools/eval/fullband_check.py`, matched by song
   name, with `cleansplit/tests/test_paired_statistics.py` failing on both the unpaired and the by-position forms.
 
 The general lesson, and the reason this section exists rather than a quiet edit: an error in the *statistic* looks
@@ -803,7 +803,7 @@ carries a real measured cost in passes and a real measured dB, rather than an ad
 Every lever in §14.8 buys quality with compute. The blend **weight** buys it with nothing: `vocals = (sw + ep317) / 2`
 is one constant, and 0.5 was chosen because it is the obvious value, never because it measured best.
 
-`tools/ensemble_weight.py`, pre-registered with a **held-out split** before any weight was scored, because choosing a
+`tools/experiments/ensemble_weight.py`, pre-registered with a **held-out split** before any weight was scored, because choosing a
 weight to maximise a score on the same 20 songs this project reports against is fitting the test set: fit on the first
 10 songs in the fixed alphabetical order, choose the weight there only, then check it on the untouched last 10.
 
@@ -841,7 +841,7 @@ Two things fall out of the curve for free:
 a ceiling of **+0.38 dB paired, 20/20 songs** — most of the +0.45 dB the entire two-model ensemble is worth. That is a
 budget worth attacking, and it is the measurable form of "have an AI listen to the stems and fix the bad parts".
 
-`tools/tile_combine.py` tries to collect it without the truth. Every combiner is a fixed, parameter-free formula on the
+`tools/experiments/tile_combine.py` tries to collect it without the truth. Every combiner is a fixed, parameter-free formula on the
 two complex STFTs, so nothing is fitted to these songs and no held-out split is needed, and all cost nothing at
 inference because both models already run.
 
@@ -870,7 +870,7 @@ cheap route to it is now measured and closed. The remaining route is a trained s
 
 ### 14.11 The medians hide the spread: on one song in twenty, the fast path is 5 dB worse
 
-Writing the caches out as audio (`tools/render_audio.py`) exposed something the median never showed. Per-song, current
+Writing the caches out as audio (`tools/render/render_audio.py`) exposed something the median never showed. Per-song, current
 default versus the fast opt-out, vocals:
 
 | song | best | fast | difference |
@@ -888,7 +888,7 @@ It also revises how the `--quality` switch should be described. A tier label can
 claim is "the same on most material, up to several dB worse on some", which is a different and more useful statement.
 
 **Audio is now produced, not just numbers.** Nothing listenable had reflected the current defaults for eleven days;
-every §14 result lived in `.npz` arrays. `tools/render_audio.py` writes the *same arrays that were scored* — not a
+every §14 result lived in `.npz` arrays. `tools/render/render_audio.py` writes the *same arrays that were scored* — not a
 re-render — as `mixture / truth / best / fast / error_best / error_fast` plus `_loud` copies of the error normalised to
 −3 dBFS. The error signal is the useful artefact: a stem can sound acceptable soloed and still carry everything these
 numbers track, and `error_best_loud/vocals.wav` is that damage in isolation.
@@ -942,7 +942,7 @@ cost. Fixed, with a test asserting the flag reaches the constructed separator.
 ### 14.13 The vocal recipe's asymmetry costs nothing: ep317 does not need TTA
 
 The shipped ensemble runs SW with 3-pass TTA and ep317 with a single pass. Nobody had measured whether that asymmetry
-was costing the flagship stem — §14.5 listed it as open work rather than guessing. `tools/vocal_best_recipe.py` ran all
+was costing the flagship stem — §14.5 listed it as open work rather than guessing. `tools/experiments/vocal_best_recipe.py` ran all
 three arms at overlap 4, so overlap is not a confound.
 
 | candidate | SNR | paired ΔSNR | won | SAR | ΔSAR |

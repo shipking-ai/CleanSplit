@@ -6,7 +6,7 @@
         report.json       what ran, how long, peak VRAM, tempo, note counts, licences, caveats
 
 mode "stems" transcribes each separated stem with a hard instrument constraint; mode "mix" transcribes the original
-mix unconstrained. Defaults decided by tools/transcription_eval.py against exact MIDI (docs/04 section 13): stems beat
+mix unconstrained. Defaults decided by tools/eval/transcription_eval.py against exact MIDI (docs/04 section 13): stems beat
 the mix (pre-registered Q1: multi-F1 +0.048, 13/20 tracks) and Transkun beats MuScriptor on the piano stem (Q2:
 piano F1 +0.186). Together: multi-F1 0.226 -> 0.332 pooled, better on 16/20 tracks.
 """

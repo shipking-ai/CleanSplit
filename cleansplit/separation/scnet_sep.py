@@ -12,7 +12,7 @@ of the 20 MUSDB songs used here) has "Drums Ensemble (MelBand + SCNet XL + BS Ro
 whole board at 14.3505 dB, above MVSep's own proprietary ensemble and above plain "BS Roformer SW (6 stems)" at
 14.1129. See docs/01 section 8.1.
 
-Whether it actually helps HERE is measured, not assumed: tools/stem_ensemble_experiment.py carries the pre-registered
+Whether it actually helps HERE is measured, not assumed: tools/experiments/stem_ensemble_experiment.py carries the pre-registered
 rule, and this project has already rejected three third models (MDX23C, HTDemucs_ft, MDX-Net Inst HQ 3) that were all
 weaker than the pair they joined.
 

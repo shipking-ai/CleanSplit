@@ -1,6 +1,6 @@
 """Transcription plumbing: note format, MIDI writing, stem routing, the song pipeline (backends mocked).
 
-The models themselves are measured in tools/transcription_eval.py against exact MIDI, not here.
+The models themselves are measured in tools/eval/transcription_eval.py against exact MIDI, not here.
 """
 
 import json

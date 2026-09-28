@@ -3,7 +3,7 @@
 Why it is here: the only measured gain in this project is ensembling (docs/04_results.md section 7), and ensembles
 gain from models whose errors differ. SW and ep317 are both BS-RoFormers; MDX23C is a convolutional TFC-TDF U-Net
 on an 8192-point STFT, so its mistakes should be less correlated with theirs. Whether that turns into a better
-vocal stem is measured, not assumed (tools/ensemble_experiment.py, docs/04 section 10).
+vocal stem is measured, not assumed (tools/experiments/ensemble_experiment.py, docs/04 section 10).
 
 Inference follows MSST's demix exactly as ``roformer.py`` does: native chunk (261,120 samples), step = chunk /
 num_overlap, reflect padding of chunk - step on both sides, the same linear fade over chunk // 10. The model's own

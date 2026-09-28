@@ -2,7 +2,7 @@
 
 A2SB code and weights are NOT part of CleanSplit and are non-commercial:
   code    third_party/diffusion-audio-restoration (NVIDIA Source Code License-NC), imported at runtime
-  weights models/a2sb/*.ckpt (NVIDIA OneWay Noncommercial License), SHA-256 pinned in models.checkpoints
+  weights data/models/a2sb/*.ckpt (NVIDIA OneWay Noncommercial License), SHA-256 pinned in models.checkpoints
 
 What this module reproduces from NVIDIA's inference (A2SB_lightning_module_api.TimePartitionedPretrainedSTFTBridgeModel):
   * representation: STFT 2048/512/hann (center=True) -> [|X|^0.25, cos(phase), sin(phase)], DC bin dropped (3x1024xT)
@@ -29,17 +29,32 @@ from .base import RestorationContext, RestorationProposal, Restorer
 
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_REPO = ROOT / "third_party" / "diffusion-audio-restoration"
-DEFAULT_CKPT_DIR = ROOT / "models" / "a2sb"
 WINDOW_FRAMES = 256
 HOP = 512
 N_FFT = 2048
 SEGMENT = (WINDOW_FRAMES - 1) * HOP  # 130,560 samples -> exactly 256 frames with center=True
 
 
+def _a2sb_ckpt_dir() -> Path:
+    """Where the A2SB weights live: alongside every other model, with the old root-level path still honoured.
+
+    They used to sit in a second `models/` directory at the repository root, separate from `data/models/` where all the
+    other checkpoints are. The canonical location is now `<models dir>/a2sb`, but an existing install that still has the
+    legacy directory keeps working rather than failing with a confusing "checkpoint not found".
+    """
+    from ..models.checkpoints import cleansplit_models_dir
+
+    canonical = cleansplit_models_dir() / "a2sb"
+    legacy = ROOT / "models" / "a2sb"
+    if not canonical.is_dir() and legacy.is_dir():
+        return legacy
+    return canonical
+
+
 class A2SBModel:
     """Loads the 2-split ensemble once and samples masked 3x1024x256 windows."""
 
-    def __init__(self, repo_dir=DEFAULT_REPO, ckpt_dir=DEFAULT_CKPT_DIR, precision="fp16", device="cuda", verify=True):
+    def __init__(self, repo_dir=DEFAULT_REPO, ckpt_dir=_a2sb_ckpt_dir(), precision="fp16", device="cuda", verify=True):
         import torch
         import yaml
 
