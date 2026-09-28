@@ -7,7 +7,7 @@ name = "cleansplit"
 version = "0.1.0"
 description = "Local-first stem separation with artifact-aware, mixture-consistent analysis and restoration"
 requires-python = ">=3.10"
-license = { text = "MIT (CleanSplit code only; model weights carry their own terms)" }
+license = { text = "MIT (CleanSplit code only). third_party/apollo is CC BY-SA 4.0 and vendored model code is MIT/BSD-3; see LICENSE. Model weights are not redistributed and carry their own terms." }
 dependencies = [
     "numpy>=1.26",
     "scipy>=1.11",

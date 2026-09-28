@@ -640,5 +640,34 @@ residuals this project measures), and TTA is **not** switched on for the ep317 m
 would be an unmeasured change to a measured recipe. It is a cheap experiment and is listed as open work rather than
 guessed at.
 
-`num_overlap` 8 is still being measured; docs/02 shows it is ~2.4× slower again than 4, so it would need a much
-larger gain to change the recommendation.
+### 14.6 Overlap 8: the gain saturates at 4, and the unpaired statistic nearly cost 2x render time for nothing
+
+`num_overlap` 8 passed the section 14.2 rule too, and on the bss_eval table it looked considerably *better* than 4:
+
+| arm | vocals dSAR | drums dSAR | bass dSAR | other dSAR |
+|---|---|---|---|---|
+| overlap 4 | +0.03 | +0.08 | +0.03 | +0.09 |
+| overlap 8 | **+0.32** | +0.11 | +0.02 | +0.10 |
+
+A +0.32 dB vocal gain would have been ten times what overlap 4 delivered, and under "best quality is the default" that
+would have made 8 the new default at another 2x in GPU time. It is not real. On the **paired, filter-free, full-band**
+gate that section 14.4 requires of every candidate, the two are indistinguishable:
+
+| arm | vocals | drums | bass | other |
+|---|---|---|---|---|
+| overlap 4 | +0.09 (18/20) | +0.05 (19/20) | +0.05 (14/20) | +0.07 (16/20) |
+| overlap 8 | +0.09 (19/20) | +0.05 (18/20) | +0.05 (15/20) | +0.06 (17/20) |
+
+Identical to two decimal places on every stem, with win counts differing by one song either way — noise. **The benefit
+of overlap-add averaging saturates at 4.** Going to 8 buys nothing and costs roughly half the throughput (0.13x
+realtime versus 0.26x on the same machine).
+
+**Decision: overlap 4 stays the default and 8 is not adopted** — the first time in this project that "best quality"
+and "faster" point at the same setting.
+
+Two lessons worth keeping:
+1. The unpaired form (median of one arm minus median of the other) invented a 0.32 dB gain out of nothing, exactly as
+   it did for ep317 in section 14.4's follow-up. Every comparison in this project is now paired, with win counts.
+2. bss_eval's SAR, with its optimal distortion filter, moved by +0.32 dB while the filter-free full-band SNR did not
+   move at all. That is the second time the filter allowance has manufactured a result, and it is why the full-band
+   gate is mandatory rather than advisory.
