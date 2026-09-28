@@ -1,0 +1,240 @@
+{
+ "excerpt_60s": {
+  "separation_sdr_db": {
+   "vocals": 15.762675999475224,
+   "drums": 4.193079564391621,
+   "bass": 18.67342285236583,
+   "other": 3.5457121030813488
+  },
+  "missing_energy_share": {},
+  "bands": {
+   "20-250Hz": {
+    "none": 0.0,
+    "proportional": -0.02836540867740222,
+    "oracle_cell": -2.732861417317009,
+    "oracle_block": -0.43558514952706096,
+    "confident_0.8": -0.016120158684712504,
+    "confident_0.95": -0.010035725490214847,
+    "vocals_only": {
+     "none": 0.0,
+     "proportional": 0.1157676252342184,
+     "oracle_cell": -2.1007726041659653,
+     "oracle_block": -0.19475132818744817,
+     "confident_0.8": 0.08280619768628511,
+     "confident_0.95": 0.038729208574411624
+    },
+    "residual_share_of_stem_error": 0.010581321126925478
+   },
+   "250-2000Hz": {
+    "none": 0.0,
+    "proportional": 0.10903686042606306,
+    "oracle_cell": -3.124138204748916,
+    "oracle_block": -1.1831798080260258,
+    "confident_0.8": 0.10562432682655111,
+    "confident_0.95": 0.0797850558424358,
+    "vocals_only": {
+     "none": 0.0,
+     "proportional": 1.1771832474416233,
+     "oracle_cell": -3.830264935029684,
+     "oracle_block": -1.7833899795824957,
+     "confident_0.8": 0.9175537777025575,
+     "confident_0.95": 0.6221543208823015
+    },
+    "residual_share_of_stem_error": 0.0262568779507659
+   },
+   "2000-6000Hz": {
+    "none": 0.0,
+    "proportional": 0.14701763305345605,
+    "oracle_cell": -2.9084508436231205,
+    "oracle_block": -0.8473627690175934,
+    "confident_0.8": 0.14121111433972605,
+    "confident_0.95": 0.10886417493540909,
+    "vocals_only": {
+     "none": 0.0,
+     "proportional": 0.8875952143698908,
+     "oracle_cell": -4.392319040149861,
+     "oracle_block": -2.020991559268071,
+     "confident_0.8": 0.7926621617786954,
+     "confident_0.95": 0.5941351382355593
+    },
+    "residual_share_of_stem_error": 0.015440582793553361
+   },
+   "6000-12000Hz": {
+    "none": 0.0,
+    "proportional": -0.02298558125996889,
+    "oracle_cell": -2.691691296282089,
+    "oracle_block": -0.15921576094542333,
+    "confident_0.8": -0.011877182682916324,
+    "confident_0.95": 0.0002438121150466371,
+    "vocals_only": {
+     "none": 0.0,
+     "proportional": 0.03831007850502456,
+     "oracle_cell": -3.2050441476761478,
+     "oracle_block": -0.4956022204532371,
+     "confident_0.8": 0.04039614213714651,
+     "confident_0.95": 0.03201869308120209
+    },
+    "residual_share_of_stem_error": 0.003970497129793243
+   },
+   "12000-22050Hz": {
+    "none": 0.0,
+    "proportional": -0.015317552962475407,
+    "oracle_cell": -3.1045689984005103,
+    "oracle_block": -0.10442486084082891,
+    "confident_0.8": -0.003956788820904624,
+    "confident_0.95": 0.0017312572002979873,
+    "vocals_only": {
+     "none": 0.0,
+     "proportional": -0.0457648536480473,
+     "oracle_cell": -3.5891947611574144,
+     "oracle_block": -0.016791687214652032,
+     "confident_0.8": -0.010591456486036658,
+     "confident_0.95": 0.0009111183921436815
+    },
+    "residual_share_of_stem_error": 0.0011189361031823314
+   },
+   "0-22050Hz": {
+    "none": 0.0,
+    "proportional": -0.0004880636771859288,
+    "oracle_cell": -2.79690925344005,
+    "oracle_block": -0.5494735452525161,
+    "confident_0.8": 0.008609437943103001,
+    "confident_0.95": 0.008395596831628811,
+    "vocals_only": {
+     "none": 0.0,
+     "proportional": 0.8355557551792981,
+     "oracle_cell": -3.400987364297061,
+     "oracle_block": -1.2983594858373406,
+     "confident_0.8": 0.6625259219808516,
+     "confident_0.95": 0.4516435624508025
+    },
+    "residual_share_of_stem_error": 0.01298608947054055
+   }
+  },
+  "residual_rel_mixture_db": -34.00208839822604,
+  "residual_share_of_total_stem_error": 0.012986089473912126,
+  "confident_cell_fraction": {
+   "0.8": 0.7118229821739551,
+   "0.95": 0.4550010279605263
+  }
+ },
+ "excerpt_120s": {
+  "separation_sdr_db": {
+   "vocals": 17.057530196187408,
+   "drums": 5.683128837909108,
+   "bass": 19.915190579699228,
+   "other": 2.4194892334840827
+  },
+  "missing_energy_share": {},
+  "bands": {
+   "20-250Hz": {
+    "none": 0.0,
+    "proportional": -0.03379029366748397,
+    "oracle_cell": -2.3562678195501,
+    "oracle_block": -0.3108952745409492,
+    "confident_0.8": -0.027232927131985957,
+    "confident_0.95": -0.01898488198291244,
+    "vocals_only": {
+     "none": 0.0,
+     "proportional": 0.05018529678507067,
+     "oracle_cell": -2.3152151476715113,
+     "oracle_block": -0.3724711581807488,
+     "confident_0.8": 0.041095360426816434,
+     "confident_0.95": 0.0271466628389255
+    },
+    "residual_share_of_stem_error": 0.015711898511965215
+   },
+   "250-2000Hz": {
+    "none": 0.0,
+    "proportional": -0.08904955120647187,
+    "oracle_cell": -3.6552385685352946,
+    "oracle_block": -1.531989483137035,
+    "confident_0.8": -0.0528194867335156,
+    "confident_0.95": -0.06873337253108557,
+    "vocals_only": {
+     "none": 0.0,
+     "proportional": 1.9952725927409831,
+     "oracle_cell": -4.2680613688880715,
+     "oracle_block": -1.6488994085690734,
+     "confident_0.8": 1.4786468161049824,
+     "confident_0.95": 0.8518707548558714
+    },
+    "residual_share_of_stem_error": 0.09742105273931
+   },
+   "2000-6000Hz": {
+    "none": 0.0,
+    "proportional": 0.1403413235180902,
+    "oracle_cell": -2.728519818670876,
+    "oracle_block": -0.4908879593420301,
+    "confident_0.8": 0.14521271854311266,
+    "confident_0.95": 0.12522331419796326,
+    "vocals_only": {
+     "none": 0.0,
+     "proportional": 1.1655060735825002,
+     "oracle_cell": -3.3071285778404436,
+     "oracle_block": -1.1116690616087856,
+     "confident_0.8": 1.0674188293208138,
+     "confident_0.95": 0.877034924850746
+    },
+    "residual_share_of_stem_error": 0.03189895157052763
+   },
+   "6000-12000Hz": {
+    "none": 0.0,
+    "proportional": 0.007913594966364668,
+    "oracle_cell": -2.851010203487505,
+    "oracle_block": -0.24317706000914235,
+    "confident_0.8": 0.012863641319285782,
+    "confident_0.95": 0.00916380774992377,
+    "vocals_only": {
+     "none": 0.0,
+     "proportional": 0.015523732811959765,
+     "oracle_cell": -3.411848018146232,
+     "oracle_block": -1.182110688047253,
+     "confident_0.8": 0.062485361708401646,
+     "confident_0.95": 0.0439293908061908
+    },
+    "residual_share_of_stem_error": 0.00450815962230481
+   },
+   "12000-22050Hz": {
+    "none": 0.0,
+    "proportional": 0.009708504300431922,
+    "oracle_cell": -3.157163346207917,
+    "oracle_block": -0.0793465386217642,
+    "confident_0.8": 0.009327089812484816,
+    "confident_0.95": 0.005034991522534333,
+    "vocals_only": {
+     "none": 0.0,
+     "proportional": -0.03756687471560083,
+     "oracle_cell": -3.8240258585229983,
+     "oracle_block": -1.273004288327868,
+     "confident_0.8": 0.002041632269095524,
+     "confident_0.95": 0.0002899969880447494
+    },
+    "residual_share_of_stem_error": 0.001212685509301403
+   },
+   "0-22050Hz": {
+    "none": 0.0,
+    "proportional": -0.037293429728464444,
+    "oracle_cell": -2.6361663636727917,
+    "oracle_block": -0.5553008964653136,
+    "confident_0.8": -0.02444860958187472,
+    "confident_0.95": -0.022937218218070488,
+    "vocals_only": {
+     "none": 0.0,
+     "proportional": 1.2524346145321963,
+     "oracle_cell": -3.3799700145582445,
+     "oracle_block": -1.103052035818819,
+     "confident_0.8": 0.9369360834752583,
+     "confident_0.95": 0.5598120601745656
+    },
+    "residual_share_of_stem_error": 0.03395797724231864
+   }
+  },
+  "residual_rel_mixture_db": -30.731858128679256,
+  "residual_share_of_total_stem_error": 0.03395797723221212,
+  "confident_cell_fraction": {
+   "0.8": 0.7376750556308049,
+   "0.95": 0.5085906510013545
+  }
+ }
+}

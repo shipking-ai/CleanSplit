@@ -1,0 +1,14 @@
+{
+ "mask_cells": 3348,
+ "segment_samples": 130560,
+ "fp32_roundtrip_rel_err": 0.0008663572097805085,
+ "fp32_seconds_stereo_window_50_steps": 2522.5,
+ "fp32_box_rel_err_vs_truth": 0.5894215328831938,
+ "fp32_peak_vram_mb": 6751,
+ "fp16_roundtrip_rel_err": 0.0008663572097805085,
+ "fp16_seconds_stereo_window_50_steps": 74.6,
+ "fp16_box_rel_err_vs_truth": 0.5886607515908149,
+ "fp16_peak_vram_mb": 3703,
+ "zeroed_box_rel_err_vs_truth": 1.0,
+ "fp16_vs_fp32_rel_diff_full_sampling": 0.005678495437934203
+}

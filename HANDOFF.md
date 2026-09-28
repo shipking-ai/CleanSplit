@@ -1,0 +1,521 @@
+# CleanSplit — HANDOFF
+
+**Updated after every code change.** Newest entry on top. If you are picking this up cold, read
+[README.md](README.md) for what the project is, [QUICKSTART.md](QUICKSTART.md) for how to run it, and
+[docs/04_results.md](docs/04_results.md) for what has actually been measured.
+
+---
+
+## Current state (2026-09-21)
+
+| Area | State |
+|---|---|
+| Six-stem separation (BS-RoFormer SW, ep317, HTDemucs_ft, ensembles) | works, measured |
+| Artifact analysis + artifact map | works, measured (docs/03) |
+| Restoration + mixture-consistency gate | works; **every restorer tested is worse than doing nothing** (docs/04 §4, §5, §9) |
+| Desktop UI (`cleansplit ui`) | works: lanes, solo/mute, A/B compare, inspector, flagged spots |
+| Apollo codec restoration | **done and written up** (docs/04 §9). Integrated, measured, not enabled by default |
+| MDX23C InstVoc HQ | **removed from the ensemble again** after MUSDB (worse on 16/20 real songs). Still available as `--separator mdx23c_instvoc_hq` |
+| Real multitrack truth | **MUSDB18-HQ, 20 songs, done** (docs/04 §11). `ensemble` vocals +0.39 dB median vs SW, 18/20. `ensemble_demucs` worse on a typical song, useful when SW misses an instrument |
+| Artifacts vs bleed (SAR/SIR) | **measured, 20 songs** (docs/04 §14). Artifacts dominate: SIR is 10–11 dB cleaner than SAR everywhere. 4 reduction candidates **all rejected**; Wiener post-filtering fails on its own terms. **`--overlap 4` passes both gates** (§14.5) — first thing in this project to clear one. **Now the default, along with `ensemble` and TTA** (user: best quality wins over speed). ov8 measuring |
+| Tests | **84** (74 non-GPU + 10 gpu-marked). 2026-09-28: 74 non-GPU passed in 83 s AND **all 10 GPU tests passed in 47 min** on the new best-quality defaults. `PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe -m pytest -q` |
+
+Python: `C:\AI\CleanSplit\.venv\Scripts\python.exe` (uv-managed, **no pip** — use
+`uv pip install --python .venv/Scripts/python.exe <pkg>`). Set `PYTHONIOENCODING=utf-8` for anything that prints Δ or dB.
+
+### Verified after the last code change
+`cleansplit restore "After 2.mp3" --restorer apollo:variant=vocal_restore` was re-run against the current code
+(after `ApolloRestorer` learned to handle mixture-level regions) and produced **the same result**: 13 eligible,
+0 accepted, all six stems bit-identical, rejection reasons `{"mixture error in region increased": 13,
+"adds energy not explained": 1}`. docs/04 §9.3 is correct as written.
+
+---
+
+## The headline answer (for "where's the AI that fixes the stems?")
+
+Two generative restorers are integrated and both lost:
+
+| Restorer | Target | Result |
+|---|---|---|
+| A2SB (NVIDIA, non-commercial) | inpaint a flagged TF box | gate rejected all raw proposals; the consistent variant was accepted 67/69 and **61 of those were worse** vs truth |
+| Apollo (CC BY-SA) | repair codec damage | **worse than doing nothing in 24/24 ground-truth measurements**; gate rejected 13/13 on a real song |
+
+Root cause, measured in docs/04 §5: **~97% of the separator's error is misallocation** — energy that is present in
+the mix but filed under the wrong stem. It cancels in the sum, so the mixture cannot see it, and no single-stem
+generative prior can fix it. The thing that actually worked is ensembling — but on 20 real songs (docs/04 §11) the vocal gain is **+0.39 dB
+median**, not the +1.8…+2.1 dB that one song suggested.
+
+---
+
+## Recently changed
+
+### 2026-09-28 (3) — Research pass: what would actually raise the ceiling (docs/01 section 8)
+Sources: MVSep Multisong leaderboard (100+ commercial tracks, independent of our 20 MUSDB songs) and
+arXiv:2609.07226 (Sony AI, MIT code + released weights). Full write-up in docs/01 section 8. Headlines:
+
+1. **Biggest structural gap: only VOCALS are ensembled.** Drums, bass, guitar and piano come from SW alone, so three
+   quarters of the output gets none of the +1.12 dB SAR that averaging buys. MVSep's drums board has
+   **"Drums Ensemble (MelBand + SCNet XL + BS Roformer SW)" as the best entry on the whole board (14.3505)**, above
+   MVSep's own proprietary ensemble and above plain "BS Roformer SW (6 stems)" (14.1129) — **+0.24 dB SDR** from
+   exactly the recipe we are missing. Needs SCNet XL + MelBand drums downloads.
+2. **Our "comparable strength" rule is confirmed externally.** MVSep vocals: "BS RoFormer (11.89 + 12.33)" ensembles
+   to 12.2597, i.e. **worse than its own better member (12.3339)**. Same effect as our three rejected third models.
+3. **The user's listen-and-fix idea works — inside the separator, not after it.** Sony's MIMO framework iterates while
+   holding mixture consistency (our own invariant; they frame it as fixed-point iteration) and adds a **stem
+   discriminator** whose only job is to judge whether a stem sounds real. Vocals: SDR 10.38 -> **11.05**, SAR 11.74 ->
+   12.14, and the **generative** variant gets the best SAR (12.16). Most of the gain is the discriminator. Consistent
+   with our 24/24 failure of post-hoc repair: right idea, wrong place. **Requires training, not a config change.**
+4. **Lossy sources put a hard ceiling on everything:** re-encoding the true stems caps vocals SDR at 37.7 dB (MP3 320)
+   and **20.1 dB (MP3 128)**. Models sit at ~12 dB so 320 is not binding, but it confirms docs/04 section 9 on the
+   user's own MP3-sourced file.
+
+Ranked: (1) ensemble the other stems, (2) add/swap a top-20 downloadable vocal model, (3) MIMO+discriminator is a
+training project, (4) source quality gates all of it. Items 1 and 2 need downloads -> asked the user.
+
+
+### 2026-09-28 (2) — Inventory of every model already on disk; only one was still untested
+User wants the absolute best split, so: what else is already installed that could join the vocal average (the one
+mechanism in this project that measurably works, +1.12 dB SAR)?
+
+`C:\Users\wegot\AppData\Local\Programs\Ultimate Vocal Remover\models` holds:
+
+| file | size | status |
+|---|---|---|
+| `BS-Rofo-SW-Fixed.ckpt` | 667 MB | in use (SW) |
+| `model_bs_roformer_ep_317_sdr_12.9755.ckpt` | 610 MB | in use (2nd vocal model) |
+| `MDX23C-8KFFT-InstVoc_HQ.ckpt` | 427 MB | tested, **rejected** (docs/04 sections 11, 14.3, 14.4) |
+| `Demucs_Models/v3_v4_repo/*.th` (5) | — | tested as htdemucs_ft, **worse** (sections 11, 14.1) |
+| `Apollo_Models/Vocal_Restore.ckpt` | — | tested, **worse in 24/24** (section 9) |
+| `UVR-MDX-NET-Inst_HQ_3.onnx` | 64 MB | **the only untested one** |
+| `VR_Models/1_HP-UVR.pth`, `UVR-DeNoise-Lite.pth` | 121 / 17 MB | old VR architecture, not wired up |
+
+**Getting MDX-Net Inst HQ 3 runnable took real source-hunting, and that matters for trusting the result.** UVR keys a
+model's inference parameters by the md5 of its last 10 kB (`ad1501a5b998eb4b37c8ab81b1403305`). That key is in
+**neither** the local `model_data.json` (86 entries) **nor** TRvlvr/application_data's `mdx_model_data`. Guessing the
+parameters would have produced garbage that looked exactly like "this model does not help" — the single failure mode
+this project exists to avoid. Resolved from primary sources instead:
+- `dim_f=3072, dim_t=256` — **read out of the ONNX file itself** (graph input shape `[batch, 4, 3072, 256]`, via the
+  `onnx` package; `onnxruntime` installed to run it).
+- `hop=1024`, `chunk = hop*(dim_t-1)`, `trim = n_fft//2` — **UVR's own `separate.py`** on GitHub, the code that ships
+  these models. (UVR is installed here as a frozen exe, so the local copy has no readable source.)
+- `n_fft=6144` — **inferred**: the only value where `dim_f == n_fft/2`, the convention for this family.
+- `compensate=1.0` — **inferred**, and principled rather than arbitrary: it is the value that keeps
+  `vocals = mixture - instrumental` exactly mixture-consistent, which every CleanSplit recipe requires anyway.
+
+Because two parameters are inferred, `tools/dev/mdxnet_onnx_probe.py` **self-checks before reporting anything**: it
+scores the model's own instrumental against the true instrumental and refuses to say anything about the model's quality
+if that is below 6 dB. **It came out at 15.27 dB, so the plumbing is right.**
+
+**ANSWER, 20 songs: it does NOT help, and the on-disk avenue is now CLOSED.** Self-check 16.30 dB, so the
+implementation is sound and the result is about the model, not the plumbing.
+
+| vocal estimate | median SNR |
+|---|---|
+| MDX-Net Inst HQ 3 alone | 10.42 dB |
+| shipped pair `mean(sw_tta, ep317)` | **13.16 dB** |
+| pair + MDX-Net averaged in | 12.82 dB (**-0.34 dB, better on only 1/20 songs**) |
+
+Same shape as the MDX23C result and for the same reason: a model **2.7 dB weaker** than the pair drags the average
+down. Averaging only cancels artifacts when the members are of comparable strength — that is the real lesson from
+three rejected third models (MDX23C, Demucs, MDX-Net), and it is a *prediction* for any future candidate: a model more
+than ~1-2 dB below the pair will hurt, so check its solo score before wiring it into the average. A stronger third
+vocal model would have to be downloaded, which needs the user's go-ahead. `VR_Models/1_HP-UVR.pth` is an older, weaker
+architecture still and was not wired up on the same reasoning.
+
+New deps: `onnx`, `onnxruntime` (CPU; the probe runs off the GPU on purpose, so it does not contend with the overlap
+and vocal-recipe runs).
+
+**Operational note worth keeping: do not run two GPU jobs at once on this machine.** The overlap-8 arm and the GPU test
+suite together pinned VRAM at 7.8 of 8 GB and 100% utilisation, and the overlap arm fell from 0.13x to **0.06x**
+realtime — more than half the throughput lost to thrashing. `tools/dev/gpu_queue.sh` now serialises the remaining work
+(GPU tests -> overlap 8 -> vocal recipe) and echoes each stage's result. Resume commands are inside it.
+
+
+### 2026-09-28 — Defaults are now the BEST MEASURED setting, not the fastest (user decision)
+User: *"Whatever split mode brings the BEST quality, should be the default."* That overrules my §14.5 call to leave
+overlap at 2, and it exposed something bigger than the overlap question.
+
+| default | was | now | measured gain | cost |
+|---|---|---|---|---|
+| `--separator` | `bs_roformer_sw` | **`ensemble`** | **+1.12 dB vocal SAR**, +0.39 dB SNR, 18/20 songs | ~4 model passes |
+| `--overlap` | 2 | **4** | +0.03…+0.09 dB SAR, 14–19/20 songs | ~2× |
+| `--tta` | off | **on**, `--no-tta` to disable | better on all four stems | 3× on the SW pass |
+
+**The separator default was the real find.** Every number in docs/04 §11 and §14 says `ensemble` is the best this
+project can make, and the CLI had defaulted to single-pass SW with no TTA — the *fastest* option — since before any of
+it was measured. Two other places silently pinned the fast path as well:
+- `cleansplit midi` built its own `argparse.Namespace` with `"overlap": 2, "fp16": False, "tta": False`, so the MIDI
+  command always separated at the old fast settings no matter what the user asked for. Now `overlap 4, tta True`.
+- `EnsembleSeparator` had **no `num_overlap` parameter at all**, so `--overlap` was silently dropped for the default
+  recipe (found in the previous entry, fixed there).
+
+Library defaults moved too, so the UI and any direct caller get the same: `BSRoformerSeparator.num_overlap` 2 → 4,
+`EnsembleSeparator.num_overlap` default 4. UI mode list rewritten (`cleansplit/ui/service.py`): Ensemble is first and
+labelled "best measured quality", the quoted speeds doubled to match overlap 4 (~7× song length), `ensemble_demucs`
+now says "measurably worse on drums and bass", SW says "lowest quality".
+
+**Deliberately NOT changed, with reasons:**
+- `evaluate` stays pinned to `bs_roformer_sw` — the experiment protocols behind docs/04 §4, §5 and §12 were run with
+  it, and moving that default would silently change what an already-published number means.
+- `ensemble_demucs` stays opt-in (measurably worse on both axes), MDX23C stays out (§14.3/§14.4), `--fp16` stays off.
+- **TTA is NOT switched on for the ep317 member inside the ensemble.** It would probably help and it is cheap to
+  test, but it is an unmeasured change to a measured recipe. Listed as open work, not guessed at.
+
+Tests: **84**. New `test_defaults_are_the_best_measured_setting_not_the_fastest` asserts the defaults for
+`separate`/`analyze`/`midi`, that `evaluate` stays pinned, **and** that `--no-tta --overlap 2 --separator
+bs_roformer_sw` still works — so this cannot quietly regress to the fast path. 73 non-GPU passed after the change.
+
+Docs: docs/04 §14.5 decision paragraph rewritten (marked as a user revision of my call), QUICKSTART §2 rewritten so
+the plain command is the best one and the fast flags are the opt-out, README example de-flagged.
+
+
+### 2026-09-22 — Measuring the thing the project is actually for: ARTIFACTS
+The user's reminder: "the whole point of this is to split with no artifacts". Every number until now was SDR, which
+mixes two different faults. The BSS decomposition separates them: **SIR = bleed**, **SAR = artifacts** (energy in the
+estimate that belongs to no source — warble, smearing, musical noise).
+
+**Baseline, locked (`tools/artifact_metrics.py --limit 20`, MUSDB18-HQ 20 songs x 30 s, 16 kHz, median dB):**
+
+| candidate | stem | SDR | SIR (bleed) | SAR (artifacts) |
+|---|---|---|---|---|
+| sw_tta | vocals | 12.65 | 23.89 | 13.00 |
+| sw_tta | drums | 13.52 | 24.04 | 14.06 |
+| sw_tta | bass | 10.98 | 20.20 | 12.40 |
+| sw_tta | other | 8.43 | 16.36 | 9.60 |
+| **ensemble** (shipped) | vocals | **13.62** | 24.39 | **14.12** |
+| ensemble | other | 8.36 | 15.76 | 9.67 |
+| ensemble_demucs | drums | 12.56 | 23.11 | 12.98 |
+| ensemble_demucs | bass | 10.48 | 18.35 | 12.36 |
+| demucs | vocals | 9.90 | 19.11 | 10.38 |
+
+Three things this settles:
+1. **Bleed is not the problem. Artifacts are.** SIR sits 10–11 dB above SAR on every stem of every model, and
+   SDR tracks SAR to within ~0.5 dB. What is left to hear is damage the model does *inside* the stem.
+2. **Averaging models is an artifact remover, not just an SDR trick.** The shipped vocal ensemble buys
+   **+1.12 dB SAR** over sw_tta alone (13.00 → 14.12) — the largest single gain measured in this project.
+3. **`ensemble_demucs` is confirmed harmful on the artifact axis too** (drums −1.08 dB SAR, bass −0.04), independently
+   of the SDR verdict in docs/04 §11. It stays opt-in insurance for songs where SW misses an instrument outright.
+**Artifact reduction: four candidates, all REJECTED** (`tools/artifact_reduction.py --limit 20`, pre-registered bar:
+median SAR up on vocals AND drums AND bass, median SDR down <= 0.10 dB on each). Median dSAR vs the shipped ensemble:
+
+| candidate | vocals | drums | bass | verdict |
+|---|---|---|---|---|
+| `+mdx23c` | +0.22 | 0.00 | 0.00 | no — only touches vocals, so the rule is vacuously false; see below |
+| `wiener1` | −2.91 | −4.29 | −3.14 | no |
+| `wiener2` | −3.07 | −4.74 | −3.59 | no |
+| `wiener2_smooth` | −3.60 | −5.53 | −4.29 | no |
+
+Wiener post-filtering — the textbook artifact reducer (Open-Unmix/norbert, `demucs --wiener`) — **fails on its own
+terms**, costing 3–5.5 dB of the SAR it exists to protect. The reason is specific to CleanSplit: the shipped stems are
+**already mixture-consistent by construction** (`other` is the exact remainder), so Wiener has no inconsistency to
+remove and can only swap the models' phase-accurate output for a coarse 4096/1024 magnitude mask whose own error is
+a fresh artifact. Genuine negative result; nothing in that family was tuned after seeing it.
+
+**`+mdx23c` looked like it disagreed with docs/04 §11 (which removed MDX23C). It doesn't — and my explanation for the
+disagreement was wrong.** `tools/dev/mdx23c_band_probe.py` (new) pre-registered the hypothesis *"MDX23C helps below
+8 kHz and hurts above"* with an explicit falsification condition. Full-rate 44.1 kHz per-band SNR, 20 songs:
+**−0.08 dB below, −0.03 dB above, 4/20 songs improved. Same sign in both bands → FALSIFIED.** MDX23C hurts
+everywhere; §11's removal decision is confirmed by an independent measurement. The §14 gain came from `bss_eval`
+fitting an optimal 512-tap distortion filter before scoring, which absorbs EQ-shaped error into the target term.
+**Consequence, added after the falsification (it tightens the bar, it does not loosen it): a SAR-only gain is not
+evidence of a cleaner stem — any future candidate must also pass a filter-free full-band check before it ships.**
+Written up as docs/04 §14.4.
+- `tools/overlap_experiment.py` — new, **pre-registered, same bar**. SW+TTA alone (so the overlap factor is the only
+  thing that changes between arms) at `num_overlap` 2 (shipped) vs 4 vs 8. Rationale: chunked inference denoises each
+  chunk independently, so the seams and each chunk's own invented energy are uncorrelated — more overlap averages more
+  independent passes, the same mechanism that makes model ensembling cancel artifacts. Cache is per overlap
+  (`data/musdb_cache/sw_tta_ov<N>/`), so it is resumable. Later change: `--out` plus a per-arm "N songs scored" line,
+  so a complete arm can be scored in one process while another is still filling its cache — an arm with a partial
+  cache is scored over the songs it has and the count says so.
+- `tools/fullband_check.py` — new. The filter-free full-band gate §14.4 demands of every SAR candidate: median
+  `snr_db` at the native 44.1 kHz, all four stems, no downsampling and no filter allowance (the §3/§6/§7/§11 metric).
+  Gate: median must improve on vocals, drums AND bass; `other` is reported, not gated (it is the remainder, so it
+  absorbs the other three's mistakes). **Written and run before the overlap SAR numbers were visible**, so it cannot
+  have been shaped by them.
+
+**OVERLAP 4 PASSES BOTH GATES — the first candidate in the whole artifact/restoration line of work to do so.**
+docs/04 §14.5. 20 songs, SW+TTA alone, vs the shipped `num_overlap=2`:
+
+| | vocals | drums | bass | other |
+|---|---|---|---|---|
+| ΔSAR (artifacts) | +0.03 | +0.08 | +0.03 | +0.09 |
+| ΔSDR | +0.03 | +0.07 | +0.08 | +0.09 |
+| **ΔSNR full-band, filter-free** | **+0.09** | **+0.05** | **+0.05** | +0.07 |
+| songs improved, full band | **18/20** | **19/20** | 14/20 | 16/20 |
+
+Effect size is **inaudible on its own** (sub-0.1 dB). What makes it real is consistency — 18/20 and 19/20 is not
+noise — and that both metrics agree in sign, unlike every rejected candidate. Cost: **~2x GPU time**.
+
+**Decision: `--overlap` exposed and documented, default stays 2.** The pre-registered rule said a passing overlap
+"replaces the shipped 2"; it earned that on quality. The same rule said the speed/quality trade is the user's, so the
+deviation is recorded in docs/04 §14.5 rather than buried: doubling every render for an inaudible gain is a poor
+default, and withholding a change is the conservative direction, not the flattering one.
+
+**Bug found and fixed while wiring the lever up:** `--overlap` was **silently ignored for `--separator ensemble`**,
+the default recipe — `_make_separator` built the ensembles with `device` only, and `EnsembleSeparator` had no
+`num_overlap` parameter at all. So the one lever that passed both gates could not reach the code path that ships.
+`EnsembleSeparator(num_overlap=...)` now forwards to both RoFormer members (HTDemucs_ft is unaffected, it has its own
+float overlap), the registry factory and CLI pass it through, `--overlap`'s help text carries the measured numbers,
+and `test_overlap_reaches_both_roformer_members_of_the_ensemble_and_the_cache_key` (no GPU, constructors only) covers
+the plumbing **and** the cache key, so a re-run at another overlap cannot silently reuse cached stems. **83 tests.**
+
+`num_overlap=8` still measuring (`outputs/overlap_experiment.log`, ~50 min of separation left, then ~25 min scoring).
+docs/02 has it ~2.4x slower again than 4, so it needs a much larger gain to change the recommendation.
+
+### 2026-09-21 (7) — First real song through the MIDI converter: works, but `other` is garbage
+`cleansplit midi "After 2.mp3"` (reused the `ensemble` split), 1943 s total, MuScriptor peak 1713 MB:
+vocals 675 notes, piano (Transkun) 494, guitar 4932, **bass 51** (808s mostly missed), **drums 0** (the split's
+drum lane is nearly empty, the known SW failure on this song), **other 28,871 — 16k "French horn"**, 1434 s of the
+run. Tempo: beat_this refused ("no fixed tempo, 196 ms RMS from 80.1 BPM") → wrote the 120 BPM default.
+Changes so far:
+- `_muscriptor_worker.py` prints `[progress] item/items chunk/chunks` every 5 chunks; `muscriptor_backend.py` now
+  streams the worker's stderr (Popen + reader thread) into a `progress(i, n, c, t, label)` callback, keeping the
+  last 15 lines for errors; `pipeline.py` logs "MIDI: other (4/5) 40%". Previously a 30-minute run was silent.
+- Tempo fallback in the worker: when beat_this finds no constant tempo, use the **median beat interval**
+  (40-240 BPM range) and mark `grid.fallback`; the report caveat says so. 120 BPM was certainly wrong.
+- Probe (`tools/dev/midi_after2_probe.py`, 60 s, `outputs/midi_probe.log`): `ensemble` split → drums 0, bass 5,
+  other 4175 notes (70/s); `ensemble_demucs` split → drums 25, bass 117, other 564 (all piano, 9.4/s), 4× faster.
+  Constraining `other` away from drums made it worse (117/s): the garbage is the *content* — SW missed the drums
+  and 808s on this song, so their energy landed in the `other` remainder. The two bass stems differ by only −20 dB
+  yet gave 5 vs 117 notes → near-sine 808 bass is a weak spot of MuScriptor (now a report caveat).
+- **Density guard** (`pipeline.py`, `SUSPECT_NOTES_PER_S = 40`): threshold from BabySlakh's exact MIDI (densest
+  real stem averaged 30.7 notes/s). A stem above it keeps its own `.mid` but is left out of the combined file and
+  named in the report. Checked against the benchmark: never fires on the shipped route C2 (0.332 → 0.332), fires once
+  on plain C (a 104 notes/s piano) and lifts it 0.274 → 0.298. +1 test; transcription tests 7/7.
+- **Q3 (pre-registered in `transcription_eval.py` before running)**: scale every stem sent to MuScriptor to
+  −20 dBFS RMS (MuScriptor does not normalise input; After 2's Demucs drum stem sits at −48 dBFS). Adopt if pooled
+  multi-F1 improves AND > 10/20 tracks. **Result: NO** (+0.001, 10/20). Not adopted. Caveat: BabySlakh stems are at
+  normal levels, so very quiet stems are barely tested. Written into docs/04 §13 with the After 2 findings.
+- `outputs/ensemble/After_2/midi/After_2_clean.mid` — the combined file rebuilt without the garbage `other` track
+  (made by hand from the existing file; the guard now does this automatically). Sent to the user with vocals/piano/guitar.
+- **After 2 v2** (`--separator ensemble_demucs`, `outputs/ensemble_demucs/After_2/midi/`): 788 s (was 1943 s),
+  **78.9 BPM** from the median-beat fallback (was a 120 placeholder), drums **175** (was 0), bass **454** (was 51),
+  other 5,708 (24.7/s, under the guard; was 28,871), guitar 4,532, vocals 699, piano 498. Guard did not fire.
+  Drums still look under-counted for hip-hop (0.76 hits/s). Sent to the user.
+
+### 2026-09-21 (6) — MIDI eval done; defaults set from it
+- **UI MIDI button**: `service.submit_midi(variant, slug)` + worker branch for `kind == "midi"`;
+  `POST /api/midi`; songs carry a `midi` flag; `/api/reveal` accepts `sub: "midi"`. Header button reads
+  "MIDI" → "MIDI…" while running → "Open MIDI" (reveals `midi/`); key **M**. `test_ui.py` +1 test (404 for unknown
+  song, job runs the pipeline, flag false when no .mid). 8/8 UI tests pass.
+- **Result** (docs/04 §13, `outputs/_benchmarks/transcription_babyslakh.json`): pooled multi-F1 full mix 0.226 →
+  stems 0.274 → **stems + Transkun piano 0.332** (oracle stems 0.334). Q1 stems beat mix **YES** (+0.048, 13/20);
+  Q2 Transkun on piano **YES** (+0.186 piano-F1). Combined vs full mix: better on 16/20, median 0.183 → 0.316.
+- `cleansplit/cli/main.py`, `cleansplit/transcription/pipeline.py` — defaults now `--mode stems --piano transkun`.
+- `cleansplit/tests/test_transcription.py` — existing pipeline test pins `piano="muscriptor"`; new test checks the
+  default sends piano to Transkun (mocked), not MuScriptor, and that Transkun velocities reach the MIDI. 6/6 pass.
+- Caveats in §13: 16 kHz synthetic audio (biased against stems), no singing in Slakh (vocal route untested),
+  MuScriptor may have seen Slakh.
+
+### 2026-09-21 (5) — Disagreement flag (held-out test running) + MIDI converter research
+**Disagreement flag.** agreement = 10·log10(|d|²/|s−d|²) between SW+TTA's and HTDemucs_ft's estimate of a stem —
+needs no truth. On MUSDB songs 1–20: Spearman with SW's true SDR **0.79** (80 song-stems); all 8 SW failures
+(SDR < 3 dB) rank in the 17 lowest. Threshold **6 dB** chosen on those 20 (catches 7/8, flags 13/80).
+- `tools/disagreement_eval.py` — new. **Pre-registered** pass criteria in the docstring (recall ≥ 0.5, precision
+  ≥ 0.4, Spearman ≥ 0.5) for the **30 held-out songs 21–50**, written before they were separated. Running in the
+  background → `outputs/disagreement_heldout.log`.
+- **Held-out result: FAIL** (docs/04 §12). Spearman 0.827 and recall 4/4 pass, **precision 0.21 < 0.4** fails. Not
+  shipped as a warning; threshold deliberately not re-tuned on the held-out songs. The ranking is real; showing the
+  raw agreement number without a threshold is a possible later option.
+
+**MIDI converter — built so far (2026-09-21):**
+- User accepted the MuScriptor licence and logged in to HuggingFace themselves (`hf auth whoami` → MindCoDev);
+  medium and large both return 200/206. Token lives in `~/.cache/huggingface/token`; never print it.
+- `.venv-transcribe/` — separate uv env: `muscriptor==0.3.0` + torch 2.11 cu128 (reused from uv cache). In
+  `.gitignore`. Kept apart because MuScriptor pins fastapi/numpy differently and its weights are non-commercial.
+- `cleansplit/transcription/` — new package:
+  - `notes.py` — `TranscribedNote` (onset, offset, pitch, instrument group, is_drum, velocity|None, source) and
+    `write_midi` (one track per stem+instrument; GM program map; fixed velocity 90 where the backend has none).
+  - `_muscriptor_worker.py` — runs *inside* `.venv-transcribe`, JSON in/out, imports nothing from CleanSplit.
+  - `muscriptor_backend.py` — `transcribe_many(items, model, dtype)`; per-stem hard instrument constraints
+    (`STEM_INSTRUMENTS`: vocals→voice, drums→drums, bass→basses, piano→pianos, guitar→guitars, other→free).
+  - `transkun_backend.py` — `TranskunPiano`: SHA-256 pinned (`50a80010…d44c`), `weights_only=True`,
+    **strict** load (upstream CLI uses unsafe load + `strict=False`).
+- Main venv: `transkun==2.0.1`, `pretty_midi`, `mir_eval` installed.
+- Smoke tests: MuScriptor medium on 15 s of After 2 vocals → 55 voice notes, 12.4 s, **1688 MB** peak (first load
+  92 s incl. 1.2 GB weight download). Transkun on 30 s of After 2 piano stem → 41 notes with velocities, 22 s,
+  **855 MB** peak.
+- BabySlakh downloaded + extracted: `data/babyslakh/babyslakh_16k/Track00001..20` (16 kHz **mono**, 226 stems
+  listed, 209 with audio, 213 with MIDI; the `audio_rendered` flag in metadata.yaml is False for all of them and
+  is ignored; 4 stems have audio but no MIDI).
+- `tools/transcription_eval.py` — new. Routes A full mix / C CleanSplit stems (constrained) / C2 stems with piano →
+  Transkun / D oracle true stems. mir_eval, 50 ms onsets, offsets ignored; multi-F1 (instrument-aware), onset-F1,
+  drum-F1 (GM keys → kick/snare/hihat/tom/cymbal), piano-F1. **Pre-registered:** Q1 C beats A on pooled multi-F1 AND
+  >10/20 tracks → per-stem becomes the default; Q2 C2 beats C on piano-F1 → piano stems go to Transkun. Biases
+  written in up front (16 kHz input hurts C; Slakh may be in MuScriptor's pre-training; no singing in Slakh).
+  Caches in `data/transcription_cache/` (per route JSON + separated stems). Running → `outputs/transcription_eval.log`.
+- `_muscriptor_worker.py` / `muscriptor_backend.py` — optional `grid_from`: tempo, bar lines and MuScriptor's own
+  onset-lag estimate (beat_this via MuScriptor) from the full mix. Returned as `info["grid"]`.
+- `cleansplit/transcription/pipeline.py` — new `transcribe_split(song_dir, mode, model, piano)`: skips stems below
+  −60 dBFS, subtracts the measured onset lag, writes `midi/<song>.mid` (all tracks, detected BPM), `midi/<stem>.mid`,
+  `midi/report.json` (timings, VRAM, tempo, note counts, caveats: no velocities from MuScriptor, constant tempo,
+  non-commercial weights).
+- `cleansplit/cli/main.py` — new `cleansplit midi SONG [--mode stems|mix] [--model small|medium|large]
+  [--piano muscriptor|transkun] [--separator ...]`; reuses a cached split or separates first. **Defaults
+  (stems, muscriptor for piano) are provisional until the eval answers Q1/Q2.** Not yet run end to end.
+- `cleansplit/transcription/notes.py` — MIDI written at **960 ticks/beat**; pretty_midi's default 220 snapped notes
+  to a ~3 ms grid at ~100 BPM (caught by the new test).
+- `cleansplit/tests/test_transcription.py` — new, 5 non-GPU tests: MIDI round-trip (times, pitches, tracks, drums,
+  velocity default + clamping, zero-length notes), stem constraints are valid MuScriptor names, pipeline skips
+  silent stems / constrains each stem / subtracts the onset lag, mix mode, the eval's note matcher. **5/5 pass.**
+
+**MIDI converter — research notes:**
+- **MuScriptor** (Kyutai + Mirelo, arXiv 2607.08168, July 2026): open multi-instrument AMT, 36 instrument groups
+  incl. drums and voice, small 103M / medium 307M / large 1.4B, 16 kHz mono, code MIT, weights **CC BY-NC 4.0 and
+  gated on HuggingFace** (the user must accept the licence with their own account and run `hf auth login`
+  themselves — I may not create accounts or enter tokens). Self-reported Multi-F1 48.2 vs YourMT3+ 21.9 on their
+  own test set. **No velocity output.** Works best at steady tempo.
+- **Transkun** (piano, MIT, pip `transkun`, velocity + pedal) — piano specialist.
+- **basic-pitch** (Spotify, Apache-2.0, ungated) — lightweight fallback, pitch bends.
+- **ADTOF** (drums; weights non-commercial), **ROSVOT** (singing voice, ACL'24) — specialists, not yet checked.
+- YourMT3+ is GPL-3.0 (would constrain CleanSplit's licence if vendored).
+
+### 2026-09-21 (4) — MUSDB18-HQ results; MDX23C reverted
+Real studio truth, 20 songs, pre-registered questions (full tables in docs/04 §11):
+- Q1 vocal ensemble beats SW: **yes**, but small — shipped 3-model +0.30 median 17/20; the 2-model average
+  +0.39 median, **18/20**.
+- Q2 MDX23C helps: **no** — −0.09 median, 4/20. The BUH result (+0.30, 5/5) did not replicate.
+- Q3 Demucs averaging helps drums/bass: **no** — drums 0/20, bass 7/20.
+- Q4 that average beats Demucs alone: yes (20/20, 18/20). The BUH smoke-test hint did not hold either.
+Changes made because of it:
+- `cleansplit/separation/ensemble.py` — **vocals back to mean(SW+TTA, ep317)**; MDX23C removed; docstring carries the
+  MUSDB evidence and the history. Recipe string reverted, so 3-model cache entries are not reused.
+- `cleansplit/tests/test_separator_gpu.py` — recipe test back to the 2-model average (MDX23C's own test stays).
+- `cleansplit/cli/main.py`, `cleansplit/ui/service.py` — honest labels: `ensemble` "best measured";
+  `ensemble_demucs` "try when a drum or bass lane comes out empty" (its one measured win is the song where SW
+  missed the bass entirely: SW 0.8 dB vs Demucs 14.5 dB).
+- `README.md` status row, `docs/04_results.md` — new §11; "superseded" notes on §7 and §10.
+- Lesson recorded: one song with a separator-made reference overstated the ensemble gain ~5× and produced two
+  wrong adoption decisions. Do not adopt anything on BUH evidence alone again.
+
+
+### 2026-09-21 (3) — MUSDB18-HQ: real multitrack truth (download in progress)
+The user approved downloading MUSDB18-HQ (Zenodo record 3338373, `musdb18hq.zip`, 22,656,664,047 bytes, md5
+`12d4f2ecd55245a4688754dd76363103`, open access, **educational / non-commercial licence**). MoisesDB needs an
+account, which I may not create; the user can sign up if they want it.
+- **Download**: `data/musdb18hq/musdb18hq.zip`, resumable `curl -C -` in a 10-attempt loop. Zenodo throttles to
+  ~2.2 MB/s → **~3 hours**. If the session dies, resume with:
+  `cd data/musdb18hq && curl -L -C - --retry 5 -o musdb18hq.zip "https://zenodo.org/records/3338373/files/musdb18hq.zip?download=1"`
+  then check the md5 before using it.
+- `.gitignore` — `data/` added (the dataset must never be committed: licence and size).
+- `tools/musdb_eval.py` — new. `extract` (test/ only), `run` (per-model, per-song `.npz` cache in
+  `data/musdb_cache/`, so it resumes after interruption), `score`. **Protocol and three questions fixed in the
+  docstring before any result:** one 30 s excerpt per song centred on the midpoint; median/mean/pooled SDR; a "yes"
+  needs a better median AND wins on >25/50. Q1 ensemble vocals vs SW; Q2 does MDX23C still help; Q3 Demucs
+  averaging for drums/bass. Leakage bias stated up front (community models may have trained on the test songs;
+  Demucs did not → bias is against Demucs). Env overrides `CLEANSPLIT_MUSDB_{TEST,CACHE,OUT}` exist for the smoke test.
+- Smoke test on a 2-song fake MUSDB built from the BUH stems: **all 5 models ran, cached, scored, JSON written.**
+  It surfaced a question the protocol was missing: on those BUH excerpts Demucs *alone* beat the SW+Demucs average
+  for drums (4.86 vs 4.13 dB) and bass (20.63 vs 19.21). Added **Q4 (average vs Demucs alone)** to the pre-registered
+  list, with a note that it was added after the BUH smoke test and before any MUSDB song was scored. If Q4 comes
+  back "no" on MUSDB, `ensemble_demucs` should take drums/bass from Demucs alone rather than the average.
+- Download at 1.13 / 22.66 GB when this was written.
+- **Scope cut to 20 songs** at the user's request (first 20 test songs alphabetically, content-blind). Stated in the
+  `musdb_eval.py` docstring; a "yes" now needs wins on >10/20.
+- Zenodo speed check: 6 parallel range requests got 3.3 MB/s combined, same as one connection → the cap is per
+  client, not per connection. No faster route from Zenodo.
+- `tools/dev/musdb_chain.sh N` — new. Waits for the zip to reach full size, **checks the md5 and stops on a
+  mismatch**, extracts test/, runs `musdb_eval.py run --limit N`. Running in the background with N=20, log in
+  `outputs/musdb_run.log`. If it dies: re-run the same command; the per-song cache means finished models are skipped.
+
+### 2026-09-21 (2) — MDX23C adopted into the ensemble
+- **Result** (`outputs/vocal_ensemble.log`): pooled vocals SDR 18.93 → **19.23 dB (+0.30)**, better on **5/5**
+  excerpts. Pre-registered rule satisfied → adopted. Full table in docs/04 §10.
+- `cleansplit/separation/ensemble.py` — vocals = mean(SW+TTA, ep317, MDX23C); MDX23C loaded after the other two are
+  released (8 GB budget unchanged); recipe string and cache key updated, so old cached ensemble splits are not reused.
+- `cleansplit/cli/main.py` — `mdx23c_instvoc_hq` is a `--separator` choice with its own branch (SW's chunk/fp16/tta
+  options do not apply); ensemble help text updated.
+- `cleansplit/ui/service.py` — separator labels/timings updated ("SW×3 + ep317 + MDX23C", ~4× song length).
+- `README.md`, `docs/04_results.md` §10, `docs/02_hardware_measurements.md` (MDX23C table) — written up.
+- `tools/vocal_ensemble_experiment.py` — JSON write crashed on a numpy int64 after printing the result; cast to
+  Python types. Re-run end to end: **identical to the first run to 0.01 dB** in every cell (deterministic), JSON at
+  `outputs/_benchmarks/vocal_ensemble_BUH.json`.
+- Tests: `test_separator_gpu.py` — new `test_mdx23c_separates_aligned_vocals_and_instrumental`; the ensemble
+  recipe test now checks the 3-model average. `test_cli_e2e.py` accepts the new choice.
+- Surprise worth remembering: the *most* architecturally diverse pair (SW + MDX23C, 18.48) is worse than the two
+  BS-RoFormers together (18.93). Architecture diversity ≠ error diversity; measure, do not assume.
+
+### 2026-09-21 (1) — MDX23C InstVoc HQ integration
+Why: ensembling is the only thing that has measurably improved the stems (docs/04 §7), and ensembles gain from
+models whose errors differ. SW and ep317 are both BS-RoFormers; MDX23C is a convolutional TFC-TDF U-Net.
+- `cleansplit/separation/mdx23c/{__init__,model}.py` — vendored from MSST @ `050cae73…` (the same pinned commit
+  as the BS-RoFormer code, MIT). Two deviations in the header: `prefer_target_instrument` inlined, config passed
+  as an attribute dict. Numerics untouched.
+- `cleansplit/separation/mdx23c_sep.py` — new `MDX23CSeparator` (vocals + instrumental), MSST-identical chunked
+  overlap-add (native chunk 261,120, overlap 8, reflect pad, chunk//10 fade), reuses `fade_window` /
+  `load_msst_config` from `roformer.py`.
+- `cleansplit/models/checkpoints.py` — `MDX23C_INSTVOC_HQ` pinned: sha256 `49d51472…d816`, 448,101,203 bytes,
+  config `model_2_stem_full_band_8k.yaml` (confirmed via UVR's `model_data.json` hash map, not guessed).
+- `cleansplit/separation/registry.py` — registered `mdx23c_instvoc_hq`.
+- Smoke test, 30 s of Concrete Crown, RTX 2080 Super Max-Q: strict state-dict load, hash verified, **1482 MB peak**;
+  overlap 2 / 4 / 8 = 8.3 / 9.6 / 19.8 s; vocals + instrumental reproduce the mixture to −64…−66 dB.
+- `tools/vocal_ensemble_experiment.py` — new. Scores every equal-weight combination of {SW+TTA, ep317, MDX23C}
+  against BUH vocal truth on **5** excerpts (30/60/90/120/150 s, twice as many as §7). **Decision rule fixed before
+  running:** MDX23C joins the default ensemble only if the 3-model average beats the current 2-model average on the
+  pooled score *and* on a majority of excerpts. Running now → `outputs/vocal_ensemble.log`.
+
+### 2026-09-17 (3) — Apollo measured and written up
+- `docs/04_results.md` — new **§9** (source material already lossy; whole-signal results table; region-restricted
+  and gated run; conclusion). §8 cross-linked. Title date bumped.
+- `docs/02_hardware_measurements.md` — Apollo VRAM/speed table: ~410 MB per second of stereo audio, 5 s chunk =
+  2100 MB at 5× realtime, 20 s = 8.2 GB and thrashes, 60 s OOM. Operating point 5 s / 1 s overlap / 0.5 s pad.
+- `README.md` — status row for Apollo, a limitation line saying no generative restorer is enabled by default, and a
+  licensing paragraph for the two vendored third-party trees.
+- `cleansplit/restoration/apollo.py` — `ApolloRestorer` now handles **mixture-level** regions by picking the stems
+  that own the box (`_targets`, same energy-share rule as A2SB: top 2 stems within 20 dB). Before this it returned
+  no proposals for those regions, so they silently produced no decision at all.
+- `cleansplit/restoration/pipeline.py` — `_folder_name()`: restorer names carry options
+  (`apollo:variant=vocal_restore`) and `:`/`=` are illegal in Windows paths, which crashed the run after the work
+  was already done.
+- `cleansplit/tests/test_apollo.py` — new, 5 tests (registration + option parsing, folder-name sanitising,
+  shape/level preservation, **chunk seams < −25 dB vs a single pass**, region locality or bit-identity on reject).
+- `cleansplit/restoration/apollo.py` (2nd pass) — the per-song enhanced-stem cache now keys on a blake2b hash of
+  the **whole** array, not a 4096-sample prefix: with `--max-iterations > 1` a later pass can change a stem
+  anywhere, and the prefix key would have returned a stale enhancement and scored the wrong audio. Added
+  `describe()` (variant, target rules, licence) and dropped an unused import.
+
+### 2026-09-17 (2) — Apollo integration
+- `third_party/apollo/{__init__,apollo,base_model}.py`, `LICENSE` — vendored from
+  github.com/JusperLee/Apollo @ `e84bcacc59d5455f05d86a5c97dd4aeb3c14dbb6`, CC BY-SA 4.0. Two deviations in the
+  file header: no huggingface_hub mixin, no debug print. Numerics untouched.
+- `cleansplit/restoration/apollo.py` — new. `ApolloModel` (whole-signal, chunked overlap-add, `weights_only` load
+  with an explicit allowlist) and `ApolloRestorer` (region-restricted proposal for the gate).
+- `cleansplit/restoration/baselines.py` — registered `apollo` in `RESTORERS`.
+- `cleansplit/models/checkpoints.py` — `APOLLO` registry (both UVR checkpoints, SHA-256 + size pinned, provenance
+  and licence recorded) and `find_apollo()`. Nothing is downloaded.
+- `tools/apollo_probe.py`, `tools/apollo_experiment.py` — new.
+
+### 2026-09-17 (1) — Desktop UI finished
+- `cleansplit/ui/static/app.js` — A/B now switches **everything** from the active side (waveforms, level readouts,
+  flagged marks, inspector, header), not just the waveform; `activeSrc()` is the single source of truth.
+  Inspector visibility is deliberately not touched on Tab (it would change deck width and make the two
+  waveforms incomparable). Fixed the flagged-spot click index (it indexed the unfiltered region list).
+- `cleansplit/ui/static/app.css` — narrow-window rules: <1180 px the inspector floats over the deck, <980 px the
+  rail and lanes shrink. `pywebview` min size is 980×620 to match.
+- `cleansplit/ui/{server,service,desktop}.py`, `cleansplit/cli/main.py` — the app now reads/writes `outputs/`
+  (one sub-folder per separator) instead of `outputs/ui`, so existing CLI splits show up.
+- `cleansplit/tests/test_ui.py` — new, 7 tests.
+- `pyproject.toml` — declared the `ui` extra (fastapi, uvicorn, pywebview) and added `httpx` to `dev`.
+
+---
+
+## Traps for whoever is next
+
+1. **"Stems rebuild the song +157 dB"** on ensemble splits is exact *by construction* (`other` is the remainder),
+   not a quality score. The UI says so inline. Never quote it as evidence.
+2. **The user's own files are already lossy.** `After 2.wav` is a decode of `After 2.mp3` (lag 0, correlation
+   1.00000, gain 1.00000, SNR 74.5 dB) and everything except `Concrete Crown.wav` stops at ~16 kHz. Any experiment
+   that treats one of those WAVs as a lossless reference is measuring nothing.
+3. **Passing the mixture-consistency gate is not evidence of improvement** (docs/04 §4). Ground-truth scoring is
+   mandatory before believing any restorer.
+4. `vocal_restore` (Apollo) applied to a full mixture destroys everything below 250 Hz. It is a vocals-only model.
+
+## Open work, in priority order
+
+1. ~~Disagreement detector~~ — tested, failed its precision bar on held-out songs (docs/04 §12).
+1b. The remaining 30 MUSDB test songs: `tools/musdb_eval.py run` (no `--limit`); the cache makes the first 20 free.
+2. ~~MDX23C InstVoc HQ as a third vocal model~~ — in progress, see 2026-09-21 above.
+3. A **mixture-conditioned generative refiner trained to fix allocation** — the error that actually dominates.
+   That is a model to train, not one that exists off the shelf.
+4. UI: a listening-test mode would be the honest way to answer the one question the measurements cannot
+   (is Apollo's fabricated top octave *preferred*, even though it is wrong?).

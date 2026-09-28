@@ -1,0 +1,557 @@
+{
+  "results": [
+    {
+      "song": "synthetic_seed0",
+      "separator": "bs_roformer_sw",
+      "mixture_snr_model_matched_db": 33.30118050084764,
+      "eligible_regions": 34,
+      "separation_sdr_db": {
+        "vocals": 1.3201742495495046e-05,
+        "drums": 9.997490763596097,
+        "bass": 15.646975693083201,
+        "guitar": -0.00014893019997422498,
+        "piano": 17.91919949953345,
+        "other": -9.215057502233092
+      },
+      "restorers": {
+        "identity": {
+          "accepted": 0,
+          "rejected": 34,
+          "reconstruction": {
+            "before": {
+              "snr_db": 33.30118050084764,
+              "residual_rel_db": -33.30118050084764
+            },
+            "after": {
+              "snr_db": 33.30118050084764,
+              "residual_rel_db": -33.30118050084764
+            }
+          },
+          "stems": {
+            "vocals": {
+              "sdr_before_db": 1.3201742495495046e-05,
+              "sdr_after_db": 1.3201742495495046e-05,
+              "changed_samples": 0,
+              "local_err_change_db": 0.0
+            },
+            "drums": {
+              "sdr_before_db": 9.997490763596097,
+              "sdr_after_db": 9.997490763596097,
+              "changed_samples": 0,
+              "local_err_change_db": 0.0
+            },
+            "bass": {
+              "sdr_before_db": 15.646975693083201,
+              "sdr_after_db": 15.646975693083201,
+              "changed_samples": 0,
+              "local_err_change_db": 0.0
+            },
+            "guitar": {
+              "sdr_before_db": -0.00014893019997422498,
+              "sdr_after_db": -0.00014893019997422498,
+              "changed_samples": 0,
+              "local_err_change_db": 0.0
+            },
+            "piano": {
+              "sdr_before_db": 17.91919949953345,
+              "sdr_after_db": 17.91919949953345,
+              "changed_samples": 0,
+              "local_err_change_db": 0.0
+            },
+            "other": {
+              "sdr_before_db": -9.215057502233092,
+              "sdr_after_db": -9.215057502233092,
+              "changed_samples": 0,
+              "local_err_change_db": 0.0
+            }
+          },
+          "mean_local_err_change_db_changed_stems": null,
+          "seconds": 3.0
+        },
+        "residual_reallocation": {
+          "accepted": 34,
+          "rejected": 0,
+          "reconstruction": {
+            "before": {
+              "snr_db": 33.30118050084764,
+              "residual_rel_db": -33.30118050084764
+            },
+            "after": {
+              "snr_db": 33.60378489115744,
+              "residual_rel_db": -33.60378489115744
+            }
+          },
+          "stems": {
+            "vocals": {
+              "sdr_before_db": 1.3201742495495046e-05,
+              "sdr_after_db": 1.3201742497423694e-05,
+              "changed_samples": 8561,
+              "local_err_change_db": -1.5477455838180535e-13
+            },
+            "drums": {
+              "sdr_before_db": 9.997490763596097,
+              "sdr_after_db": 10.003945272516521,
+              "changed_samples": 102699,
+              "local_err_change_db": -0.04151256186720094
+            },
+            "bass": {
+              "sdr_before_db": 15.646975693083201,
+              "sdr_after_db": 15.646975692957241,
+              "changed_samples": 2940,
+              "local_err_change_db": 1.5694741773094612e-07
+            },
+            "guitar": {
+              "sdr_before_db": -0.00014893019997422498,
+              "sdr_after_db": -0.00014893019982233817,
+              "changed_samples": 11881,
+              "local_err_change_db": -1.7797627722743935e-11
+            },
+            "piano": {
+              "sdr_before_db": 17.91919949953345,
+              "sdr_after_db": 17.927787585313972,
+              "changed_samples": 135669,
+              "local_err_change_db": -0.03969289467738085
+            },
+            "other": {
+              "sdr_before_db": -9.215057502233092,
+              "sdr_after_db": -9.21500783963941,
+              "changed_samples": 80885,
+              "local_err_change_db": -0.0006747764950571692
+            }
+          },
+          "mean_local_err_change_db_changed_stems": -0.013646679351695605,
+          "seconds": 20.9
+        },
+        "region_wiener": {
+          "accepted": 34,
+          "rejected": 0,
+          "reconstruction": {
+            "before": {
+              "snr_db": 33.30118050084764,
+              "residual_rel_db": -33.30118050084764
+            },
+            "after": {
+              "snr_db": 33.74483384580009,
+              "residual_rel_db": -33.74483384580009
+            }
+          },
+          "stems": {
+            "vocals": {
+              "sdr_before_db": 1.3201742495495046e-05,
+              "sdr_after_db": 1.3204974078159374e-05,
+              "changed_samples": 233177,
+              "local_err_change_db": -1.3011689812244686e-08
+            },
+            "drums": {
+              "sdr_before_db": 9.997490763596097,
+              "sdr_after_db": 9.971156068450522,
+              "changed_samples": 232804,
+              "local_err_change_db": 0.06460505406573902
+            },
+            "bass": {
+              "sdr_before_db": 15.646975693083201,
+              "sdr_after_db": 14.754840662385067,
+              "changed_samples": 224048,
+              "local_err_change_db": 2.603846735826436
+            },
+            "guitar": {
+              "sdr_before_db": -0.00014893019997422498,
+              "sdr_after_db": -0.00013652890382243236,
+              "changed_samples": 233068,
+              "local_err_change_db": -4.6317556688669375e-05
+            },
+            "piano": {
+              "sdr_before_db": 17.91919949953345,
+              "sdr_after_db": 12.765846851645062,
+              "changed_samples": 226429,
+              "local_err_change_db": 8.697024327018804
+            },
+            "other": {
+              "sdr_before_db": -9.215057502233092,
+              "sdr_after_db": -9.19547162989844,
+              "changed_samples": 232627,
+              "local_err_change_db": -0.07579455827877475
+            }
+          },
+          "mean_local_err_change_db_changed_stems": 1.881605871343971,
+          "seconds": 21.6
+        }
+      }
+    },
+    {
+      "song": "synthetic_seed1",
+      "separator": "bs_roformer_sw",
+      "mixture_snr_model_matched_db": 33.67066720833659,
+      "eligible_regions": 25,
+      "separation_sdr_db": {
+        "vocals": 1.2782101093395744e-05,
+        "drums": 9.982260835716497,
+        "bass": 15.932616392297241,
+        "guitar": -0.00014851530004756928,
+        "piano": 17.641529537188415,
+        "other": -9.231007462971686
+      },
+      "restorers": {
+        "identity": {
+          "accepted": 0,
+          "rejected": 25,
+          "reconstruction": {
+            "before": {
+              "snr_db": 33.67066720833659,
+              "residual_rel_db": -33.67066720833659
+            },
+            "after": {
+              "snr_db": 33.67066720833659,
+              "residual_rel_db": -33.67066720833659
+            }
+          },
+          "stems": {
+            "vocals": {
+              "sdr_before_db": 1.2782101093395744e-05,
+              "sdr_after_db": 1.2782101093395744e-05,
+              "changed_samples": 0,
+              "local_err_change_db": 0.0
+            },
+            "drums": {
+              "sdr_before_db": 9.982260835716497,
+              "sdr_after_db": 9.982260835716497,
+              "changed_samples": 0,
+              "local_err_change_db": 0.0
+            },
+            "bass": {
+              "sdr_before_db": 15.932616392297241,
+              "sdr_after_db": 15.932616392297241,
+              "changed_samples": 0,
+              "local_err_change_db": 0.0
+            },
+            "guitar": {
+              "sdr_before_db": -0.00014851530004756928,
+              "sdr_after_db": -0.00014851530004756928,
+              "changed_samples": 0,
+              "local_err_change_db": 0.0
+            },
+            "piano": {
+              "sdr_before_db": 17.641529537188415,
+              "sdr_after_db": 17.641529537188415,
+              "changed_samples": 0,
+              "local_err_change_db": 0.0
+            },
+            "other": {
+              "sdr_before_db": -9.231007462971686,
+              "sdr_after_db": -9.231007462971686,
+              "changed_samples": 0,
+              "local_err_change_db": 0.0
+            }
+          },
+          "mean_local_err_change_db_changed_stems": null,
+          "seconds": 2.4
+        },
+        "residual_reallocation": {
+          "accepted": 25,
+          "rejected": 0,
+          "reconstruction": {
+            "before": {
+              "snr_db": 33.67066720833659,
+              "residual_rel_db": -33.67066720833659
+            },
+            "after": {
+              "snr_db": 33.908203848265714,
+              "residual_rel_db": -33.908203848265714
+            }
+          },
+          "stems": {
+            "vocals": {
+              "sdr_before_db": 1.2782101093395744e-05,
+              "sdr_after_db": 1.2782101096288719e-05,
+              "changed_samples": 7945,
+              "local_err_change_db": -1.0882435460055208e-12
+            },
+            "drums": {
+              "sdr_before_db": 9.982260835716497,
+              "sdr_after_db": 9.985725024819052,
+              "changed_samples": 24675,
+              "local_err_change_db": -0.0485006217284057
+            },
+            "bass": {
+              "sdr_before_db": 15.932616392297241,
+              "sdr_after_db": 15.93261257541963,
+              "changed_samples": 7887,
+              "local_err_change_db": 0.0003283151094223926
+            },
+            "guitar": {
+              "sdr_before_db": -0.00014851530004756928,
+              "sdr_after_db": -0.00014851530074962366,
+              "changed_samples": 11641,
+              "local_err_change_db": 6.263789058951706e-11
+            },
+            "piano": {
+              "sdr_before_db": 17.641529537188415,
+              "sdr_after_db": 17.63749564198906,
+              "changed_samples": 101302,
+              "local_err_change_db": 0.02880775631973984
+            },
+            "other": {
+              "sdr_before_db": -9.231007462971686,
+              "sdr_after_db": -9.231186607308187,
+              "changed_samples": 105442,
+              "local_err_change_db": 0.00183108436565721
+            }
+          },
+          "mean_local_err_change_db_changed_stems": -0.002922244312006102,
+          "seconds": 13.2
+        },
+        "region_wiener": {
+          "accepted": 25,
+          "rejected": 0,
+          "reconstruction": {
+            "before": {
+              "snr_db": 33.67066720833659,
+              "residual_rel_db": -33.67066720833659
+            },
+            "after": {
+              "snr_db": 33.978271595075206,
+              "residual_rel_db": -33.978271595075206
+            }
+          },
+          "stems": {
+            "vocals": {
+              "sdr_before_db": 1.2782101093395744e-05,
+              "sdr_after_db": 1.2353012521134088e-05,
+              "changed_samples": 179946,
+              "local_err_change_db": 2.590475696796794e-06
+            },
+            "drums": {
+              "sdr_before_db": 9.982260835716497,
+              "sdr_after_db": 9.977043768690578,
+              "changed_samples": 179227,
+              "local_err_change_db": 0.016802488188562684
+            },
+            "bass": {
+              "sdr_before_db": 15.932616392297241,
+              "sdr_after_db": 15.178429313511856,
+              "changed_samples": 173136,
+              "local_err_change_db": 2.3726236448727973
+            },
+            "guitar": {
+              "sdr_before_db": -0.00014851530004756928,
+              "sdr_after_db": -0.00013903824204833392,
+              "changed_samples": 179883,
+              "local_err_change_db": -4.557486563087031e-05
+            },
+            "piano": {
+              "sdr_before_db": 17.641529537188415,
+              "sdr_after_db": 12.044411293991224,
+              "changed_samples": 173607,
+              "local_err_change_db": 11.027850947959863
+            },
+            "other": {
+              "sdr_before_db": -9.231007462971686,
+              "sdr_after_db": -9.212459345968547,
+              "changed_samples": 179537,
+              "local_err_change_db": -0.10333278662103043
+            }
+          },
+          "mean_local_err_change_db_changed_stems": 2.2189835516683765,
+          "seconds": 16.6
+        }
+      }
+    },
+    {
+      "song": "synthetic_seed2",
+      "separator": "bs_roformer_sw",
+      "mixture_snr_model_matched_db": 33.49448132662776,
+      "eligible_regions": 26,
+      "separation_sdr_db": {
+        "vocals": 1.3404197417271638e-05,
+        "drums": 10.035275758503218,
+        "bass": 15.794326038665805,
+        "guitar": -0.00012732690188755935,
+        "piano": 17.575791355721055,
+        "other": -9.213686142164372
+      },
+      "restorers": {
+        "identity": {
+          "accepted": 0,
+          "rejected": 26,
+          "reconstruction": {
+            "before": {
+              "snr_db": 33.49448132662776,
+              "residual_rel_db": -33.49448132662776
+            },
+            "after": {
+              "snr_db": 33.49448132662776,
+              "residual_rel_db": -33.49448132662776
+            }
+          },
+          "stems": {
+            "vocals": {
+              "sdr_before_db": 1.3404197417271638e-05,
+              "sdr_after_db": 1.3404197417271638e-05,
+              "changed_samples": 0,
+              "local_err_change_db": 0.0
+            },
+            "drums": {
+              "sdr_before_db": 10.035275758503218,
+              "sdr_after_db": 10.035275758503218,
+              "changed_samples": 0,
+              "local_err_change_db": 0.0
+            },
+            "bass": {
+              "sdr_before_db": 15.794326038665805,
+              "sdr_after_db": 15.794326038665805,
+              "changed_samples": 0,
+              "local_err_change_db": 0.0
+            },
+            "guitar": {
+              "sdr_before_db": -0.00012732690188755935,
+              "sdr_after_db": -0.00012732690188755935,
+              "changed_samples": 0,
+              "local_err_change_db": 0.0
+            },
+            "piano": {
+              "sdr_before_db": 17.575791355721055,
+              "sdr_after_db": 17.575791355721055,
+              "changed_samples": 0,
+              "local_err_change_db": 0.0
+            },
+            "other": {
+              "sdr_before_db": -9.213686142164372,
+              "sdr_after_db": -9.213686142164372,
+              "changed_samples": 0,
+              "local_err_change_db": 0.0
+            }
+          },
+          "mean_local_err_change_db_changed_stems": null,
+          "seconds": 2.4
+        },
+        "residual_reallocation": {
+          "accepted": 23,
+          "rejected": 3,
+          "reconstruction": {
+            "before": {
+              "snr_db": 33.49448132662776,
+              "residual_rel_db": -33.49448132662776
+            },
+            "after": {
+              "snr_db": 33.74565817452209,
+              "residual_rel_db": -33.74565817452209
+            }
+          },
+          "stems": {
+            "vocals": {
+              "sdr_before_db": 1.3404197417271638e-05,
+              "sdr_after_db": 1.3404197420164611e-05,
+              "changed_samples": 12760,
+              "local_err_change_db": -5.462915098024715e-13
+            },
+            "drums": {
+              "sdr_before_db": 10.035275758503218,
+              "sdr_after_db": 10.040315138119292,
+              "changed_samples": 34537,
+              "local_err_change_db": -0.05061213675763654
+            },
+            "bass": {
+              "sdr_before_db": 15.794326038665805,
+              "sdr_after_db": 15.79431757644916,
+              "changed_samples": 8421,
+              "local_err_change_db": 0.0008194468747179623
+            },
+            "guitar": {
+              "sdr_before_db": -0.00012732690188755935,
+              "sdr_after_db": -0.00012732702818199786,
+              "changed_samples": 18530,
+              "local_err_change_db": 5.344179382434478e-09
+            },
+            "piano": {
+              "sdr_before_db": 17.575791355721055,
+              "sdr_after_db": 17.58081735726285,
+              "changed_samples": 104715,
+              "local_err_change_db": -0.03304982269128445
+            },
+            "other": {
+              "sdr_before_db": -9.213686142164372,
+              "sdr_after_db": -9.213648457427674,
+              "changed_samples": 95975,
+              "local_err_change_db": -0.00047417131480311756
+            }
+          },
+          "mean_local_err_change_db_changed_stems": -0.01388611309089551,
+          "seconds": 14.0
+        },
+        "region_wiener": {
+          "accepted": 25,
+          "rejected": 1,
+          "reconstruction": {
+            "before": {
+              "snr_db": 33.49448132662776,
+              "residual_rel_db": -33.49448132662776
+            },
+            "after": {
+              "snr_db": 33.775774318101696,
+              "residual_rel_db": -33.775774318101696
+            }
+          },
+          "stems": {
+            "vocals": {
+              "sdr_before_db": 1.3404197417271638e-05,
+              "sdr_after_db": 1.329824552878245e-05,
+              "changed_samples": 149154,
+              "local_err_change_db": 8.598525612602883e-07
+            },
+            "drums": {
+              "sdr_before_db": 10.035275758503218,
+              "sdr_after_db": 10.035987140475733,
+              "changed_samples": 148242,
+              "local_err_change_db": -0.0025085706660787225
+            },
+            "bass": {
+              "sdr_before_db": 15.794326038665805,
+              "sdr_after_db": 15.32342032426413,
+              "changed_samples": 135601,
+              "local_err_change_db": 1.6389901582268371
+            },
+            "guitar": {
+              "sdr_before_db": -0.00012732690188755935,
+              "sdr_after_db": -0.00012176721953131208,
+              "changed_samples": 149034,
+              "local_err_change_db": -3.197944857552091e-05
+            },
+            "piano": {
+              "sdr_before_db": 17.575791355721055,
+              "sdr_after_db": 13.720561136175712,
+              "changed_samples": 137951,
+              "local_err_change_db": 9.505417706891025
+            },
+            "other": {
+              "sdr_before_db": -9.213686142164372,
+              "sdr_after_db": -9.205310382420985,
+              "changed_samples": 148214,
+              "local_err_change_db": -0.06011877748134972
+            }
+          },
+          "mean_local_err_change_db_changed_stems": 1.8469582328957366,
+          "seconds": 17.3
+        }
+      }
+    }
+  ],
+  "summary": {
+    "identity": {
+      "songs_with_changes": 0,
+      "mean_local_err_change_db": null,
+      "moved_closer_to_truth_in": 0
+    },
+    "residual_reallocation": {
+      "songs_with_changes": 3,
+      "mean_local_err_change_db": -0.010151678918199071,
+      "moved_closer_to_truth_in": 3
+    },
+    "region_wiener": {
+      "songs_with_changes": 3,
+      "mean_local_err_change_db": 1.9825158853026945,
+      "moved_closer_to_truth_in": 0
+    }
+  },
+  "seconds": 176.0,
+  "caveat": "with synthetic caricature stems the separator is out of domain. Use real multitrack stems\n(e.g. MoisesDB / MUSDB18-HQ, downloaded by the user) via ``stems_from_folder`` for meaningful conclusions, and\nremember a public dataset may overlap the separator's training data."
+}

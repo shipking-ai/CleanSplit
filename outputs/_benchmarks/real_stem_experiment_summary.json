@@ -1,0 +1,100 @@
+{
+ "a2sb": {
+  "songs": [
+   "excerpt_120s",
+   "excerpt_120s[stems]",
+   "excerpt_60s",
+   "excerpt_60s[stems]"
+  ],
+  "accepted": 0,
+  "proposals": 23,
+  "pooled_accepted_db": null,
+  "pooled_all_proposals_db": 19.250138595367346,
+  "regions_closer": 8,
+  "regions_worse": 14,
+  "regions_scored": 23,
+  "per_group_pooled_db": {
+   "drums": 10.322131340559926,
+   "other": 1.3857488231367023,
+   "vocals": 24.65813478593814
+  }
+ },
+ "a2sb_consistent": {
+  "songs": [
+   "excerpt_120s",
+   "excerpt_120s[stems]",
+   "excerpt_60s",
+   "excerpt_60s[stems]"
+  ],
+  "accepted": 23,
+  "proposals": 23,
+  "pooled_accepted_db": 1.7905537772517486,
+  "pooled_all_proposals_db": 1.7905537772517486,
+  "regions_closer": 1,
+  "regions_worse": 22,
+  "regions_scored": 23,
+  "per_group_pooled_db": {
+   "bass": 0.0012928814777517597,
+   "drums": 1.3403211265811765,
+   "other": 0.05216530931074523,
+   "vocals": 9.169307458944399
+  }
+ },
+ "identity": {
+  "songs": [
+   "excerpt_120s",
+   "excerpt_120s[stems]",
+   "excerpt_60s",
+   "excerpt_60s[stems]"
+  ],
+  "accepted": 0,
+  "proposals": 23,
+  "pooled_accepted_db": null,
+  "pooled_all_proposals_db": null,
+  "regions_closer": 0,
+  "regions_worse": 0,
+  "regions_scored": 0
+ },
+ "region_wiener": {
+  "songs": [
+   "excerpt_120s",
+   "excerpt_120s[stems]",
+   "excerpt_60s",
+   "excerpt_60s[stems]"
+  ],
+  "accepted": 23,
+  "proposals": 23,
+  "pooled_accepted_db": 1.2241492584176012,
+  "pooled_all_proposals_db": 1.2241492584176012,
+  "regions_closer": 1,
+  "regions_worse": 22,
+  "regions_scored": 23,
+  "per_group_pooled_db": {
+   "bass": 0.0012941034454810832,
+   "drums": 0.910158682721907,
+   "other": 0.024530921070263362,
+   "vocals": 7.506283689414114
+  }
+ },
+ "residual_reallocation": {
+  "songs": [
+   "excerpt_120s",
+   "excerpt_120s[stems]",
+   "excerpt_60s",
+   "excerpt_60s[stems]"
+  ],
+  "accepted": 21,
+  "proposals": 23,
+  "pooled_accepted_db": 1.2107372091899171,
+  "pooled_all_proposals_db": 0.6268972635161557,
+  "regions_closer": 3,
+  "regions_worse": 18,
+  "regions_scored": 23,
+  "per_group_pooled_db": {
+   "bass": -8.575654359611749e-08,
+   "drums": 2.9523170959724436,
+   "other": -0.2872458403649846,
+   "vocals": 4.204240797524966
+  }
+ }
+}

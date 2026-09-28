@@ -1,0 +1,92 @@
+{
+ "device": "NVIDIA GeForce RTX 2080 Super with Max-Q Design",
+ "vram_total_mb": 8192,
+ "vram_free_at_start_mb": 7115,
+ "checkpoints": {
+  "A2SB_onesplit_0.0_1.0_release.ckpt": {
+   "present": true,
+   "sha256_ok": true,
+   "strict_load": true,
+   "params_M": 565.5,
+   "dtypes": [
+    "torch.float32"
+   ]
+  },
+  "A2SB_twosplit_0.0_0.5_release.ckpt": {
+   "present": true,
+   "sha256_ok": true,
+   "strict_load": true,
+   "params_M": 565.5,
+   "dtypes": [
+    "torch.float32"
+   ]
+  },
+  "A2SB_twosplit_0.5_1.0_release.ckpt": {
+   "present": true,
+   "sha256_ok": true,
+   "strict_load": true,
+   "params_M": 565.5,
+   "dtypes": [
+    "torch.float32"
+   ]
+  }
+ },
+ "runs": [
+  {
+   "config": "onesplit fp32",
+   "weights_mb": 2172,
+   "batch": 1,
+   "peak_vram_mb": 3367,
+   "sec_per_forward": 0.553,
+   "finite": true,
+   "pathological": false
+  },
+  {
+   "config": "onesplit fp32",
+   "weights_mb": 2172,
+   "batch": 2,
+   "peak_vram_mb": 4555,
+   "sec_per_forward": 7.145,
+   "finite": true,
+   "pathological": true
+  },
+  {
+   "config": "onesplit fp16",
+   "weights_mb": 1101,
+   "batch": 1,
+   "peak_vram_mb": 1956,
+   "sec_per_forward": 0.415,
+   "finite": true,
+   "pathological": false
+  },
+  {
+   "config": "onesplit fp16",
+   "weights_mb": 1101,
+   "batch": 2,
+   "peak_vram_mb": 2577,
+   "sec_per_forward": 0.842,
+   "finite": true,
+   "pathological": false
+  },
+  {
+   "config": "twosplit both resident fp32",
+   "weights_mb": 4354,
+   "batch": 1,
+   "peak_vram_mb": 5541,
+   "sec_per_forward": 2.102,
+   "finite": true,
+   "pathological": false
+  },
+  {
+   "config": "twosplit both resident fp16",
+   "weights_mb": 2195,
+   "batch": 1,
+   "peak_vram_mb": 3049,
+   "sec_per_forward": 0.391,
+   "finite": true,
+   "pathological": false
+  }
+ ],
+ "autocast_fp32_weights_vs_fp32_relative_output_error": 0.001205667620524764,
+ "fp16_vs_fp32_relative_output_error": 0.0027736760675907135
+}

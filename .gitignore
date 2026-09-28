@@ -1,0 +1,41 @@
+# Model weights: never in git. CleanSplit locates them in the user's UVR install or downloads them; several are
+# community checkpoints with no explicit licence and must not be redistributed.
+*.ckpt
+*.pth
+*.th
+*.onnx
+*.safetensors
+models/
+
+# Datasets and caches. data/ is 42 GB (MUSDB18-HQ, redistribution not permitted) and the separation cache.
+data/
+
+# Audio and array dumps anywhere in the tree.
+*.wav
+*.flac
+*.mp3
+*.m4a
+*.npz
+*.npy
+
+# Run outputs are 4.6 GB of stems. The benchmark JSONs under outputs/_benchmarks are the measured RECORD of every
+# experiment and ARE tracked (un-ignored below) -- they are what makes docs/04 checkable.
+outputs/*
+!outputs/_benchmarks/
+outputs/_benchmarks/*
+!outputs/_benchmarks/*.json
+
+# Environments and build noise.
+.venv/
+.venv-transcribe/
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+
+# NVIDIA's A2SB repo is CLONED here, not vendored: it is a full git repo of its own and its weights are CC BY-NC.
+# Restore it with the pinned commit in third_party/README.md.
+third_party/diffusion-audio-restoration/
+
+# Stray editor temp files.
+*.tmp.*

@@ -1,0 +1,206 @@
+{
+ "cut_hz": 8000,
+ "summary": {
+  "low": {
+   "median": -0.08485622995338371,
+   "mean": -0.1161621120097636,
+   "improved": 4,
+   "n": 20
+  },
+  "high": {
+   "median": -0.028311186642046238,
+   "mean": -0.12074339518147519,
+   "improved": 8,
+   "n": 20
+  },
+  "full": {
+   "median": -0.08198530055588549,
+   "mean": -0.12406823905458224,
+   "improved": 4,
+   "n": 20
+  }
+ },
+ "prediction_held": false,
+ "rows": [
+  {
+   "song": "Al James - Schoolboy Facination",
+   "ensemble_low": 13.241657594533434,
+   "ensemble_high": 10.171944584914044,
+   "ensemble_full": 13.137128926730506,
+   "+mdx23c_low": 13.133270445253649,
+   "+mdx23c_high": 10.15265328438387,
+   "+mdx23c_full": 13.03288197738042
+  },
+  {
+   "song": "AM Contra - Heart Peripheral",
+   "ensemble_low": 14.777655751239326,
+   "ensemble_high": 5.9145532116896335,
+   "ensemble_full": 14.367670957430715,
+   "+mdx23c_low": 14.631241873312018,
+   "+mdx23c_high": 5.794886868299793,
+   "+mdx23c_full": 14.224018760168622
+  },
+  {
+   "song": "Angels In Amplifiers - I'm Alright",
+   "ensemble_low": 14.976430010503684,
+   "ensemble_high": 6.232361118337099,
+   "ensemble_full": 14.776180253849727,
+   "+mdx23c_low": 14.77057656433864,
+   "+mdx23c_high": 6.234508926889413,
+   "+mdx23c_full": 14.580902246600287
+  },
+  {
+   "song": "Arise - Run Run Run",
+   "ensemble_low": 19.173268002017416,
+   "ensemble_high": 8.135079179900146,
+   "ensemble_full": 19.113313833831878,
+   "+mdx23c_low": 18.84309216522009,
+   "+mdx23c_high": 8.090045215738927,
+   "+mdx23c_full": 18.7872470781899
+  },
+  {
+   "song": "Ben Carrigan - We'll Talk About It All Tonight",
+   "ensemble_low": 20.339946994233436,
+   "ensemble_high": 16.471984540420202,
+   "ensemble_full": 20.29188362162129,
+   "+mdx23c_low": 20.22880278388792,
+   "+mdx23c_high": 16.38566444827289,
+   "+mdx23c_full": 20.181201499945086
+  },
+  {
+   "song": "BKS - Bulldozer",
+   "ensemble_low": 13.145546171652178,
+   "ensemble_high": 12.492053625186639,
+   "ensemble_full": 13.133447020677222,
+   "+mdx23c_low": 13.077554517312567,
+   "+mdx23c_high": 12.326799675635113,
+   "+mdx23c_full": 13.0634970032754
+  },
+  {
+   "song": "BKS - Too Much",
+   "ensemble_low": 14.936532441640365,
+   "ensemble_high": 6.791025665688821,
+   "ensemble_full": 14.826004288916973,
+   "+mdx23c_low": 14.868034869391348,
+   "+mdx23c_high": 6.956145943623877,
+   "+mdx23c_full": 14.764261987398156
+  },
+  {
+   "song": "Bobby Nobody - Stitch Up",
+   "ensemble_low": 14.58788201229364,
+   "ensemble_high": 15.817848277469393,
+   "ensemble_full": 14.640782212828832,
+   "+mdx23c_low": 14.49125663916524,
+   "+mdx23c_high": 15.874464158972255,
+   "+mdx23c_full": 14.54979686682982
+  },
+  {
+   "song": "Buitraker - Revo X",
+   "ensemble_low": 9.897572162745877,
+   "ensemble_high": 7.076977314490027,
+   "ensemble_full": 9.829658120892859,
+   "+mdx23c_low": 9.992037277591105,
+   "+mdx23c_high": 7.197412293113511,
+   "+mdx23c_full": 9.924964369437944
+  },
+  {
+   "song": "Carlos Gonzalez - A Place For Us",
+   "ensemble_low": 10.335146267966257,
+   "ensemble_high": 12.13815514846145,
+   "ensemble_full": 10.348127492203197,
+   "+mdx23c_low": 10.298973199708117,
+   "+mdx23c_high": 11.971707293209366,
+   "+mdx23c_full": 10.311185197735508
+  },
+  {
+   "song": "Cristina Vane - So Easy",
+   "ensemble_low": 19.424504262190055,
+   "ensemble_high": 13.845312739368696,
+   "ensemble_full": 19.256851309151262,
+   "+mdx23c_low": 19.306328142622238,
+   "+mdx23c_high": 13.760628363280338,
+   "+mdx23c_full": 19.14042234595998
+  },
+  {
+   "song": "Detsky Sad - Walkie Talkie",
+   "ensemble_low": 12.952959391050525,
+   "ensemble_high": 6.52850312499485,
+   "ensemble_full": 12.816631445605912,
+   "+mdx23c_low": 13.134293957364058,
+   "+mdx23c_high": 6.573243832483188,
+   "+mdx23c_full": 12.992416258879727
+  },
+  {
+   "song": "Enda Reilly - Cur An Long Ag Seol",
+   "ensemble_low": 19.583458557771635,
+   "ensemble_high": 5.861277704439425,
+   "ensemble_full": 19.503888834913358,
+   "+mdx23c_low": 19.19131393540524,
+   "+mdx23c_high": 5.823946631685507,
+   "+mdx23c_full": 19.11820862251578
+  },
+  {
+   "song": "Forkupines - Semantics",
+   "ensemble_low": 10.70675461773688,
+   "ensemble_high": 9.472316872413233,
+   "ensemble_full": 10.693028668536634,
+   "+mdx23c_low": 10.606379059643363,
+   "+mdx23c_high": 9.548490168183491,
+   "+mdx23c_full": 10.594860229082695
+  },
+  {
+   "song": "Georgia Wonder - Siren",
+   "ensemble_low": 7.826536013991044,
+   "ensemble_high": 5.944909426022585,
+   "ensemble_full": 7.801891059972609,
+   "+mdx23c_low": 7.862602236290356,
+   "+mdx23c_high": 5.9048787245374035,
+   "+mdx23c_full": 7.836721993598074
+  },
+  {
+   "song": "Girls Under Glass - We Feel Alright",
+   "ensemble_low": 7.418163363202921,
+   "ensemble_high": 8.351159331745091,
+   "ensemble_full": 7.428931412041831,
+   "+mdx23c_low": 7.47098680340442,
+   "+mdx23c_high": 8.35835826403613,
+   "+mdx23c_full": 7.481279770000392
+  },
+  {
+   "song": "Hollow Ground - Ill Fate",
+   "ensemble_low": 8.826809003021326,
+   "ensemble_high": 5.494441706739473,
+   "ensemble_full": 8.793081386719887,
+   "+mdx23c_low": 8.816036124146986,
+   "+mdx23c_high": 5.723100711445842,
+   "+mdx23c_full": 8.785673602940747
+  },
+  {
+   "song": "James Elder & Mark M Thompson - The English Actor",
+   "ensemble_low": 11.055830506512045,
+   "ensemble_high": 12.191562958545756,
+   "ensemble_full": 11.063686674999618,
+   "+mdx23c_low": 10.982743419733678,
+   "+mdx23c_high": 12.13531871688163,
+   "+mdx23c_full": 10.99070141988686
+  },
+  {
+   "song": "Juliet's Rescue - Heartbeats",
+   "ensemble_low": 12.320905887365504,
+   "ensemble_high": 9.598552868445578,
+   "ensemble_full": 12.257639681434826,
+   "+mdx23c_low": 12.279963948670876,
+   "+mdx23c_high": 9.58520879593959,
+   "+mdx23c_full": 12.21755209572116
+  },
+  {
+   "song": "Little Chicago's Finest - My Own",
+   "ensemble_low": 19.541259650586344,
+   "ensemble_high": 13.725614517066983,
+   "ensemble_full": 19.162907284627952,
+   "+mdx23c_low": 18.760088459596712,
+   "+mdx23c_high": 11.443303696097484,
+   "+mdx23c_full": 18.18357638034889
+  }
+ ]
+}

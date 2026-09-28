@@ -1,0 +1,3159 @@
+{
+  "results": [
+    {
+      "song": "excerpt_120s",
+      "separator": "bs_roformer_sw",
+      "groups": {
+        "vocals": [
+          "vocals"
+        ],
+        "drums": [
+          "drums"
+        ],
+        "bass": [
+          "bass"
+        ],
+        "other": [
+          "guitar",
+          "piano",
+          "other"
+        ]
+      },
+      "mixture_snr_model_matched_db": 32.005109860775185,
+      "eligible_regions": 433,
+      "separation_sdr_db": {
+        "vocals": 17.04265160293756,
+        "drums": 5.677968434097384,
+        "bass": 19.903983546422875,
+        "other": 2.4036422313170354
+      },
+      "restorers": {
+        "identity": {
+          "accepted": 0,
+          "rejected": 10,
+          "decisions": [
+            {
+              "region_id": "mixture-00193",
+              "stem": "mixture",
+              "accepted": false,
+              "reasons": [
+                "no change proposed"
+              ],
+              "stems_changed": [],
+              "err_delta_db": 0.0,
+              "stem_change_rel_db": null,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 0.008727533349722044,
+              "err_before": 0.1682284296638478,
+              "evidence_before": null,
+              "evidence_after": null,
+              "notes": [
+                "no-op control"
+              ]
+            },
+            {
+              "region_id": "mixture-00209",
+              "stem": "mixture",
+              "accepted": false,
+              "reasons": [
+                "no change proposed"
+              ],
+              "stems_changed": [],
+              "err_delta_db": 0.0,
+              "stem_change_rel_db": null,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 0.009693053540407648,
+              "err_before": 0.1018280559379855,
+              "evidence_before": null,
+              "evidence_after": null,
+              "notes": [
+                "no-op control"
+              ]
+            },
+            {
+              "region_id": "mixture-00220",
+              "stem": "mixture",
+              "accepted": false,
+              "reasons": [
+                "no change proposed"
+              ],
+              "stems_changed": [],
+              "err_delta_db": 0.0,
+              "stem_change_rel_db": null,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 0.001562068372591553,
+              "err_before": 0.012799684200535504,
+              "evidence_before": null,
+              "evidence_after": null,
+              "notes": [
+                "no-op control"
+              ]
+            },
+            {
+              "region_id": "mixture-00203",
+              "stem": "mixture",
+              "accepted": false,
+              "reasons": [
+                "no change proposed"
+              ],
+              "stems_changed": [],
+              "err_delta_db": 0.0,
+              "stem_change_rel_db": null,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 0.0225220017624807,
+              "err_before": 0.09141949034257829,
+              "evidence_before": null,
+              "evidence_after": null,
+              "notes": [
+                "no-op control"
+              ]
+            },
+            {
+              "region_id": "mixture-00222",
+              "stem": "mixture",
+              "accepted": false,
+              "reasons": [
+                "no change proposed"
+              ],
+              "stems_changed": [],
+              "err_delta_db": 0.0,
+              "stem_change_rel_db": null,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 0.7498075813984493,
+              "err_before": 2.930812089484637,
+              "evidence_before": null,
+              "evidence_after": null,
+              "notes": [
+                "no-op control"
+              ]
+            },
+            {
+              "region_id": "mixture-00194",
+              "stem": "mixture",
+              "accepted": false,
+              "reasons": [
+                "no change proposed"
+              ],
+              "stems_changed": [],
+              "err_delta_db": 0.0,
+              "stem_change_rel_db": null,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 0.08223451996599263,
+              "err_before": 1.1127958024243503,
+              "evidence_before": null,
+              "evidence_after": null,
+              "notes": [
+                "no-op control"
+              ]
+            },
+            {
+              "region_id": "mixture-00199",
+              "stem": "mixture",
+              "accepted": false,
+              "reasons": [
+                "no change proposed"
+              ],
+              "stems_changed": [],
+              "err_delta_db": 0.0,
+              "stem_change_rel_db": null,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 43.608002685104246,
+              "err_before": 8.230016725172312,
+              "evidence_before": null,
+              "evidence_after": null,
+              "notes": [
+                "no-op control"
+              ]
+            },
+            {
+              "region_id": "mixture-00223",
+              "stem": "mixture",
+              "accepted": false,
+              "reasons": [
+                "no change proposed"
+              ],
+              "stems_changed": [],
+              "err_delta_db": 0.0,
+              "stem_change_rel_db": null,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 0.6329987277271145,
+              "err_before": 1.6649252730990989,
+              "evidence_before": null,
+              "evidence_after": null,
+              "notes": [
+                "no-op control"
+              ]
+            },
+            {
+              "region_id": "mixture-00201",
+              "stem": "mixture",
+              "accepted": false,
+              "reasons": [
+                "no change proposed"
+              ],
+              "stems_changed": [],
+              "err_delta_db": 0.0,
+              "stem_change_rel_db": null,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 0.19791749435599876,
+              "err_before": 1.3526109921488012,
+              "evidence_before": null,
+              "evidence_after": null,
+              "notes": [
+                "no-op control"
+              ]
+            },
+            {
+              "region_id": "mixture-00198",
+              "stem": "mixture",
+              "accepted": false,
+              "reasons": [
+                "no change proposed"
+              ],
+              "stems_changed": [],
+              "err_delta_db": 0.0,
+              "stem_change_rel_db": null,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 2.1922717231117614,
+              "err_before": 1.3420970967213512,
+              "evidence_before": null,
+              "evidence_after": null,
+              "notes": [
+                "no-op control"
+              ]
+            }
+          ],
+          "box_truth_changes": [],
+          "box_total_changes": [],
+          "pooled_change_db_accepted": null,
+          "pooled_change_db_all_proposals": null,
+          "whole_stem_sdr": {
+            "vocals": {
+              "sdr_before_db": 17.04265160293756,
+              "sdr_after_db": 17.04265160293756
+            },
+            "drums": {
+              "sdr_before_db": 5.677968434097384,
+              "sdr_after_db": 5.677968434097384
+            },
+            "bass": {
+              "sdr_before_db": 19.903983546422875,
+              "sdr_after_db": 19.903983546422875
+            },
+            "other": {
+              "sdr_before_db": 2.4036422313170354,
+              "sdr_after_db": 2.4036422313170354
+            }
+          },
+          "reconstruction": {
+            "before": {
+              "snr_db": 32.005109860775185,
+              "residual_rel_db": -32.005109860775185
+            },
+            "after": {
+              "snr_db": 32.005109860775185,
+              "residual_rel_db": -32.005109860775185
+            }
+          },
+          "seconds": 1.5
+        },
+        "residual_reallocation": {
+          "accepted": 10,
+          "rejected": 0,
+          "decisions": [
+            {
+              "region_id": "mixture-00193",
+              "stem": "mixture",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -7.58654496963207,
+              "stem_change_rel_db": 7.270420811549149,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 0.008727533349722044,
+              "err_before": 0.1682284296638478,
+              "evidence_before": 0.9986531138420105,
+              "evidence_after": 0.9936535954475403,
+              "notes": []
+            },
+            {
+              "region_id": "mixture-00209",
+              "stem": "mixture",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -6.811993710658602,
+              "stem_change_rel_db": 4.683435858117422,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 0.009693053540407648,
+              "err_before": 0.1018280559379855,
+              "evidence_before": 0.998140811920166,
+              "evidence_after": 0.9949175715446472,
+              "notes": []
+            },
+            {
+              "region_id": "mixture-00220",
+              "stem": "mixture",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -6.184469216003228,
+              "stem_change_rel_db": 5.401232774092566,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 0.001562068372591553,
+              "err_before": 0.012799684200535504,
+              "evidence_before": 0.9955558180809021,
+              "evidence_after": 0.9942407011985779,
+              "notes": []
+            },
+            {
+              "region_id": "mixture-00203",
+              "stem": "mixture",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -8.672054533813785,
+              "stem_change_rel_db": 3.2790294693320163,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 0.0225220017624807,
+              "err_before": 0.09141949034257829,
+              "evidence_before": 0.992742657661438,
+              "evidence_after": 0.9363985657691956,
+              "notes": []
+            },
+            {
+              "region_id": "mixture-00222",
+              "stem": "mixture",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -20.668234817874477,
+              "stem_change_rel_db": 4.636083419259188,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 0.7498075813984493,
+              "err_before": 2.930812089484637,
+              "evidence_before": 0.9991669654846191,
+              "evidence_after": 0.6102705001831055,
+              "notes": []
+            },
+            {
+              "region_id": "mixture-00194",
+              "stem": "mixture",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -13.864126618464422,
+              "stem_change_rel_db": 7.844129917048064,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 0.08223434216452151,
+              "err_before": 1.112796994285316,
+              "evidence_before": 0.9987509846687317,
+              "evidence_after": 0.9141217470169067,
+              "notes": []
+            },
+            {
+              "region_id": "mixture-00199",
+              "stem": "mixture",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -18.75034441344398,
+              "stem_change_rel_db": -7.940006930004676,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 43.60800268890364,
+              "err_before": 8.230016692362184,
+              "evidence_before": 0.9990382194519043,
+              "evidence_after": 0.9472668170928955,
+              "notes": []
+            },
+            {
+              "region_id": "mixture-00223",
+              "stem": "mixture",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -18.59794885046285,
+              "stem_change_rel_db": 2.589143023967955,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 0.632998739467107,
+              "err_before": 1.6649254860466287,
+              "evidence_before": 0.9962369203567505,
+              "evidence_after": 0.34997549653053284,
+              "notes": []
+            },
+            {
+              "region_id": "mixture-00201",
+              "stem": "mixture",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -12.182145524011585,
+              "stem_change_rel_db": 7.159277596596551,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 0.19793742374524934,
+              "err_before": 1.352517628917696,
+              "evidence_before": 0.9984298944473267,
+              "evidence_after": 0.9591252207756042,
+              "notes": []
+            },
+            {
+              "region_id": "mixture-00198",
+              "stem": "mixture",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -16.819855397967352,
+              "stem_change_rel_db": -3.316849533233282,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 2.1922716858639393,
+              "err_before": 1.3420971514256526,
+              "evidence_before": 0.9948550462722778,
+              "evidence_after": 0.8671263456344604,
+              "notes": []
+            }
+          ],
+          "box_truth_changes": [
+            {
+              "region_id": "mixture-00193",
+              "truth_stem": "vocals",
+              "accepted": true,
+              "box_err_change_db": 10.603487330066983,
+              "box_err_before_rel_truth_db": 10.536222328951197,
+              "err_before": 0.003066744778648373,
+              "err_after": 0.03523922653592139,
+              "truth_energy": 0.0002710537384897549
+            },
+            {
+              "region_id": "mixture-00193",
+              "truth_stem": "drums",
+              "accepted": true,
+              "box_err_change_db": 1.770581150330691,
+              "box_err_before_rel_truth_db": -1.2116432746850305,
+              "err_before": 0.0036581851072784153,
+              "err_after": 0.00549950742077385,
+              "truth_energy": 0.0048353732639620246
+            },
+            {
+              "region_id": "mixture-00193",
+              "truth_stem": "bass",
+              "accepted": true,
+              "box_err_change_db": 1.149637454011337e-09,
+              "box_err_before_rel_truth_db": 0.0065748949369272,
+              "err_before": 0.00011238153075327296,
+              "err_after": 0.00011238153078302191,
+              "truth_energy": 0.00011221152220995872
+            },
+            {
+              "region_id": "mixture-00193",
+              "truth_stem": "other",
+              "accepted": true,
+              "box_err_change_db": -0.3743559995778248,
+              "box_err_before_rel_truth_db": -0.5300459725707404,
+              "err_before": 0.1294727010532558,
+              "err_after": 0.1187798051109521,
+              "truth_energy": 0.14627927715377337
+            },
+            {
+              "region_id": "mixture-00209",
+              "truth_stem": "vocals",
+              "accepted": true,
+              "box_err_change_db": 7.421278382825442,
+              "box_err_before_rel_truth_db": 22.91957349672036,
+              "err_before": 0.005224850164701838,
+              "err_after": 0.02885371108141928,
+              "truth_energy": 2.667574092145748e-05
+            },
+            {
+              "region_id": "mixture-00209",
+              "truth_stem": "drums",
+              "accepted": true,
+              "box_err_change_db": -3.2542522633456343,
+              "box_err_before_rel_truth_db": -1.4433168086837074,
+              "err_before": 0.011077395758780384,
+              "err_after": 0.005236154416010693,
+              "truth_energy": 0.01544433996145543
+            },
+            {
+              "region_id": "mixture-00209",
+              "truth_stem": "bass",
+              "accepted": true,
+              "box_err_change_db": -1.2574676206848087e-06,
+              "box_err_before_rel_truth_db": -0.08229229137565786,
+              "err_before": 6.256038948876093e-05,
+              "err_after": 6.256037137486448e-05,
+              "truth_energy": 6.375711734282223e-05
+            },
+            {
+              "region_id": "mixture-00209",
+              "truth_stem": "other",
+              "accepted": true,
+              "box_err_change_db": -0.025778595024376107,
+              "box_err_before_rel_truth_db": -0.3335484981526291,
+              "err_before": 0.055373747713572605,
+              "err_after": 0.05504603706151893,
+              "truth_energy": 0.05979415976651428
+            },
+            {
+              "region_id": "mixture-00220",
+              "truth_stem": "vocals",
+              "accepted": true,
+              "box_err_change_db": 0.1452381710295929,
+              "box_err_before_rel_truth_db": 15.539963218712431,
+              "err_before": 0.0006234795021749851,
+              "err_after": 0.0006446826717262846,
+              "truth_energy": 1.7411085896786415e-05
+            },
+            {
+              "region_id": "mixture-00220",
+              "truth_stem": "drums",
+              "accepted": true,
+              "box_err_change_db": -0.48384490555199766,
+              "box_err_before_rel_truth_db": -0.6136202271742087,
+              "err_before": 0.0015681335217697131,
+              "err_after": 0.0014028090151572165,
+              "truth_energy": 0.0018061135942593412
+            },
+            {
+              "region_id": "mixture-00220",
+              "truth_stem": "bass",
+              "accepted": true,
+              "box_err_change_db": 0.0,
+              "box_err_before_rel_truth_db": -0.005937663366160682,
+              "err_before": 2.850132221857448e-05,
+              "err_after": 2.850132221857448e-05,
+              "truth_energy": 2.854031580539124e-05
+            },
+            {
+              "region_id": "mixture-00220",
+              "truth_stem": "other",
+              "accepted": true,
+              "box_err_change_db": -0.0009215149742097543,
+              "box_err_before_rel_truth_db": -0.6142686208797012,
+              "err_before": 0.008050589176738641,
+              "err_after": 0.00804888113029466,
+              "truth_energy": 0.009273731701432702
+            },
+            {
+              "region_id": "mixture-00203",
+              "truth_stem": "vocals",
+              "accepted": true,
+              "box_err_change_db": 0.8399373007796475,
+              "box_err_before_rel_truth_db": 37.4027429768601,
+              "err_before": 0.014993679110719159,
+              "err_after": 0.0181929004070693,
+              "truth_energy": 2.7266783781278217e-06
+            },
+            {
+              "region_id": "mixture-00203",
+              "truth_stem": "drums",
+              "accepted": true,
+              "box_err_change_db": -5.296273514753396,
+              "box_err_before_rel_truth_db": -1.7065924892410034,
+              "err_before": 0.01822376558850094,
+              "err_after": 0.005382831298903953,
+              "truth_energy": 0.02699587256580047
+            },
+            {
+              "region_id": "mixture-00203",
+              "truth_stem": "bass",
+              "accepted": true,
+              "box_err_change_db": 0.0,
+              "box_err_before_rel_truth_db": 0.007544455029110821,
+              "err_before": 0.00017262427282321873,
+              "err_after": 0.00017262427282321873,
+              "truth_energy": 0.00017232465457752495
+            },
+            {
+              "region_id": "mixture-00203",
+              "truth_stem": "other",
+              "accepted": true,
+              "box_err_change_db": -0.00445887526836267,
+              "box_err_before_rel_truth_db": -0.21938088094918026,
+              "err_before": 0.07417810678088052,
+              "err_after": 0.0741019876479751,
+              "truth_energy": 0.07802141688038305
+            },
+            {
+              "region_id": "mixture-00222",
+              "truth_stem": "vocals",
+              "accepted": true,
+              "box_err_change_db": 6.951650185720073,
+              "box_err_before_rel_truth_db": 5.37416887481598,
+              "err_before": 0.2921318035492629,
+              "err_after": 1.4479176378338254,
+              "truth_energy": 0.08475434120493318
+            },
+            {
+              "region_id": "mixture-00222",
+              "truth_stem": "drums",
+              "accepted": true,
+              "box_err_change_db": -2.0926832854673396,
+              "box_err_before_rel_truth_db": -0.8353853071444821,
+              "err_before": 1.426361071110451,
+              "err_after": 0.8809700595359036,
+              "truth_energy": 1.7288925707138028
+            },
+            {
+              "region_id": "mixture-00222",
+              "truth_stem": "bass",
+              "accepted": true,
+              "box_err_change_db": -5.002639615374406e-07,
+              "box_err_before_rel_truth_db": 0.06374210278202345,
+              "err_before": 0.00023828429645353133,
+              "err_after": 0.0002382842690055567,
+              "truth_energy": 0.00023481249972062722
+            },
+            {
+              "region_id": "mixture-00222",
+              "truth_stem": "other",
+              "accepted": true,
+              "box_err_change_db": -0.026938325132415293,
+              "box_err_before_rel_truth_db": -0.15506579483432245,
+              "err_before": 1.7590572326304994,
+              "err_after": 1.7481799596256422,
+              "truth_energy": 1.8229994992556207
+            },
+            {
+              "region_id": "mixture-00194",
+              "truth_stem": "vocals",
+              "accepted": true,
+              "box_err_change_db": 10.663826395170652,
+              "box_err_before_rel_truth_db": 18.796607084334514,
+              "err_before": 0.023219653311816354,
+              "err_after": 0.2705442889294723,
+              "truth_energy": 0.0003063338736268837
+            },
+            {
+              "region_id": "mixture-00194",
+              "truth_stem": "drums",
+              "accepted": true,
+              "box_err_change_db": 7.975958959629099,
+              "box_err_before_rel_truth_db": -1.7430900662317885,
+              "err_before": 0.03017960310979182,
+              "err_after": 0.18936923295587843,
+              "truth_energy": 0.04508400930216187
+            },
+            {
+              "region_id": "mixture-00194",
+              "truth_stem": "bass",
+              "accepted": true,
+              "box_err_change_db": 3.858152671281533e-08,
+              "box_err_before_rel_truth_db": -0.0033915067878397616,
+              "err_before": 0.00046164308550696834,
+              "err_after": 0.00046164308960807847,
+              "truth_energy": 0.0004620037341485886
+            },
+            {
+              "region_id": "mixture-00194",
+              "truth_stem": "other",
+              "accepted": true,
+              "box_err_change_db": -1.4561168448244581,
+              "box_err_before_rel_truth_db": -0.9629303227102342,
+              "err_before": 1.104952563460206,
+              "err_after": 0.79019076419856,
+              "truth_energy": 1.3792299079895556
+            },
+            {
+              "region_id": "mixture-00199",
+              "truth_stem": "vocals",
+              "accepted": true,
+              "box_err_change_db": 2.6095701379626597,
+              "box_err_before_rel_truth_db": 28.088310543831945,
+              "err_before": 0.18824489806549005,
+              "err_after": 0.34330507875558486,
+              "truth_energy": 0.00029234263702466426
+            },
+            {
+              "region_id": "mixture-00199",
+              "truth_stem": "drums",
+              "accepted": true,
+              "box_err_change_db": 6.891162433895391,
+              "box_err_before_rel_truth_db": -11.94671517348278,
+              "err_before": 1.2435044760265295,
+              "err_after": 6.078040593078914,
+              "truth_energy": 19.46788939663309
+            },
+            {
+              "region_id": "mixture-00199",
+              "truth_stem": "bass",
+              "accepted": true,
+              "box_err_change_db": -6.034261179171162e-08,
+              "box_err_before_rel_truth_db": -0.0010074105765428487,
+              "err_before": 0.03717034153196648,
+              "err_after": 0.0371703410155069,
+              "truth_energy": 0.037178964745049684
+            },
+            {
+              "region_id": "mixture-00199",
+              "truth_stem": "other",
+              "accepted": true,
+              "box_err_change_db": -0.11721651257583303,
+              "box_err_before_rel_truth_db": -0.33818947618338013,
+              "err_before": 9.183165377027759,
+              "err_after": 8.938625749371306,
+              "truth_energy": 9.926847567616544
+            },
+            {
+              "region_id": "mixture-00223",
+              "truth_stem": "vocals",
+              "accepted": true,
+              "box_err_change_db": 6.408966252836635,
+              "box_err_before_rel_truth_db": 18.90503955031296,
+              "err_before": 0.5176234238812002,
+              "err_after": 2.264177896626874,
+              "truth_energy": 0.006660548055984971
+            },
+            {
+              "region_id": "mixture-00223",
+              "truth_stem": "drums",
+              "accepted": true,
+              "box_err_change_db": -6.452302665625575,
+              "box_err_before_rel_truth_db": -0.607624991010445,
+              "err_before": 0.5497917875874109,
+              "err_after": 0.12444228637749576,
+              "truth_energy": 0.6323546951186765
+            },
+            {
+              "region_id": "mixture-00223",
+              "truth_stem": "bass",
+              "accepted": true,
+              "box_err_change_db": -2.5414064821512038e-06,
+              "box_err_before_rel_truth_db": 0.12845949529790562,
+              "err_before": 0.001177764513654227,
+              "err_after": 0.0011777638244496393,
+              "truth_energy": 0.0011434377213725548
+            },
+            {
+              "region_id": "mixture-00223",
+              "truth_stem": "other",
+              "accepted": true,
+              "box_err_change_db": -0.014023067569499061,
+              "box_err_before_rel_truth_db": -0.16016297331830637,
+              "err_before": 1.6546428506483828,
+              "err_after": 1.649308740030044,
+              "truth_energy": 1.7168033991219331
+            },
+            {
+              "region_id": "mixture-00201",
+              "truth_stem": "vocals",
+              "accepted": true,
+              "box_err_change_db": 1.296626046324619,
+              "box_err_before_rel_truth_db": 24.788225370036283,
+              "err_before": 0.04233376485230743,
+              "err_after": 0.057062329571139256,
+              "truth_energy": 0.00014056084396991912
+            },
+            {
+              "region_id": "mixture-00201",
+              "truth_stem": "drums",
+              "accepted": true,
+              "box_err_change_db": 2.9183343812522033,
+              "box_err_before_rel_truth_db": -2.6970755829535364,
+              "err_before": 0.23247970279192698,
+              "err_after": 0.455217007886641,
+              "truth_energy": 0.4326060612342151
+            },
+            {
+              "region_id": "mixture-00201",
+              "truth_stem": "bass",
+              "accepted": true,
+              "box_err_change_db": 5.774281636411044e-07,
+              "box_err_before_rel_truth_db": -0.007066487328223549,
+              "err_before": 0.002132436980235219,
+              "err_after": 0.002132437263759257,
+              "truth_energy": 0.0021359095329788478
+            },
+            {
+              "region_id": "mixture-00201",
+              "truth_stem": "other",
+              "accepted": true,
+              "box_err_change_db": -4.335127327217407e-05,
+              "box_err_before_rel_truth_db": -0.02209451986655945,
+              "err_before": 0.9705604872982196,
+              "err_after": 0.9705507992122159,
+              "truth_energy": 0.9755107478494802
+            },
+            {
+              "region_id": "mixture-00198",
+              "truth_stem": "vocals",
+              "accepted": true,
+              "box_err_change_db": 2.651159521398281,
+              "box_err_before_rel_truth_db": 37.23565333567795,
+              "err_before": 0.24674694563462823,
+              "err_after": 0.4543261531697743,
+              "truth_energy": 4.663225872591097e-05
+            },
+            {
+              "region_id": "mixture-00198",
+              "truth_stem": "drums",
+              "accepted": true,
+              "box_err_change_db": -2.0697946091411925,
+              "box_err_before_rel_truth_db": -4.5732274729286795,
+              "err_before": 0.7073179572077593,
+              "err_after": 0.4391725862800747,
+              "truth_energy": 2.027390612681908
+            },
+            {
+              "region_id": "mixture-00198",
+              "truth_stem": "bass",
+              "accepted": true,
+              "box_err_change_db": -3.49629747680634e-07,
+              "box_err_before_rel_truth_db": 0.001530152298692626,
+              "err_before": 0.0011333375290268654,
+              "err_after": 0.0011333374377872768,
+              "truth_energy": 0.001132938289885867
+            },
+            {
+              "region_id": "mixture-00198",
+              "truth_stem": "other",
+              "accepted": true,
+              "box_err_change_db": -0.03741789620495448,
+              "box_err_before_rel_truth_db": -0.5469333404477446,
+              "err_before": 1.043113345456357,
+              "err_after": 1.0341647061177686,
+              "truth_energy": 1.18310921168987
+            }
+          ],
+          "box_total_changes": [
+            {
+              "region_id": "mixture-00193",
+              "accepted": true,
+              "total_err_change_db": 0.685188166464352,
+              "total_err_before_rel_truth_db": -0.4587890029044464,
+              "err_before": 0.13631001246993588,
+              "err_after": 0.15963092059843037,
+              "truth_energy": 0.1514979156784351
+            },
+            {
+              "region_id": "mixture-00209",
+              "accepted": true,
+              "total_err_change_db": 0.9451557206364141,
+              "total_err_before_rel_truth_db": -0.21209194786264304,
+              "err_before": 0.07173855402654358,
+              "err_after": 0.08919846293032377,
+              "truth_energy": 0.075328932586234
+            },
+            {
+              "region_id": "mixture-00220",
+              "accepted": true,
+              "total_err_change_db": -0.06203791079312588,
+              "total_err_before_rel_truth_db": -0.3473092684797621,
+              "err_before": 0.010270703522901914,
+              "err_after": 0.010124874139396734,
+              "truth_energy": 0.01112579669739422
+            },
+            {
+              "region_id": "mixture-00203",
+              "accepted": true,
+              "total_err_change_db": -0.4107931305888509,
+              "total_err_before_rel_truth_db": 0.09699684193883726,
+              "err_before": 0.10756817575292384,
+              "err_after": 0.09785034362677157,
+              "truth_energy": 0.10519234077913918
+            },
+            {
+              "region_id": "mixture-00222",
+              "accepted": true,
+              "total_err_change_db": 0.6900343229675603,
+              "total_err_before_rel_truth_db": -0.19425964206054164,
+              "err_before": 3.4777883915866665,
+              "err_after": 4.077305941264377,
+              "truth_energy": 3.6368812236740773
+            },
+            {
+              "region_id": "mixture-00194",
+              "accepted": true,
+              "total_err_change_db": 0.3305392148317179,
+              "total_err_before_rel_truth_db": -0.8982640014043322,
+              "err_before": 1.158813462967321,
+              "err_after": 1.250565929173519,
+              "truth_energy": 1.425082254899493
+            },
+            {
+              "region_id": "mixture-00199",
+              "accepted": true,
+              "total_err_change_db": 1.596365376960687,
+              "total_err_before_rel_truth_db": -4.413882209594607,
+              "err_before": 10.652085092651745,
+              "err_after": 15.397141762221313,
+              "truth_energy": 29.43220827163171
+            },
+            {
+              "region_id": "mixture-00223",
+              "accepted": true,
+              "total_err_change_db": 1.710777053595232,
+              "total_err_before_rel_truth_db": 0.6273265654463732,
+              "err_before": 2.7232358266306482,
+              "err_after": 4.039106686858863,
+              "truth_energy": 2.356962080017967
+            },
+            {
+              "region_id": "mixture-00201",
+              "accepted": true,
+              "total_err_change_db": 0.755942956918742,
+              "total_err_before_rel_truth_db": -0.5329745035666132,
+              "err_before": 1.2475063919226894,
+              "err_after": 1.4849625739337553,
+              "truth_energy": 1.410393279460644
+            },
+            {
+              "region_id": "mixture-00198",
+              "accepted": true,
+              "total_err_change_db": -0.153516182653954,
+              "total_err_before_rel_truth_db": -2.0606897909402004,
+              "err_before": 1.9983115858277714,
+              "err_after": 1.928796783005405,
+              "truth_energy": 3.21167939492039
+            }
+          ],
+          "pooled_change_db_accepted": 1.2104400173100727,
+          "pooled_change_db_all_proposals": 1.2104400173100727,
+          "whole_stem_sdr": {
+            "vocals": {
+              "sdr_before_db": 17.04265160293756,
+              "sdr_after_db": 17.0425708218614
+            },
+            "drums": {
+              "sdr_before_db": 5.677968434097384,
+              "sdr_after_db": 5.6779583711267385
+            },
+            "bass": {
+              "sdr_before_db": 19.903983546422875,
+              "sdr_after_db": 19.903983546422985
+            },
+            "other": {
+              "sdr_before_db": 2.4036422313170354,
+              "sdr_after_db": 2.403645878931104
+            }
+          },
+          "reconstruction": {
+            "before": {
+              "snr_db": 32.005109860775185,
+              "residual_rel_db": -32.005109860775185
+            },
+            "after": {
+              "snr_db": 32.0058368663345,
+              "residual_rel_db": -32.0058368663345
+            }
+          },
+          "seconds": 8.9
+        },
+        "region_wiener": {
+          "accepted": 10,
+          "rejected": 0,
+          "decisions": [
+            {
+              "region_id": "mixture-00193",
+              "stem": "mixture",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -7.586544969632093,
+              "stem_change_rel_db": 7.730320323880032,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 0.008727533349722044,
+              "err_before": 0.1682284296638478,
+              "evidence_before": 0.9986531138420105,
+              "evidence_after": 0.993653416633606,
+              "notes": []
+            },
+            {
+              "region_id": "mixture-00209",
+              "stem": "mixture",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -6.8119937106585935,
+              "stem_change_rel_db": 4.978033514990981,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 0.009693053540407648,
+              "err_before": 0.1018280559379855,
+              "evidence_before": 0.998140811920166,
+              "evidence_after": 0.9949174523353577,
+              "notes": []
+            },
+            {
+              "region_id": "mixture-00220",
+              "stem": "mixture",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -6.184469216003269,
+              "stem_change_rel_db": 8.126493983107896,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 0.001562068372591553,
+              "err_before": 0.012799684200535504,
+              "evidence_before": 0.9955558180809021,
+              "evidence_after": 0.9942407011985779,
+              "notes": []
+            },
+            {
+              "region_id": "mixture-00203",
+              "stem": "mixture",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -8.67205453381374,
+              "stem_change_rel_db": 7.0340352096333,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 0.0225220017624807,
+              "err_before": 0.09141949034257829,
+              "evidence_before": 0.992742657661438,
+              "evidence_after": 0.9363998174667358,
+              "notes": []
+            },
+            {
+              "region_id": "mixture-00222",
+              "stem": "mixture",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -20.66823481787443,
+              "stem_change_rel_db": 6.034371426165453,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 0.7498075813984493,
+              "err_before": 2.930812089484637,
+              "evidence_before": 0.9991669654846191,
+              "evidence_after": 0.6102720499038696,
+              "notes": []
+            },
+            {
+              "region_id": "mixture-00194",
+              "stem": "mixture",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -13.864128390619717,
+              "stem_change_rel_db": 9.390450596975843,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 0.08223433500533661,
+              "err_before": 1.1127970276949581,
+              "evidence_before": 0.9987509846687317,
+              "evidence_after": 0.9141185283660889,
+              "notes": []
+            },
+            {
+              "region_id": "mixture-00199",
+              "stem": "mixture",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -18.75034415689458,
+              "stem_change_rel_db": -6.488724283780014,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 43.60800267474477,
+              "err_before": 8.230016200880073,
+              "evidence_before": 0.9990382194519043,
+              "evidence_after": 0.9472667574882507,
+              "notes": []
+            },
+            {
+              "region_id": "mixture-00223",
+              "stem": "mixture",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -18.59795135263333,
+              "stem_change_rel_db": 4.273235209326177,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 0.6329987644358865,
+              "err_before": 1.6649253804368327,
+              "evidence_before": 0.9962369203567505,
+              "evidence_after": 0.34996795654296875,
+              "notes": []
+            },
+            {
+              "region_id": "mixture-00201",
+              "stem": "mixture",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -12.18214669855488,
+              "stem_change_rel_db": 8.673821014914937,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 0.1979350313691085,
+              "err_before": 1.3525163256520305,
+              "evidence_before": 0.9984298944473267,
+              "evidence_after": 0.9591249823570251,
+              "notes": []
+            },
+            {
+              "region_id": "mixture-00198",
+              "stem": "mixture",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -16.819855005897182,
+              "stem_change_rel_db": -0.7428361266416073,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 2.1922717423457048,
+              "err_before": 1.3420962672095937,
+              "evidence_before": 0.9948550462722778,
+              "evidence_after": 0.8671277761459351,
+              "notes": []
+            }
+          ],
+          "box_truth_changes": [
+            {
+              "region_id": "mixture-00193",
+              "truth_stem": "vocals",
+              "accepted": true,
+              "box_err_change_db": 10.60173061027717,
+              "box_err_before_rel_truth_db": 10.536222328951197,
+              "err_before": 0.003066744778648373,
+              "err_after": 0.03522497516259437,
+              "truth_energy": 0.0002710537384897549
+            },
+            {
+              "region_id": "mixture-00193",
+              "truth_stem": "drums",
+              "accepted": true,
+              "box_err_change_db": 2.8758123885586335,
+              "box_err_before_rel_truth_db": -1.2116432746850305,
+              "err_before": 0.0036581851072784153,
+              "err_after": 0.0070932769409089436,
+              "truth_energy": 0.0048353732639620246
+            },
+            {
+              "region_id": "mixture-00193",
+              "truth_stem": "bass",
+              "accepted": true,
+              "box_err_change_db": -0.0017613064650055096,
+              "box_err_before_rel_truth_db": 0.0065748949369272,
+              "err_before": 0.00011238153075327296,
+              "err_after": 0.00011233596301230033,
+              "truth_energy": 0.00011221152220995872
+            },
+            {
+              "region_id": "mixture-00193",
+              "truth_stem": "other",
+              "accepted": true,
+              "box_err_change_db": -0.14935635484864815,
+              "box_err_before_rel_truth_db": -0.5300459725707404,
+              "err_before": 0.1294727010532558,
+              "err_after": 0.12509575507190066,
+              "truth_energy": 0.14627927715377337
+            },
+            {
+              "region_id": "mixture-00209",
+              "truth_stem": "vocals",
+              "accepted": true,
+              "box_err_change_db": 7.467300194992093,
+              "box_err_before_rel_truth_db": 22.91957349672036,
+              "err_before": 0.005224850164701838,
+              "err_after": 0.029161097167890938,
+              "truth_energy": 2.667574092145748e-05
+            },
+            {
+              "region_id": "mixture-00209",
+              "truth_stem": "drums",
+              "accepted": true,
+              "box_err_change_db": -3.6502122805716115,
+              "box_err_before_rel_truth_db": -1.4433168086837074,
+              "err_before": 0.011077395758780384,
+              "err_after": 0.004779873948365812,
+              "truth_energy": 0.01544433996145543
+            },
+            {
+              "region_id": "mixture-00209",
+              "truth_stem": "bass",
+              "accepted": true,
+              "box_err_change_db": 0.04680814496929888,
+              "box_err_before_rel_truth_db": -0.08229229137565786,
+              "err_before": 6.256038948876093e-05,
+              "err_after": 6.323831046500488e-05,
+              "truth_energy": 6.375711734282223e-05
+            },
+            {
+              "region_id": "mixture-00209",
+              "truth_stem": "other",
+              "accepted": true,
+              "box_err_change_db": 0.13709524571557705,
+              "box_err_before_rel_truth_db": -0.3335484981526291,
+              "err_before": 0.055373747713572605,
+              "err_after": 0.057149632533879585,
+              "truth_energy": 0.05979415976651428
+            },
+            {
+              "region_id": "mixture-00220",
+              "truth_stem": "vocals",
+              "accepted": true,
+              "box_err_change_db": -1.889297580896143,
+              "box_err_before_rel_truth_db": 15.539963218712431,
+              "err_before": 0.0006234795021749851,
+              "err_after": 0.0004035454192444565,
+              "truth_energy": 1.7411085896786415e-05
+            },
+            {
+              "region_id": "mixture-00220",
+              "truth_stem": "drums",
+              "accepted": true,
+              "box_err_change_db": 0.20430471669877331,
+              "box_err_before_rel_truth_db": -0.6136202271742087,
+              "err_before": 0.0015681335217697131,
+              "err_after": 0.0016436657682858678,
+              "truth_energy": 0.0018061135942593412
+            },
+            {
+              "region_id": "mixture-00220",
+              "truth_stem": "bass",
+              "accepted": true,
+              "box_err_change_db": 0.002789201912928265,
+              "box_err_before_rel_truth_db": -0.005937663366160682,
+              "err_before": 2.850132221857448e-05,
+              "err_after": 2.851963271499318e-05,
+              "truth_energy": 2.854031580539124e-05
+            },
+            {
+              "region_id": "mixture-00220",
+              "truth_stem": "other",
+              "accepted": true,
+              "box_err_change_db": 0.14256779390575258,
+              "box_err_before_rel_truth_db": -0.6142686208797012,
+              "err_before": 0.008050589176738641,
+              "err_after": 0.008319255154350539,
+              "truth_energy": 0.009273731701432702
+            },
+            {
+              "region_id": "mixture-00203",
+              "truth_stem": "vocals",
+              "accepted": true,
+              "box_err_change_db": -5.2463951163768385,
+              "box_err_before_rel_truth_db": 37.4027429768601,
+              "err_before": 0.014993679110719159,
+              "err_after": 0.0044799039254283714,
+              "truth_energy": 2.7266783781278217e-06
+            },
+            {
+              "region_id": "mixture-00203",
+              "truth_stem": "drums",
+              "accepted": true,
+              "box_err_change_db": -0.052705112572439775,
+              "box_err_before_rel_truth_db": -1.7065924892410034,
+              "err_before": 0.01822376558850094,
+              "err_after": 0.018003942166694424,
+              "truth_energy": 0.02699587256580047
+            },
+            {
+              "region_id": "mixture-00203",
+              "truth_stem": "bass",
+              "accepted": true,
+              "box_err_change_db": -0.006135098352586056,
+              "box_err_before_rel_truth_db": 0.007544455029110821,
+              "err_before": 0.00017262427282321873,
+              "err_after": 0.00017238058582325473,
+              "truth_energy": 0.00017232465457752495
+            },
+            {
+              "region_id": "mixture-00203",
+              "truth_stem": "other",
+              "accepted": true,
+              "box_err_change_db": 0.13028193666462276,
+              "box_err_before_rel_truth_db": -0.21938088094918026,
+              "err_before": 0.07417810678088052,
+              "err_after": 0.07643705367140419,
+              "truth_energy": 0.07802141688038305
+            },
+            {
+              "region_id": "mixture-00222",
+              "truth_stem": "vocals",
+              "accepted": true,
+              "box_err_change_db": 6.183191737799834,
+              "box_err_before_rel_truth_db": 5.37416887481598,
+              "err_before": 0.2921318035492629,
+              "err_after": 1.2131039412778035,
+              "truth_energy": 0.08475434120493318
+            },
+            {
+              "region_id": "mixture-00222",
+              "truth_stem": "drums",
+              "accepted": true,
+              "box_err_change_db": -1.1528535594341132,
+              "box_err_before_rel_truth_db": -0.8353853071444821,
+              "err_before": 1.426361071110451,
+              "err_after": 1.0938156212402497,
+              "truth_energy": 1.7288925707138028
+            },
+            {
+              "region_id": "mixture-00222",
+              "truth_stem": "bass",
+              "accepted": true,
+              "box_err_change_db": -0.061690757438728136,
+              "box_err_before_rel_truth_db": 0.06374210278202345,
+              "err_before": 0.00023828429645353133,
+              "err_after": 0.00023492343718921083,
+              "truth_energy": 0.00023481249972062722
+            },
+            {
+              "region_id": "mixture-00222",
+              "truth_stem": "other",
+              "accepted": true,
+              "box_err_change_db": 0.11786655528244581,
+              "box_err_before_rel_truth_db": -0.15506579483432245,
+              "err_before": 1.7590572326304994,
+              "err_after": 1.8074513870698707,
+              "truth_energy": 1.8229994992556207
+            },
+            {
+              "region_id": "mixture-00194",
+              "truth_stem": "vocals",
+              "accepted": true,
+              "box_err_change_db": 10.228235545216158,
+              "box_err_before_rel_truth_db": 18.796607084334514,
+              "err_before": 0.023219653311816354,
+              "err_after": 0.24472553443848954,
+              "truth_energy": 0.0003063338736268837
+            },
+            {
+              "region_id": "mixture-00194",
+              "truth_stem": "drums",
+              "accepted": true,
+              "box_err_change_db": 10.723126634579472,
+              "box_err_before_rel_truth_db": -1.7430900662317885,
+              "err_before": 0.03017960310979182,
+              "err_after": 0.35647262774628585,
+              "truth_energy": 0.04508400930216187
+            },
+            {
+              "region_id": "mixture-00194",
+              "truth_stem": "bass",
+              "accepted": true,
+              "box_err_change_db": 0.00204032001884027,
+              "box_err_before_rel_truth_db": -0.0033915067878397616,
+              "err_before": 0.00046164308550696834,
+              "err_after": 0.0004618600168647323,
+              "truth_energy": 0.0004620037341485886
+            },
+            {
+              "region_id": "mixture-00194",
+              "truth_stem": "other",
+              "accepted": true,
+              "box_err_change_db": -0.691310890028835,
+              "box_err_before_rel_truth_db": -0.9629303227102342,
+              "err_before": 1.104952563460206,
+              "err_after": 0.9423506724347839,
+              "truth_energy": 1.3792299079895556
+            },
+            {
+              "region_id": "mixture-00199",
+              "truth_stem": "vocals",
+              "accepted": true,
+              "box_err_change_db": -3.267376612697042,
+              "box_err_before_rel_truth_db": 28.088310543831945,
+              "err_before": 0.18824489806549005,
+              "err_after": 0.08871265013649954,
+              "truth_energy": 0.00029234263702466426
+            },
+            {
+              "region_id": "mixture-00199",
+              "truth_stem": "drums",
+              "accepted": true,
+              "box_err_change_db": 8.260450378453953,
+              "box_err_before_rel_truth_db": -11.94671517348278,
+              "err_before": 1.2435044760265295,
+              "err_after": 8.330909001695508,
+              "truth_energy": 19.46788939663309
+            },
+            {
+              "region_id": "mixture-00199",
+              "truth_stem": "bass",
+              "accepted": true,
+              "box_err_change_db": 0.0008229664928862237,
+              "box_err_before_rel_truth_db": -0.0010074105765428487,
+              "err_before": 0.03717034153196648,
+              "err_after": 0.03717738579464751,
+              "truth_energy": 0.037178964745049684
+            },
+            {
+              "region_id": "mixture-00199",
+              "truth_stem": "other",
+              "accepted": true,
+              "box_err_change_db": 0.18762358449152747,
+              "box_err_before_rel_truth_db": -0.33818947618338013,
+              "err_before": 9.183165377027759,
+              "err_after": 9.588590330363338,
+              "truth_energy": 9.926847567616544
+            },
+            {
+              "region_id": "mixture-00223",
+              "truth_stem": "vocals",
+              "accepted": true,
+              "box_err_change_db": 5.631419440029398,
+              "box_err_before_rel_truth_db": 18.90503955031296,
+              "err_before": 0.5176234238812002,
+              "err_after": 1.8930228888706917,
+              "truth_energy": 0.006660548055984971
+            },
+            {
+              "region_id": "mixture-00223",
+              "truth_stem": "drums",
+              "accepted": true,
+              "box_err_change_db": -4.561877168558016,
+              "box_err_before_rel_truth_db": -0.607624991010445,
+              "err_before": 0.5497917875874109,
+              "err_after": 0.19231383638559918,
+              "truth_energy": 0.6323546951186765
+            },
+            {
+              "region_id": "mixture-00223",
+              "truth_stem": "bass",
+              "accepted": true,
+              "box_err_change_db": -0.12537402970824754,
+              "box_err_before_rel_truth_db": 0.12845949529790562,
+              "err_before": 0.001177764513654227,
+              "err_after": 0.001144250370725156,
+              "truth_energy": 0.0011434377213725548
+            },
+            {
+              "region_id": "mixture-00223",
+              "truth_stem": "other",
+              "accepted": true,
+              "box_err_change_db": 0.13191013427285384,
+              "box_err_before_rel_truth_db": -0.16016297331830637,
+              "err_before": 1.6546428506483828,
+              "err_after": 1.7056710588538069,
+              "truth_energy": 1.7168033991219331
+            },
+            {
+              "region_id": "mixture-00201",
+              "truth_stem": "vocals",
+              "accepted": true,
+              "box_err_change_db": -8.282256760965772,
+              "box_err_before_rel_truth_db": 24.788225370036283,
+              "err_before": 0.04233376485230743,
+              "err_after": 0.006287257057324448,
+              "truth_energy": 0.00014056084396991912
+            },
+            {
+              "region_id": "mixture-00201",
+              "truth_stem": "drums",
+              "accepted": true,
+              "box_err_change_db": 4.668962891698153,
+              "box_err_before_rel_truth_db": -2.6970755829535364,
+              "err_before": 0.23247970279192698,
+              "err_after": 0.6812104960274994,
+              "truth_energy": 0.4326060612342151
+            },
+            {
+              "region_id": "mixture-00201",
+              "truth_stem": "bass",
+              "accepted": true,
+              "box_err_change_db": 0.0062941706576626864,
+              "box_err_before_rel_truth_db": -0.007066487328223549,
+              "err_before": 0.002132436980235219,
+              "err_after": 0.0021355297326497045,
+              "truth_energy": 0.0021359095329788478
+            },
+            {
+              "region_id": "mixture-00201",
+              "truth_stem": "other",
+              "accepted": true,
+              "box_err_change_db": 0.019469707481737306,
+              "box_err_before_rel_truth_db": -0.02209451986655945,
+              "err_before": 0.9705604872982196,
+              "err_after": 0.9749213415409184,
+              "truth_energy": 0.9755107478494802
+            },
+            {
+              "region_id": "mixture-00198",
+              "truth_stem": "vocals",
+              "accepted": true,
+              "box_err_change_db": -0.9245515642579796,
+              "box_err_before_rel_truth_db": 37.23565333567795,
+              "err_before": 0.24674694563462823,
+              "err_after": 0.1994328194286367,
+              "truth_energy": 4.663225872591097e-05
+            },
+            {
+              "region_id": "mixture-00198",
+              "truth_stem": "drums",
+              "accepted": true,
+              "box_err_change_db": -0.011160352732719557,
+              "box_err_before_rel_truth_db": -4.5732274729286795,
+              "err_before": 0.7073179572077593,
+              "err_after": 0.7055026488982825,
+              "truth_energy": 2.027390612681908
+            },
+            {
+              "region_id": "mixture-00198",
+              "truth_stem": "bass",
+              "accepted": true,
+              "box_err_change_db": -0.0008367226650945441,
+              "box_err_before_rel_truth_db": 0.001530152298692626,
+              "err_before": 0.0011333375290268654,
+              "err_after": 0.001133119198402548,
+              "truth_energy": 0.001132938289885867
+            },
+            {
+              "region_id": "mixture-00198",
+              "truth_stem": "other",
+              "accepted": true,
+              "box_err_change_db": 0.46130556393550237,
+              "box_err_before_rel_truth_db": -0.5469333404477446,
+              "err_before": 1.043113345456357,
+              "err_after": 1.1600108681100456,
+              "truth_energy": 1.18310921168987
+            }
+          ],
+          "box_total_changes": [
+            {
+              "region_id": "mixture-00193",
+              "accepted": true,
+              "total_err_change_db": 0.894654997194106,
+              "total_err_before_rel_truth_db": -0.4587890029044464,
+              "err_before": 0.13631001246993588,
+              "err_after": 0.16752634313841627,
+              "truth_energy": 0.1514979156784351
+            },
+            {
+              "region_id": "mixture-00209",
+              "accepted": true,
+              "total_err_change_db": 1.03925318378095,
+              "total_err_before_rel_truth_db": -0.21209194786264304,
+              "err_before": 0.07173855402654358,
+              "err_after": 0.09115384196060133,
+              "truth_energy": 0.075328932586234
+            },
+            {
+              "region_id": "mixture-00220",
+              "accepted": true,
+              "total_err_change_db": 0.05218096094122133,
+              "total_err_before_rel_truth_db": -0.3473092684797621,
+              "err_before": 0.010270703522901914,
+              "err_after": 0.010394985974595856,
+              "truth_energy": 0.01112579669739422
+            },
+            {
+              "region_id": "mixture-00203",
+              "accepted": true,
+              "total_err_change_db": -0.35603312694039024,
+              "total_err_before_rel_truth_db": 0.09699684193883726,
+              "err_before": 0.10756817575292384,
+              "err_after": 0.09909328034935024,
+              "truth_energy": 0.10519234077913918
+            },
+            {
+              "region_id": "mixture-00222",
+              "accepted": true,
+              "total_err_change_db": 0.7295486531125989,
+              "total_err_before_rel_truth_db": -0.19425964206054164,
+              "err_before": 3.4777883915866665,
+              "err_after": 4.114605873025113,
+              "truth_energy": 3.6368812236740773
+            },
+            {
+              "region_id": "mixture-00194",
+              "accepted": true,
+              "total_err_change_db": 1.245036725384075,
+              "total_err_before_rel_truth_db": -0.8982640014043322,
+              "err_before": 1.158813462967321,
+              "err_after": 1.544010694636424,
+              "truth_energy": 1.425082254899493
+            },
+            {
+              "region_id": "mixture-00199",
+              "accepted": true,
+              "total_err_change_db": 2.284410706388487,
+              "total_err_before_rel_truth_db": -4.413882209594607,
+              "err_before": 10.652085092651745,
+              "err_after": 18.045389367989994,
+              "truth_energy": 29.43220827163171
+            },
+            {
+              "region_id": "mixture-00223",
+              "accepted": true,
+              "total_err_change_db": 1.4369461533231491,
+              "total_err_before_rel_truth_db": 0.6273265654463732,
+              "err_before": 2.7232358266306482,
+              "err_after": 3.792152034480823,
+              "truth_energy": 2.356962080017967
+            },
+            {
+              "region_id": "mixture-00201",
+              "accepted": true,
+              "total_err_change_db": 1.2513237525898764,
+              "total_err_before_rel_truth_db": -0.5329745035666132,
+              "err_before": 1.2475063919226894,
+              "err_after": 1.664554624358392,
+              "truth_energy": 1.410393279460644
+            },
+            {
+              "region_id": "mixture-00198",
+              "accepted": true,
+              "total_err_change_db": 0.14460954606476056,
+              "total_err_before_rel_truth_db": -2.0606897909402004,
+              "err_before": 1.9983115858277714,
+              "err_after": 2.0660794556353674,
+              "truth_energy": 3.21167939492039
+            }
+          ],
+          "pooled_change_db_accepted": 1.65227187353965,
+          "pooled_change_db_all_proposals": 1.65227187353965,
+          "whole_stem_sdr": {
+            "vocals": {
+              "sdr_before_db": 17.04265160293756,
+              "sdr_after_db": 17.0426027200611
+            },
+            "drums": {
+              "sdr_before_db": 5.677968434097384,
+              "sdr_after_db": 5.67794982956093
+            },
+            "bass": {
+              "sdr_before_db": 19.903983546422875,
+              "sdr_after_db": 19.903983546473686
+            },
+            "other": {
+              "sdr_before_db": 2.4036422313170354,
+              "sdr_after_db": 2.4036393173460344
+            }
+          },
+          "reconstruction": {
+            "before": {
+              "snr_db": 32.005109860775185,
+              "residual_rel_db": -32.005109860775185
+            },
+            "after": {
+              "snr_db": 32.00583686739354,
+              "residual_rel_db": -32.00583686739354
+            }
+          },
+          "seconds": 8.3
+        },
+        "a2sb": {
+          "accepted": 0,
+          "rejected": 10,
+          "decisions": [
+            {
+              "region_id": "mixture-00193",
+              "stem": "mixture",
+              "accepted": false,
+              "reasons": [
+                "mixture error in region increased by +0.87 dB",
+                "residual evidence increased (1.00 -> 1.00)"
+              ],
+              "stems_changed": [
+                "vocals",
+                "drums"
+              ],
+              "err_delta_db": 0.8713207504494374,
+              "stem_change_rel_db": -6.625999539096821,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 0.008727533349722044,
+              "err_before": 0.1682284296638478,
+              "evidence_before": 0.9986531138420105,
+              "evidence_after": 0.9989510178565979,
+              "notes": [
+                "A2SB 50 steps fp16, targets ['vocals', 'drums']"
+              ]
+            },
+            {
+              "region_id": "mixture-00209",
+              "stem": "mixture",
+              "accepted": false,
+              "reasons": [
+                "mixture error in region increased by +1.26 dB",
+                "residual evidence increased (1.00 -> 1.00)"
+              ],
+              "stems_changed": [
+                "vocals",
+                "drums"
+              ],
+              "err_delta_db": 1.256312121777906,
+              "stem_change_rel_db": -4.564178357443836,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 0.009693053540407648,
+              "err_before": 0.1018280559379855,
+              "evidence_before": 0.998140811920166,
+              "evidence_after": 0.9986246228218079,
+              "notes": [
+                "A2SB 50 steps fp16, targets ['vocals', 'drums']"
+              ]
+            },
+            {
+              "region_id": "mixture-00220",
+              "stem": "mixture",
+              "accepted": false,
+              "reasons": [
+                "mixture error in region increased by +0.22 dB",
+                "residual evidence increased (1.00 -> 1.00)"
+              ],
+              "stems_changed": [
+                "vocals",
+                "other"
+              ],
+              "err_delta_db": 0.21731288552032327,
+              "stem_change_rel_db": -11.102411493485526,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 0.001562068372591553,
+              "err_before": 0.012799684200535504,
+              "evidence_before": 0.9955558180809021,
+              "evidence_after": 0.9956004619598389,
+              "notes": [
+                "A2SB 50 steps fp16, targets ['vocals', 'other']"
+              ]
+            },
+            {
+              "region_id": "mixture-00203",
+              "stem": "mixture",
+              "accepted": false,
+              "reasons": [
+                "mixture error in region increased by +1.17 dB",
+                "residual evidence increased (0.99 -> 0.99)"
+              ],
+              "stems_changed": [
+                "vocals",
+                "drums"
+              ],
+              "err_delta_db": 1.16721975316916,
+              "stem_change_rel_db": -3.4193257998217264,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 0.0225220017624807,
+              "err_before": 0.09141949034257829,
+              "evidence_before": 0.992742657661438,
+              "evidence_after": 0.9947519898414612,
+              "notes": [
+                "A2SB 50 steps fp16, targets ['vocals', 'drums']"
+              ]
+            },
+            {
+              "region_id": "mixture-00222",
+              "stem": "mixture",
+              "accepted": false,
+              "reasons": [
+                "mixture error in region increased by +2.72 dB",
+                "residual evidence increased (1.00 -> 1.00)"
+              ],
+              "stems_changed": [
+                "drums",
+                "vocals"
+              ],
+              "err_delta_db": 2.71619717068085,
+              "stem_change_rel_db": 0.6490753199945832,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 0.7498075813984493,
+              "err_before": 2.930812089484637,
+              "evidence_before": 0.9991669654846191,
+              "evidence_after": 0.9998765587806702,
+              "notes": [
+                "A2SB 50 steps fp16, targets ['drums', 'vocals']"
+              ]
+            },
+            {
+              "region_id": "mixture-00194",
+              "stem": "mixture",
+              "accepted": false,
+              "reasons": [
+                "mixture error in region increased by +1.45 dB",
+                "residual evidence increased (1.00 -> 1.00)"
+              ],
+              "stems_changed": [
+                "drums",
+                "vocals"
+              ],
+              "err_delta_db": 1.4501382169420929,
+              "stem_change_rel_db": -1.4929490626880115,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 0.08223451996599263,
+              "err_before": 1.11279580242435,
+              "evidence_before": 0.9987509250640869,
+              "evidence_after": 0.9995010495185852,
+              "notes": [
+                "A2SB 50 steps fp16, targets ['drums', 'vocals']"
+              ]
+            },
+            {
+              "region_id": "mixture-00199",
+              "stem": "mixture",
+              "accepted": false,
+              "reasons": [
+                "mixture error in region increased by +3.92 dB",
+                "residual evidence increased (1.00 -> 1.00)"
+              ],
+              "stems_changed": [
+                "drums"
+              ],
+              "err_delta_db": 3.9191121547726206,
+              "stem_change_rel_db": -7.1772481925882285,
+              "unexplained_added_energy": 0.12296202369221909,
+              "stem_energy_in_box": 43.608002685104246,
+              "err_before": 8.230016725172312,
+              "evidence_before": 0.9990382194519043,
+              "evidence_after": 0.9998489618301392,
+              "notes": [
+                "A2SB 50 steps fp16, targets ['drums']"
+              ]
+            },
+            {
+              "region_id": "mixture-00223",
+              "stem": "mixture",
+              "accepted": false,
+              "reasons": [
+                "mixture error in region increased by +3.57 dB",
+                "residual evidence increased (1.00 -> 1.00)"
+              ],
+              "stems_changed": [
+                "vocals",
+                "drums"
+              ],
+              "err_delta_db": 3.57371777047053,
+              "stem_change_rel_db": -0.8997826388752018,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 0.6329987277271145,
+              "err_before": 1.664925273099099,
+              "evidence_before": 0.9962369203567505,
+              "evidence_after": 0.9996715188026428,
+              "notes": [
+                "A2SB 50 steps fp16, targets ['vocals', 'drums']"
+              ]
+            },
+            {
+              "region_id": "mixture-00201",
+              "stem": "mixture",
+              "accepted": false,
+              "reasons": [
+                "mixture error in region increased by +2.72 dB",
+                "residual evidence increased (1.00 -> 1.00)"
+              ],
+              "stems_changed": [
+                "drums",
+                "vocals"
+              ],
+              "err_delta_db": 2.722862813801265,
+              "stem_change_rel_db": 1.0634598466243184,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 0.19791749435599876,
+              "err_before": 1.3526109921488014,
+              "evidence_before": 0.9984298944473267,
+              "evidence_after": 0.9996693730354309,
+              "notes": [
+                "A2SB 50 steps fp16, targets ['drums', 'vocals']"
+              ]
+            },
+            {
+              "region_id": "mixture-00198",
+              "stem": "mixture",
+              "accepted": false,
+              "reasons": [
+                "mixture error in region increased by +5.90 dB",
+                "adds energy not explained by the missing residual (-5.6 dB)",
+                "residual evidence increased (0.99 -> 1.00)"
+              ],
+              "stems_changed": [
+                "drums",
+                "vocals"
+              ],
+              "err_delta_db": 5.899953193148145,
+              "stem_change_rel_db": -1.1403315852585714,
+              "unexplained_added_energy": 0.6101652664999682,
+              "stem_energy_in_box": 2.192271723111761,
+              "err_before": 1.3420970967213512,
+              "evidence_before": 0.9948550462722778,
+              "evidence_after": 0.9998467564582825,
+              "notes": [
+                "A2SB 50 steps fp16, targets ['drums', 'vocals']"
+              ]
+            }
+          ],
+          "box_truth_changes": [
+            {
+              "region_id": "mixture-00193",
+              "truth_stem": "vocals",
+              "accepted": false,
+              "box_err_change_db": -3.5138468416627697,
+              "box_err_before_rel_truth_db": 10.536222328951197,
+              "err_before": 0.003066744778648373,
+              "err_after": 0.0013655039172995379,
+              "truth_energy": 0.0002710537384897549
+            },
+            {
+              "region_id": "mixture-00193",
+              "truth_stem": "drums",
+              "accepted": false,
+              "box_err_change_db": 0.9987819093708528,
+              "box_err_before_rel_truth_db": -1.2116432746850305,
+              "err_before": 0.0036581851072784153,
+              "err_after": 0.0046040906757840745,
+              "truth_energy": 0.0048353732639620246
+            },
+            {
+              "region_id": "mixture-00209",
+              "truth_stem": "vocals",
+              "accepted": false,
+              "box_err_change_db": -3.4033438132722056,
+              "box_err_before_rel_truth_db": 22.91957349672036,
+              "err_before": 0.005224850164701838,
+              "err_after": 0.0023863792229747195,
+              "truth_energy": 2.667574092145748e-05
+            },
+            {
+              "region_id": "mixture-00209",
+              "truth_stem": "drums",
+              "accepted": false,
+              "box_err_change_db": 0.44025419178317393,
+              "box_err_before_rel_truth_db": -1.4433168086837074,
+              "err_before": 0.011077395758780384,
+              "err_after": 0.01225922712057147,
+              "truth_energy": 0.01544433996145543
+            },
+            {
+              "region_id": "mixture-00220",
+              "truth_stem": "vocals",
+              "accepted": false,
+              "box_err_change_db": -0.6007262670305509,
+              "box_err_before_rel_truth_db": 15.539963218712431,
+              "err_before": 0.0006234795021749851,
+              "err_after": 0.0005429371429617344,
+              "truth_energy": 1.7411085896786415e-05
+            },
+            {
+              "region_id": "mixture-00220",
+              "truth_stem": "other",
+              "accepted": false,
+              "box_err_change_db": -0.005927111106327079,
+              "box_err_before_rel_truth_db": -0.6142686208797012,
+              "err_before": 0.008050589176738641,
+              "err_after": 0.008039609486186577,
+              "truth_energy": 0.009273731701432702
+            },
+            {
+              "region_id": "mixture-00203",
+              "truth_stem": "vocals",
+              "accepted": false,
+              "box_err_change_db": 0.6268667580619638,
+              "box_err_before_rel_truth_db": 37.4027429768601,
+              "err_before": 0.014993679110719159,
+              "err_after": 0.017321874502642783,
+              "truth_energy": 2.7266783781278217e-06
+            },
+            {
+              "region_id": "mixture-00203",
+              "truth_stem": "drums",
+              "accepted": false,
+              "box_err_change_db": 0.5819754246622887,
+              "box_err_before_rel_truth_db": -1.7065924892410043,
+              "err_before": 0.01822376558850094,
+              "err_after": 0.020837022607634037,
+              "truth_energy": 0.026995872565800473
+            },
+            {
+              "region_id": "mixture-00222",
+              "truth_stem": "vocals",
+              "accepted": false,
+              "box_err_change_db": 1.6325439340282628,
+              "box_err_before_rel_truth_db": 5.374168874815979,
+              "err_before": 0.2921318035492628,
+              "err_after": 0.4254350170906266,
+              "truth_energy": 0.08475434120493319
+            },
+            {
+              "region_id": "mixture-00222",
+              "truth_stem": "drums",
+              "accepted": false,
+              "box_err_change_db": 0.548595346836614,
+              "box_err_before_rel_truth_db": -0.8353853071444821,
+              "err_before": 1.426361071110451,
+              "err_after": 1.6184117097944322,
+              "truth_energy": 1.7288925707138028
+            },
+            {
+              "region_id": "mixture-00194",
+              "truth_stem": "vocals",
+              "accepted": false,
+              "box_err_change_db": -0.6865097236065121,
+              "box_err_before_rel_truth_db": 18.796607084334514,
+              "err_before": 0.023219653311816354,
+              "err_after": 0.01982461485306192,
+              "truth_energy": 0.0003063338736268837
+            },
+            {
+              "region_id": "mixture-00194",
+              "truth_stem": "drums",
+              "accepted": false,
+              "box_err_change_db": 1.0955211845138684,
+              "box_err_before_rel_truth_db": -1.7430900662317885,
+              "err_before": 0.03017960310979182,
+              "err_after": 0.0388387856441727,
+              "truth_energy": 0.04508400930216187
+            },
+            {
+              "region_id": "mixture-00199",
+              "truth_stem": "drums",
+              "accepted": false,
+              "box_err_change_db": 6.630895508858252,
+              "box_err_before_rel_truth_db": -11.94671517348278,
+              "err_before": 1.2435044760265295,
+              "err_after": 5.724491353731789,
+              "truth_energy": 19.46788939663309
+            },
+            {
+              "region_id": "mixture-00223",
+              "truth_stem": "vocals",
+              "accepted": false,
+              "box_err_change_db": -7.400707287580196,
+              "box_err_before_rel_truth_db": 18.90503955031296,
+              "err_before": 0.5176234238812002,
+              "err_after": 0.09417664012641783,
+              "truth_energy": 0.006660548055984971
+            },
+            {
+              "region_id": "mixture-00223",
+              "truth_stem": "drums",
+              "accepted": false,
+              "box_err_change_db": 0.4890972461120638,
+              "box_err_before_rel_truth_db": -0.607624991010445,
+              "err_before": 0.5497917875874109,
+              "err_after": 0.6153298351278554,
+              "truth_energy": 0.6323546951186765
+            },
+            {
+              "region_id": "mixture-00201",
+              "truth_stem": "vocals",
+              "accepted": false,
+              "box_err_change_db": -2.0435094245198355,
+              "box_err_before_rel_truth_db": 24.788225370036283,
+              "err_before": 0.04233376485230743,
+              "err_after": 0.02644453596712323,
+              "truth_energy": 0.00014056084396991912
+            },
+            {
+              "region_id": "mixture-00201",
+              "truth_stem": "drums",
+              "accepted": false,
+              "box_err_change_db": 3.007958351195501,
+              "box_err_before_rel_truth_db": -2.6970755829535364,
+              "err_before": 0.23247970279192698,
+              "err_after": 0.4647087788639578,
+              "truth_energy": 0.4326060612342151
+            },
+            {
+              "region_id": "mixture-00198",
+              "truth_stem": "vocals",
+              "accepted": false,
+              "box_err_change_db": -1.8784590173263598,
+              "box_err_before_rel_truth_db": 37.23565333567795,
+              "err_before": 0.24674694563462818,
+              "err_after": 0.1601053645196332,
+              "truth_energy": 4.663225872591097e-05
+            },
+            {
+              "region_id": "mixture-00198",
+              "truth_stem": "drums",
+              "accepted": false,
+              "box_err_change_db": 4.706034690407067,
+              "box_err_before_rel_truth_db": -4.5732274729286795,
+              "err_before": 0.7073179572077593,
+              "err_after": 2.0903458811371367,
+              "truth_energy": 2.0273906126819083
+            }
+          ],
+          "box_total_changes": [
+            {
+              "region_id": "mixture-00193",
+              "accepted": false,
+              "total_err_change_db": -0.5170122989088659,
+              "total_err_before_rel_truth_db": 1.1957063279812066,
+              "err_before": 0.006724929885926788,
+              "err_after": 0.0059695945930836125,
+              "truth_energy": 0.005106427002451779
+            },
+            {
+              "region_id": "mixture-00209",
+              "accepted": false,
+              "total_err_change_db": -0.4649350991122531,
+              "total_err_before_rel_truth_db": 0.2272861337676346,
+              "err_before": 0.01630224592348222,
+              "err_after": 0.01464560634354619,
+              "truth_energy": 0.015471015702376889
+            },
+            {
+              "region_id": "mixture-00220",
+              "accepted": false,
+              "total_err_change_db": -0.046017294851774075,
+              "total_err_before_rel_truth_db": -0.2984627796248486,
+              "err_before": 0.008674068678913627,
+              "err_after": 0.008582546629148311,
+              "truth_energy": 0.009291142787329489
+            },
+            {
+              "region_id": "mixture-00203",
+              "accepted": false,
+              "total_err_change_db": 0.6018391732762913,
+              "total_err_before_rel_truth_db": 0.900249882146626,
+              "err_before": 0.0332174446992201,
+              "err_after": 0.03815889711027682,
+              "truth_energy": 0.026998599244178603
+            },
+            {
+              "region_id": "mixture-00222",
+              "accepted": false,
+              "total_err_change_db": 0.7522769686220504,
+              "total_err_before_rel_truth_db": -0.2340500498182348,
+              "err_before": 1.718492874659714,
+              "err_after": 2.0438467268850586,
+              "truth_energy": 1.813646911918736
+            },
+            {
+              "region_id": "mixture-00194",
+              "accepted": false,
+              "total_err_change_db": 0.40798924784817114,
+              "total_err_before_rel_truth_db": 0.7057174331208604,
+              "err_before": 0.05339925642160817,
+              "err_after": 0.05866340049723462,
+              "truth_energy": 0.04539034317578876
+            },
+            {
+              "region_id": "mixture-00199",
+              "accepted": false,
+              "total_err_change_db": 6.578175016215967,
+              "total_err_before_rel_truth_db": -11.94671517348278,
+              "err_before": 1.2435044760265295,
+              "err_after": 5.724491353731789,
+              "truth_energy": 19.46788939663309
+            },
+            {
+              "region_id": "mixture-00223",
+              "accepted": false,
+              "total_err_change_db": -1.772459694589221,
+              "total_err_before_rel_truth_db": 2.2282216952034894,
+              "err_before": 1.067415211468611,
+              "err_after": 0.7095064752542732,
+              "truth_energy": 0.6390152431746614
+            },
+            {
+              "region_id": "mixture-00201",
+              "accepted": false,
+              "total_err_change_db": 2.518782058981839,
+              "total_err_before_rel_truth_db": -1.971956743981487,
+              "err_before": 0.2748134676442344,
+              "err_after": 0.491153314831081,
+              "truth_energy": 0.432746622078185
+            },
+            {
+              "region_id": "mixture-00198",
+              "accepted": false,
+              "total_err_change_db": 3.7216085080114363,
+              "total_err_before_rel_truth_db": -3.273695006537837,
+              "err_before": 0.9540649028423874,
+              "err_after": 2.25045124565677,
+              "truth_energy": 2.0274372449406344
+            }
+          ],
+          "pooled_change_db_accepted": null,
+          "pooled_change_db_all_proposals": 3.2327707256871707,
+          "whole_stem_sdr": {
+            "vocals": {
+              "sdr_before_db": 17.04265160293756,
+              "sdr_after_db": 17.04265160293756
+            },
+            "drums": {
+              "sdr_before_db": 5.677968434097384,
+              "sdr_after_db": 5.677968434097384
+            },
+            "bass": {
+              "sdr_before_db": 19.903983546422875,
+              "sdr_after_db": 19.903983546422875
+            },
+            "other": {
+              "sdr_before_db": 2.4036422313170354,
+              "sdr_after_db": 2.4036422313170354
+            }
+          },
+          "reconstruction": {
+            "before": {
+              "snr_db": 32.005109860775185,
+              "residual_rel_db": -32.005109860775185
+            },
+            "after": {
+              "snr_db": 32.005109860775185,
+              "residual_rel_db": -32.005109860775185
+            }
+          },
+          "seconds": 798.5
+        },
+        "a2sb_consistent": {
+          "accepted": 10,
+          "rejected": 0,
+          "decisions": [
+            {
+              "region_id": "mixture-00193",
+              "stem": "mixture",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -7.586544969632053,
+              "stem_change_rel_db": 7.469531899898278,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 0.008727533349722044,
+              "err_before": 0.1682284296638478,
+              "evidence_before": 0.9986531138420105,
+              "evidence_after": 0.993653416633606,
+              "notes": [
+                "A2SB 50 steps fp16, targets ['vocals', 'drums']",
+                "allocation from A2SB prior, stems = Wiener split of O_ref"
+              ]
+            },
+            {
+              "region_id": "mixture-00209",
+              "stem": "mixture",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -6.811993710658592,
+              "stem_change_rel_db": 4.860766048733075,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 0.009693053540407648,
+              "err_before": 0.1018280559379855,
+              "evidence_before": 0.998140811920166,
+              "evidence_after": 0.9949174523353577,
+              "notes": [
+                "A2SB 50 steps fp16, targets ['vocals', 'drums']",
+                "allocation from A2SB prior, stems = Wiener split of O_ref"
+              ]
+            },
+            {
+              "region_id": "mixture-00220",
+              "stem": "mixture",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -6.184469216003251,
+              "stem_change_rel_db": 8.127805050832476,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 0.001562068372591553,
+              "err_before": 0.012799684200535504,
+              "evidence_before": 0.9955558180809021,
+              "evidence_after": 0.9942407011985779,
+              "notes": [
+                "A2SB 50 steps fp16, targets ['vocals', 'other']",
+                "allocation from A2SB prior, stems = Wiener split of O_ref"
+              ]
+            },
+            {
+              "region_id": "mixture-00203",
+              "stem": "mixture",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -8.672054533813832,
+              "stem_change_rel_db": 6.965732079401528,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 0.0225220017624807,
+              "err_before": 0.09141949034257829,
+              "evidence_before": 0.992742657661438,
+              "evidence_after": 0.9363998174667358,
+              "notes": [
+                "A2SB 50 steps fp16, targets ['vocals', 'drums']",
+                "allocation from A2SB prior, stems = Wiener split of O_ref"
+              ]
+            },
+            {
+              "region_id": "mixture-00222",
+              "stem": "mixture",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -20.66823481787447,
+              "stem_change_rel_db": 5.8588650167405,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 0.7498075813984493,
+              "err_before": 2.930812089484637,
+              "evidence_before": 0.9991669654846191,
+              "evidence_after": 0.6102717518806458,
+              "notes": [
+                "A2SB 50 steps fp16, targets ['drums', 'vocals']",
+                "allocation from A2SB prior, stems = Wiener split of O_ref"
+              ]
+            },
+            {
+              "region_id": "mixture-00194",
+              "stem": "mixture",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -13.864127970004052,
+              "stem_change_rel_db": 9.392289895348696,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 0.08223434039271153,
+              "err_before": 1.1127970838685357,
+              "evidence_before": 0.9987509846687317,
+              "evidence_after": 0.9141186475753784,
+              "notes": [
+                "A2SB 50 steps fp16, targets ['drums', 'vocals']",
+                "allocation from A2SB prior, stems = Wiener split of O_ref"
+              ]
+            },
+            {
+              "region_id": "mixture-00199",
+              "stem": "mixture",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -18.75034420371135,
+              "stem_change_rel_db": -6.307887584129215,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 43.60800267141071,
+              "err_before": 8.23001622587147,
+              "evidence_before": 0.9990382194519043,
+              "evidence_after": 0.9472668766975403,
+              "notes": [
+                "A2SB 50 steps fp16, targets ['drums']",
+                "allocation from A2SB prior, stems = Wiener split of O_ref"
+              ]
+            },
+            {
+              "region_id": "mixture-00223",
+              "stem": "mixture",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -18.597950908809487,
+              "stem_change_rel_db": 5.19920945501246,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 0.6329987495748972,
+              "err_before": 1.6649253329794675,
+              "evidence_before": 0.9962369203567505,
+              "evidence_after": 0.34996679425239563,
+              "notes": [
+                "A2SB 50 steps fp16, targets ['vocals', 'drums']",
+                "allocation from A2SB prior, stems = Wiener split of O_ref"
+              ]
+            },
+            {
+              "region_id": "mixture-00201",
+              "stem": "mixture",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -12.182147386289458,
+              "stem_change_rel_db": 8.789130794677959,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 0.19793515584311433,
+              "err_before": 1.3525164326282701,
+              "evidence_before": 0.9984298944473267,
+              "evidence_after": 0.9591250419616699,
+              "notes": [
+                "A2SB 50 steps fp16, targets ['drums', 'vocals']",
+                "allocation from A2SB prior, stems = Wiener split of O_ref"
+              ]
+            },
+            {
+              "region_id": "mixture-00198",
+              "stem": "mixture",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -16.81985540666271,
+              "stem_change_rel_db": -0.13251714231073758,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 2.1922717630763744,
+              "err_before": 1.3420962151206801,
+              "evidence_before": 0.9948550462722778,
+              "evidence_after": 0.8671279549598694,
+              "notes": [
+                "A2SB 50 steps fp16, targets ['drums', 'vocals']",
+                "allocation from A2SB prior, stems = Wiener split of O_ref"
+              ]
+            }
+          ],
+          "box_truth_changes": [
+            {
+              "region_id": "mixture-00193",
+              "truth_stem": "vocals",
+              "accepted": true,
+              "box_err_change_db": 9.955778780177539,
+              "box_err_before_rel_truth_db": 10.536222328951197,
+              "err_before": 0.003066744778648373,
+              "err_after": 0.030356766670421562,
+              "truth_energy": 0.0002710537384897549
+            },
+            {
+              "region_id": "mixture-00193",
+              "truth_stem": "drums",
+              "accepted": true,
+              "box_err_change_db": 3.4009079319934403,
+              "box_err_before_rel_truth_db": -1.2116432746850305,
+              "err_before": 0.0036581851072784153,
+              "err_after": 0.008004910315174354,
+              "truth_energy": 0.0048353732639620246
+            },
+            {
+              "region_id": "mixture-00193",
+              "truth_stem": "bass",
+              "accepted": true,
+              "box_err_change_db": -0.0017573606450874161,
+              "box_err_before_rel_truth_db": 0.0065748949369272,
+              "err_before": 0.00011238153075327296,
+              "err_after": 0.00011233606507615336,
+              "truth_energy": 0.00011221152220995872
+            },
+            {
+              "region_id": "mixture-00193",
+              "truth_stem": "other",
+              "accepted": true,
+              "box_err_change_db": -0.283290770672237,
+              "box_err_before_rel_truth_db": -0.5300459725707404,
+              "err_before": 0.1294727010532558,
+              "err_after": 0.12129674068085741,
+              "truth_energy": 0.14627927715377337
+            },
+            {
+              "region_id": "mixture-00209",
+              "truth_stem": "vocals",
+              "accepted": true,
+              "box_err_change_db": 7.28781505652205,
+              "box_err_before_rel_truth_db": 22.91957349672036,
+              "err_before": 0.005224850164701838,
+              "err_after": 0.027980491964208067,
+              "truth_energy": 2.667574092145748e-05
+            },
+            {
+              "region_id": "mixture-00209",
+              "truth_stem": "drums",
+              "accepted": true,
+              "box_err_change_db": -3.9175797456256856,
+              "box_err_before_rel_truth_db": -1.4433168086837074,
+              "err_before": 0.011077395758780384,
+              "err_after": 0.004494482536883653,
+              "truth_energy": 0.01544433996145543
+            },
+            {
+              "region_id": "mixture-00209",
+              "truth_stem": "bass",
+              "accepted": true,
+              "box_err_change_db": 0.04680620737409679,
+              "box_err_before_rel_truth_db": -0.08229229137565786,
+              "err_before": 6.256038948876093e-05,
+              "err_after": 6.323828225137916e-05,
+              "truth_energy": 6.375711734282223e-05
+            },
+            {
+              "region_id": "mixture-00209",
+              "truth_stem": "other",
+              "accepted": true,
+              "box_err_change_db": 0.13285941605963392,
+              "box_err_before_rel_truth_db": -0.33354849815262855,
+              "err_before": 0.055373747713572605,
+              "err_after": 0.057093919623857375,
+              "truth_energy": 0.059794159766514275
+            },
+            {
+              "region_id": "mixture-00220",
+              "truth_stem": "vocals",
+              "accepted": true,
+              "box_err_change_db": -1.8902794519690247,
+              "box_err_before_rel_truth_db": 15.539963218712431,
+              "err_before": 0.0006234795021749851,
+              "err_after": 0.00040345419432610797,
+              "truth_energy": 1.7411085896786415e-05
+            },
+            {
+              "region_id": "mixture-00220",
+              "truth_stem": "drums",
+              "accepted": true,
+              "box_err_change_db": 0.20362100203423478,
+              "box_err_before_rel_truth_db": -0.6136202271742087,
+              "err_before": 0.0015681335217697131,
+              "err_after": 0.0016434070245116724,
+              "truth_energy": 0.0018061135942593412
+            },
+            {
+              "region_id": "mixture-00220",
+              "truth_stem": "bass",
+              "accepted": true,
+              "box_err_change_db": 0.002789201912928265,
+              "box_err_before_rel_truth_db": -0.005937663366160682,
+              "err_before": 2.850132221857448e-05,
+              "err_after": 2.851963271499318e-05,
+              "truth_energy": 2.854031580539124e-05
+            },
+            {
+              "region_id": "mixture-00220",
+              "truth_stem": "other",
+              "accepted": true,
+              "box_err_change_db": 0.14256185034315055,
+              "box_err_before_rel_truth_db": -0.6142686208797012,
+              "err_before": 0.008050589176738641,
+              "err_after": 0.008319243768992898,
+              "truth_energy": 0.009273731701432702
+            },
+            {
+              "region_id": "mixture-00203",
+              "truth_stem": "vocals",
+              "accepted": true,
+              "box_err_change_db": -5.002542301975536,
+              "box_err_before_rel_truth_db": 37.4027429768601,
+              "err_before": 0.014993679110719159,
+              "err_after": 0.004738642899130109,
+              "truth_energy": 2.7266783781278217e-06
+            },
+            {
+              "region_id": "mixture-00203",
+              "truth_stem": "drums",
+              "accepted": true,
+              "box_err_change_db": -0.1449533379996261,
+              "box_err_before_rel_truth_db": -1.7065924892410043,
+              "err_before": 0.01822376558850094,
+              "err_after": 0.017625554413797043,
+              "truth_energy": 0.026995872565800473
+            },
+            {
+              "region_id": "mixture-00203",
+              "truth_stem": "bass",
+              "accepted": true,
+              "box_err_change_db": -0.0061344417562906005,
+              "box_err_before_rel_truth_db": 0.007544455029109858,
+              "err_before": 0.0001726242728232187,
+              "err_after": 0.00017238061188494034,
+              "truth_energy": 0.00017232465457752495
+            },
+            {
+              "region_id": "mixture-00203",
+              "truth_stem": "other",
+              "accepted": true,
+              "box_err_change_db": 0.13041124890455352,
+              "box_err_before_rel_truth_db": -0.21938088094918026,
+              "err_before": 0.07417810678088052,
+              "err_after": 0.07643932963718092,
+              "truth_energy": 0.07802141688038305
+            },
+            {
+              "region_id": "mixture-00222",
+              "truth_stem": "vocals",
+              "accepted": true,
+              "box_err_change_db": 6.375124600964322,
+              "box_err_before_rel_truth_db": 5.374168874815979,
+              "err_before": 0.2921318035492628,
+              "err_after": 1.2679183873791255,
+              "truth_energy": 0.08475434120493319
+            },
+            {
+              "region_id": "mixture-00222",
+              "truth_stem": "drums",
+              "accepted": true,
+              "box_err_change_db": -1.3343022291355795,
+              "box_err_before_rel_truth_db": -0.8353853071444821,
+              "err_before": 1.426361071110451,
+              "err_after": 1.049057406877334,
+              "truth_energy": 1.7288925707138028
+            },
+            {
+              "region_id": "mixture-00222",
+              "truth_stem": "bass",
+              "accepted": true,
+              "box_err_change_db": -0.06167318929054074,
+              "box_err_before_rel_truth_db": 0.06374210278202345,
+              "err_before": 0.00023828429645353133,
+              "err_after": 0.00023492438750708888,
+              "truth_energy": 0.00023481249972062722
+            },
+            {
+              "region_id": "mixture-00222",
+              "truth_stem": "other",
+              "accepted": true,
+              "box_err_change_db": 0.12638154337333976,
+              "box_err_before_rel_truth_db": -0.15506579483432195,
+              "err_before": 1.7590572326304994,
+              "err_after": 1.8109986401784433,
+              "truth_energy": 1.8229994992556204
+            },
+            {
+              "region_id": "mixture-00194",
+              "truth_stem": "vocals",
+              "accepted": true,
+              "box_err_change_db": 9.753891833264323,
+              "box_err_before_rel_truth_db": 18.796607084334514,
+              "err_before": 0.023219653311816354,
+              "err_after": 0.21940418863329808,
+              "truth_energy": 0.0003063338736268837
+            },
+            {
+              "region_id": "mixture-00194",
+              "truth_stem": "drums",
+              "accepted": true,
+              "box_err_change_db": 10.87752131720082,
+              "box_err_before_rel_truth_db": -1.7430900662317885,
+              "err_before": 0.03017960310979182,
+              "err_after": 0.3693734330019265,
+              "truth_energy": 0.04508400930216187
+            },
+            {
+              "region_id": "mixture-00194",
+              "truth_stem": "bass",
+              "accepted": true,
+              "box_err_change_db": 0.002041583272157944,
+              "box_err_before_rel_truth_db": -0.0033915067878397616,
+              "err_before": 0.00046164308550696834,
+              "err_after": 0.0004618601512082038,
+              "truth_energy": 0.0004620037341485886
+            },
+            {
+              "region_id": "mixture-00194",
+              "truth_stem": "other",
+              "accepted": true,
+              "box_err_change_db": -0.6896754940516264,
+              "box_err_before_rel_truth_db": -0.9629303227102342,
+              "err_before": 1.104952563460206,
+              "err_after": 0.942705594443662,
+              "truth_energy": 1.3792299079895556
+            },
+            {
+              "region_id": "mixture-00199",
+              "truth_stem": "vocals",
+              "accepted": true,
+              "box_err_change_db": -7.860072861843652,
+              "box_err_before_rel_truth_db": 28.088310543831945,
+              "err_before": 0.18824489806549005,
+              "err_after": 0.030811718988429583,
+              "truth_energy": 0.00029234263702466426
+            },
+            {
+              "region_id": "mixture-00199",
+              "truth_stem": "drums",
+              "accepted": true,
+              "box_err_change_db": 8.460256563792955,
+              "box_err_before_rel_truth_db": -11.94671517348278,
+              "err_before": 1.2435044760265295,
+              "err_after": 8.723143346341972,
+              "truth_energy": 19.46788939663309
+            },
+            {
+              "region_id": "mixture-00199",
+              "truth_stem": "bass",
+              "accepted": true,
+              "box_err_change_db": 0.0008295959681774577,
+              "box_err_before_rel_truth_db": -0.0010074105765428487,
+              "err_before": 0.03717034153196648,
+              "err_after": 0.03717744254571364,
+              "truth_energy": 0.037178964745049684
+            },
+            {
+              "region_id": "mixture-00199",
+              "truth_stem": "other",
+              "accepted": true,
+              "box_err_change_db": 0.23968873498311036,
+              "box_err_before_rel_truth_db": -0.33818947618338013,
+              "err_before": 9.183165377027759,
+              "err_after": 9.704234419273607,
+              "truth_energy": 9.926847567616544
+            },
+            {
+              "region_id": "mixture-00223",
+              "truth_stem": "vocals",
+              "accepted": true,
+              "box_err_change_db": 4.063638004928546,
+              "box_err_before_rel_truth_db": 18.90503955031296,
+              "err_before": 0.5176234238812002,
+              "err_after": 1.3194037728493133,
+              "truth_energy": 0.006660548055984971
+            },
+            {
+              "region_id": "mixture-00223",
+              "truth_stem": "drums",
+              "accepted": true,
+              "box_err_change_db": -1.917716075064305,
+              "box_err_before_rel_truth_db": -0.607624991010445,
+              "err_before": 0.5497917875874109,
+              "err_after": 0.35353029924902013,
+              "truth_energy": 0.6323546951186765
+            },
+            {
+              "region_id": "mixture-00223",
+              "truth_stem": "bass",
+              "accepted": true,
+              "box_err_change_db": -0.12589328725999682,
+              "box_err_before_rel_truth_db": 0.12845949529790562,
+              "err_before": 0.001177764513654227,
+              "err_after": 0.0011441135683589484,
+              "truth_energy": 0.0011434377213725548
+            },
+            {
+              "region_id": "mixture-00223",
+              "truth_stem": "other",
+              "accepted": true,
+              "box_err_change_db": 0.07852159644254328,
+              "box_err_before_rel_truth_db": -0.16016297331830637,
+              "err_before": 1.6546428506483828,
+              "err_after": 1.6848313184914783,
+              "truth_energy": 1.7168033991219331
+            },
+            {
+              "region_id": "mixture-00201",
+              "truth_stem": "vocals",
+              "accepted": true,
+              "box_err_change_db": -9.992189165110478,
+              "box_err_before_rel_truth_db": 24.788225370036283,
+              "err_before": 0.04233376485230743,
+              "err_after": 0.004240997111081269,
+              "truth_energy": 0.00014056084396991912
+            },
+            {
+              "region_id": "mixture-00201",
+              "truth_stem": "drums",
+              "accepted": true,
+              "box_err_change_db": 4.8167221760767625,
+              "box_err_before_rel_truth_db": -2.6970755829535364,
+              "err_before": 0.23247970279192698,
+              "err_after": 0.7047859850135539,
+              "truth_energy": 0.4326060612342151
+            },
+            {
+              "region_id": "mixture-00201",
+              "truth_stem": "bass",
+              "accepted": true,
+              "box_err_change_db": 0.006292258931339877,
+              "box_err_before_rel_truth_db": -0.0070664873282230665,
+              "err_before": 0.002132436980235219,
+              "err_after": 0.002135528792608402,
+              "truth_energy": 0.0021359095329788473
+            },
+            {
+              "region_id": "mixture-00201",
+              "truth_stem": "other",
+              "accepted": true,
+              "box_err_change_db": 0.01946963532375233,
+              "box_err_before_rel_truth_db": -0.02209451986655945,
+              "err_before": 0.9705604872982196,
+              "err_after": 0.97492132534261,
+              "truth_energy": 0.9755107478494802
+            },
+            {
+              "region_id": "mixture-00198",
+              "truth_stem": "vocals",
+              "accepted": true,
+              "box_err_change_db": -5.236160219438492,
+              "box_err_before_rel_truth_db": 37.23565333567795,
+              "err_before": 0.24674694563462818,
+              "err_after": 0.07389852388601159,
+              "truth_energy": 4.663225872591097e-05
+            },
+            {
+              "region_id": "mixture-00198",
+              "truth_stem": "drums",
+              "accepted": true,
+              "box_err_change_db": 0.6078978595435189,
+              "box_err_before_rel_truth_db": -4.5732274729286795,
+              "err_before": 0.7073179572077593,
+              "err_after": 0.8135878793373605,
+              "truth_energy": 2.0273906126819083
+            },
+            {
+              "region_id": "mixture-00198",
+              "truth_stem": "bass",
+              "accepted": true,
+              "box_err_change_db": -0.0008477365345698009,
+              "box_err_before_rel_truth_db": 0.0015301522986916625,
+              "err_before": 0.0011333375290268652,
+              "err_after": 0.0011331163247737899,
+              "truth_energy": 0.001132938289885867
+            },
+            {
+              "region_id": "mixture-00198",
+              "truth_stem": "other",
+              "accepted": true,
+              "box_err_change_db": 0.45960995984005043,
+              "box_err_before_rel_truth_db": -0.5469333404477451,
+              "err_before": 1.043113345456357,
+              "err_after": 1.1595580566327641,
+              "truth_energy": 1.1831092116898703
+            }
+          ],
+          "box_total_changes": [
+            {
+              "region_id": "mixture-00193",
+              "accepted": true,
+              "total_err_change_db": 0.6889872202557211,
+              "total_err_before_rel_truth_db": -0.4587890029044464,
+              "err_before": 0.13631001246993588,
+              "err_after": 0.1597707537315295,
+              "truth_energy": 0.1514979156784351
+            },
+            {
+              "region_id": "mixture-00209",
+              "accepted": true,
+              "total_err_change_db": 0.9662015705209591,
+              "total_err_before_rel_truth_db": -0.21209194786264304,
+              "err_before": 0.07173855402654358,
+              "err_after": 0.08963213240720047,
+              "truth_energy": 0.075328932586234
+            },
+            {
+              "region_id": "mixture-00220",
+              "accepted": true,
+              "total_err_change_db": 0.052030148804755726,
+              "total_err_before_rel_truth_db": -0.3473092684797621,
+              "err_before": 0.010270703522901914,
+              "err_after": 0.010394624620545672,
+              "truth_energy": 0.01112579669739422
+            },
+            {
+              "region_id": "mixture-00203",
+              "accepted": true,
+              "total_err_change_db": -0.36117479223271104,
+              "total_err_before_rel_truth_db": 0.09699684193883726,
+              "err_before": 0.10756817575292384,
+              "err_after": 0.09897590756199301,
+              "truth_energy": 0.10519234077913918
+            },
+            {
+              "region_id": "mixture-00222",
+              "accepted": true,
+              "total_err_change_db": 0.7438707390312649,
+              "total_err_before_rel_truth_db": -0.19425964206054164,
+              "err_before": 3.4777883915866665,
+              "err_after": 4.12820935882241,
+              "truth_energy": 3.6368812236740773
+            },
+            {
+              "region_id": "mixture-00194",
+              "accepted": true,
+              "total_err_change_db": 1.210997176089219,
+              "total_err_before_rel_truth_db": -0.8982640014043322,
+              "err_before": 1.158813462967321,
+              "err_after": 1.5319450762300946,
+              "truth_energy": 1.425082254899493
+            },
+            {
+              "region_id": "mixture-00199",
+              "accepted": true,
+              "total_err_change_db": 2.391205593619104,
+              "total_err_before_rel_truth_db": -4.413882209594607,
+              "err_before": 10.652085092651745,
+              "err_after": 18.495366927149725,
+              "truth_energy": 29.43220827163171
+            },
+            {
+              "region_id": "mixture-00223",
+              "accepted": true,
+              "total_err_change_db": 0.910419712485119,
+              "total_err_before_rel_truth_db": 0.6273265654463732,
+              "err_before": 2.7232358266306482,
+              "err_after": 3.358909504158171,
+              "truth_energy": 2.356962080017967
+            },
+            {
+              "region_id": "mixture-00201",
+              "accepted": true,
+              "total_err_change_db": 1.3070879393629622,
+              "total_err_before_rel_truth_db": -0.5329745035666132,
+              "err_before": 1.2475063919226894,
+              "err_after": 1.6860838362598536,
+              "truth_energy": 1.410393279460644
+            },
+            {
+              "region_id": "mixture-00198",
+              "accepted": true,
+              "total_err_change_db": 0.10687433906504676,
+              "total_err_before_rel_truth_db": -2.0606897909402013,
+              "err_before": 1.9983115858277714,
+              "err_after": 2.04817757618091,
+              "truth_energy": 3.211679394920391
+            }
+          ],
+          "pooled_change_db_accepted": 1.6539881875581142,
+          "pooled_change_db_all_proposals": 1.6539881875581142,
+          "whole_stem_sdr": {
+            "vocals": {
+              "sdr_before_db": 17.04265160293756,
+              "sdr_after_db": 17.0426191310372
+            },
+            "drums": {
+              "sdr_before_db": 5.677968434097384,
+              "sdr_after_db": 5.677948141289918
+            },
+            "bass": {
+              "sdr_before_db": 19.903983546422875,
+              "sdr_after_db": 19.90398354647606
+            },
+            "other": {
+              "sdr_before_db": 2.4036422313170354,
+              "sdr_after_db": 2.4036388280816263
+            }
+          },
+          "reconstruction": {
+            "before": {
+              "snr_db": 32.005109860775185,
+              "residual_rel_db": -32.005109860775185
+            },
+            "after": {
+              "snr_db": 32.00583686706126,
+              "residual_rel_db": -32.00583686706126
+            }
+          },
+          "seconds": 756.6
+        }
+      }
+    }
+  ],
+  "seconds": 1600.5,
+  "doc": "Ground-truth restoration experiment.\n\n    known stems -> mix -> real separator -> analysis -> restorer + gate -> fidelity vs the TRUE stems\n\nThis is the test that can say \"no\": a restoration may be mixture-consistent and still move stems away from the\ntruth. Every restorer (including the identity control) sees the same regions and is scored identically.\n\nTruth may be coarser than the separator's stems. ``groups`` maps each truth stem to the separator stems whose SUM\nestimates it (e.g. truth 'other' <- guitar + piano + other). All scores are computed on these group sums.\n\nPrimary score (per proposal, per affected group), computed for EVERY proposal whether accepted or not:\n  box_err_change_db = 10log10( ||STFT(G' - T)||^2 / ||STFT(G - T)||^2 ) inside the region's TF box\n  (negative = closer to truth). Restricting to the box matters: region edits touch a few hundred Hz, and a\n  time-domain measure over all frequencies dilutes any effect toward 0 dB.\nSecondary: whole-stem SNR-form SDR of each group before/after the accepted changes.\n\nCaveats: synthetic caricature stems are out of domain for real separators; stems from another separator\n(e.g. a commercial service) are real music but carry that separator's own artifacts in the \"truth\".\n"
+}

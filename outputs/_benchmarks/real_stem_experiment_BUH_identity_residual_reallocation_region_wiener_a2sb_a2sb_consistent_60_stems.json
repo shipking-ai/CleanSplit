@@ -1,0 +1,227 @@
+{
+  "results": [
+    {
+      "song": "excerpt_60s[stems]",
+      "region_scope": "stems",
+      "separator": "bs_roformer_sw",
+      "groups": {
+        "vocals": [
+          "vocals"
+        ],
+        "drums": [
+          "drums"
+        ],
+        "bass": [
+          "bass"
+        ],
+        "other": [
+          "guitar",
+          "piano",
+          "other"
+        ]
+      },
+      "mixture_snr_model_matched_db": 36.61493812950939,
+      "eligible_regions": 0,
+      "separation_sdr_db": {
+        "vocals": 15.759448321814315,
+        "drums": 4.190429552886997,
+        "bass": 18.675694284554773,
+        "other": 3.523214062215874
+      },
+      "restorers": {
+        "identity": {
+          "accepted": 0,
+          "rejected": 0,
+          "decisions": [],
+          "box_truth_changes": [],
+          "box_total_changes": [],
+          "pooled_change_db_accepted": null,
+          "pooled_change_db_all_proposals": null,
+          "whole_stem_sdr": {
+            "vocals": {
+              "sdr_before_db": 15.759448321814315,
+              "sdr_after_db": 15.759448321814315
+            },
+            "drums": {
+              "sdr_before_db": 4.190429552886997,
+              "sdr_after_db": 4.190429552886997
+            },
+            "bass": {
+              "sdr_before_db": 18.675694284554773,
+              "sdr_after_db": 18.675694284554773
+            },
+            "other": {
+              "sdr_before_db": 3.523214062215874,
+              "sdr_after_db": 3.523214062215874
+            }
+          },
+          "reconstruction": {
+            "before": {
+              "snr_db": 36.61493812950939,
+              "residual_rel_db": -36.61493812950939
+            },
+            "after": {
+              "snr_db": 36.61493812950939,
+              "residual_rel_db": -36.61493812950939
+            }
+          },
+          "seconds": 1.0
+        },
+        "residual_reallocation": {
+          "accepted": 0,
+          "rejected": 0,
+          "decisions": [],
+          "box_truth_changes": [],
+          "box_total_changes": [],
+          "pooled_change_db_accepted": null,
+          "pooled_change_db_all_proposals": null,
+          "whole_stem_sdr": {
+            "vocals": {
+              "sdr_before_db": 15.759448321814315,
+              "sdr_after_db": 15.759448321814315
+            },
+            "drums": {
+              "sdr_before_db": 4.190429552886997,
+              "sdr_after_db": 4.190429552886997
+            },
+            "bass": {
+              "sdr_before_db": 18.675694284554773,
+              "sdr_after_db": 18.675694284554773
+            },
+            "other": {
+              "sdr_before_db": 3.523214062215874,
+              "sdr_after_db": 3.523214062215874
+            }
+          },
+          "reconstruction": {
+            "before": {
+              "snr_db": 36.61493812950939,
+              "residual_rel_db": -36.61493812950939
+            },
+            "after": {
+              "snr_db": 36.61493812950939,
+              "residual_rel_db": -36.61493812950939
+            }
+          },
+          "seconds": 1.0
+        },
+        "region_wiener": {
+          "accepted": 0,
+          "rejected": 0,
+          "decisions": [],
+          "box_truth_changes": [],
+          "box_total_changes": [],
+          "pooled_change_db_accepted": null,
+          "pooled_change_db_all_proposals": null,
+          "whole_stem_sdr": {
+            "vocals": {
+              "sdr_before_db": 15.759448321814315,
+              "sdr_after_db": 15.759448321814315
+            },
+            "drums": {
+              "sdr_before_db": 4.190429552886997,
+              "sdr_after_db": 4.190429552886997
+            },
+            "bass": {
+              "sdr_before_db": 18.675694284554773,
+              "sdr_after_db": 18.675694284554773
+            },
+            "other": {
+              "sdr_before_db": 3.523214062215874,
+              "sdr_after_db": 3.523214062215874
+            }
+          },
+          "reconstruction": {
+            "before": {
+              "snr_db": 36.61493812950939,
+              "residual_rel_db": -36.61493812950939
+            },
+            "after": {
+              "snr_db": 36.61493812950939,
+              "residual_rel_db": -36.61493812950939
+            }
+          },
+          "seconds": 0.9
+        },
+        "a2sb": {
+          "accepted": 0,
+          "rejected": 0,
+          "decisions": [],
+          "box_truth_changes": [],
+          "box_total_changes": [],
+          "pooled_change_db_accepted": null,
+          "pooled_change_db_all_proposals": null,
+          "whole_stem_sdr": {
+            "vocals": {
+              "sdr_before_db": 15.759448321814315,
+              "sdr_after_db": 15.759448321814315
+            },
+            "drums": {
+              "sdr_before_db": 4.190429552886997,
+              "sdr_after_db": 4.190429552886997
+            },
+            "bass": {
+              "sdr_before_db": 18.675694284554773,
+              "sdr_after_db": 18.675694284554773
+            },
+            "other": {
+              "sdr_before_db": 3.523214062215874,
+              "sdr_after_db": 3.523214062215874
+            }
+          },
+          "reconstruction": {
+            "before": {
+              "snr_db": 36.61493812950939,
+              "residual_rel_db": -36.61493812950939
+            },
+            "after": {
+              "snr_db": 36.61493812950939,
+              "residual_rel_db": -36.61493812950939
+            }
+          },
+          "seconds": 0.9
+        },
+        "a2sb_consistent": {
+          "accepted": 0,
+          "rejected": 0,
+          "decisions": [],
+          "box_truth_changes": [],
+          "box_total_changes": [],
+          "pooled_change_db_accepted": null,
+          "pooled_change_db_all_proposals": null,
+          "whole_stem_sdr": {
+            "vocals": {
+              "sdr_before_db": 15.759448321814315,
+              "sdr_after_db": 15.759448321814315
+            },
+            "drums": {
+              "sdr_before_db": 4.190429552886997,
+              "sdr_after_db": 4.190429552886997
+            },
+            "bass": {
+              "sdr_before_db": 18.675694284554773,
+              "sdr_after_db": 18.675694284554773
+            },
+            "other": {
+              "sdr_before_db": 3.523214062215874,
+              "sdr_after_db": 3.523214062215874
+            }
+          },
+          "reconstruction": {
+            "before": {
+              "snr_db": 36.61493812950939,
+              "residual_rel_db": -36.61493812950939
+            },
+            "after": {
+              "snr_db": 36.61493812950939,
+              "residual_rel_db": -36.61493812950939
+            }
+          },
+          "seconds": 0.9
+        }
+      }
+    }
+  ],
+  "seconds": 32.6,
+  "doc": "Ground-truth restoration experiment.\n\n    known stems -> mix -> real separator -> analysis -> restorer + gate -> fidelity vs the TRUE stems\n\nThis is the test that can say \"no\": a restoration may be mixture-consistent and still move stems away from the\ntruth. Every restorer (including the identity control) sees the same regions and is scored identically.\n\nTruth may be coarser than the separator's stems. ``groups`` maps each truth stem to the separator stems whose SUM\nestimates it (e.g. truth 'other' <- guitar + piano + other). All scores are computed on these group sums.\n\nPrimary score (per proposal, per affected group), computed for EVERY proposal whether accepted or not:\n  box_err_change_db = 10log10( ||STFT(G' - T)||^2 / ||STFT(G - T)||^2 ) inside the region's TF box\n  (negative = closer to truth). Restricting to the box matters: region edits touch a few hundred Hz, and a\n  time-domain measure over all frequencies dilutes any effect toward 0 dB.\nSecondary: whole-stem SNR-form SDR of each group before/after the accepted changes.\n\nCaveats: synthetic caricature stems are out of domain for real separators; stems from another separator\n(e.g. a commercial service) are real music but carry that separator's own artifacts in the \"truth\".\n"
+}

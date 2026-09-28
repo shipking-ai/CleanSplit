@@ -1,0 +1,2589 @@
+{
+ "sample_rate": 16000,
+ "median": {
+  "ensemble": {
+   "vocals": {
+    "sdr": 13.623114675734618,
+    "sir": 24.387123737290658,
+    "sar": 14.118065361195747
+   },
+   "drums": {
+    "sdr": 13.519508889558654,
+    "sir": 24.038668686678683,
+    "sar": 14.064686682712937
+   },
+   "bass": {
+    "sdr": 10.979860039186219,
+    "sir": 20.204836271829723,
+    "sar": 12.404545083472204
+   },
+   "other": {
+    "sdr": 8.36105146652849,
+    "sir": 15.763379222053558,
+    "sar": 9.673621733477688
+   }
+  },
+  "+mdx23c": {
+   "vocals": {
+    "sdr": 13.750102917195461,
+    "sir": 23.75737665496267,
+    "sar": 14.339138891286986
+   },
+   "drums": {
+    "sdr": 13.519508889558654,
+    "sir": 24.038668686678683,
+    "sar": 14.064686682712937
+   },
+   "bass": {
+    "sdr": 10.979860039186219,
+    "sir": 20.204836271829723,
+    "sar": 12.404545083472204
+   },
+   "other": {
+    "sdr": 8.356643575852356,
+    "sir": 15.696513869983761,
+    "sar": 9.682013518503972
+   }
+  },
+  "wiener1": {
+   "vocals": {
+    "sdr": 10.32647927910834,
+    "sir": 18.309078580824135,
+    "sar": 11.208192962220654
+   },
+   "drums": {
+    "sdr": 8.0601538884364,
+    "sir": 14.33363833667426,
+    "sar": 9.7717659212738
+   },
+   "bass": {
+    "sdr": 5.979491409887558,
+    "sir": 9.981253800305986,
+    "sar": 9.26907322821506
+   },
+   "other": {
+    "sdr": 5.848485502915182,
+    "sir": 9.783114529681168,
+    "sar": 8.755253764677814
+   }
+  },
+  "wiener2": {
+   "vocals": {
+    "sdr": 10.53561644210225,
+    "sir": 20.274539597160746,
+    "sar": 11.047015258742459
+   },
+   "drums": {
+    "sdr": 8.664526297514982,
+    "sir": 17.68162844701748,
+    "sar": 9.320748829914859
+   },
+   "bass": {
+    "sdr": 6.751912175847682,
+    "sir": 12.990205525810751,
+    "sar": 8.816755523372464
+   },
+   "other": {
+    "sdr": 6.172058688604769,
+    "sir": 12.2908251411981,
+    "sar": 7.995781299376532
+   }
+  },
+  "wiener2_smooth": {
+   "vocals": {
+    "sdr": 9.877677459188615,
+    "sir": 18.901662212691072,
+    "sar": 10.523011137681754
+   },
+   "drums": {
+    "sdr": 7.1524430982431,
+    "sir": 14.423160799783341,
+    "sar": 8.530861709753747
+   },
+   "bass": {
+    "sdr": 5.98881804239948,
+    "sir": 11.656321725411878,
+    "sar": 8.11523083461687
+   },
+   "other": {
+    "sdr": 5.575360123427363,
+    "sir": 11.535729884458052,
+    "sar": 7.613740626642565
+   }
+  }
+ },
+ "verdict": {
+  "+mdx23c": {
+   "sar_better_on_all_three": false,
+   "sdr_within_0.1dB": true,
+   "adopt": false
+  },
+  "wiener1": {
+   "sar_better_on_all_three": false,
+   "sdr_within_0.1dB": false,
+   "adopt": false
+  },
+  "wiener2": {
+   "sar_better_on_all_three": false,
+   "sdr_within_0.1dB": false,
+   "adopt": false
+  },
+  "wiener2_smooth": {
+   "sar_better_on_all_three": false,
+   "sdr_within_0.1dB": false,
+   "adopt": false
+  }
+ },
+ "rows": {
+  "ensemble": {
+   "vocals": [
+    {
+     "song": "Al James - Schoolboy Facination",
+     "sdr": 13.719539245167066,
+     "sir": 24.467673681146934,
+     "sar": 14.116914247084026
+    },
+    {
+     "song": "AM Contra - Heart Peripheral",
+     "sdr": 15.79439800788645,
+     "sir": 24.30657379343438,
+     "sar": 16.46983131692922
+    },
+    {
+     "song": "Angels In Amplifiers - I'm Alright",
+     "sdr": 15.897871985852937,
+     "sir": 28.92672955655726,
+     "sar": 16.125218320961313
+    },
+    {
+     "song": "Arise - Run Run Run",
+     "sdr": 19.54455982583471,
+     "sir": 36.073441895876414,
+     "sar": 19.643304404803455
+    },
+    {
+     "song": "Ben Carrigan - We'll Talk About It All Tonight",
+     "sdr": 21.34447955440656,
+     "sir": 31.258284412397398,
+     "sar": 21.814987509683693
+    },
+    {
+     "song": "BKS - Bulldozer",
+     "sdr": 8.485019196735461,
+     "sir": 21.699642843049368,
+     "sar": 8.726556479499115
+    },
+    {
+     "song": "BKS - Too Much",
+     "sdr": 15.847876556236724,
+     "sir": 28.957864544875576,
+     "sar": 16.070973878359975
+    },
+    {
+     "song": "Bobby Nobody - Stitch Up",
+     "sdr": 14.552050855043145,
+     "sir": 27.546566903999306,
+     "sar": 14.783281011886462
+    },
+    {
+     "song": "Buitraker - Revo X",
+     "sdr": 11.051676033886173,
+     "sir": 22.336851696957275,
+     "sar": 11.412653201143094
+    },
+    {
+     "song": "Carlos Gonzalez - A Place For Us",
+     "sdr": 10.489658757656475,
+     "sir": 20.50173969695392,
+     "sar": 10.984413112024935
+    },
+    {
+     "song": "Cristina Vane - So Easy",
+     "sdr": 19.88873957208353,
+     "sir": 32.23509575413335,
+     "sar": 20.152020642638767
+    },
+    {
+     "song": "Detsky Sad - Walkie Talkie",
+     "sdr": 13.52669010630217,
+     "sir": 22.635389909200157,
+     "sar": 14.119216475307466
+    },
+    {
+     "song": "Enda Reilly - Cur An Long Ag Seol",
+     "sdr": 19.831976619272133,
+     "sir": 33.32492481626244,
+     "sar": 20.03278425444584
+    },
+    {
+     "song": "Forkupines - Semantics",
+     "sdr": 11.033336540449191,
+     "sir": 20.847307021398983,
+     "sar": 11.547667498816638
+    },
+    {
+     "song": "Georgia Wonder - Siren",
+     "sdr": 7.202244532702671,
+     "sir": 13.35431918011967,
+     "sar": 8.604791363320022
+    },
+    {
+     "song": "Girls Under Glass - We Feel Alright",
+     "sdr": 7.397896778571717,
+     "sir": 17.183444942950356,
+     "sar": 7.962251421969723
+    },
+    {
+     "song": "Hollow Ground - Ill Fate",
+     "sdr": 8.689977091245893,
+     "sir": 16.379922468942315,
+     "sar": 9.599156363263907
+    },
+    {
+     "song": "James Elder & Mark M Thompson - The English Actor",
+     "sdr": 12.203537247542357,
+     "sir": 24.986297974339692,
+     "sar": 12.452368842584011
+    },
+    {
+     "song": "Juliet's Rescue - Heartbeats",
+     "sdr": 12.012025660620475,
+     "sir": 21.771129671317624,
+     "sar": 12.525999915331813
+    },
+    {
+     "song": "Little Chicago's Finest - My Own",
+     "sdr": 20.547300997918928,
+     "sir": 30.956431313879932,
+     "sar": 20.965190846218164
+    }
+   ],
+   "drums": [
+    {
+     "song": "Al James - Schoolboy Facination",
+     "sdr": 10.643950395768274,
+     "sir": 20.970865825467566,
+     "sar": 11.101266351645268
+    },
+    {
+     "song": "AM Contra - Heart Peripheral",
+     "sdr": 10.664062735484332,
+     "sir": 23.310977111889486,
+     "sar": 10.92703616987999
+    },
+    {
+     "song": "Angels In Amplifiers - I'm Alright",
+     "sdr": 12.555677248489076,
+     "sir": 24.01759077752367,
+     "sar": 12.894661020657786
+    },
+    {
+     "song": "Arise - Run Run Run",
+     "sdr": 4.420338167448379,
+     "sir": 7.38303924807221,
+     "sar": 8.207444864466716
+    },
+    {
+     "song": "Ben Carrigan - We'll Talk About It All Tonight",
+     "sdr": 19.76971484485398,
+     "sir": 35.63894922707677,
+     "sar": 19.88480538678132
+    },
+    {
+     "song": "BKS - Bulldozer",
+     "sdr": 14.47616792309985,
+     "sir": 25.333228286976173,
+     "sar": 14.860870829826515
+    },
+    {
+     "song": "BKS - Too Much",
+     "sdr": 13.878747844836116,
+     "sir": 24.199704706629298,
+     "sar": 14.318563339449478
+    },
+    {
+     "song": "Bobby Nobody - Stitch Up",
+     "sdr": 10.810894057399793,
+     "sir": 23.42900854376824,
+     "sar": 11.074988248538018
+    },
+    {
+     "song": "Buitraker - Revo X",
+     "sdr": 20.112389996411522,
+     "sir": 32.872385793956546,
+     "sar": 20.350977060826047
+    },
+    {
+     "song": "Carlos Gonzalez - A Place For Us",
+     "sdr": 9.199670643559143,
+     "sir": 16.53723154679626,
+     "sar": 10.181333456161585
+    },
+    {
+     "song": "Cristina Vane - So Easy",
+     "sdr": 17.24903436914427,
+     "sir": 27.660204033319186,
+     "sar": 17.670673925585003
+    },
+    {
+     "song": "Detsky Sad - Walkie Talkie",
+     "sdr": 7.801242244920433,
+     "sir": 18.34016788402246,
+     "sar": 8.266048311439413
+    },
+    {
+     "song": "Enda Reilly - Cur An Long Ag Seol",
+     "sdr": 18.58323723279468,
+     "sir": 33.41410387330634,
+     "sar": 18.730405526494934
+    },
+    {
+     "song": "Forkupines - Semantics",
+     "sdr": 13.479594602493478,
+     "sir": 22.103650885068667,
+     "sar": 14.147549206844312
+    },
+    {
+     "song": "Georgia Wonder - Siren",
+     "sdr": 13.559423176623833,
+     "sir": 24.059746595833694,
+     "sar": 13.981824158581562
+    },
+    {
+     "song": "Girls Under Glass - We Feel Alright",
+     "sdr": 13.723690227143967,
+     "sir": 23.635654152153865,
+     "sar": 14.2099200424882
+    },
+    {
+     "song": "Hollow Ground - Ill Fate",
+     "sdr": 9.187932174332333,
+     "sir": 19.721847305438054,
+     "sar": 9.636097436928958
+    },
+    {
+     "song": "James Elder & Mark M Thompson - The English Actor",
+     "sdr": 11.761580951647774,
+     "sir": 24.78756946559464,
+     "sar": 11.997918916233687
+    },
+    {
+     "song": "Juliet's Rescue - Heartbeats",
+     "sdr": 18.931497405762464,
+     "sir": 31.132264668188512,
+     "sar": 19.204697049258094
+    },
+    {
+     "song": "Little Chicago's Finest - My Own",
+     "sdr": 20.658429310542978,
+     "sir": 31.807722861315312,
+     "sar": 21.008092939779853
+    }
+   ],
+   "bass": [
+    {
+     "song": "Al James - Schoolboy Facination",
+     "sdr": 13.346250081873315,
+     "sir": 20.997647633053262,
+     "sar": 14.198939440857947
+    },
+    {
+     "song": "AM Contra - Heart Peripheral",
+     "sdr": 1.7666009139155174,
+     "sir": 2.723221569387773,
+     "sar": 10.665309637751111
+    },
+    {
+     "song": "Angels In Amplifiers - I'm Alright",
+     "sdr": 12.373020082580144,
+     "sir": 20.32968556941881,
+     "sar": 13.17070315548768
+    },
+    {
+     "song": "Arise - Run Run Run",
+     "sdr": 0.8036035928888419,
+     "sir": 1.2980088124390554,
+     "sar": 12.89508331438552
+    },
+    {
+     "song": "Ben Carrigan - We'll Talk About It All Tonight",
+     "sdr": 24.042542226675767,
+     "sir": 31.584642176490085,
+     "sar": 24.886876891615817
+    },
+    {
+     "song": "BKS - Bulldozer",
+     "sdr": 12.467742963076432,
+     "sir": 22.15475154569836,
+     "sar": 12.987891784911575
+    },
+    {
+     "song": "BKS - Too Much",
+     "sdr": 16.210015809200776,
+     "sir": 25.242213960896112,
+     "sar": 16.80271907481954
+    },
+    {
+     "song": "Bobby Nobody - Stitch Up",
+     "sdr": 11.454534916556085,
+     "sir": 21.708374166624335,
+     "sar": 11.914006852558888
+    },
+    {
+     "song": "Buitraker - Revo X",
+     "sdr": 13.44330676152994,
+     "sir": 18.413909798476197,
+     "sar": 15.16998254389353
+    },
+    {
+     "song": "Carlos Gonzalez - A Place For Us",
+     "sdr": 1.4677621850887512,
+     "sir": 11.766968493075874,
+     "sar": 2.17323852872807
+    },
+    {
+     "song": "Cristina Vane - So Easy",
+     "sdr": 10.505185161816353,
+     "sir": 20.079986974240636,
+     "sar": 11.055109180548833
+    },
+    {
+     "song": "Detsky Sad - Walkie Talkie",
+     "sdr": 7.847841111091731,
+     "sir": 20.693263032216997,
+     "sar": 8.11632362974591
+    },
+    {
+     "song": "Enda Reilly - Cur An Long Ag Seol",
+     "sdr": 15.995002634686061,
+     "sir": 30.133876304407707,
+     "sar": 16.16998005769355
+    },
+    {
+     "song": "Forkupines - Semantics",
+     "sdr": 10.227539149375753,
+     "sir": 18.800028046493132,
+     "sar": 10.933958806371303
+    },
+    {
+     "song": "Georgia Wonder - Siren",
+     "sdr": 14.69510867457135,
+     "sir": 22.68665056746913,
+     "sar": 15.46943919486087
+    },
+    {
+     "song": "Girls Under Glass - We Feel Alright",
+     "sdr": 3.758774115960326,
+     "sir": 17.97876722231806,
+     "sar": 3.9949439771984414
+    },
+    {
+     "song": "Hollow Ground - Ill Fate",
+     "sdr": -0.734634461066864,
+     "sir": 6.116350805759193,
+     "sar": 1.2199659623644368
+    },
+    {
+     "song": "James Elder & Mark M Thompson - The English Actor",
+     "sdr": 9.592417370107322,
+     "sir": 17.87062438581631,
+     "sar": 10.361700724085905
+    },
+    {
+     "song": "Juliet's Rescue - Heartbeats",
+     "sdr": -4.729539733019605,
+     "sir": -1.2184762502636706,
+     "sar": 1.4939452171825698
+    },
+    {
+     "song": "Little Chicago's Finest - My Own",
+     "sdr": 23.47348519353803,
+     "sir": 39.94575887259168,
+     "sar": 23.57289318941048
+    }
+   ],
+   "other": [
+    {
+     "song": "Al James - Schoolboy Facination",
+     "sdr": 6.110209224265163,
+     "sir": 14.657803355986358,
+     "sar": 6.9098910966848015
+    },
+    {
+     "song": "AM Contra - Heart Peripheral",
+     "sdr": 0.5905401153241883,
+     "sir": 14.583247322830886,
+     "sar": 0.9158706966010113
+    },
+    {
+     "song": "Angels In Amplifiers - I'm Alright",
+     "sdr": 10.116708475448634,
+     "sir": 18.355771573290987,
+     "sar": 10.885482162979107
+    },
+    {
+     "song": "Arise - Run Run Run",
+     "sdr": -1.9083096460417905,
+     "sir": 18.102183039690015,
+     "sar": -1.7980520682888255
+    },
+    {
+     "song": "Ben Carrigan - We'll Talk About It All Tonight",
+     "sdr": 16.8184731616322,
+     "sir": 24.230772301348903,
+     "sar": 17.704414094917468
+    },
+    {
+     "song": "BKS - Bulldozer",
+     "sdr": 8.437301462303443,
+     "sir": 16.505871697918515,
+     "sar": 9.269936479300316
+    },
+    {
+     "song": "BKS - Too Much",
+     "sdr": 8.836824048175728,
+     "sir": 16.94503922606424,
+     "sar": 9.653026760769206
+    },
+    {
+     "song": "Bobby Nobody - Stitch Up",
+     "sdr": 11.88123166828703,
+     "sir": 20.002882398420454,
+     "sar": 12.651285450458708
+    },
+    {
+     "song": "Buitraker - Revo X",
+     "sdr": 8.101574673956891,
+     "sir": 16.429241870716133,
+     "sar": 8.88965541413212
+    },
+    {
+     "song": "Carlos Gonzalez - A Place For Us",
+     "sdr": 9.240292904636524,
+     "sir": 15.047121875826718,
+     "sar": 10.697113621803142
+    },
+    {
+     "song": "Cristina Vane - So Easy",
+     "sdr": 9.428401283543181,
+     "sir": 15.985369431896341,
+     "sar": 10.620875341713973
+    },
+    {
+     "song": "Detsky Sad - Walkie Talkie",
+     "sdr": 0.23824824776747183,
+     "sir": 2.669652084195777,
+     "sar": 5.794107947088712
+    },
+    {
+     "song": "Enda Reilly - Cur An Long Ag Seol",
+     "sdr": 14.162644305329417,
+     "sir": 21.851676498729596,
+     "sar": 15.00145350847909
+    },
+    {
+     "song": "Forkupines - Semantics",
+     "sdr": 7.57225730812203,
+     "sir": 13.274130310624903,
+     "sar": 9.132992392288338
+    },
+    {
+     "song": "Georgia Wonder - Siren",
+     "sdr": 8.28480147075354,
+     "sir": 14.300553357297707,
+     "sar": 9.69421670618617
+    },
+    {
+     "song": "Girls Under Glass - We Feel Alright",
+     "sdr": 3.168097866070663,
+     "sir": 6.116670036773874,
+     "sar": 7.19107099624935
+    },
+    {
+     "song": "Hollow Ground - Ill Fate",
+     "sdr": 4.564072565127148,
+     "sir": 6.413321754647072,
+     "sar": 10.05717167624586
+    },
+    {
+     "song": "James Elder & Mark M Thompson - The English Actor",
+     "sdr": 10.173169247735434,
+     "sir": 15.541389012210775,
+     "sar": 11.783354223277648
+    },
+    {
+     "song": "Juliet's Rescue - Heartbeats",
+     "sdr": 6.785128729041626,
+     "sir": 12.833474448545005,
+     "sar": 8.245785261582517
+    },
+    {
+     "song": "Little Chicago's Finest - My Own",
+     "sdr": 10.779500161153841,
+     "sir": 18.808387728314745,
+     "sar": 11.580252669541906
+    }
+   ]
+  },
+  "+mdx23c": {
+   "vocals": [
+    {
+     "song": "Al James - Schoolboy Facination",
+     "sdr": 13.61240876207155,
+     "sir": 23.851858421204312,
+     "sar": 14.062027909848368
+    },
+    {
+     "song": "AM Contra - Heart Peripheral",
+     "sdr": 15.663166997583266,
+     "sir": 23.662894888721024,
+     "sar": 16.431266889598973
+    },
+    {
+     "song": "Angels In Amplifiers - I'm Alright",
+     "sdr": 15.77977952779423,
+     "sir": 28.290443238899535,
+     "sar": 16.036935363771164
+    },
+    {
+     "song": "Arise - Run Run Run",
+     "sdr": 19.164073881297583,
+     "sir": 35.27027699224458,
+     "sar": 19.273145107714218
+    },
+    {
+     "song": "Ben Carrigan - We'll Talk About It All Tonight",
+     "sdr": 21.291647681837283,
+     "sir": 30.744925913259348,
+     "sar": 21.818102922408812
+    },
+    {
+     "song": "BKS - Bulldozer",
+     "sdr": 8.353076969644091,
+     "sir": 20.84471585577379,
+     "sar": 8.640539646492012
+    },
+    {
+     "song": "BKS - Too Much",
+     "sdr": 15.78574570063462,
+     "sir": 28.36933960884256,
+     "sar": 16.038489898520854
+    },
+    {
+     "song": "Bobby Nobody - Stitch Up",
+     "sdr": 14.439604124432288,
+     "sir": 27.217348869975325,
+     "sar": 14.683194194119908
+    },
+    {
+     "song": "Buitraker - Revo X",
+     "sdr": 11.083682529798228,
+     "sir": 21.690394829387536,
+     "sar": 11.508120992582446
+    },
+    {
+     "song": "Carlos Gonzalez - A Place For Us",
+     "sdr": 10.43194132602184,
+     "sir": 20.108868955801086,
+     "sar": 10.969091985017567
+    },
+    {
+     "song": "Cristina Vane - So Easy",
+     "sdr": 19.758495586801857,
+     "sir": 31.790099385524243,
+     "sar": 20.042298232186905
+    },
+    {
+     "song": "Detsky Sad - Walkie Talkie",
+     "sdr": 13.887797072319373,
+     "sir": 22.148252974379588,
+     "sar": 14.616249872725604
+    },
+    {
+     "song": "Enda Reilly - Cur An Long Ag Seol",
+     "sdr": 19.463469436519752,
+     "sir": 32.32030980873632,
+     "sar": 19.697007028082716
+    },
+    {
+     "song": "Forkupines - Semantics",
+     "sdr": 10.959982126753129,
+     "sir": 20.717067708698252,
+     "sar": 11.482069993624478
+    },
+    {
+     "song": "Georgia Wonder - Siren",
+     "sdr": 7.211188926916531,
+     "sir": 13.131503095258658,
+     "sar": 8.700723648014607
+    },
+    {
+     "song": "Girls Under Glass - We Feel Alright",
+     "sdr": 7.41239331161855,
+     "sir": 16.865678804106654,
+     "sar": 8.02365859948343
+    },
+    {
+     "song": "Hollow Ground - Ill Fate",
+     "sdr": 8.647196229412172,
+     "sir": 15.842092084159008,
+     "sar": 9.678158323049518
+    },
+    {
+     "song": "James Elder & Mark M Thompson - The English Actor",
+     "sdr": 12.13961194705524,
+     "sir": 24.44635568182622,
+     "sar": 12.418333378530146
+    },
+    {
+     "song": "Juliet's Rescue - Heartbeats",
+     "sdr": 11.937707363222982,
+     "sir": 21.384129690575012,
+     "sar": 12.49284631833822
+    },
+    {
+     "song": "Little Chicago's Finest - My Own",
+     "sdr": 19.61151961884936,
+     "sir": 29.17517161144066,
+     "sar": 20.125646854164753
+    }
+   ],
+   "drums": [
+    {
+     "song": "Al James - Schoolboy Facination",
+     "sdr": 10.643950395768274,
+     "sir": 20.970865825467566,
+     "sar": 11.101266351645268
+    },
+    {
+     "song": "AM Contra - Heart Peripheral",
+     "sdr": 10.664062735484332,
+     "sir": 23.310977111889486,
+     "sar": 10.92703616987999
+    },
+    {
+     "song": "Angels In Amplifiers - I'm Alright",
+     "sdr": 12.555677248489076,
+     "sir": 24.01759077752367,
+     "sar": 12.894661020657786
+    },
+    {
+     "song": "Arise - Run Run Run",
+     "sdr": 4.420338167448379,
+     "sir": 7.38303924807221,
+     "sar": 8.207444864466716
+    },
+    {
+     "song": "Ben Carrigan - We'll Talk About It All Tonight",
+     "sdr": 19.76971484485398,
+     "sir": 35.63894922707677,
+     "sar": 19.88480538678132
+    },
+    {
+     "song": "BKS - Bulldozer",
+     "sdr": 14.47616792309985,
+     "sir": 25.333228286976173,
+     "sar": 14.860870829826515
+    },
+    {
+     "song": "BKS - Too Much",
+     "sdr": 13.878747844836116,
+     "sir": 24.199704706629298,
+     "sar": 14.318563339449478
+    },
+    {
+     "song": "Bobby Nobody - Stitch Up",
+     "sdr": 10.810894057399793,
+     "sir": 23.42900854376824,
+     "sar": 11.074988248538018
+    },
+    {
+     "song": "Buitraker - Revo X",
+     "sdr": 20.112389996411522,
+     "sir": 32.872385793956546,
+     "sar": 20.350977060826047
+    },
+    {
+     "song": "Carlos Gonzalez - A Place For Us",
+     "sdr": 9.199670643559143,
+     "sir": 16.53723154679626,
+     "sar": 10.181333456161585
+    },
+    {
+     "song": "Cristina Vane - So Easy",
+     "sdr": 17.24903436914427,
+     "sir": 27.660204033319186,
+     "sar": 17.670673925585003
+    },
+    {
+     "song": "Detsky Sad - Walkie Talkie",
+     "sdr": 7.801242244920433,
+     "sir": 18.34016788402246,
+     "sar": 8.266048311439413
+    },
+    {
+     "song": "Enda Reilly - Cur An Long Ag Seol",
+     "sdr": 18.58323723279468,
+     "sir": 33.41410387330634,
+     "sar": 18.730405526494934
+    },
+    {
+     "song": "Forkupines - Semantics",
+     "sdr": 13.479594602493478,
+     "sir": 22.103650885068667,
+     "sar": 14.147549206844312
+    },
+    {
+     "song": "Georgia Wonder - Siren",
+     "sdr": 13.559423176623833,
+     "sir": 24.059746595833694,
+     "sar": 13.981824158581562
+    },
+    {
+     "song": "Girls Under Glass - We Feel Alright",
+     "sdr": 13.723690227143967,
+     "sir": 23.635654152153865,
+     "sar": 14.2099200424882
+    },
+    {
+     "song": "Hollow Ground - Ill Fate",
+     "sdr": 9.187932174332333,
+     "sir": 19.721847305438054,
+     "sar": 9.636097436928958
+    },
+    {
+     "song": "James Elder & Mark M Thompson - The English Actor",
+     "sdr": 11.761580951647774,
+     "sir": 24.78756946559464,
+     "sar": 11.997918916233687
+    },
+    {
+     "song": "Juliet's Rescue - Heartbeats",
+     "sdr": 18.931497405762464,
+     "sir": 31.132264668188512,
+     "sar": 19.204697049258094
+    },
+    {
+     "song": "Little Chicago's Finest - My Own",
+     "sdr": 20.658429310542978,
+     "sir": 31.807722861315312,
+     "sar": 21.008092939779853
+    }
+   ],
+   "bass": [
+    {
+     "song": "Al James - Schoolboy Facination",
+     "sdr": 13.346250081873315,
+     "sir": 20.997647633053262,
+     "sar": 14.198939440857947
+    },
+    {
+     "song": "AM Contra - Heart Peripheral",
+     "sdr": 1.7666009139155174,
+     "sir": 2.723221569387773,
+     "sar": 10.665309637751111
+    },
+    {
+     "song": "Angels In Amplifiers - I'm Alright",
+     "sdr": 12.373020082580144,
+     "sir": 20.32968556941881,
+     "sar": 13.17070315548768
+    },
+    {
+     "song": "Arise - Run Run Run",
+     "sdr": 0.8036035928888419,
+     "sir": 1.2980088124390554,
+     "sar": 12.89508331438552
+    },
+    {
+     "song": "Ben Carrigan - We'll Talk About It All Tonight",
+     "sdr": 24.042542226675767,
+     "sir": 31.584642176490085,
+     "sar": 24.886876891615817
+    },
+    {
+     "song": "BKS - Bulldozer",
+     "sdr": 12.467742963076432,
+     "sir": 22.15475154569836,
+     "sar": 12.987891784911575
+    },
+    {
+     "song": "BKS - Too Much",
+     "sdr": 16.210015809200776,
+     "sir": 25.242213960896112,
+     "sar": 16.80271907481954
+    },
+    {
+     "song": "Bobby Nobody - Stitch Up",
+     "sdr": 11.454534916556085,
+     "sir": 21.708374166624335,
+     "sar": 11.914006852558888
+    },
+    {
+     "song": "Buitraker - Revo X",
+     "sdr": 13.44330676152994,
+     "sir": 18.413909798476197,
+     "sar": 15.16998254389353
+    },
+    {
+     "song": "Carlos Gonzalez - A Place For Us",
+     "sdr": 1.4677621850887512,
+     "sir": 11.766968493075874,
+     "sar": 2.17323852872807
+    },
+    {
+     "song": "Cristina Vane - So Easy",
+     "sdr": 10.505185161816353,
+     "sir": 20.079986974240636,
+     "sar": 11.055109180548833
+    },
+    {
+     "song": "Detsky Sad - Walkie Talkie",
+     "sdr": 7.847841111091731,
+     "sir": 20.693263032216997,
+     "sar": 8.11632362974591
+    },
+    {
+     "song": "Enda Reilly - Cur An Long Ag Seol",
+     "sdr": 15.995002634686061,
+     "sir": 30.133876304407707,
+     "sar": 16.16998005769355
+    },
+    {
+     "song": "Forkupines - Semantics",
+     "sdr": 10.227539149375753,
+     "sir": 18.800028046493132,
+     "sar": 10.933958806371303
+    },
+    {
+     "song": "Georgia Wonder - Siren",
+     "sdr": 14.69510867457135,
+     "sir": 22.68665056746913,
+     "sar": 15.46943919486087
+    },
+    {
+     "song": "Girls Under Glass - We Feel Alright",
+     "sdr": 3.758774115960326,
+     "sir": 17.97876722231806,
+     "sar": 3.9949439771984414
+    },
+    {
+     "song": "Hollow Ground - Ill Fate",
+     "sdr": -0.734634461066864,
+     "sir": 6.116350805759193,
+     "sar": 1.2199659623644368
+    },
+    {
+     "song": "James Elder & Mark M Thompson - The English Actor",
+     "sdr": 9.592417370107322,
+     "sir": 17.87062438581631,
+     "sar": 10.361700724085905
+    },
+    {
+     "song": "Juliet's Rescue - Heartbeats",
+     "sdr": -4.729539733019605,
+     "sir": -1.2184762502636706,
+     "sar": 1.4939452171825698
+    },
+    {
+     "song": "Little Chicago's Finest - My Own",
+     "sdr": 23.47348519353803,
+     "sir": 39.94575887259168,
+     "sar": 23.57289318941048
+    }
+   ],
+   "other": [
+    {
+     "song": "Al James - Schoolboy Facination",
+     "sdr": 5.969151900392818,
+     "sir": 14.800519432420023,
+     "sar": 6.7198014292526365
+    },
+    {
+     "song": "AM Contra - Heart Peripheral",
+     "sdr": 0.2561081978717935,
+     "sir": 14.461666337729621,
+     "sar": 0.5769653571529592
+    },
+    {
+     "song": "Angels In Amplifiers - I'm Alright",
+     "sdr": 9.982292342179203,
+     "sir": 17.983902064313007,
+     "sar": 10.79993580910228
+    },
+    {
+     "song": "Arise - Run Run Run",
+     "sdr": -2.0082893302006832,
+     "sir": 17.965959249967963,
+     "sar": -1.8955559501351185
+    },
+    {
+     "song": "Ben Carrigan - We'll Talk About It All Tonight",
+     "sdr": 16.781298719030488,
+     "sir": 24.062481508241703,
+     "sar": 17.697494816951856
+    },
+    {
+     "song": "BKS - Bulldozer",
+     "sdr": 8.411980360972425,
+     "sir": 16.514096446820716,
+     "sar": 9.238263232180373
+    },
+    {
+     "song": "BKS - Too Much",
+     "sdr": 8.808679179456817,
+     "sir": 16.969525510810595,
+     "sar": 9.614842889772916
+    },
+    {
+     "song": "Bobby Nobody - Stitch Up",
+     "sdr": 11.862679254070368,
+     "sir": 20.049575721132534,
+     "sar": 12.620491277852198
+    },
+    {
+     "song": "Buitraker - Revo X",
+     "sdr": 8.13416946177131,
+     "sir": 16.51829184708676,
+     "sar": 8.910635491115872
+    },
+    {
+     "song": "Carlos Gonzalez - A Place For Us",
+     "sdr": 9.177667450525565,
+     "sir": 14.903332774355043,
+     "sar": 10.66819636567834
+    },
+    {
+     "song": "Cristina Vane - So Easy",
+     "sdr": 9.398482824164525,
+     "sir": 15.915169301378295,
+     "sar": 10.604189483453666
+    },
+    {
+     "song": "Detsky Sad - Walkie Talkie",
+     "sdr": 0.2295234606865667,
+     "sir": 2.691469333312561,
+     "sar": 5.737368747981966
+    },
+    {
+     "song": "Enda Reilly - Cur An Long Ag Seol",
+     "sdr": 13.934680702487459,
+     "sir": 21.70546764222701,
+     "sar": 14.757867863028727
+    },
+    {
+     "song": "Forkupines - Semantics",
+     "sdr": 7.518902825985655,
+     "sir": 13.149810029605309,
+     "sar": 9.111716054086973
+    },
+    {
+     "song": "Georgia Wonder - Siren",
+     "sdr": 8.301306790732287,
+     "sir": 14.21301322063264,
+     "sar": 9.749184147235027
+    },
+    {
+     "song": "Girls Under Glass - We Feel Alright",
+     "sdr": 3.1386849398338788,
+     "sir": 6.089515113347552,
+     "sar": 7.1646846383335046
+    },
+    {
+     "song": "Hollow Ground - Ill Fate",
+     "sdr": 4.563336910716957,
+     "sir": 6.399630713634515,
+     "sar": 10.083496486117047
+    },
+    {
+     "song": "James Elder & Mark M Thompson - The English Actor",
+     "sdr": 10.134889544852584,
+     "sir": 15.477858438589225,
+     "sar": 11.757194626418885
+    },
+    {
+     "song": "Juliet's Rescue - Heartbeats",
+     "sdr": 6.771866342547259,
+     "sir": 12.81545395488921,
+     "sar": 8.23499039455707
+    },
+    {
+     "song": "Little Chicago's Finest - My Own",
+     "sdr": 9.92877814033034,
+     "sir": 18.04535211379249,
+     "sar": 10.72415961248543
+    }
+   ]
+  },
+  "wiener1": {
+   "vocals": [
+    {
+     "song": "Al James - Schoolboy Facination",
+     "sdr": 10.06348073535892,
+     "sir": 17.329519154085034,
+     "sar": 11.045746702295018
+    },
+    {
+     "song": "AM Contra - Heart Peripheral",
+     "sdr": 14.260026227234547,
+     "sir": 21.889238690676763,
+     "sar": 15.11096963116942
+    },
+    {
+     "song": "Angels In Amplifiers - I'm Alright",
+     "sdr": 12.913504722448417,
+     "sir": 21.43428295556233,
+     "sar": 13.602550765184201
+    },
+    {
+     "song": "Arise - Run Run Run",
+     "sdr": 10.532509488260224,
+     "sir": 18.95513506735735,
+     "sar": 11.261615029841217
+    },
+    {
+     "song": "Ben Carrigan - We'll Talk About It All Tonight",
+     "sdr": 14.28785571235234,
+     "sir": 20.517602603760476,
+     "sar": 15.508087302661092
+    },
+    {
+     "song": "BKS - Bulldozer",
+     "sdr": 5.096130071844954,
+     "sir": 13.22013096634076,
+     "sar": 6.024698213395689
+    },
+    {
+     "song": "BKS - Too Much",
+     "sdr": 12.756664531304054,
+     "sir": 21.900876365424295,
+     "sar": 13.348579906991914
+    },
+    {
+     "song": "Bobby Nobody - Stitch Up",
+     "sdr": 9.959932384247015,
+     "sir": 17.366117331808546,
+     "sar": 10.909791926407381
+    },
+    {
+     "song": "Buitraker - Revo X",
+     "sdr": 8.55840140919953,
+     "sir": 17.66302209429092,
+     "sar": 9.201645367989816
+    },
+    {
+     "song": "Carlos Gonzalez - A Place For Us",
+     "sdr": 8.13437282844383,
+     "sir": 14.819413209393185,
+     "sar": 9.323956312924963
+    },
+    {
+     "song": "Cristina Vane - So Easy",
+     "sdr": 12.921821775360197,
+     "sir": 19.79537571508606,
+     "sar": 13.965738049433762
+    },
+    {
+     "song": "Detsky Sad - Walkie Talkie",
+     "sdr": 11.297911047936216,
+     "sir": 20.344320726256726,
+     "sar": 11.915554356706014
+    },
+    {
+     "song": "Enda Reilly - Cur An Long Ag Seol",
+     "sdr": 12.485457779031394,
+     "sir": 19.447127180408902,
+     "sar": 13.510641433623052
+    },
+    {
+     "song": "Forkupines - Semantics",
+     "sdr": 9.273259805573673,
+     "sir": 16.50422565795872,
+     "sar": 10.280142662251265
+    },
+    {
+     "song": "Georgia Wonder - Siren",
+     "sdr": 5.858229143491787,
+     "sir": 9.920057199729248,
+     "sar": 8.44387666489826
+    },
+    {
+     "song": "Girls Under Glass - We Feel Alright",
+     "sdr": 6.047481638148579,
+     "sir": 14.085876725077542,
+     "sar": 6.955977895655279
+    },
+    {
+     "song": "Hollow Ground - Ill Fate",
+     "sdr": 7.983476283598509,
+     "sir": 14.50750963315411,
+     "sar": 9.228401435251277
+    },
+    {
+     "song": "James Elder & Mark M Thompson - The English Actor",
+     "sdr": 10.63268630769173,
+     "sir": 19.914592500252745,
+     "sar": 11.221970942339414
+    },
+    {
+     "song": "Juliet's Rescue - Heartbeats",
+     "sdr": 10.120449069956457,
+     "sir": 17.032252518932435,
+     "sar": 11.194414982101893
+    },
+    {
+     "song": "Little Chicago's Finest - My Own",
+     "sdr": 14.293960941574479,
+     "sir": 21.628467099407263,
+     "sar": 15.210720823453329
+    }
+   ],
+   "drums": [
+    {
+     "song": "Al James - Schoolboy Facination",
+     "sdr": 5.505830489328519,
+     "sir": 10.862039947474958,
+     "sar": 7.343623785677394
+    },
+    {
+     "song": "AM Contra - Heart Peripheral",
+     "sdr": 6.018578785679778,
+     "sir": 8.656956904491729,
+     "sar": 9.990360189756885
+    },
+    {
+     "song": "Angels In Amplifiers - I'm Alright",
+     "sdr": 8.281505970654537,
+     "sir": 14.692449985383842,
+     "sar": 9.553171652790715
+    },
+    {
+     "song": "Arise - Run Run Run",
+     "sdr": 2.3986102383945047,
+     "sir": 5.388177039308246,
+     "sar": 6.532909923012058
+    },
+    {
+     "song": "Ben Carrigan - We'll Talk About It All Tonight",
+     "sdr": 17.111115006471667,
+     "sir": 31.225634351454975,
+     "sar": 17.286136761351656
+    },
+    {
+     "song": "BKS - Bulldozer",
+     "sdr": 9.912997027950222,
+     "sir": 15.956291803692245,
+     "sar": 11.263664219254071
+    },
+    {
+     "song": "BKS - Too Much",
+     "sdr": 7.521469331366882,
+     "sir": 13.3656494910603,
+     "sar": 9.02690750637298
+    },
+    {
+     "song": "Bobby Nobody - Stitch Up",
+     "sdr": 6.756223163454965,
+     "sir": 14.203138166327093,
+     "sar": 7.780101532455063
+    },
+    {
+     "song": "Buitraker - Revo X",
+     "sdr": 12.374263384979702,
+     "sir": 19.625129714860474,
+     "sar": 13.327542690966258
+    },
+    {
+     "song": "Carlos Gonzalez - A Place For Us",
+     "sdr": 7.026331534031273,
+     "sir": 11.447873878845478,
+     "sar": 9.273764106529578
+    },
+    {
+     "song": "Cristina Vane - So Easy",
+     "sdr": 12.653871096031848,
+     "sir": 17.562420885757074,
+     "sar": 14.423178180638345
+    },
+    {
+     "song": "Detsky Sad - Walkie Talkie",
+     "sdr": 6.761197039619819,
+     "sir": 13.417978885310939,
+     "sar": 8.01099627000794
+    },
+    {
+     "song": "Enda Reilly - Cur An Long Ag Seol",
+     "sdr": 10.245010375375399,
+     "sir": 17.051060466001296,
+     "sar": 11.346069483317507
+    },
+    {
+     "song": "Forkupines - Semantics",
+     "sdr": 11.105333590563076,
+     "sir": 17.52379449442019,
+     "sar": 12.305944190959757
+    },
+    {
+     "song": "Georgia Wonder - Siren",
+     "sdr": 7.838801806218262,
+     "sir": 14.464138507021428,
+     "sar": 9.056634510836544
+    },
+    {
+     "song": "Girls Under Glass - We Feel Alright",
+     "sdr": 8.747834529442608,
+     "sir": 13.182927740800437,
+     "sar": 10.890919994891783
+    },
+    {
+     "song": "Hollow Ground - Ill Fate",
+     "sdr": 5.081850609999076,
+     "sir": 9.43679676197392,
+     "sar": 7.535136389118712
+    },
+    {
+     "song": "James Elder & Mark M Thompson - The English Actor",
+     "sdr": 7.27988660146675,
+     "sir": 13.758268352446754,
+     "sar": 8.565859456029596
+    },
+    {
+     "song": "Juliet's Rescue - Heartbeats",
+     "sdr": 13.86579776008729,
+     "sir": 21.133096728778305,
+     "sar": 14.801512404209415
+    },
+    {
+     "song": "Little Chicago's Finest - My Own",
+     "sdr": 11.460398018065996,
+     "sir": 17.797776387236905,
+     "sar": 12.680646913433373
+    }
+   ],
+   "bass": [
+    {
+     "song": "Al James - Schoolboy Facination",
+     "sdr": 7.600274154606373,
+     "sir": 11.642634035334273,
+     "sar": 10.065064648792841
+    },
+    {
+     "song": "AM Contra - Heart Peripheral",
+     "sdr": -0.3064557453727621,
+     "sir": 0.5980870580518141,
+     "sar": 9.673064441360502
+    },
+    {
+     "song": "Angels In Amplifiers - I'm Alright",
+     "sdr": 6.782360382271619,
+     "sir": 10.02471063761323,
+     "sar": 9.984068718069645
+    },
+    {
+     "song": "Arise - Run Run Run",
+     "sdr": 0.165430308792662,
+     "sir": 0.7211865581674258,
+     "sar": 12.034004615942298
+    },
+    {
+     "song": "Ben Carrigan - We'll Talk About It All Tonight",
+     "sdr": 19.814185498440803,
+     "sir": 24.811255094870404,
+     "sar": 21.48074678279955
+    },
+    {
+     "song": "BKS - Bulldozer",
+     "sdr": 7.1036252386793555,
+     "sir": 11.481556892908802,
+     "sar": 9.373676958689753
+    },
+    {
+     "song": "BKS - Too Much",
+     "sdr": 8.628163261811189,
+     "sir": 12.549519933589998,
+     "sar": 11.120761577651358
+    },
+    {
+     "song": "Bobby Nobody - Stitch Up",
+     "sdr": 5.614562410249785,
+     "sir": 8.74055216096663,
+     "sar": 9.05693600408062
+    },
+    {
+     "song": "Buitraker - Revo X",
+     "sdr": 6.770041292897007,
+     "sir": 10.750320936427366,
+     "sar": 9.338769369525986
+    },
+    {
+     "song": "Carlos Gonzalez - A Place For Us",
+     "sdr": -1.0913817974469326,
+     "sir": 4.052600951931405,
+     "sar": 1.9349872315809558
+    },
+    {
+     "song": "Cristina Vane - So Easy",
+     "sdr": 5.440678743836874,
+     "sir": 9.111696547838838,
+     "sar": 8.380255040024263
+    },
+    {
+     "song": "Detsky Sad - Walkie Talkie",
+     "sdr": 2.2604594158542763,
+     "sir": 7.607579510311167,
+     "sar": 4.454481700377978
+    },
+    {
+     "song": "Enda Reilly - Cur An Long Ag Seol",
+     "sdr": 7.950835660365906,
+     "sir": 12.931144707828143,
+     "sar": 9.826553087688527
+    },
+    {
+     "song": "Forkupines - Semantics",
+     "sdr": 6.11118231265408,
+     "sir": 10.938136852152315,
+     "sar": 8.18102864274589
+    },
+    {
+     "song": "Georgia Wonder - Siren",
+     "sdr": 6.621567171914839,
+     "sir": 9.937796962998743,
+     "sar": 9.765695605841875
+    },
+    {
+     "song": "Girls Under Glass - We Feel Alright",
+     "sdr": 2.131622697864863,
+     "sir": 9.447306332429093,
+     "sar": 3.490092699678751
+    },
+    {
+     "song": "Hollow Ground - Ill Fate",
+     "sdr": -2.2088621967772935,
+     "sir": 2.745348851032246,
+     "sar": 1.3144014299143922
+    },
+    {
+     "song": "James Elder & Mark M Thompson - The English Actor",
+     "sdr": 5.847800507121036,
+     "sir": 10.486180058844795,
+     "sar": 8.048595096155907
+    },
+    {
+     "song": "Juliet's Rescue - Heartbeats",
+     "sdr": -6.072140180343906,
+     "sir": -3.3086623446633423,
+     "sar": 2.1722399114420936
+    },
+    {
+     "song": "Little Chicago's Finest - My Own",
+     "sdr": 7.502109037639971,
+     "sir": 12.896604029368175,
+     "sar": 9.199377086904136
+    }
+   ],
+   "other": [
+    {
+     "song": "Al James - Schoolboy Facination",
+     "sdr": 2.204297346270051,
+     "sir": 5.3210297657373165,
+     "sar": 6.229030969922428
+    },
+    {
+     "song": "AM Contra - Heart Peripheral",
+     "sdr": 0.66023043353054,
+     "sir": 8.988295504992061,
+     "sar": 1.8668064630912327
+    },
+    {
+     "song": "Angels In Amplifiers - I'm Alright",
+     "sdr": 5.808897367309958,
+     "sir": 8.72151956787443,
+     "sar": 9.46613208143049
+    },
+    {
+     "song": "Arise - Run Run Run",
+     "sdr": -0.9313514461382745,
+     "sir": 12.675165997617977,
+     "sar": -0.5093580871072831
+    },
+    {
+     "song": "Ben Carrigan - We'll Talk About It All Tonight",
+     "sdr": 9.643980716956142,
+     "sir": 14.649132249588462,
+     "sar": 11.43888232062638
+    },
+    {
+     "song": "BKS - Bulldozer",
+     "sdr": 6.080246674649268,
+     "sir": 11.069591167931724,
+     "sar": 8.062941805990073
+    },
+    {
+     "song": "BKS - Too Much",
+     "sdr": 6.343791922967589,
+     "sir": 11.022744115458423,
+     "sar": 8.48186680774411
+    },
+    {
+     "song": "Bobby Nobody - Stitch Up",
+     "sdr": 7.219317010175773,
+     "sir": 10.538495328943247,
+     "sar": 10.308895772647134
+    },
+    {
+     "song": "Buitraker - Revo X",
+     "sdr": 5.11428385045872,
+     "sir": 9.421940018078606,
+     "sar": 7.596729599871233
+    },
+    {
+     "song": "Carlos Gonzalez - A Place For Us",
+     "sdr": 7.33624151760771,
+     "sir": 10.905677994398179,
+     "sar": 10.190217191441711
+    },
+    {
+     "song": "Cristina Vane - So Easy",
+     "sdr": 5.2820138889753,
+     "sir": 8.198391874554247,
+     "sar": 9.000620176064192
+    },
+    {
+     "song": "Detsky Sad - Walkie Talkie",
+     "sdr": -1.1204836524189234,
+     "sir": 0.8859695763549871,
+     "sar": 5.787608134734898
+    },
+    {
+     "song": "Enda Reilly - Cur An Long Ag Seol",
+     "sdr": 6.693841451753595,
+     "sir": 10.681230280918552,
+     "sar": 9.263239342477208
+    },
+    {
+     "song": "Forkupines - Semantics",
+     "sdr": 6.111436410799604,
+     "sir": 9.940749752530419,
+     "sar": 8.85228978103743
+    },
+    {
+     "song": "Georgia Wonder - Siren",
+     "sdr": 6.323864674429204,
+     "sir": 9.85908896424818,
+     "sar": 9.292827684211835
+    },
+    {
+     "song": "Girls Under Glass - We Feel Alright",
+     "sdr": 2.8445524455148385,
+     "sir": 5.450851461458198,
+     "sar": 7.389512888530431
+    },
+    {
+     "song": "Hollow Ground - Ill Fate",
+     "sdr": 4.053957314717078,
+     "sir": 5.4622384662487935,
+     "sar": 10.716699678301694
+    },
+    {
+     "song": "James Elder & Mark M Thompson - The English Actor",
+     "sdr": 8.309549765120249,
+     "sir": 11.902402870053974,
+     "sar": 11.077855050570589
+    },
+    {
+     "song": "Juliet's Rescue - Heartbeats",
+     "sdr": 5.888073638520406,
+     "sir": 9.707140095114154,
+     "sar": 8.6582177483182
+    },
+    {
+     "song": "Little Chicago's Finest - My Own",
+     "sdr": 4.5288566376054575,
+     "sir": 8.76334938395989,
+     "sar": 7.127323784396255
+    }
+   ]
+  },
+  "wiener2": {
+   "vocals": [
+    {
+     "song": "Al James - Schoolboy Facination",
+     "sdr": 10.308172801382195,
+     "sir": 18.70326819692272,
+     "sar": 11.045174787047525
+    },
+    {
+     "song": "AM Contra - Heart Peripheral",
+     "sdr": 14.370893346012357,
+     "sir": 22.426534491932138,
+     "sar": 15.13466496610839
+    },
+    {
+     "song": "Angels In Amplifiers - I'm Alright",
+     "sdr": 13.144432189339783,
+     "sir": 23.42205115802851,
+     "sar": 13.591933890234413
+    },
+    {
+     "song": "Arise - Run Run Run",
+     "sdr": 11.503388767544267,
+     "sir": 22.75873428470443,
+     "sar": 11.86443766053882
+    },
+    {
+     "song": "Ben Carrigan - We'll Talk About It All Tonight",
+     "sdr": 14.956154470577554,
+     "sir": 22.372433438572855,
+     "sar": 15.84992731634205
+    },
+    {
+     "song": "BKS - Bulldozer",
+     "sdr": 5.329234904845781,
+     "sir": 15.554588137122803,
+     "sar": 5.8816978687326635
+    },
+    {
+     "song": "BKS - Too Much",
+     "sdr": 13.041002176544973,
+     "sir": 22.99093854179317,
+     "sar": 13.525932666572697
+    },
+    {
+     "song": "Bobby Nobody - Stitch Up",
+     "sdr": 10.342259286631423,
+     "sir": 19.780659470527453,
+     "sar": 10.91240521425479
+    },
+    {
+     "song": "Buitraker - Revo X",
+     "sdr": 8.578460081219875,
+     "sir": 20.458054178952253,
+     "sar": 8.908645284349495
+    },
+    {
+     "song": "Carlos Gonzalez - A Place For Us",
+     "sdr": 8.29083767265564,
+     "sir": 16.939249772860506,
+     "sar": 9.015252166768677
+    },
+    {
+     "song": "Cristina Vane - So Easy",
+     "sdr": 12.824588684202034,
+     "sir": 20.101243804279576,
+     "sar": 13.767040506433926
+    },
+    {
+     "song": "Detsky Sad - Walkie Talkie",
+     "sdr": 12.49496535849125,
+     "sir": 23.774896957532327,
+     "sar": 12.849252137911908
+    },
+    {
+     "song": "Enda Reilly - Cur An Long Ag Seol",
+     "sdr": 12.72634990045033,
+     "sir": 20.447835390041913,
+     "sar": 13.569266603840177
+    },
+    {
+     "song": "Forkupines - Semantics",
+     "sdr": 9.293934580236773,
+     "sir": 17.813093488027608,
+     "sar": 10.023412701010948
+    },
+    {
+     "song": "Georgia Wonder - Siren",
+     "sdr": 6.084396378508574,
+     "sir": 11.999108735374971,
+     "sar": 7.635437843167482
+    },
+    {
+     "song": "Girls Under Glass - We Feel Alright",
+     "sdr": 6.157312290048267,
+     "sir": 16.728907670450376,
+     "sar": 6.647051348860115
+    },
+    {
+     "song": "Hollow Ground - Ill Fate",
+     "sdr": 7.909079748339998,
+     "sir": 15.477201466605134,
+     "sar": 8.866192395405054
+    },
+    {
+     "song": "James Elder & Mark M Thompson - The English Actor",
+     "sdr": 10.728973597573075,
+     "sir": 22.544255970549656,
+     "sar": 11.04885573043739
+    },
+    {
+     "song": "Juliet's Rescue - Heartbeats",
+     "sdr": 10.247746290774655,
+     "sir": 18.72164135264095,
+     "sar": 10.97131255087845
+    },
+    {
+     "song": "Little Chicago's Finest - My Own",
+     "sdr": 15.02894800428698,
+     "sir": 23.95677241971308,
+     "sar": 15.641221797857767
+    }
+   ],
+   "drums": [
+    {
+     "song": "Al James - Schoolboy Facination",
+     "sdr": 6.197274184113733,
+     "sir": 14.571072311622073,
+     "sar": 7.028746789493313
+    },
+    {
+     "song": "AM Contra - Heart Peripheral",
+     "sdr": 6.666260041324836,
+     "sir": 11.98556673229717,
+     "sar": 8.443637578679363
+    },
+    {
+     "song": "Angels In Amplifiers - I'm Alright",
+     "sdr": 8.796343091577876,
+     "sir": 18.004418531468318,
+     "sar": 9.41975403996564
+    },
+    {
+     "song": "Arise - Run Run Run",
+     "sdr": 2.8296161305884135,
+     "sir": 6.029403002047187,
+     "sar": 6.6256931509552075
+    },
+    {
+     "song": "Ben Carrigan - We'll Talk About It All Tonight",
+     "sdr": 17.824498173992072,
+     "sir": 36.530469036061135,
+     "sar": 17.88436538957201
+    },
+    {
+     "song": "BKS - Bulldozer",
+     "sdr": 10.376982035343163,
+     "sir": 18.61358334164389,
+     "sar": 11.14258629389494
+    },
+    {
+     "song": "BKS - Too Much",
+     "sdr": 8.196055217684027,
+     "sir": 16.079744376568282,
+     "sar": 9.07352333411734
+    },
+    {
+     "song": "Bobby Nobody - Stitch Up",
+     "sdr": 7.410983593852215,
+     "sir": 18.554185960067326,
+     "sar": 7.818457119199609
+    },
+    {
+     "song": "Buitraker - Revo X",
+     "sdr": 12.847378029802648,
+     "sir": 20.97659621056238,
+     "sar": 13.607415197586018
+    },
+    {
+     "song": "Carlos Gonzalez - A Place For Us",
+     "sdr": 7.345469374561944,
+     "sir": 12.77153174312141,
+     "sar": 9.036176328952179
+    },
+    {
+     "song": "Cristina Vane - So Easy",
+     "sdr": 13.001969995079108,
+     "sir": 19.747312449299255,
+     "sar": 14.080158939885933
+    },
+    {
+     "song": "Detsky Sad - Walkie Talkie",
+     "sdr": 6.787168411181654,
+     "sir": 15.462658721754982,
+     "sar": 7.542056402418779
+    },
+    {
+     "song": "Enda Reilly - Cur An Long Ag Seol",
+     "sdr": 10.729849761770545,
+     "sir": 19.26721669085033,
+     "sar": 11.436195350720556
+    },
+    {
+     "song": "Forkupines - Semantics",
+     "sdr": 11.208290106687802,
+     "sir": 19.30160960259451,
+     "sar": 11.991049318750777
+    },
+    {
+     "song": "Georgia Wonder - Siren",
+     "sdr": 8.532709503452086,
+     "sir": 17.35883836256664,
+     "sar": 9.221743619864075
+    },
+    {
+     "song": "Girls Under Glass - We Feel Alright",
+     "sdr": 9.279367277398794,
+     "sir": 14.797004578427684,
+     "sar": 10.851817466475966
+    },
+    {
+     "song": "Hollow Ground - Ill Fate",
+     "sdr": 6.124959635702139,
+     "sir": 13.273978059941431,
+     "sar": 7.254820367034659
+    },
+    {
+     "song": "James Elder & Mark M Thompson - The English Actor",
+     "sdr": 7.931586647965014,
+     "sir": 17.067688511395886,
+     "sar": 8.581169067383062
+    },
+    {
+     "song": "Juliet's Rescue - Heartbeats",
+     "sdr": 14.242865910821884,
+     "sir": 23.46987041287697,
+     "sar": 14.814969926728272
+    },
+    {
+     "song": "Little Chicago's Finest - My Own",
+     "sdr": 12.14713618742637,
+     "sir": 19.407221277042005,
+     "sar": 13.100688513057195
+    }
+   ],
+   "bass": [
+    {
+     "song": "Al James - Schoolboy Facination",
+     "sdr": 7.934103115229764,
+     "sir": 13.343496482721681,
+     "sar": 9.604554635487496
+    },
+    {
+     "song": "AM Contra - Heart Peripheral",
+     "sdr": 0.14094447281612427,
+     "sir": 1.4489594569384645,
+     "sar": 8.336235679345748
+    },
+    {
+     "song": "Angels In Amplifiers - I'm Alright",
+     "sdr": 7.360754350990781,
+     "sir": 12.459981856058722,
+     "sar": 9.206246967006614
+    },
+    {
+     "song": "Arise - Run Run Run",
+     "sdr": 0.3465579967862712,
+     "sir": 0.9196867671375999,
+     "sar": 12.000048415653845
+    },
+    {
+     "song": "Ben Carrigan - We'll Talk About It All Tonight",
+     "sdr": 20.431949057164598,
+     "sir": 26.519100755676696,
+     "sar": 21.669046420687202
+    },
+    {
+     "song": "BKS - Bulldozer",
+     "sdr": 7.868026036688603,
+     "sir": 14.429888003216986,
+     "sar": 9.104855771895815
+    },
+    {
+     "song": "BKS - Too Much",
+     "sdr": 9.429432285381502,
+     "sir": 15.067489799946824,
+     "sar": 10.947362784984552
+    },
+    {
+     "song": "Bobby Nobody - Stitch Up",
+     "sdr": 6.682388146754205,
+     "sir": 11.77363450225341,
+     "sar": 8.571207260151759
+    },
+    {
+     "song": "Buitraker - Revo X",
+     "sdr": 7.7370326756612915,
+     "sir": 14.045673679099469,
+     "sar": 9.062303786593167
+    },
+    {
+     "song": "Carlos Gonzalez - A Place For Us",
+     "sdr": -0.7954670522067775,
+     "sir": 8.359805002788217,
+     "sar": 0.3583938111108698
+    },
+    {
+     "song": "Cristina Vane - So Easy",
+     "sdr": 6.406894616414249,
+     "sir": 12.952359265853053,
+     "sar": 7.70920520420601
+    },
+    {
+     "song": "Detsky Sad - Walkie Talkie",
+     "sdr": 2.9020669158523815,
+     "sir": 11.494555606749712,
+     "sar": 3.8458137634456997
+    },
+    {
+     "song": "Enda Reilly - Cur An Long Ag Seol",
+     "sdr": 8.65788433008144,
+     "sir": 17.508189463119002,
+     "sar": 9.34063528353514
+    },
+    {
+     "song": "Forkupines - Semantics",
+     "sdr": 6.82143620494116,
+     "sir": 15.355646583363345,
+     "sar": 7.601915439088531
+    },
+    {
+     "song": "Georgia Wonder - Siren",
+     "sdr": 7.492139166853282,
+     "sir": 12.153566261898725,
+     "sar": 9.56576252583557
+    },
+    {
+     "song": "Girls Under Glass - We Feel Alright",
+     "sdr": 2.119172292706749,
+     "sir": 13.420334372542042,
+     "sar": 2.646804803898747
+    },
+    {
+     "song": "Hollow Ground - Ill Fate",
+     "sdr": -2.221826456512472,
+     "sir": 6.49441191470686,
+     "sar": -0.7166516968336487
+    },
+    {
+     "song": "James Elder & Mark M Thompson - The English Actor",
+     "sdr": 6.327276496521628,
+     "sir": 13.02805178576845,
+     "sar": 7.582763664454962
+    },
+    {
+     "song": "Juliet's Rescue - Heartbeats",
+     "sdr": -6.581344893439534,
+     "sir": -2.7358125843171672,
+     "sar": 0.3188984842120204
+    },
+    {
+     "song": "Little Chicago's Finest - My Own",
+     "sdr": 8.734699354454742,
+     "sir": 18.61030496903165,
+     "sar": 9.265717568495866
+    }
+   ],
+   "other": [
+    {
+     "song": "Al James - Schoolboy Facination",
+     "sdr": 3.183602335862441,
+     "sir": 8.772539768635276,
+     "sar": 5.127971267992689
+    },
+    {
+     "song": "AM Contra - Heart Peripheral",
+     "sdr": 0.896181273889206,
+     "sir": 14.212612689578814,
+     "sar": 1.2650070488431027
+    },
+    {
+     "song": "Angels In Amplifiers - I'm Alright",
+     "sdr": 6.292620266623464,
+     "sir": 10.635372787563666,
+     "sar": 8.644590026745586
+    },
+    {
+     "song": "Arise - Run Run Run",
+     "sdr": -1.597334364284328,
+     "sir": 17.439447440845782,
+     "sar": -1.4651635038860278
+    },
+    {
+     "song": "Ben Carrigan - We'll Talk About It All Tonight",
+     "sdr": 10.746119961433786,
+     "sir": 18.62712028825681,
+     "sar": 11.577476681869715
+    },
+    {
+     "song": "BKS - Bulldozer",
+     "sdr": 6.519313929868411,
+     "sir": 13.94211603011776,
+     "sar": 7.558339311293457
+    },
+    {
+     "song": "BKS - Too Much",
+     "sdr": 7.053236025313337,
+     "sir": 14.580103383887675,
+     "sar": 8.046521822726117
+    },
+    {
+     "song": "Bobby Nobody - Stitch Up",
+     "sdr": 7.8287684365817745,
+     "sir": 12.930343302329202,
+     "sar": 9.649203504586612
+    },
+    {
+     "song": "Buitraker - Revo X",
+     "sdr": 5.579924892534284,
+     "sir": 11.797817767691651,
+     "sar": 7.043480439232763
+    },
+    {
+     "song": "Carlos Gonzalez - A Place For Us",
+     "sdr": 7.645554542955148,
+     "sir": 12.966986941103208,
+     "sar": 9.369431620790689
+    },
+    {
+     "song": "Cristina Vane - So Easy",
+     "sdr": 6.051497110586073,
+     "sir": 10.896017564908139,
+     "sar": 8.115908071076726
+    },
+    {
+     "song": "Detsky Sad - Walkie Talkie",
+     "sdr": -0.5280472318362209,
+     "sir": 1.9817196361052838,
+     "sar": 5.179587251485343
+    },
+    {
+     "song": "Enda Reilly - Cur An Long Ag Seol",
+     "sdr": 7.616369105937571,
+     "sir": 13.978498153172076,
+     "sar": 8.927999961252059
+    },
+    {
+     "song": "Forkupines - Semantics",
+     "sdr": 6.303394411716522,
+     "sir": 11.969919523430022,
+     "sar": 7.945040776026946
+    },
+    {
+     "song": "Georgia Wonder - Siren",
+     "sdr": 6.737970395775462,
+     "sir": 12.280975656941276,
+     "sar": 8.408531965529825
+    },
+    {
+     "song": "Girls Under Glass - We Feel Alright",
+     "sdr": 2.988993931742373,
+     "sir": 6.2464588090437605,
+     "sar": 6.690299605222743
+    },
+    {
+     "song": "Hollow Ground - Ill Fate",
+     "sdr": 4.1406763444486785,
+     "sir": 5.884938571244064,
+     "sar": 9.941955887223738
+    },
+    {
+     "song": "James Elder & Mark M Thompson - The English Actor",
+     "sdr": 8.46617199791454,
+     "sir": 12.909123614081796,
+     "sar": 10.617778755479621
+    },
+    {
+     "song": "Juliet's Rescue - Heartbeats",
+     "sdr": 5.629294685537865,
+     "sir": 10.558048207556094,
+     "sar": 7.67958576120534
+    },
+    {
+     "song": "Little Chicago's Finest - My Own",
+     "sdr": 5.8192503116068774,
+     "sir": 12.300674625454924,
+     "sar": 7.173738181630325
+    }
+   ]
+  },
+  "wiener2_smooth": {
+   "vocals": [
+    {
+     "song": "Al James - Schoolboy Facination",
+     "sdr": 9.728468488912915,
+     "sir": 17.55387360477115,
+     "sar": 10.587170886024648
+    },
+    {
+     "song": "AM Contra - Heart Peripheral",
+     "sdr": 13.761066323740149,
+     "sir": 21.211998567618508,
+     "sar": 14.654855443405935
+    },
+    {
+     "song": "Angels In Amplifiers - I'm Alright",
+     "sdr": 12.328535190985848,
+     "sir": 21.589121492938826,
+     "sar": 12.906629134435905
+    },
+    {
+     "song": "Arise - Run Run Run",
+     "sdr": 10.40599204288098,
+     "sir": 20.86798729435097,
+     "sar": 10.850558329025304
+    },
+    {
+     "song": "Ben Carrigan - We'll Talk About It All Tonight",
+     "sdr": 14.135800716235703,
+     "sir": 20.829503823870297,
+     "sar": 15.217894416177682
+    },
+    {
+     "song": "BKS - Bulldozer",
+     "sdr": 4.318927195877306,
+     "sir": 13.501976079588667,
+     "sar": 5.067239707117569
+    },
+    {
+     "song": "BKS - Too Much",
+     "sdr": 12.056096418909696,
+     "sir": 21.076407206642873,
+     "sar": 12.67129476576902
+    },
+    {
+     "song": "Bobby Nobody - Stitch Up",
+     "sdr": 9.254740253305618,
+     "sir": 17.804299859207738,
+     "sar": 9.979406898334206
+    },
+    {
+     "song": "Buitraker - Revo X",
+     "sdr": 7.710640998084642,
+     "sir": 18.983263965628055,
+     "sar": 8.101886760613647
+    },
+    {
+     "song": "Carlos Gonzalez - A Place For Us",
+     "sdr": 7.779208130993381,
+     "sir": 15.888219400826413,
+     "sar": 8.61889936300139
+    },
+    {
+     "song": "Cristina Vane - So Easy",
+     "sdr": 11.98668188082529,
+     "sir": 18.82006045975409,
+     "sar": 13.052374314076546
+    },
+    {
+     "song": "Detsky Sad - Walkie Talkie",
+     "sdr": 11.641390567390504,
+     "sir": 22.86575389598534,
+     "sar": 12.00440032878791
+    },
+    {
+     "song": "Enda Reilly - Cur An Long Ag Seol",
+     "sdr": 12.064260388317837,
+     "sir": 19.195577411405008,
+     "sar": 13.050621106865982
+    },
+    {
+     "song": "Forkupines - Semantics",
+     "sdr": 8.710113697361274,
+     "sir": 16.66053076528232,
+     "sar": 9.561621198580522
+    },
+    {
+     "song": "Georgia Wonder - Siren",
+     "sdr": 5.597735467863288,
+     "sir": 11.045487845038007,
+     "sar": 7.384815325812295
+    },
+    {
+     "song": "Girls Under Glass - We Feel Alright",
+     "sdr": 5.613086173622107,
+     "sir": 15.607763895514214,
+     "sar": 6.189041958623691
+    },
+    {
+     "song": "Hollow Ground - Ill Fate",
+     "sdr": 7.411248506234662,
+     "sir": 14.180067371633315,
+     "sar": 8.600154571441575
+    },
+    {
+     "song": "James Elder & Mark M Thompson - The English Actor",
+     "sdr": 10.026886429464314,
+     "sir": 20.63859636544834,
+     "sar": 10.45885138933886
+    },
+    {
+     "song": "Juliet's Rescue - Heartbeats",
+     "sdr": 9.44087251663445,
+     "sir": 17.08259042418055,
+     "sar": 10.345391406569986
+    },
+    {
+     "song": "Little Chicago's Finest - My Own",
+     "sdr": 13.060152477854647,
+     "sir": 20.546449711009423,
+     "sar": 13.951621718627738
+    }
+   ],
+   "drums": [
+    {
+     "song": "Al James - Schoolboy Facination",
+     "sdr": 4.952912897213365,
+     "sir": 12.419077478435787,
+     "sar": 6.052587364096431
+    },
+    {
+     "song": "AM Contra - Heart Peripheral",
+     "sdr": 5.779409033303499,
+     "sir": 10.015698416841714,
+     "sar": 8.247210413924655
+    },
+    {
+     "song": "Angels In Amplifiers - I'm Alright",
+     "sdr": 7.364887382435318,
+     "sir": 14.826726497182667,
+     "sar": 8.364183026400664
+    },
+    {
+     "song": "Arise - Run Run Run",
+     "sdr": 1.5385795104494182,
+     "sir": 4.8708352376881,
+     "sar": 5.473847958162018
+    },
+    {
+     "song": "Ben Carrigan - We'll Talk About It All Tonight",
+     "sdr": 15.809984794892593,
+     "sir": 31.331768831532465,
+     "sar": 15.936708274376901
+    },
+    {
+     "song": "BKS - Bulldozer",
+     "sdr": 9.047803304932403,
+     "sir": 15.841669499976387,
+     "sar": 10.178965136627161
+    },
+    {
+     "song": "BKS - Too Much",
+     "sdr": 6.939998814050882,
+     "sir": 13.813779139962438,
+     "sar": 8.115390464524303
+    },
+    {
+     "song": "Bobby Nobody - Stitch Up",
+     "sdr": 6.164090921194669,
+     "sir": 15.860531361020804,
+     "sar": 6.767956449399762
+    },
+    {
+     "song": "Buitraker - Revo X",
+     "sdr": 11.687331441103748,
+     "sir": 18.524729015516147,
+     "sar": 12.755929639224707
+    },
+    {
+     "song": "Carlos Gonzalez - A Place For Us",
+     "sdr": 6.828671656060491,
+     "sir": 11.941557843849628,
+     "sar": 8.697540393106832
+    },
+    {
+     "song": "Cristina Vane - So Easy",
+     "sdr": 11.98904008359773,
+     "sir": 17.73768492845813,
+     "sar": 13.405507805132446
+    },
+    {
+     "song": "Detsky Sad - Walkie Talkie",
+     "sdr": 6.402726805735739,
+     "sir": 13.816406069690888,
+     "sar": 7.4487145627067175
+    },
+    {
+     "song": "Enda Reilly - Cur An Long Ag Seol",
+     "sdr": 9.725380176712493,
+     "sir": 17.075738151286657,
+     "sar": 10.693139702504244
+    },
+    {
+     "song": "Forkupines - Semantics",
+     "sdr": 10.242152381693144,
+     "sir": 17.195662177823774,
+     "sar": 11.302403106329775
+    },
+    {
+     "song": "Georgia Wonder - Siren",
+     "sdr": 6.904460936467806,
+     "sir": 14.019595102384015,
+     "sar": 8.011554856969546
+    },
+    {
+     "song": "Girls Under Glass - We Feel Alright",
+     "sdr": 7.576455399698496,
+     "sir": 11.964647937341738,
+     "sar": 9.810168491751485
+    },
+    {
+     "song": "Hollow Ground - Ill Fate",
+     "sdr": 5.096578885879178,
+     "sir": 10.785277979928555,
+     "sar": 6.810610535152653
+    },
+    {
+     "song": "James Elder & Mark M Thompson - The English Actor",
+     "sdr": 6.44078267787347,
+     "sir": 13.52602152604205,
+     "sar": 7.574997881370776
+    },
+    {
+     "song": "Juliet's Rescue - Heartbeats",
+     "sdr": 12.360806967534533,
+     "sir": 19.57171621224858,
+     "sar": 13.323989501361222
+    },
+    {
+     "song": "Little Chicago's Finest - My Own",
+     "sdr": 10.356442425251526,
+     "sir": 16.36951417535731,
+     "sar": 11.70739580235773
+    }
+   ],
+   "bass": [
+    {
+     "song": "Al James - Schoolboy Facination",
+     "sdr": 7.160171003536485,
+     "sir": 12.067751901510423,
+     "sar": 9.116204236611022
+    },
+    {
+     "song": "AM Contra - Heart Peripheral",
+     "sdr": -0.2506677166902243,
+     "sir": 1.062888505638559,
+     "sar": 8.094216639004667
+    },
+    {
+     "song": "Angels In Amplifiers - I'm Alright",
+     "sdr": 6.375762213356824,
+     "sir": 11.147693075306018,
+     "sar": 8.45757307750481
+    },
+    {
+     "song": "Arise - Run Run Run",
+     "sdr": 0.32496664572724443,
+     "sir": 0.9011139300653634,
+     "sar": 11.965436578953446
+    },
+    {
+     "song": "Ben Carrigan - We'll Talk About It All Tonight",
+     "sdr": 18.951894858202163,
+     "sir": 25.658327976892995,
+     "sar": 20.006581663412778
+    },
+    {
+     "song": "BKS - Bulldozer",
+     "sdr": 6.671851568977609,
+     "sir": 12.725290541534806,
+     "sar": 8.136245030229073
+    },
+    {
+     "song": "BKS - Too Much",
+     "sdr": 8.24452872781636,
+     "sir": 13.227704247314186,
+     "sar": 10.10500061629283
+    },
+    {
+     "song": "Bobby Nobody - Stitch Up",
+     "sdr": 6.199971402250727,
+     "sir": 10.899082501012016,
+     "sar": 8.336851562530585
+    },
+    {
+     "song": "Buitraker - Revo X",
+     "sdr": 6.887122698586115,
+     "sir": 13.472006905587033,
+     "sar": 8.154595412643625
+    },
+    {
+     "song": "Carlos Gonzalez - A Place For Us",
+     "sdr": -0.9081229007866323,
+     "sir": 7.890914213358329,
+     "sar": 0.3599607380729824
+    },
+    {
+     "song": "Cristina Vane - So Easy",
+     "sdr": 5.699724396286722,
+     "sir": 12.053119533519483,
+     "sar": 7.106204689220464
+    },
+    {
+     "song": "Detsky Sad - Walkie Talkie",
+     "sdr": 2.078059238511896,
+     "sir": 10.481413405984885,
+     "sar": 3.1278174776349137
+    },
+    {
+     "song": "Enda Reilly - Cur An Long Ag Seol",
+     "sdr": 7.808750352281408,
+     "sir": 16.096619431461157,
+     "sar": 8.611409419339216
+    },
+    {
+     "song": "Forkupines - Semantics",
+     "sdr": 5.777664682548233,
+     "sir": 14.55533397184011,
+     "sar": 6.544534444317715
+    },
+    {
+     "song": "Georgia Wonder - Siren",
+     "sdr": 6.309398963329046,
+     "sir": 10.76002437739319,
+     "sar": 8.590014251734756
+    },
+    {
+     "song": "Girls Under Glass - We Feel Alright",
+     "sdr": 1.449071188283425,
+     "sir": 11.627538257713198,
+     "sar": 2.1760058691501474
+    },
+    {
+     "song": "Hollow Ground - Ill Fate",
+     "sdr": -2.5054106948001293,
+     "sir": 5.74544814953669,
+     "sar": -0.7761311825235241
+    },
+    {
+     "song": "James Elder & Mark M Thompson - The English Actor",
+     "sdr": 5.313487419280416,
+     "sir": 11.685105193110559,
+     "sar": 6.736966583673799
+    },
+    {
+     "song": "Juliet's Rescue - Heartbeats",
+     "sdr": -6.952098433043307,
+     "sir": -2.8902464581558025,
+     "sar": -0.09617511599578246
+    },
+    {
+     "song": "Little Chicago's Finest - My Own",
+     "sdr": 7.257760188348304,
+     "sir": 16.35312443454175,
+     "sar": 7.927972063708077
+    }
+   ],
+   "other": [
+    {
+     "song": "Al James - Schoolboy Facination",
+     "sdr": 2.7676947540534984,
+     "sir": 8.087343927024374,
+     "sar": 4.9054224169206595
+    },
+    {
+     "song": "AM Contra - Heart Peripheral",
+     "sdr": 0.7456558406872033,
+     "sir": 13.433459850077774,
+     "sar": 1.1787257053612412
+    },
+    {
+     "song": "Angels In Amplifiers - I'm Alright",
+     "sdr": 5.653028200889242,
+     "sir": 9.756416393293637,
+     "sar": 8.227424904352759
+    },
+    {
+     "song": "Arise - Run Run Run",
+     "sdr": -1.256400495799031,
+     "sir": 16.172965850078135,
+     "sar": -1.0736011099148335
+    },
+    {
+     "song": "Ben Carrigan - We'll Talk About It All Tonight",
+     "sdr": 10.035397279490468,
+     "sir": 17.98335398715973,
+     "sar": 10.863224426502352
+    },
+    {
+     "song": "BKS - Bulldozer",
+     "sdr": 5.982622669218952,
+     "sir": 13.14989658614093,
+     "sar": 7.113787338791424
+    },
+    {
+     "song": "BKS - Too Much",
+     "sdr": 6.605571041862303,
+     "sir": 13.952602025587645,
+     "sar": 7.661117611487514
+    },
+    {
+     "song": "Bobby Nobody - Stitch Up",
+     "sdr": 7.133044879189477,
+     "sir": 12.030017862756207,
+     "sar": 9.096364984884636
+    },
+    {
+     "song": "Buitraker - Revo X",
+     "sdr": 4.954418751049127,
+     "sir": 10.58484213088625,
+     "sar": 6.705960604316001
+    },
+    {
+     "song": "Carlos Gonzalez - A Place For Us",
+     "sdr": 7.307755218540875,
+     "sir": 12.46355126074256,
+     "sar": 9.12798658353416
+    },
+    {
+     "song": "Cristina Vane - So Easy",
+     "sdr": 5.4976920459654846,
+     "sir": 10.09100853048843,
+     "sar": 7.756093782248054
+    },
+    {
+     "song": "Detsky Sad - Walkie Talkie",
+     "sdr": -0.9673284310019336,
+     "sir": 1.4769561868934593,
+     "sar": 5.028276784157065
+    },
+    {
+     "song": "Enda Reilly - Cur An Long Ag Seol",
+     "sdr": 6.996404821705246,
+     "sir": 13.22091705029138,
+     "sar": 8.381986778403052
+    },
+    {
+     "song": "Forkupines - Semantics",
+     "sdr": 5.831144990928591,
+     "sir": 11.355069732793552,
+     "sar": 7.566363641797617
+    },
+    {
+     "song": "Georgia Wonder - Siren",
+     "sdr": 6.420609728673245,
+     "sir": 11.71639003612255,
+     "sar": 8.224314779479073
+    },
+    {
+     "song": "Girls Under Glass - We Feel Alright",
+     "sdr": 2.929512613534441,
+     "sir": 6.22121833683058,
+     "sar": 6.605247469930047
+    },
+    {
+     "song": "Hollow Ground - Ill Fate",
+     "sdr": 3.897345267445218,
+     "sir": 5.564474023453439,
+     "sar": 9.92666727267316
+    },
+    {
+     "song": "James Elder & Mark M Thompson - The English Actor",
+     "sdr": 7.961172513635507,
+     "sir": 12.349094004633436,
+     "sar": 10.172980590758385
+    },
+    {
+     "song": "Juliet's Rescue - Heartbeats",
+     "sdr": 5.113944135868785,
+     "sir": 9.741767191152146,
+     "sar": 7.386414218138054
+    },
+    {
+     "song": "Little Chicago's Finest - My Own",
+     "sdr": 4.646112169677514,
+     "sir": 10.89820876353572,
+     "sar": 6.160525871901408
+    }
+   ]
+  }
+ }
+}

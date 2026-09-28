@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>CleanSplit</title>
+<link rel="stylesheet" href="/static/app.css">
+</head>
+<body>
+<div id="app">
+  <aside id="rail">
+    <div class="rail-head"><span class="mark"></span><span class="brand">CleanSplit</span></div>
+    <div class="rail-section">Splits</div>
+    <div id="songs"></div>
+    <div id="jobs"></div>
+    <div class="rail-foot">
+      <select id="separator" class="btn" title="Which models to use"></select>
+      <button id="open" class="btn btn-primary">Split a song…</button>
+    </div>
+  </aside>
+
+  <main id="main">
+    <header id="head">
+      <div>
+        <div id="title">No split selected</div>
+        <div id="meta" class="mono"></div>
+      </div>
+      <div class="spacer"></div>
+      <span id="abpill" class="pill" hidden></span>
+      <select id="compare" class="btn btn-ghost" title="Compare against another split"></select>
+      <button id="analyze" class="btn btn-ghost" title="Measure this split (A)">Analyze</button>
+      <button id="midi" class="btn btn-ghost" title="Transcribe this split to MIDI (M)">MIDI</button>
+      <button id="reveal" class="btn btn-ghost" title="Show the files">Folder</button>
+    </header>
+
+    <div id="withinspector">
+      <div id="deckwrap">
+        <div id="deck"></div>
+        <div id="playhead" hidden></div>
+        <div id="empty">
+          <h2>Nothing split yet</h2>
+          <div class="drop">Drop an audio file here, or press <kbd>O</kbd> to choose one.</div>
+        </div>
+      </div>
+      <aside id="inspector" hidden>
+        <div class="insp-head"><strong>Measurements</strong><span class="spacer"></span><button id="closeinsp" class="btn-ghost btn" title="Hide (I)">✕</button></div>
+        <div id="insp-body"></div>
+      </aside>
+    </div>
+
+    <footer id="transport">
+      <button id="play" class="btn" title="Play / pause (space)">▶</button>
+      <span id="time" class="tcode mono">0:00.00 / 0:00.00</span>
+      <span class="spacer"></span>
+      <span class="hint"><kbd>1</kbd>–<kbd>6</kbd> solo · <kbd>alt</kbd>+<kbd>1</kbd>–<kbd>6</kbd> mute · <kbd>[</kbd> <kbd>]</kbd> flagged spots · <kbd>I</kbd> panel · <kbd>M</kbd> MIDI</span>
+    </footer>
+  </main>
+</div>
+<input id="file" type="file" accept="audio/*,.wav,.mp3,.flac,.m4a,.ogg,.aiff" hidden>
+<script type="module" src="/static/app.js"></script>
+</body>
+</html>

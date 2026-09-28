@@ -1,0 +1,263 @@
+{
+ "protocol": "Does transcribing separated stems beat transcribing the full mix? Scored against exact MIDI (BabySlakh).\n\n    python tools/transcription_eval.py extract\n    python tools/transcription_eval.py run      # separates, transcribes every route (cached per route), scores\n    python tools/transcription_eval.py score    # re-score from the cache\n\nData: BabySlakh (Zenodo 4603870, CC BY 4.0): the first 20 Slakh2100 tracks, 16 kHz, each with the rendered stems\nand the exact MIDI they were rendered from. One 30 s excerpt per track, centred on the midpoint (content-blind).\n\nRoutes:\n  A  full mix   -> MuScriptor medium, unconstrained. What a plain audio-to-MIDI tool does.\n  C  CleanSplit -> `ensemble` separation (the shipped recipe) -> every stem to MuScriptor medium with that stem's\n                   hard instrument constraint (muscriptor_backend.STEM_INSTRUMENTS).\n  C2 as C, but the piano stem goes to Transkun (piano specialist, velocities) instead of MuScriptor.\n  D  oracle     -> the TRUE stems summed into CleanSplit's six groups -> MuScriptor constrained. Upper bound: the gap\n                   D - C is what separation errors cost; D - A is what stem-wise transcription could gain at best.\n\nMetrics (mir_eval.transcription, onset tolerance 50 ms, offsets ignored \u2014 the MT3/MuScriptor convention):\n  multi-F1   a note counts only if pitch, onset AND instrument group match (MuScriptor's MT3_FULL_PLUS groups).\n             Matching is done within each group, true positives summed over groups.\n  onset-F1   pitch + onset, instrument ignored (pitched notes only).\n  drum-F1    drum hits, GM keys collapsed to kick / snare / hi-hat / tom / cymbal / other.\nAll pooled over the 20 excerpts (sum TP, ref, est), plus the per-track multi-F1 for the win count.\n\nPRE-REGISTERED (written before any route was transcribed):\n  Q1  C beats A on pooled multi-F1 AND on more than 10/20 tracks  -> ship per-stem transcription as the default.\n  Q2  C2 beats C on piano-group onset-F1 pooled                  -> route piano stems to Transkun.\n  Reported, not decided on: onset-F1, drum-F1, D.\n\nADDED 2026-09-21 after the first results, before route C2n was run (prompted by a real song whose drum stem sat at\n-48 dBFS and came out nearly empty; MuScriptor does not normalise its input):\n  C2n as C2, but every stem sent to MuScriptor is first scaled to -20 dBFS RMS (silent stems still skipped).\n  Q3  C2n beats C2 on pooled multi-F1 AND on more than 10/20 tracks -> normalise stems by default.\n\nKnown biases, stated up front:\n  * BabySlakh is 16 kHz. The separators were trained on 44.1 kHz and here see audio with nothing above 8 kHz.\n    This works AGAINST route C. MuScriptor itself runs at 16 kHz, so route A loses nothing.\n  * The audio is rendered from MIDI with sample libraries, not played. MuScriptor was pre-trained on synthetic\n    data and may have seen Slakh; that flatters every MuScriptor route alike.\n  * Slakh has no singing, so the vocal route (voice constraint) is not tested here at all.\n",
+ "summary": {
+  "A": {
+   "multi": 0.2256756044882263,
+   "onset": 0.5001316967813306,
+   "drum": 0.5230258191152046,
+   "piano": 0.32172092137826
+  },
+  "C": {
+   "multi": 0.2739564499646254,
+   "onset": 0.4881691690904803,
+   "drum": 0.6508138351983723,
+   "piano": 0.42052877138413686
+  },
+  "D": {
+   "multi": 0.3336425604001129,
+   "onset": 0.4752954462953253,
+   "drum": 0.7141426783479349,
+   "piano": 0.46729158356601513
+  },
+  "C2": {
+   "multi": 0.3315264906452177,
+   "onset": 0.5480853296030774,
+   "drum": 0.6508138351983723,
+   "piano": 0.6063003249046476
+  },
+  "C2n": {
+   "multi": 0.33213027412563373,
+   "onset": 0.5481653347082581,
+   "drum": 0.6486486486486487,
+   "piano": 0.6076521248058733
+  }
+ },
+ "totals": {
+  "A": {
+   "multi": [
+    2142,
+    10560,
+    8423
+   ],
+   "onset": [
+    4747,
+    10560,
+    8423
+   ],
+   "drum": [
+    1732,
+    4569,
+    2054
+   ],
+   "piano": [
+    845,
+    2694,
+    2559
+   ]
+  },
+  "C": {
+   "multi": [
+    3485,
+    10560,
+    14882
+   ],
+   "onset": [
+    6210,
+    10560,
+    14882
+   ],
+   "drum": [
+    2559,
+    4569,
+    3295
+   ],
+   "piano": [
+    2028,
+    2694,
+    6951
+   ]
+  },
+  "D": {
+   "multi": [
+    4136,
+    10560,
+    14233
+   ],
+   "onset": [
+    5892,
+    10560,
+    14233
+   ],
+   "drum": [
+    2853,
+    4569,
+    3421
+   ],
+   "piano": [
+    2343,
+    2694,
+    7334
+   ]
+  },
+  "C2": {
+   "multi": [
+    3792,
+    10560,
+    12316
+   ],
+   "onset": [
+    6269,
+    10560,
+    12316
+   ],
+   "drum": [
+    2559,
+    4569,
+    3295
+   ],
+   "piano": [
+    2146,
+    2694,
+    4385
+   ]
+  },
+  "C2n": {
+   "multi": [
+    3865,
+    10560,
+    12714
+   ],
+   "onset": [
+    6379,
+    10560,
+    12714
+   ],
+   "drum": [
+    2568,
+    4569,
+    3349
+   ],
+   "piano": [
+    2152,
+    2694,
+    4389
+   ]
+  }
+ },
+ "per_track_multi_f1": {
+  "A": {
+   "Track00001": 0.16981132075471697,
+   "Track00002": 0.0,
+   "Track00003": 0.2132904608788853,
+   "Track00004": 0.14903129657228018,
+   "Track00005": 0.26833242802824553,
+   "Track00006": 0.061224489795918366,
+   "Track00007": 0.42247191011235957,
+   "Track00008": 0.3177366702937976,
+   "Track00009": 0.0,
+   "Track00010": 0.5355191256830601,
+   "Track00011": 0.1788154897494305,
+   "Track00012": 0.18780251694094868,
+   "Track00013": 0.4835164835164835,
+   "Track00014": 0.037037037037037035,
+   "Track00015": 0.35509138381201044,
+   "Track00016": 0.012269938650306749,
+   "Track00017": 0.16481069042316257,
+   "Track00018": 0.5754614549402823,
+   "Track00019": 0.01179245283018868,
+   "Track00020": 0.2898550724637681
+  },
+  "C": {
+   "Track00001": 0.27450980392156865,
+   "Track00002": 0.0,
+   "Track00003": 0.1346228239845261,
+   "Track00004": 0.04794520547945205,
+   "Track00005": 0.4814636494944632,
+   "Track00006": 0.0,
+   "Track00007": 0.47642679900744417,
+   "Track00008": 0.3492647058823529,
+   "Track00009": 0.07846039970392302,
+   "Track00010": 0.4679334916864608,
+   "Track00011": 0.3466666666666667,
+   "Track00012": 0.003626473254759746,
+   "Track00013": 0.560932944606414,
+   "Track00014": 0.29547141796585,
+   "Track00015": 0.45146726862302483,
+   "Track00016": 0.2465437788018433,
+   "Track00017": 0.25164113785557984,
+   "Track00018": 0.47039740470397406,
+   "Track00019": 0.06277056277056277,
+   "Track00020": 0.3298097251585624
+  },
+  "D": {
+   "Track00001": 0.25122349102773245,
+   "Track00002": 0.01073345259391771,
+   "Track00003": 0.2132564841498559,
+   "Track00004": 0.07191780821917808,
+   "Track00005": 0.6115892139988526,
+   "Track00006": 0.25621414913957935,
+   "Track00007": 0.6476578411405295,
+   "Track00008": 0.47146401985111663,
+   "Track00009": 0.04043321299638989,
+   "Track00010": 0.5651105651105651,
+   "Track00011": 0.2617169373549884,
+   "Track00012": 0.34510595358224017,
+   "Track00013": 0.7731421121251629,
+   "Track00014": 0.3287272727272727,
+   "Track00015": 0.4655581947743468,
+   "Track00016": 0.18067382450944094,
+   "Track00017": 0.3391304347826087,
+   "Track00018": 0.7001044932079414,
+   "Track00019": 0.04267701260911736,
+   "Track00020": 0.16701461377870563
+  },
+  "C2": {
+   "Track00001": 0.27450980392156865,
+   "Track00002": 0.33494363929146537,
+   "Track00003": 0.3822903363133248,
+   "Track00004": 0.18563922942206654,
+   "Track00005": 0.4880429477794046,
+   "Track00006": 0.0,
+   "Track00007": 0.4737267582861762,
+   "Track00008": 0.35559736594543745,
+   "Track00009": 0.10660980810234541,
+   "Track00010": 0.512280701754386,
+   "Track00011": 0.3736749116607774,
+   "Track00012": 0.3100358422939068,
+   "Track00013": 0.3077837195484254,
+   "Track00014": 0.30132939438700146,
+   "Track00015": 0.4608501118568233,
+   "Track00016": 0.24572649572649571,
+   "Track00017": 0.21335807050092764,
+   "Track00018": 0.44513137557959814,
+   "Track00019": 0.13852813852813853,
+   "Track00020": 0.3225806451612903
+  },
+  "C2n": {
+   "Track00001": 0.22429906542056074,
+   "Track00002": 0.3242424242424242,
+   "Track00003": 0.3912280701754386,
+   "Track00004": 0.1840277777777778,
+   "Track00005": 0.46626893070215697,
+   "Track00006": 0.0,
+   "Track00007": 0.48494711147274205,
+   "Track00008": 0.37145650048875856,
+   "Track00009": 0.08598962194217939,
+   "Track00010": 0.5110132158590308,
+   "Track00011": 0.38576449912126537,
+   "Track00012": 0.31141868512110726,
+   "Track00013": 0.32421052631578945,
+   "Track00014": 0.3183183183183183,
+   "Track00015": 0.46799116997792495,
+   "Track00016": 0.24312896405919662,
+   "Track00017": 0.1942257217847769,
+   "Track00018": 0.4504227517294389,
+   "Track00019": 0.1288981288981289,
+   "Track00020": 0.33185840707964603
+  }
+ },
+ "q1_stems_beat_mix": true,
+ "q1_wins": 13,
+ "q2_transkun_piano": true,
+ "q3_normalise_stems": false
+}

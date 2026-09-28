@@ -1,0 +1,730 @@
+{
+ "threshold_db": 6.0,
+ "fail_sdr_db": 3.0,
+ "recall": 1.0,
+ "precision": 0.21052631578947367,
+ "spearman": 0.8274949649281199,
+ "pass": false,
+ "rows": [
+  {
+   "song": "Louis Cressy Band - Good Time",
+   "stem": "vocals",
+   "agreement_db": 9.501377824736593,
+   "sw_sdr_db": 12.662909946723449
+  },
+  {
+   "song": "Louis Cressy Band - Good Time",
+   "stem": "drums",
+   "agreement_db": 12.640871365796372,
+   "sw_sdr_db": 12.428631079935526
+  },
+  {
+   "song": "Louis Cressy Band - Good Time",
+   "stem": "bass",
+   "agreement_db": 13.589272724799219,
+   "sw_sdr_db": 14.286131804392937
+  },
+  {
+   "song": "Louis Cressy Band - Good Time",
+   "stem": "other",
+   "agreement_db": 13.828267551482181,
+   "sw_sdr_db": 13.797113915552066
+  },
+  {
+   "song": "Lyndsey Ollard - Catching Up",
+   "stem": "vocals",
+   "agreement_db": 17.9107220839988,
+   "sw_sdr_db": 18.312104842529447
+  },
+  {
+   "song": "Lyndsey Ollard - Catching Up",
+   "stem": "drums",
+   "agreement_db": 12.446993676240242,
+   "sw_sdr_db": 12.59733654841165
+  },
+  {
+   "song": "Lyndsey Ollard - Catching Up",
+   "stem": "bass",
+   "agreement_db": 8.39025407228106,
+   "sw_sdr_db": 10.059125326781906
+  },
+  {
+   "song": "Lyndsey Ollard - Catching Up",
+   "stem": "other",
+   "agreement_db": 10.89958357665367,
+   "sw_sdr_db": 11.342148993439041
+  },
+  {
+   "song": "M.E.R.C. Music - Knockout",
+   "stem": "vocals",
+   "agreement_db": 15.223890944345278,
+   "sw_sdr_db": 15.83474705313957
+  },
+  {
+   "song": "M.E.R.C. Music - Knockout",
+   "stem": "drums",
+   "agreement_db": 10.502248523502718,
+   "sw_sdr_db": 13.28204750892414
+  },
+  {
+   "song": "M.E.R.C. Music - Knockout",
+   "stem": "bass",
+   "agreement_db": 6.219596614795899,
+   "sw_sdr_db": 13.612411759734693
+  },
+  {
+   "song": "M.E.R.C. Music - Knockout",
+   "stem": "other",
+   "agreement_db": 8.005299382188856,
+   "sw_sdr_db": 11.10480045868881
+  },
+  {
+   "song": "Moosmusic - Big Dummy Shake",
+   "stem": "vocals",
+   "agreement_db": 14.840993212851682,
+   "sw_sdr_db": 14.582506962828049
+  },
+  {
+   "song": "Moosmusic - Big Dummy Shake",
+   "stem": "drums",
+   "agreement_db": 15.18507181968111,
+   "sw_sdr_db": 15.187945124013877
+  },
+  {
+   "song": "Moosmusic - Big Dummy Shake",
+   "stem": "bass",
+   "agreement_db": 10.14517870900346,
+   "sw_sdr_db": 11.395388191755417
+  },
+  {
+   "song": "Moosmusic - Big Dummy Shake",
+   "stem": "other",
+   "agreement_db": 9.112172367203247,
+   "sw_sdr_db": 10.062320556538253
+  },
+  {
+   "song": "Motor Tapes - Shore",
+   "stem": "vocals",
+   "agreement_db": 14.294412393274404,
+   "sw_sdr_db": 16.794683574600768
+  },
+  {
+   "song": "Motor Tapes - Shore",
+   "stem": "drums",
+   "agreement_db": 11.664969878017924,
+   "sw_sdr_db": 12.810949778645833
+  },
+  {
+   "song": "Motor Tapes - Shore",
+   "stem": "bass",
+   "agreement_db": 13.45109603707912,
+   "sw_sdr_db": 15.78128490549725
+  },
+  {
+   "song": "Motor Tapes - Shore",
+   "stem": "other",
+   "agreement_db": 13.01807558671178,
+   "sw_sdr_db": 15.443380808709692
+  },
+  {
+   "song": "Mu - Too Bright",
+   "stem": "vocals",
+   "agreement_db": 14.955844134098271,
+   "sw_sdr_db": 16.57188459900802
+  },
+  {
+   "song": "Mu - Too Bright",
+   "stem": "drums",
+   "agreement_db": 18.080794224665098,
+   "sw_sdr_db": 19.048106902823335
+  },
+  {
+   "song": "Mu - Too Bright",
+   "stem": "bass",
+   "agreement_db": 13.550137117184756,
+   "sw_sdr_db": 17.623119398958906
+  },
+  {
+   "song": "Mu - Too Bright",
+   "stem": "other",
+   "agreement_db": 9.454312112628763,
+   "sw_sdr_db": 12.972413360160813
+  },
+  {
+   "song": "Nerve 9 - Pray For The Rain",
+   "stem": "vocals",
+   "agreement_db": 15.992200783840662,
+   "sw_sdr_db": 20.071268901663117
+  },
+  {
+   "song": "Nerve 9 - Pray For The Rain",
+   "stem": "drums",
+   "agreement_db": 14.893286441346865,
+   "sw_sdr_db": 13.665127263837118
+  },
+  {
+   "song": "Nerve 9 - Pray For The Rain",
+   "stem": "bass",
+   "agreement_db": 8.1287914130808,
+   "sw_sdr_db": 10.236241947477147
+  },
+  {
+   "song": "Nerve 9 - Pray For The Rain",
+   "stem": "other",
+   "agreement_db": 12.718475395183992,
+   "sw_sdr_db": 14.26664671252555
+  },
+  {
+   "song": "PR - Happy Daze",
+   "stem": "vocals",
+   "agreement_db": 1.069875042196021,
+   "sw_sdr_db": 2.5827981485595632
+  },
+  {
+   "song": "PR - Happy Daze",
+   "stem": "drums",
+   "agreement_db": 12.189547626373647,
+   "sw_sdr_db": 10.301420605296283
+  },
+  {
+   "song": "PR - Happy Daze",
+   "stem": "bass",
+   "agreement_db": 0.0001369818009022905,
+   "sw_sdr_db": 0.0001044283241316612
+  },
+  {
+   "song": "PR - Happy Daze",
+   "stem": "other",
+   "agreement_db": 5.052307024724194,
+   "sw_sdr_db": 4.390032078411744
+  },
+  {
+   "song": "PR - Oh No",
+   "stem": "vocals",
+   "agreement_db": 2.9320328268823657,
+   "sw_sdr_db": 8.240278060842424
+  },
+  {
+   "song": "PR - Oh No",
+   "stem": "drums",
+   "agreement_db": 14.17848700237085,
+   "sw_sdr_db": 23.32216031340469
+  },
+  {
+   "song": "PR - Oh No",
+   "stem": "bass",
+   "agreement_db": 6.190614126045997,
+   "sw_sdr_db": 9.452949917379414
+  },
+  {
+   "song": "PR - Oh No",
+   "stem": "other",
+   "agreement_db": 5.375341128821028,
+   "sw_sdr_db": 7.797445655812072
+  },
+  {
+   "song": "Punkdisco - Oral Hygiene",
+   "stem": "vocals",
+   "agreement_db": 9.967609618436256,
+   "sw_sdr_db": 15.84162466954817
+  },
+  {
+   "song": "Punkdisco - Oral Hygiene",
+   "stem": "drums",
+   "agreement_db": 11.295952668713413,
+   "sw_sdr_db": 6.645339906017204
+  },
+  {
+   "song": "Punkdisco - Oral Hygiene",
+   "stem": "bass",
+   "agreement_db": 3.92146129980856,
+   "sw_sdr_db": 4.747439164319532
+  },
+  {
+   "song": "Punkdisco - Oral Hygiene",
+   "stem": "other",
+   "agreement_db": 0.6967601632262661,
+   "sw_sdr_db": -0.3303398922567924
+  },
+  {
+   "song": "Raft Monk - Tiring",
+   "stem": "vocals",
+   "agreement_db": 7.374969186994762,
+   "sw_sdr_db": 9.044978656515228
+  },
+  {
+   "song": "Raft Monk - Tiring",
+   "stem": "drums",
+   "agreement_db": 12.377272740389655,
+   "sw_sdr_db": 11.515252847923549
+  },
+  {
+   "song": "Raft Monk - Tiring",
+   "stem": "bass",
+   "agreement_db": 11.77453465959678,
+   "sw_sdr_db": 11.139855118039637
+  },
+  {
+   "song": "Raft Monk - Tiring",
+   "stem": "other",
+   "agreement_db": 7.420812101220484,
+   "sw_sdr_db": 8.869849390537153
+  },
+  {
+   "song": "Sambasevam Shanmugam - Kaathaadi",
+   "stem": "vocals",
+   "agreement_db": 12.998169069735276,
+   "sw_sdr_db": 19.528580128954687
+  },
+  {
+   "song": "Sambasevam Shanmugam - Kaathaadi",
+   "stem": "drums",
+   "agreement_db": 8.184973589539648,
+   "sw_sdr_db": 15.809129436256903
+  },
+  {
+   "song": "Sambasevam Shanmugam - Kaathaadi",
+   "stem": "bass",
+   "agreement_db": 14.404892688729076,
+   "sw_sdr_db": 20.300352807203744
+  },
+  {
+   "song": "Sambasevam Shanmugam - Kaathaadi",
+   "stem": "other",
+   "agreement_db": 10.141045161597368,
+   "sw_sdr_db": 17.282015086234686
+  },
+  {
+   "song": "Secretariat - Borderline",
+   "stem": "vocals",
+   "agreement_db": 11.208117752932882,
+   "sw_sdr_db": 11.082436614838372
+  },
+  {
+   "song": "Secretariat - Borderline",
+   "stem": "drums",
+   "agreement_db": 9.610020026780118,
+   "sw_sdr_db": 8.085910859853808
+  },
+  {
+   "song": "Secretariat - Borderline",
+   "stem": "bass",
+   "agreement_db": 5.268114816049115,
+   "sw_sdr_db": 8.778782055368579
+  },
+  {
+   "song": "Secretariat - Borderline",
+   "stem": "other",
+   "agreement_db": 9.266972438991827,
+   "sw_sdr_db": 11.01688024071328
+  },
+  {
+   "song": "Secretariat - Over The Top",
+   "stem": "vocals",
+   "agreement_db": 13.391870492831393,
+   "sw_sdr_db": 12.259562946201491
+  },
+  {
+   "song": "Secretariat - Over The Top",
+   "stem": "drums",
+   "agreement_db": 10.695446170172625,
+   "sw_sdr_db": 10.241011576734703
+  },
+  {
+   "song": "Secretariat - Over The Top",
+   "stem": "bass",
+   "agreement_db": 12.513944966716418,
+   "sw_sdr_db": 13.975936233403964
+  },
+  {
+   "song": "Secretariat - Over The Top",
+   "stem": "other",
+   "agreement_db": 10.440746750347682,
+   "sw_sdr_db": 10.481377066494936
+  },
+  {
+   "song": "Side Effects Project - Sing With Me",
+   "stem": "vocals",
+   "agreement_db": 16.43590095058244,
+   "sw_sdr_db": 18.295795615668155
+  },
+  {
+   "song": "Side Effects Project - Sing With Me",
+   "stem": "drums",
+   "agreement_db": 15.79717056682259,
+   "sw_sdr_db": 16.562429328601297
+  },
+  {
+   "song": "Side Effects Project - Sing With Me",
+   "stem": "bass",
+   "agreement_db": 15.945660857657453,
+   "sw_sdr_db": 18.0638453439919
+  },
+  {
+   "song": "Side Effects Project - Sing With Me",
+   "stem": "other",
+   "agreement_db": 6.171431722934457,
+   "sw_sdr_db": 5.357552307911657
+  },
+  {
+   "song": "Signe Jakobsen - What Have You Done To Me",
+   "stem": "vocals",
+   "agreement_db": 15.888395150393713,
+   "sw_sdr_db": 14.826048990312447
+  },
+  {
+   "song": "Signe Jakobsen - What Have You Done To Me",
+   "stem": "drums",
+   "agreement_db": 10.317278984111333,
+   "sw_sdr_db": 9.80644743227894
+  },
+  {
+   "song": "Signe Jakobsen - What Have You Done To Me",
+   "stem": "bass",
+   "agreement_db": 8.489084907109351,
+   "sw_sdr_db": 6.71982861639679
+  },
+  {
+   "song": "Signe Jakobsen - What Have You Done To Me",
+   "stem": "other",
+   "agreement_db": 9.21959419969171,
+   "sw_sdr_db": 7.899028133471115
+  },
+  {
+   "song": "Skelpolu - Resurrection",
+   "stem": "vocals",
+   "agreement_db": 2.140972246840464e-05,
+   "sw_sdr_db": -75.33566825341344
+  },
+  {
+   "song": "Skelpolu - Resurrection",
+   "stem": "drums",
+   "agreement_db": 16.639271165636302,
+   "sw_sdr_db": 17.503255498099804
+  },
+  {
+   "song": "Skelpolu - Resurrection",
+   "stem": "bass",
+   "agreement_db": 19.289632402366156,
+   "sw_sdr_db": 20.564784940126792
+  },
+  {
+   "song": "Skelpolu - Resurrection",
+   "stem": "other",
+   "agreement_db": 8.954657456335744,
+   "sw_sdr_db": 12.318305305754539
+  },
+  {
+   "song": "Speak Softly - Broken Man",
+   "stem": "vocals",
+   "agreement_db": 6.909360589110975,
+   "sw_sdr_db": 9.881835108011249
+  },
+  {
+   "song": "Speak Softly - Broken Man",
+   "stem": "drums",
+   "agreement_db": 9.06296458609301,
+   "sw_sdr_db": 15.647915564299353
+  },
+  {
+   "song": "Speak Softly - Broken Man",
+   "stem": "bass",
+   "agreement_db": 20.523506958900548,
+   "sw_sdr_db": 23.572212306492972
+  },
+  {
+   "song": "Speak Softly - Broken Man",
+   "stem": "other",
+   "agreement_db": 10.842148464087648,
+   "sw_sdr_db": 14.230160261187603
+  },
+  {
+   "song": "Speak Softly - Like Horses",
+   "stem": "vocals",
+   "agreement_db": 11.363985357839839,
+   "sw_sdr_db": 11.864563381634106
+  },
+  {
+   "song": "Speak Softly - Like Horses",
+   "stem": "drums",
+   "agreement_db": 9.877441288848289,
+   "sw_sdr_db": 15.179564588426564
+  },
+  {
+   "song": "Speak Softly - Like Horses",
+   "stem": "bass",
+   "agreement_db": 23.938881682133207,
+   "sw_sdr_db": 24.351228847417463
+  },
+  {
+   "song": "Speak Softly - Like Horses",
+   "stem": "other",
+   "agreement_db": 8.975155071226204,
+   "sw_sdr_db": 10.137332116158488
+  },
+  {
+   "song": "The Doppler Shift - Atrophy",
+   "stem": "vocals",
+   "agreement_db": 9.986192455938703,
+   "sw_sdr_db": 9.870250541130499
+  },
+  {
+   "song": "The Doppler Shift - Atrophy",
+   "stem": "drums",
+   "agreement_db": 10.609775735723964,
+   "sw_sdr_db": 13.37794500833655
+  },
+  {
+   "song": "The Doppler Shift - Atrophy",
+   "stem": "bass",
+   "agreement_db": 4.108505458969967,
+   "sw_sdr_db": 5.796108171655389
+  },
+  {
+   "song": "The Doppler Shift - Atrophy",
+   "stem": "other",
+   "agreement_db": 5.125202645257881,
+   "sw_sdr_db": 8.860891881193055
+  },
+  {
+   "song": "The Easton Ellises (Baumi) - SDRNR",
+   "stem": "vocals",
+   "agreement_db": 8.07322714952151,
+   "sw_sdr_db": 10.399455608404704
+  },
+  {
+   "song": "The Easton Ellises (Baumi) - SDRNR",
+   "stem": "drums",
+   "agreement_db": 15.639072456705714,
+   "sw_sdr_db": 12.551496168805778
+  },
+  {
+   "song": "The Easton Ellises (Baumi) - SDRNR",
+   "stem": "bass",
+   "agreement_db": 9.785432006603637,
+   "sw_sdr_db": 11.224606039795791
+  },
+  {
+   "song": "The Easton Ellises (Baumi) - SDRNR",
+   "stem": "other",
+   "agreement_db": 5.51714541025809,
+   "sw_sdr_db": 7.421472340254223
+  },
+  {
+   "song": "The Easton Ellises - Falcon 69",
+   "stem": "vocals",
+   "agreement_db": 3.496722702121464,
+   "sw_sdr_db": 7.146215548780201
+  },
+  {
+   "song": "The Easton Ellises - Falcon 69",
+   "stem": "drums",
+   "agreement_db": 14.715580229656815,
+   "sw_sdr_db": 12.691472917095618
+  },
+  {
+   "song": "The Easton Ellises - Falcon 69",
+   "stem": "bass",
+   "agreement_db": 13.95875333397237,
+   "sw_sdr_db": 10.723674452182024
+  },
+  {
+   "song": "The Easton Ellises - Falcon 69",
+   "stem": "other",
+   "agreement_db": 4.429106286907962,
+   "sw_sdr_db": 5.655202254491421
+  },
+  {
+   "song": "The Long Wait - Dark Horses",
+   "stem": "vocals",
+   "agreement_db": 12.923272899707571,
+   "sw_sdr_db": 13.554179274545335
+  },
+  {
+   "song": "The Long Wait - Dark Horses",
+   "stem": "drums",
+   "agreement_db": 11.720130890409308,
+   "sw_sdr_db": 11.756165876705897
+  },
+  {
+   "song": "The Long Wait - Dark Horses",
+   "stem": "bass",
+   "agreement_db": 10.630845519044414,
+   "sw_sdr_db": 10.58049515418507
+  },
+  {
+   "song": "The Long Wait - Dark Horses",
+   "stem": "other",
+   "agreement_db": 8.746675752957692,
+   "sw_sdr_db": 9.911970581672593
+  },
+  {
+   "song": "The Mountaineering Club - Mallory",
+   "stem": "vocals",
+   "agreement_db": 19.51869789196284,
+   "sw_sdr_db": 21.74476274239854
+  },
+  {
+   "song": "The Mountaineering Club - Mallory",
+   "stem": "drums",
+   "agreement_db": 15.517824127910318,
+   "sw_sdr_db": 17.14447599653596
+  },
+  {
+   "song": "The Mountaineering Club - Mallory",
+   "stem": "bass",
+   "agreement_db": 13.95834704385078,
+   "sw_sdr_db": 14.789708054408111
+  },
+  {
+   "song": "The Mountaineering Club - Mallory",
+   "stem": "other",
+   "agreement_db": 9.50022205023808,
+   "sw_sdr_db": 9.882095976957391
+  },
+  {
+   "song": "The Sunshine Garcia Band - For I Am The Moon",
+   "stem": "vocals",
+   "agreement_db": 13.641721589737305,
+   "sw_sdr_db": 16.516644781554962
+  },
+  {
+   "song": "The Sunshine Garcia Band - For I Am The Moon",
+   "stem": "drums",
+   "agreement_db": 9.12904099751222,
+   "sw_sdr_db": 9.960373676925453
+  },
+  {
+   "song": "The Sunshine Garcia Band - For I Am The Moon",
+   "stem": "bass",
+   "agreement_db": 5.476206301369844,
+   "sw_sdr_db": 10.076743448663091
+  },
+  {
+   "song": "The Sunshine Garcia Band - For I Am The Moon",
+   "stem": "other",
+   "agreement_db": 3.0641745305213206,
+   "sw_sdr_db": 8.066473325358587
+  },
+  {
+   "song": "Timboz - Pony",
+   "stem": "vocals",
+   "agreement_db": 9.009956245544185,
+   "sw_sdr_db": 5.94025815605592
+  },
+  {
+   "song": "Timboz - Pony",
+   "stem": "drums",
+   "agreement_db": 7.218537013735795,
+   "sw_sdr_db": 7.290367842938199
+  },
+  {
+   "song": "Timboz - Pony",
+   "stem": "bass",
+   "agreement_db": 4.932738791778411,
+   "sw_sdr_db": 5.312127904578484
+  },
+  {
+   "song": "Timboz - Pony",
+   "stem": "other",
+   "agreement_db": 13.952637158508335,
+   "sw_sdr_db": 10.583527086044215
+  },
+  {
+   "song": "Tom McKenzie - Directions",
+   "stem": "vocals",
+   "agreement_db": 12.7930024633411,
+   "sw_sdr_db": 12.69815346376371
+  },
+  {
+   "song": "Tom McKenzie - Directions",
+   "stem": "drums",
+   "agreement_db": 16.797653130429687,
+   "sw_sdr_db": 17.75392124168628
+  },
+  {
+   "song": "Tom McKenzie - Directions",
+   "stem": "bass",
+   "agreement_db": 6.296024904121458,
+   "sw_sdr_db": 11.540539473375894
+  },
+  {
+   "song": "Tom McKenzie - Directions",
+   "stem": "other",
+   "agreement_db": 2.766909275029671,
+   "sw_sdr_db": 7.268147781997147
+  },
+  {
+   "song": "Triviul feat. The Fiend - Widow",
+   "stem": "vocals",
+   "agreement_db": 12.341052374472403,
+   "sw_sdr_db": 12.133262686453099
+  },
+  {
+   "song": "Triviul feat. The Fiend - Widow",
+   "stem": "drums",
+   "agreement_db": 10.866704230913518,
+   "sw_sdr_db": 9.919210498504736
+  },
+  {
+   "song": "Triviul feat. The Fiend - Widow",
+   "stem": "bass",
+   "agreement_db": 16.83198372795289,
+   "sw_sdr_db": 17.989996825770596
+  },
+  {
+   "song": "Triviul feat. The Fiend - Widow",
+   "stem": "other",
+   "agreement_db": 6.7056775733019345,
+   "sw_sdr_db": 7.867204979255825
+  },
+  {
+   "song": "We Fell From The Sky - Not You",
+   "stem": "vocals",
+   "agreement_db": 12.041621484138973,
+   "sw_sdr_db": 8.50599987229645
+  },
+  {
+   "song": "We Fell From The Sky - Not You",
+   "stem": "drums",
+   "agreement_db": 17.08844838671794,
+   "sw_sdr_db": 13.429206047623687
+  },
+  {
+   "song": "We Fell From The Sky - Not You",
+   "stem": "bass",
+   "agreement_db": 7.062799736386651,
+   "sw_sdr_db": 4.9671832724635046
+  },
+  {
+   "song": "We Fell From The Sky - Not You",
+   "stem": "other",
+   "agreement_db": 11.663756639825564,
+   "sw_sdr_db": 8.315162090780294
+  },
+  {
+   "song": "Zeno - Signs",
+   "stem": "vocals",
+   "agreement_db": 11.227252502815004,
+   "sw_sdr_db": 12.599527511679323
+  },
+  {
+   "song": "Zeno - Signs",
+   "stem": "drums",
+   "agreement_db": 14.364178033144956,
+   "sw_sdr_db": 12.91621846706329
+  },
+  {
+   "song": "Zeno - Signs",
+   "stem": "bass",
+   "agreement_db": 4.726387253892059,
+   "sw_sdr_db": 6.220901177112829
+  },
+  {
+   "song": "Zeno - Signs",
+   "stem": "other",
+   "agreement_db": 7.595671117350728,
+   "sw_sdr_db": 10.58248878296894
+  }
+ ]
+}

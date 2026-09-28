@@ -1,0 +1,1380 @@
+{
+  "results": [
+    {
+      "song": "synthetic_seed0",
+      "separator": "bs_roformer_sw",
+      "mixture_snr_model_matched_db": 33.30118050084764,
+      "eligible_regions": 34,
+      "separation_sdr_db": {
+        "vocals": 1.3201742495495046e-05,
+        "drums": 9.997490763596097,
+        "bass": 15.646975693083201,
+        "guitar": -0.00014893019997422498,
+        "piano": 17.91919949953345,
+        "other": -9.215057502233092
+      },
+      "restorers": {
+        "region_wiener": {
+          "accepted": 10,
+          "rejected": 0,
+          "decisions": [
+            {
+              "region_id": "other-00000",
+              "stem": "other",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -9.760210717496903,
+              "stem_change_rel_db": -15.83324026866736,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 3815.737898257293,
+              "err_before": 0.1646711107972787,
+              "evidence_before": 0.9999988675117493,
+              "evidence_after": 0.663008987903595,
+              "notes": []
+            },
+            {
+              "region_id": "drums-00000",
+              "stem": "drums",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -8.210386201684498,
+              "stem_change_rel_db": -14.728668847987299,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 2615.272027063983,
+              "err_before": 7.432183708942874,
+              "evidence_before": 0.9999996423721313,
+              "evidence_after": 0.998443067073822,
+              "notes": []
+            },
+            {
+              "region_id": "drums-00001",
+              "stem": "drums",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -9.898117166718205,
+              "stem_change_rel_db": -13.114083846877769,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 2278.8189121377172,
+              "err_before": 9.695102649230536,
+              "evidence_before": 0.9999994039535522,
+              "evidence_after": 0.993858814239502,
+              "notes": []
+            },
+            {
+              "region_id": "other-00003",
+              "stem": "other",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -9.39463763964339,
+              "stem_change_rel_db": -22.6402497577067,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 2083.121080011938,
+              "err_before": 3.0206506712098298,
+              "evidence_before": 1.0,
+              "evidence_after": 0.9999346733093262,
+              "notes": []
+            },
+            {
+              "region_id": "other-00005",
+              "stem": "other",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -9.228741647483844,
+              "stem_change_rel_db": -14.633425672545624,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 2436.206566370046,
+              "err_before": 6.112425533879234,
+              "evidence_before": 1.0,
+              "evidence_after": 0.9999945759773254,
+              "notes": []
+            },
+            {
+              "region_id": "other-00008",
+              "stem": "other",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -5.792884315123655,
+              "stem_change_rel_db": -20.342592921115042,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 2856.0979947282126,
+              "err_before": 1.924642503475349,
+              "evidence_before": 1.0,
+              "evidence_after": 0.9999902844429016,
+              "notes": []
+            },
+            {
+              "region_id": "other-00009",
+              "stem": "other",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -8.77189505094192,
+              "stem_change_rel_db": -48.255132972247495,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 3103.868658266592,
+              "err_before": 0.0799935179307516,
+              "evidence_before": 0.9997971653938293,
+              "evidence_after": 0.38355007767677307,
+              "notes": []
+            },
+            {
+              "region_id": "mixture-00009",
+              "stem": "mixture",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -5.255659571275967,
+              "stem_change_rel_db": -0.4853792849247164,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 0.06336709272888091,
+              "err_before": 0.0008641079164498322,
+              "evidence_before": 0.9897279739379883,
+              "evidence_after": 0.9894746541976929,
+              "notes": []
+            },
+            {
+              "region_id": "other-00007",
+              "stem": "other",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -7.88150703077795,
+              "stem_change_rel_db": -45.20586201195446,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 3117.028968851505,
+              "err_before": 0.18110619423746438,
+              "evidence_before": 0.9167822003364563,
+              "evidence_after": 0.027211444452404976,
+              "notes": []
+            },
+            {
+              "region_id": "other-00001",
+              "stem": "other",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -7.427864579046127,
+              "stem_change_rel_db": -26.823396495829954,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 1851.3200211783494,
+              "err_before": 1.990813970612441,
+              "evidence_before": 1.0,
+              "evidence_after": 0.9992266893386841,
+              "notes": []
+            }
+          ],
+          "ungated_truth_err_change_db": [
+            {
+              "region_id": "other-00000",
+              "stem": "bass",
+              "accepted": true,
+              "err_change_db": -6.482418537610765e-08
+            },
+            {
+              "region_id": "other-00000",
+              "stem": "drums",
+              "accepted": true,
+              "err_change_db": 0.4300100084579567
+            },
+            {
+              "region_id": "other-00000",
+              "stem": "other",
+              "accepted": true,
+              "err_change_db": 0.228528715074171
+            },
+            {
+              "region_id": "other-00000",
+              "stem": "vocals",
+              "accepted": true,
+              "err_change_db": 5.539999574857275e-09
+            },
+            {
+              "region_id": "other-00000",
+              "stem": "guitar",
+              "accepted": true,
+              "err_change_db": -0.04519054798687927
+            },
+            {
+              "region_id": "other-00000",
+              "stem": "piano",
+              "accepted": true,
+              "err_change_db": 8.57836274499358e-08
+            },
+            {
+              "region_id": "drums-00000",
+              "stem": "bass",
+              "accepted": true,
+              "err_change_db": 8.217169340572133e-09
+            },
+            {
+              "region_id": "drums-00000",
+              "stem": "drums",
+              "accepted": true,
+              "err_change_db": -0.31411521747412247
+            },
+            {
+              "region_id": "drums-00000",
+              "stem": "other",
+              "accepted": true,
+              "err_change_db": -0.07721286332706899
+            },
+            {
+              "region_id": "drums-00000",
+              "stem": "vocals",
+              "accepted": true,
+              "err_change_db": -0.02622406071623508
+            },
+            {
+              "region_id": "drums-00000",
+              "stem": "guitar",
+              "accepted": true,
+              "err_change_db": 1.9878935693314468e-10
+            },
+            {
+              "region_id": "drums-00000",
+              "stem": "piano",
+              "accepted": true,
+              "err_change_db": -4.476022006088635e-08
+            },
+            {
+              "region_id": "drums-00001",
+              "stem": "bass",
+              "accepted": true,
+              "err_change_db": 3.6466052775677637e-09
+            },
+            {
+              "region_id": "drums-00001",
+              "stem": "drums",
+              "accepted": true,
+              "err_change_db": -0.19350779629675507
+            },
+            {
+              "region_id": "drums-00001",
+              "stem": "other",
+              "accepted": true,
+              "err_change_db": -0.06396503253402726
+            },
+            {
+              "region_id": "drums-00001",
+              "stem": "vocals",
+              "accepted": true,
+              "err_change_db": -5.007291106005106e-09
+            },
+            {
+              "region_id": "drums-00001",
+              "stem": "guitar",
+              "accepted": true,
+              "err_change_db": -3.8698268369014224e-10
+            },
+            {
+              "region_id": "drums-00001",
+              "stem": "piano",
+              "accepted": true,
+              "err_change_db": -5.293234915050441e-07
+            },
+            {
+              "region_id": "other-00003",
+              "stem": "bass",
+              "accepted": true,
+              "err_change_db": 2.4796579469661408e-08
+            },
+            {
+              "region_id": "other-00003",
+              "stem": "drums",
+              "accepted": true,
+              "err_change_db": 0.19252703023556117
+            },
+            {
+              "region_id": "other-00003",
+              "stem": "other",
+              "accepted": true,
+              "err_change_db": 0.03403920508651668
+            },
+            {
+              "region_id": "other-00003",
+              "stem": "vocals",
+              "accepted": true,
+              "err_change_db": -0.12445099288793998
+            },
+            {
+              "region_id": "other-00003",
+              "stem": "guitar",
+              "accepted": true,
+              "err_change_db": -3.898718087801943e-10
+            },
+            {
+              "region_id": "other-00003",
+              "stem": "piano",
+              "accepted": true,
+              "err_change_db": 1.682613237750004e-08
+            },
+            {
+              "region_id": "other-00005",
+              "stem": "bass",
+              "accepted": true,
+              "err_change_db": -2.132156385010715e-08
+            },
+            {
+              "region_id": "other-00005",
+              "stem": "drums",
+              "accepted": true,
+              "err_change_db": 0.07602810862664611
+            },
+            {
+              "region_id": "other-00005",
+              "stem": "other",
+              "accepted": true,
+              "err_change_db": -0.0018062677512251338
+            },
+            {
+              "region_id": "other-00005",
+              "stem": "vocals",
+              "accepted": true,
+              "err_change_db": -3.3594435079342176e-09
+            },
+            {
+              "region_id": "other-00005",
+              "stem": "guitar",
+              "accepted": true,
+              "err_change_db": -8.79961349576088e-10
+            },
+            {
+              "region_id": "other-00005",
+              "stem": "piano",
+              "accepted": true,
+              "err_change_db": 1.5730547410598286e-08
+            },
+            {
+              "region_id": "other-00008",
+              "stem": "bass",
+              "accepted": true,
+              "err_change_db": -2.102040243530245e-06
+            },
+            {
+              "region_id": "other-00008",
+              "stem": "drums",
+              "accepted": true,
+              "err_change_db": -0.010056964395864641
+            },
+            {
+              "region_id": "other-00008",
+              "stem": "other",
+              "accepted": true,
+              "err_change_db": -0.014018395062168242
+            },
+            {
+              "region_id": "other-00008",
+              "stem": "vocals",
+              "accepted": true,
+              "err_change_db": -0.383110122916423
+            },
+            {
+              "region_id": "other-00008",
+              "stem": "guitar",
+              "accepted": true,
+              "err_change_db": -2.700718655085724e-08
+            },
+            {
+              "region_id": "other-00008",
+              "stem": "piano",
+              "accepted": true,
+              "err_change_db": -7.355694359831384e-07
+            },
+            {
+              "region_id": "other-00009",
+              "stem": "bass",
+              "accepted": true,
+              "err_change_db": -3.2894426025642784e-08
+            },
+            {
+              "region_id": "other-00009",
+              "stem": "drums",
+              "accepted": true,
+              "err_change_db": -0.00012335416312121982
+            },
+            {
+              "region_id": "other-00009",
+              "stem": "other",
+              "accepted": true,
+              "err_change_db": -0.003175019765813191
+            },
+            {
+              "region_id": "other-00009",
+              "stem": "vocals",
+              "accepted": true,
+              "err_change_db": 5.139753531701523e-09
+            },
+            {
+              "region_id": "other-00009",
+              "stem": "guitar",
+              "accepted": true,
+              "err_change_db": -8.878027783719619e-10
+            },
+            {
+              "region_id": "other-00009",
+              "stem": "piano",
+              "accepted": true,
+              "err_change_db": -9.90832534189503e-08
+            },
+            {
+              "region_id": "mixture-00009",
+              "stem": "bass",
+              "accepted": true,
+              "err_change_db": 2.228391144286275e-08
+            },
+            {
+              "region_id": "mixture-00009",
+              "stem": "drums",
+              "accepted": true,
+              "err_change_db": 0.03543414232436032
+            },
+            {
+              "region_id": "mixture-00009",
+              "stem": "other",
+              "accepted": true,
+              "err_change_db": -1.2683169062036078e-06
+            },
+            {
+              "region_id": "mixture-00009",
+              "stem": "vocals",
+              "accepted": true,
+              "err_change_db": 1.3255356056799231e-10
+            },
+            {
+              "region_id": "mixture-00009",
+              "stem": "guitar",
+              "accepted": true,
+              "err_change_db": 1.8865716824252126e-10
+            },
+            {
+              "region_id": "mixture-00009",
+              "stem": "piano",
+              "accepted": true,
+              "err_change_db": 0.0002617394453460956
+            },
+            {
+              "region_id": "other-00007",
+              "stem": "bass",
+              "accepted": true,
+              "err_change_db": -7.58269973566377e-10
+            },
+            {
+              "region_id": "other-00007",
+              "stem": "drums",
+              "accepted": true,
+              "err_change_db": -0.0002284625143636284
+            },
+            {
+              "region_id": "other-00007",
+              "stem": "other",
+              "accepted": true,
+              "err_change_db": -0.0053229448493835405
+            },
+            {
+              "region_id": "other-00007",
+              "stem": "vocals",
+              "accepted": true,
+              "err_change_db": -2.9638141414158668e-06
+            },
+            {
+              "region_id": "other-00007",
+              "stem": "guitar",
+              "accepted": true,
+              "err_change_db": -2.4635336280410724e-09
+            },
+            {
+              "region_id": "other-00007",
+              "stem": "piano",
+              "accepted": true,
+              "err_change_db": -1.61132405480456e-06
+            },
+            {
+              "region_id": "other-00001",
+              "stem": "bass",
+              "accepted": true,
+              "err_change_db": -5.634283440856263e-06
+            },
+            {
+              "region_id": "other-00001",
+              "stem": "drums",
+              "accepted": true,
+              "err_change_db": 0.07872969467098323
+            },
+            {
+              "region_id": "other-00001",
+              "stem": "other",
+              "accepted": true,
+              "err_change_db": 0.014597449318812369
+            },
+            {
+              "region_id": "other-00001",
+              "stem": "vocals",
+              "accepted": true,
+              "err_change_db": -0.05088818798656078
+            },
+            {
+              "region_id": "other-00001",
+              "stem": "guitar",
+              "accepted": true,
+              "err_change_db": 1.2445282330112834e-07
+            },
+            {
+              "region_id": "other-00001",
+              "stem": "piano",
+              "accepted": true,
+              "err_change_db": -5.1170312614430786e-08
+            }
+          ],
+          "reconstruction": {
+            "before": {
+              "snr_db": 33.30118050084764,
+              "residual_rel_db": -33.30118050084764
+            },
+            "after": {
+              "snr_db": 33.31325698802418,
+              "residual_rel_db": -33.31325698802418
+            }
+          },
+          "stems": {
+            "vocals": {
+              "sdr_before_db": 1.3201742495495046e-05,
+              "sdr_after_db": 1.3201742644001024e-05,
+              "changed_samples": 39713,
+              "local_err_change_db": -2.248715219261432e-11
+            },
+            "drums": {
+              "sdr_before_db": 9.997490763596097,
+              "sdr_after_db": 9.992409413851398,
+              "changed_samples": 38081,
+              "local_err_change_db": 0.04797528766609569
+            },
+            "bass": {
+              "sdr_before_db": 15.646975693083201,
+              "sdr_after_db": 15.646975696267484,
+              "changed_samples": 29933,
+              "local_err_change_db": -4.305171383866537e-08
+            },
+            "guitar": {
+              "sdr_before_db": -0.00014893019997422498,
+              "sdr_after_db": -0.00014893050173613782,
+              "changed_samples": 39616,
+              "local_err_change_db": 7.637507279847699e-09
+            },
+            "piano": {
+              "sdr_before_db": 17.91919949953345,
+              "sdr_after_db": 17.9191952650858,
+              "changed_samples": 32167,
+              "local_err_change_db": 0.00011485503222582646
+            },
+            "other": {
+              "sdr_before_db": -9.215057502233092,
+              "sdr_after_db": -9.215261656416757,
+              "changed_samples": 38908,
+              "local_err_change_db": 0.011209678997908519
+            }
+          },
+          "mean_local_err_change_db_changed_stems": 0.00988329770992272,
+          "seconds": 5.8
+        },
+        "a2sb_consistent": {
+          "accepted": 10,
+          "rejected": 0,
+          "decisions": [
+            {
+              "region_id": "other-00000",
+              "stem": "other",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -9.760210717496847,
+              "stem_change_rel_db": -19.934707133578584,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 3815.7378982572927,
+              "err_before": 0.1646711107972787,
+              "evidence_before": 0.9999988675117493,
+              "evidence_after": 0.9999963641166687,
+              "notes": [
+                "A2SB 50 steps fp16, targets ['other']",
+                "allocation from A2SB prior, stems = Wiener split of O_ref"
+              ]
+            },
+            {
+              "region_id": "drums-00000",
+              "stem": "drums",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -8.210386201684493,
+              "stem_change_rel_db": -14.378294317212477,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 2615.2720270639834,
+              "err_before": 7.432183708942874,
+              "evidence_before": 0.9999996423721313,
+              "evidence_after": 0.9958507418632507,
+              "notes": [
+                "A2SB 50 steps fp16, targets ['drums']",
+                "allocation from A2SB prior, stems = Wiener split of O_ref"
+              ]
+            },
+            {
+              "region_id": "drums-00001",
+              "stem": "drums",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -9.898117166718208,
+              "stem_change_rel_db": -15.136554871556386,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 2278.818912137717,
+              "err_before": 9.695102649230538,
+              "evidence_before": 0.9999994039535522,
+              "evidence_after": 0.9999997615814209,
+              "notes": [
+                "A2SB 50 steps fp16, targets ['drums']",
+                "allocation from A2SB prior, stems = Wiener split of O_ref"
+              ]
+            },
+            {
+              "region_id": "other-00003",
+              "stem": "other",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -9.394637639643385,
+              "stem_change_rel_db": -16.383993837481952,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 2083.1210800119375,
+              "err_before": 3.0206506712098298,
+              "evidence_before": 1.0,
+              "evidence_after": 0.9999999403953552,
+              "notes": [
+                "A2SB 50 steps fp16, targets ['other']",
+                "allocation from A2SB prior, stems = Wiener split of O_ref"
+              ]
+            },
+            {
+              "region_id": "other-00005",
+              "stem": "other",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -9.228741647483844,
+              "stem_change_rel_db": -11.771577090727634,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 2436.206566370046,
+              "err_before": 6.112425533879234,
+              "evidence_before": 1.0,
+              "evidence_after": 0.0,
+              "notes": [
+                "A2SB 50 steps fp16, targets ['other']",
+                "allocation from A2SB prior, stems = Wiener split of O_ref"
+              ]
+            },
+            {
+              "region_id": "other-00008",
+              "stem": "other",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -5.792884315123654,
+              "stem_change_rel_db": -21.410426478567143,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 2856.097994728213,
+              "err_before": 1.924642503475349,
+              "evidence_before": 1.0,
+              "evidence_after": 0.9999833703041077,
+              "notes": [
+                "A2SB 50 steps fp16, targets ['other']",
+                "allocation from A2SB prior, stems = Wiener split of O_ref"
+              ]
+            },
+            {
+              "region_id": "other-00009",
+              "stem": "other",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -8.771895050941932,
+              "stem_change_rel_db": -48.25512228858293,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 3103.868658266592,
+              "err_before": 0.0799935179307516,
+              "evidence_before": 0.9997971653938293,
+              "evidence_after": 0.3835498094558716,
+              "notes": [
+                "A2SB 50 steps fp16, targets ['other']",
+                "allocation from A2SB prior, stems = Wiener split of O_ref"
+              ]
+            },
+            {
+              "region_id": "mixture-00009",
+              "stem": "mixture",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -5.255659571276103,
+              "stem_change_rel_db": -0.4806708226915276,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 0.06336709272888091,
+              "err_before": 0.0008641079164498322,
+              "evidence_before": 0.9897279739379883,
+              "evidence_after": 0.9894746541976929,
+              "notes": [
+                "A2SB 50 steps fp16, targets ['piano', 'other']",
+                "allocation from A2SB prior, stems = Wiener split of O_ref"
+              ]
+            },
+            {
+              "region_id": "other-00007",
+              "stem": "other",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -7.881507030777989,
+              "stem_change_rel_db": -45.20584775763945,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 3117.028968851505,
+              "err_before": 0.1811061942374644,
+              "evidence_before": 0.9167822003364563,
+              "evidence_after": 0.027211450040340424,
+              "notes": [
+                "A2SB 50 steps fp16, targets ['other']",
+                "allocation from A2SB prior, stems = Wiener split of O_ref"
+              ]
+            },
+            {
+              "region_id": "other-00001",
+              "stem": "other",
+              "accepted": true,
+              "reasons": [
+                "all acceptance criteria met"
+              ],
+              "stems_changed": [
+                "bass",
+                "drums",
+                "other",
+                "vocals",
+                "guitar",
+                "piano"
+              ],
+              "err_delta_db": -7.427864579046128,
+              "stem_change_rel_db": -18.116793866757604,
+              "unexplained_added_energy": 0.0,
+              "stem_energy_in_box": 1851.3200211783499,
+              "err_before": 1.9908139706124408,
+              "evidence_before": 1.0,
+              "evidence_after": 0.9999991059303284,
+              "notes": [
+                "A2SB 50 steps fp16, targets ['other']",
+                "allocation from A2SB prior, stems = Wiener split of O_ref"
+              ]
+            }
+          ],
+          "ungated_truth_err_change_db": [
+            {
+              "region_id": "other-00000",
+              "stem": "bass",
+              "accepted": true,
+              "err_change_db": -6.363687548757592e-08
+            },
+            {
+              "region_id": "other-00000",
+              "stem": "drums",
+              "accepted": true,
+              "err_change_db": 0.22450598493080856
+            },
+            {
+              "region_id": "other-00000",
+              "stem": "other",
+              "accepted": true,
+              "err_change_db": 0.11601683967832288
+            },
+            {
+              "region_id": "other-00000",
+              "stem": "vocals",
+              "accepted": true,
+              "err_change_db": 5.540609994142824e-09
+            },
+            {
+              "region_id": "other-00000",
+              "stem": "guitar",
+              "accepted": true,
+              "err_change_db": -0.04519172896549236
+            },
+            {
+              "region_id": "other-00000",
+              "stem": "piano",
+              "accepted": true,
+              "err_change_db": 8.480872615185899e-08
+            },
+            {
+              "region_id": "drums-00000",
+              "stem": "bass",
+              "accepted": true,
+              "err_change_db": 8.095426855458287e-09
+            },
+            {
+              "region_id": "drums-00000",
+              "stem": "drums",
+              "accepted": true,
+              "err_change_db": -0.32173411272609914
+            },
+            {
+              "region_id": "drums-00000",
+              "stem": "other",
+              "accepted": true,
+              "err_change_db": -0.0787098510631454
+            },
+            {
+              "region_id": "drums-00000",
+              "stem": "vocals",
+              "accepted": true,
+              "err_change_db": -0.02622407257384514
+            },
+            {
+              "region_id": "drums-00000",
+              "stem": "guitar",
+              "accepted": true,
+              "err_change_db": 1.988530025459343e-10
+            },
+            {
+              "region_id": "drums-00000",
+              "stem": "piano",
+              "accepted": true,
+              "err_change_db": -4.48209326723155e-08
+            },
+            {
+              "region_id": "drums-00001",
+              "stem": "bass",
+              "accepted": true,
+              "err_change_db": 1.3602602641785166e-08
+            },
+            {
+              "region_id": "drums-00001",
+              "stem": "drums",
+              "accepted": true,
+              "err_change_db": -0.12448128371006689
+            },
+            {
+              "region_id": "drums-00001",
+              "stem": "other",
+              "accepted": true,
+              "err_change_db": -0.03329242272172765
+            },
+            {
+              "region_id": "drums-00001",
+              "stem": "vocals",
+              "accepted": true,
+              "err_change_db": -5.382216321648419e-09
+            },
+            {
+              "region_id": "drums-00001",
+              "stem": "guitar",
+              "accepted": true,
+              "err_change_db": 8.848703539867189e-09
+            },
+            {
+              "region_id": "drums-00001",
+              "stem": "piano",
+              "accepted": true,
+              "err_change_db": -1.77296910699392e-07
+            },
+            {
+              "region_id": "other-00003",
+              "stem": "bass",
+              "accepted": true,
+              "err_change_db": 2.4104988887057176e-08
+            },
+            {
+              "region_id": "other-00003",
+              "stem": "drums",
+              "accepted": true,
+              "err_change_db": 0.04111014061529837
+            },
+            {
+              "region_id": "other-00003",
+              "stem": "other",
+              "accepted": true,
+              "err_change_db": -0.011785661517219572
+            },
+            {
+              "region_id": "other-00003",
+              "stem": "vocals",
+              "accepted": true,
+              "err_change_db": -0.1244510355386577
+            },
+            {
+              "region_id": "other-00003",
+              "stem": "guitar",
+              "accepted": true,
+              "err_change_db": -3.899899388948577e-10
+            },
+            {
+              "region_id": "other-00003",
+              "stem": "piano",
+              "accepted": true,
+              "err_change_db": 1.7688561285890583e-08
+            },
+            {
+              "region_id": "other-00005",
+              "stem": "bass",
+              "accepted": true,
+              "err_change_db": -1.9226358946143744e-08
+            },
+            {
+              "region_id": "other-00005",
+              "stem": "drums",
+              "accepted": true,
+              "err_change_db": -0.20141660797105548
+            },
+            {
+              "region_id": "other-00005",
+              "stem": "other",
+              "accepted": true,
+              "err_change_db": -0.04717682831307425
+            },
+            {
+              "region_id": "other-00005",
+              "stem": "vocals",
+              "accepted": true,
+              "err_change_db": -3.359364915245632e-09
+            },
+            {
+              "region_id": "other-00005",
+              "stem": "guitar",
+              "accepted": true,
+              "err_change_db": -8.809825723633749e-10
+            },
+            {
+              "region_id": "other-00005",
+              "stem": "piano",
+              "accepted": true,
+              "err_change_db": 1.460897381828404e-08
+            },
+            {
+              "region_id": "other-00008",
+              "stem": "bass",
+              "accepted": true,
+              "err_change_db": -2.1038589515479106e-06
+            },
+            {
+              "region_id": "other-00008",
+              "stem": "drums",
+              "accepted": true,
+              "err_change_db": -0.002733351422514641
+            },
+            {
+              "region_id": "other-00008",
+              "stem": "other",
+              "accepted": true,
+              "err_change_db": -0.009487239086073301
+            },
+            {
+              "region_id": "other-00008",
+              "stem": "vocals",
+              "accepted": true,
+              "err_change_db": -0.38311020944969604
+            },
+            {
+              "region_id": "other-00008",
+              "stem": "guitar",
+              "accepted": true,
+              "err_change_db": -2.7006287315489087e-08
+            },
+            {
+              "region_id": "other-00008",
+              "stem": "piano",
+              "accepted": true,
+              "err_change_db": -7.358375619768335e-07
+            },
+            {
+              "region_id": "other-00009",
+              "stem": "bass",
+              "accepted": true,
+              "err_change_db": -7.27458900117763e-07
+            },
+            {
+              "region_id": "other-00009",
+              "stem": "drums",
+              "accepted": true,
+              "err_change_db": -0.001621473862412668
+            },
+            {
+              "region_id": "other-00009",
+              "stem": "other",
+              "accepted": true,
+              "err_change_db": -0.006141680142076476
+            },
+            {
+              "region_id": "other-00009",
+              "stem": "vocals",
+              "accepted": true,
+              "err_change_db": 3.4142823974970047e-09
+            },
+            {
+              "region_id": "other-00009",
+              "stem": "guitar",
+              "accepted": true,
+              "err_change_db": -1.3543850068979234e-08
+            },
+            {
+              "region_id": "other-00009",
+              "stem": "piano",
+              "accepted": true,
+              "err_change_db": -1.8432949373032456e-07
+            },
+            {
+              "region_id": "mixture-00009",
+              "stem": "bass",
+              "accepted": true,
+              "err_change_db": 2.228408309315092e-08
+            },
+            {
+              "region_id": "mixture-00009",
+              "stem": "drums",
+              "accepted": true,
+              "err_change_db": 0.035464463047278745
+            },
+            {
+              "region_id": "mixture-00009",
+              "stem": "other",
+              "accepted": true,
+              "err_change_db": -1.2618869987756965e-06
+            },
+            {
+              "region_id": "mixture-00009",
+              "stem": "vocals",
+              "accepted": true,
+              "err_change_db": 1.3255356056799231e-10
+            },
+            {
+              "region_id": "mixture-00009",
+              "stem": "guitar",
+              "accepted": true,
+              "err_change_db": 1.8841897935829294e-10
+            },
+            {
+              "region_id": "mixture-00009",
+              "stem": "piano",
+              "accepted": true,
+              "err_change_db": 0.0002620546844423511
+            },
+            {
+              "region_id": "other-00007",
+              "stem": "bass",
+              "accepted": true,
+              "err_change_db": -2.2810896215617972e-09
+            },
+            {
+              "region_id": "other-00007",
+              "stem": "drums",
+              "accepted": true,
+              "err_change_db": -0.00022849007759304319
+            },
+            {
+              "region_id": "other-00007",
+              "stem": "other",
+              "accepted": true,
+              "err_change_db": -0.004933328513358798
+            },
+            {
+              "region_id": "other-00007",
+              "stem": "vocals",
+              "accepted": true,
+              "err_change_db": -2.964498841385612e-06
+            },
+            {
+              "region_id": "other-00007",
+              "stem": "guitar",
+              "accepted": true,
+              "err_change_db": 2.7298607105807275e-08
+            },
+            {
+              "region_id": "other-00007",
+              "stem": "piano",
+              "accepted": true,
+              "err_change_db": -1.0171226234065468e-06
+            },
+            {
+              "region_id": "other-00001",
+              "stem": "bass",
+              "accepted": true,
+              "err_change_db": -4.778331148319795e-08
+            },
+            {
+              "region_id": "other-00001",
+              "stem": "drums",
+              "accepted": true,
+              "err_change_db": -0.11269716150264661
+            },
+            {
+              "region_id": "other-00001",
+              "stem": "other",
+              "accepted": true,
+              "err_change_db": -0.03548124213453753
+            },
+            {
+              "region_id": "other-00001",
+              "stem": "vocals",
+              "accepted": true,
+              "err_change_db": -6.6276871946688865e-09
+            },
+            {
+              "region_id": "other-00001",
+              "stem": "guitar",
+              "accepted": true,
+              "err_change_db": 4.1326746153847284e-08
+            },
+            {
+              "region_id": "other-00001",
+              "stem": "piano",
+              "accepted": true,
+              "err_change_db": -8.428144318229652e-08
+            }
+          ],
+          "reconstruction": {
+            "before": {
+              "snr_db": 33.30118050084764,
+              "residual_rel_db": -33.30118050084764
+            },
+            "after": {
+              "snr_db": 33.313256986865056,
+              "residual_rel_db": -33.313256986865056
+            }
+          },
+          "stems": {
+            "vocals": {
+              "sdr_before_db": 1.3201742495495046e-05,
+              "sdr_after_db": 1.32017426430367e-05,
+              "changed_samples": 39713,
+              "local_err_change_db": -2.2394094592091447e-11
+            },
+            "drums": {
+              "sdr_before_db": 9.997490763596097,
+              "sdr_after_db": 9.997771207550985,
+              "changed_samples": 38261,
+              "local_err_change_db": -0.0026615694199781806
+            },
+            "bass": {
+              "sdr_before_db": 15.646975693083201,
+              "sdr_after_db": 15.646975696314367,
+              "changed_samples": 29933,
+              "local_err_change_db": -4.368559184343862e-08
+            },
+            "guitar": {
+              "sdr_before_db": -0.00014893019997422498,
+              "sdr_after_db": -0.0001489305017583181,
+              "changed_samples": 39616,
+              "local_err_change_db": 7.638055982175202e-09
+            },
+            "piano": {
+              "sdr_before_db": 17.91919949953345,
+              "sdr_after_db": 17.919195259975357,
+              "changed_samples": 32167,
+              "local_err_change_db": 0.00011499364600228281
+            },
+            "other": {
+              "sdr_before_db": -9.215057502233092,
+              "sdr_after_db": -9.2149327464767,
+              "changed_samples": 38899,
+              "local_err_change_db": -0.00685927593114805
+            }
+          },
+          "mean_local_err_change_db_changed_stems": -0.0015676479625089841,
+          "seconds": 598.7
+        }
+      }
+    }
+  ],
+  "summary": {
+    "region_wiener": {
+      "songs_with_changes": 1,
+      "mean_local_err_change_db": 0.00988329770992272,
+      "moved_closer_to_truth_in": 0
+    },
+    "a2sb_consistent": {
+      "songs_with_changes": 1,
+      "mean_local_err_change_db": -0.0015676479625089841,
+      "moved_closer_to_truth_in": 1
+    }
+  },
+  "seconds": 628.0,
+  "caveat": "with synthetic caricature stems the separator is out of domain. Use real multitrack stems\n(e.g. MoisesDB / MUSDB18-HQ, downloaded by the user) via ``stems_from_folder`` for meaningful conclusions, and\nremember a public dataset may overlap the separator's training data."
+}

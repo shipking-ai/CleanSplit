@@ -1,0 +1,151 @@
+{
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "duration_s": 8.0,
+  "confidence_threshold": 0.6,
+  "enabled_detectors": [
+    "residual",
+    "cancellation",
+    "modulation",
+    "transient",
+    "leakage"
+  ],
+  "clean": {
+    "regions": 13,
+    "regions_per_minute": 19.5,
+    "by_detector": {
+      "modulation": 13
+    }
+  },
+  "scenarios": {
+    "warble_conserve": {
+      "trials": 5,
+      "detected": 2,
+      "per_expectation": {
+        "target:modulation": {
+          "trials": 5,
+          "hits": 2
+        }
+      },
+      "recall": 0.4
+    },
+    "warble_lossy": {
+      "trials": 5,
+      "detected": 3,
+      "per_expectation": {
+        "target:modulation": {
+          "trials": 5,
+          "hits": 3
+        },
+        "mixture:residual": {
+          "trials": 5,
+          "hits": 5
+        }
+      },
+      "recall": 0.6
+    },
+    "cancellation": {
+      "trials": 5,
+      "detected": 4,
+      "per_expectation": {
+        "target:cancellation": {
+          "trials": 5,
+          "hits": 4
+        },
+        "sink:cancellation": {
+          "trials": 5,
+          "hits": 4
+        }
+      },
+      "recall": 0.8
+    },
+    "smear_conserve": {
+      "trials": 5,
+      "detected": 5,
+      "per_expectation": {
+        "target:transient": {
+          "trials": 5,
+          "hits": 5
+        }
+      },
+      "recall": 1.0
+    },
+    "smear_lossy": {
+      "trials": 5,
+      "detected": 5,
+      "per_expectation": {
+        "target:transient": {
+          "trials": 5,
+          "hits": 5
+        },
+        "mixture:residual": {
+          "trials": 5,
+          "hits": 5
+        }
+      },
+      "recall": 1.0
+    },
+    "hf_noise_conserve": {
+      "trials": 5,
+      "detected": 5,
+      "per_expectation": {
+        "target:cancellation": {
+          "trials": 5,
+          "hits": 5
+        }
+      },
+      "recall": 1.0
+    },
+    "hf_noise_lossy": {
+      "trials": 5,
+      "detected": 5,
+      "per_expectation": {
+        "mixture:residual": {
+          "trials": 5,
+          "hits": 5
+        }
+      },
+      "recall": 1.0
+    },
+    "leakage_drums_into_vocals": {
+      "trials": 5,
+      "detected": 5,
+      "per_expectation": {
+        "target:leakage": {
+          "trials": 5,
+          "hits": 5
+        }
+      },
+      "recall": 1.0
+    },
+    "dropout_lossy": {
+      "trials": 5,
+      "detected": 4,
+      "per_expectation": {
+        "mixture:residual": {
+          "trials": 5,
+          "hits": 4
+        }
+      },
+      "recall": 0.8
+    },
+    "musical_noise_into_vocals": {
+      "trials": 5,
+      "detected": 0,
+      "per_expectation": {
+        "target:musical_noise": {
+          "trials": 5,
+          "hits": 0
+        }
+      },
+      "recall": 0.0
+    }
+  },
+  "seconds": 135.6,
+  "caveat": "Synthetic caricature instruments with injected corruptions; indicates detector mechanics, not real-world accuracy."
+}
