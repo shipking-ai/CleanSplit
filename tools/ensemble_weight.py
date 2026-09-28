@@ -45,8 +45,8 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "tools"))
-import musdb_eval as M  # noqa: E402
-from fullband_check import paired  # noqa: E402
+import musdb_eval as M
+from fullband_check import paired
 
 OUT = ROOT / "outputs" / "_benchmarks" / "musdb18hq_ensemble_weight.json"
 MIN_DELTA_DB = 0.02

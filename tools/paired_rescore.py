@@ -30,7 +30,7 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
-from fullband_check import paired  # noqa: E402
+from fullband_check import paired
 
 METRICS = ("sar", "sdr", "sir")
 
@@ -82,7 +82,7 @@ def main(path: Path, baseline: str, metrics: tuple[str, ...]) -> None:
         print("  no sign flips: every unpaired delta pointed the same way the paired one does")
     dest = path.with_name(path.stem + "_paired.json")
     dest.write_text(json.dumps({"source": path.name, "baseline": baseline, "paired": out,
-                                "sign_flips": [dict(zip(("arm", "stem", "metric", "unpaired", "paired", "won", "n"), f))
+                                "sign_flips": [dict(zip(("arm", "stem", "metric", "unpaired", "paired", "won", "n"), f, strict=True))
                                                for f in flips]}, indent=1))
     print(f"  written {dest}")
 

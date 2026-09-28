@@ -17,7 +17,6 @@ would be an unfalsifiable experiment.
 from __future__ import annotations
 
 import argparse
-import json
 import subprocess
 import tempfile
 import time

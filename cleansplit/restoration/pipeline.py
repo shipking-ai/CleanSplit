@@ -21,8 +21,8 @@ from ..config.settings import AnalysisConfig
 from ..metrics import signal as M
 from ..reconstruction.core import model_matched_reference
 from ..separation.base import SeparationResult
-from .baselines import create
 from .base import RestorationContext
+from .baselines import create
 from .engine import GateConfig, evaluate_and_apply
 
 

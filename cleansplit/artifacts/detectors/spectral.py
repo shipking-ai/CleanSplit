@@ -52,7 +52,7 @@ class MusicalNoiseDetector(Detector):
     def _spikes(cls, P, k):
         ok = np.ones(P.shape, dtype=bool)
         for fp in (cls._BEFORE, cls._AFTER, cls._BELOW, cls._ABOVE):
-            ok &= P > k * median_filter(P, footprint=fp, mode="nearest")
+            ok &= k * median_filter(P, footprint=fp, mode="nearest") < P
         return ok
 
     @classmethod
@@ -61,7 +61,7 @@ class MusicalNoiseDetector(Detector):
         A partial sweeping through the bin (vibrato) makes the *mixture* non-stationary; a mask spike does not."""
         before = median_filter(P, footprint=cls._BEFORE, mode="nearest")
         after = median_filter(P, footprint=cls._AFTER, mode="nearest")
-        return P <= ratio * np.minimum(before, after)
+        return ratio * np.minimum(before, after) >= P
 
     def detect(self, ctx: AnalysisContext) -> list[EvidenceMap]:
         c = ctx.config
@@ -75,7 +75,7 @@ class MusicalNoiseDetector(Detector):
         out = []
         for stem in ctx.stem_names:
             P = ctx.P_stems[stem]
-            cells = self._spikes(P, k) & mix_ok & (P >= 0.25 * ctx.P_mix)
+            cells = self._spikes(P, k) & mix_ok & (0.25 * ctx.P_mix <= P)
             iso_s = _blocks(np.where(cells, P, 0.0), r0, br, bc)
             tot_s = _blocks(P, r0, br, bc)
             m = (to_db(iso_s / np.maximum(tot_s, TINY) + 1e-6)).astype(np.float32)

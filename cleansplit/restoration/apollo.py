@@ -61,7 +61,7 @@ class ApolloModel:
 
         if str(VENDORED) not in sys.path:
             sys.path.insert(0, str(VENDORED))
-        from apollo import Apollo  # noqa: E402  (vendored CC BY-SA code)
+        from apollo import Apollo
 
         # Both released checkpoints are the configs/apollo.yaml shape; the state dict is checked against it below.
         self.torch = torch

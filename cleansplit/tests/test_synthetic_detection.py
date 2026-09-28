@@ -4,7 +4,6 @@ These encode behaviour demonstrated on the synthetic benchmark (tools/dev/explor
 blind spots, which are asserted explicitly so a future change that alters them is noticed.
 """
 
-import numpy as np
 import pytest
 
 from cleansplit.analysis.pipeline import analyze_separation

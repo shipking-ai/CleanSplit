@@ -8,7 +8,7 @@ import yaml
 
 REPO = Path(__file__).resolve().parents[2] / "third_party" / "diffusion-audio-restoration"
 sys.path.insert(0, str(REPO))
-from networks import AttnUNetF, SinusoidalTemporalEmbedding  # noqa: E402
+from networks import AttnUNetF, SinusoidalTemporalEmbedding
 
 init = yaml.safe_load(open(REPO / "configs" / "ensemble_2split_sampling.yaml"))["model"]["vf_model"]["init_args"]
 m = AttnUNetF(**init).eval().cuda()

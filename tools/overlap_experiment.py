@@ -37,7 +37,7 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "tools"))
-import musdb_eval as M  # noqa: E402
+import musdb_eval as M
 
 OUT = ROOT / "outputs" / "_benchmarks" / "musdb18hq_overlap.json"
 SAR_STEMS = ("vocals", "drums", "bass")

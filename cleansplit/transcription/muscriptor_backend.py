@@ -98,7 +98,7 @@ def transcribe_many(items: list[tuple[np.ndarray | str | Path, int | None, list[
             raise RuntimeError(f"MuScriptor worker failed (exit {proc.returncode}):\n" + "\n".join(tail))
         res = json.loads(out.read_text(encoding="utf-8"))
     notes = []
-    for (_, _, _, source), r in zip(items, res["items"]):
+    for (_, _, _, source), r in zip(items, res["items"], strict=True):
         notes.append([TranscribedNote(float(a), float(b), int(p), str(inst), bool(drum), None, f"{source}:muscriptor")
                       for a, b, p, inst, drum in r["notes"]])
     info = {"backend": "muscriptor", "model": res["model"], "dtype": res["dtype"], "load_seconds": res["load_seconds"],

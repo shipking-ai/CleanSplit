@@ -45,3 +45,39 @@ markers = [
     "gpu: requires CUDA and the local BS-RoFormer SW checkpoint",
     "slow: long-running",
 ]
+
+[tool.ruff]
+line-length = 130
+target-version = "py310"
+# Vendored upstream model code is kept byte-for-byte so it can be diffed against its source; linting it would mean
+# editing it. See LICENSE and third_party/README.md for provenance.
+extend-exclude = [
+    "cleansplit/separation/bs_roformer",
+    "cleansplit/separation/mdx23c",
+    "cleansplit/separation/scnet",
+    "third_party",
+]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I", "UP", "B", "SIM", "RUF"]
+ignore = [
+    "B008",    # FastAPI's Depends() in a default argument is the framework's documented idiom
+    "B023",    # loop-variable capture: every instance here is a closure consumed inside the same iteration
+    "RUF046",  # int() around a value already typed int reads as an assertion of intent in the DSP code
+    "SIM108",  # ternaries are not always clearer than an if/else in numeric code
+    "E741",    # `l` and `I` are conventional in the DSP code, where they track paper notation
+    "E731",    # short assigned lambdas are the house style in the experiment scripts
+    "SIM115",  # the probes deliberately hold a handle open across a long-running measurement
+    "RUF059",  # unpacking and ignoring a field documents the shape of what a function returns
+    "B007",    # an unused loop variable is often the clearest way to say "repeat n times"
+]
+
+# B905 (zip without explicit strict=) is deliberately NOT ignored. Silent truncation to the shorter sequence is exactly
+# the failure that produced the by-position pairing bug in docs/04 section 14.7, and in a project whose output is
+# measurements, a zip that quietly drops a song is a wrong number rather than a crash. Every zip in first-party code
+# passes strict=True, so a shape mismatch raises instead of being averaged away.
+
+[tool.ruff.lint.per-file-ignores]
+"cleansplit/tests/*" = ["B017", "SIM117"]   # tests deliberately assert on broad exceptions and nest context managers
+"tools/*" = ["E402"]                        # experiment scripts must set sys.path before importing the package
+"tools/dev/*" = ["E402"]

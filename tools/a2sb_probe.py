@@ -19,7 +19,7 @@ REPO = ROOT / "third_party" / "diffusion-audio-restoration"
 CKPT_DIR = ROOT / "models" / "a2sb"
 sys.path.insert(0, str(REPO))
 
-from networks import AttnUNetF, SinusoidalTemporalEmbedding  # noqa: E402
+from networks import AttnUNetF, SinusoidalTemporalEmbedding
 
 SLOW_S = 5.0
 

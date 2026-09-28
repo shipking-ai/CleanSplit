@@ -11,7 +11,7 @@ def _modulation_spectra(Bp: np.ndarray, win: int, hop: int, fr: float, fmin: flo
     """(B, T) linear band power -> complex spectra of the windowed power envelope in [fmin, fmax] (B, K, M),
     and window mean power (B, K)."""
     T = Bp.shape[1]
-    if T < win:
+    if win > T:
         Bp = np.pad(Bp, ((0, 0), (0, win - T)), mode="edge")
     seg = sliding_window_view(Bp.astype(np.float64), win, axis=-1)[:, ::hop]
     mean = seg.mean(axis=-1)

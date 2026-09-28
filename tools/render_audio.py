@@ -36,9 +36,9 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "tools"))
-import musdb_eval as M  # noqa: E402
+import musdb_eval as M
 
-from cleansplit.audio.io import save_audio  # noqa: E402
+from cleansplit.audio.io import save_audio
 
 OUT = ROOT / "outputs" / "listen"
 STEMS = ("vocals", "drums", "bass", "other")
@@ -83,7 +83,7 @@ def main(limit: int | None, which: str | None, take_all: bool, out: Path) -> Non
         picks = [scored[0], scored[len(scored) // 2], scored[-1]]
         chosen = {n for _, n in picks}
         print("Picked by vocal SNR of the current default (worst / median / best), so you can hear both ends:")
-        for lbl, (s, n) in zip(("worst ", "median", "best  "), picks):
+        for lbl, (s, n) in zip(("worst ", "median", "best  "), picks, strict=True):
             print(f"  {lbl}  {s:6.2f} dB  {n}")
         print()
 

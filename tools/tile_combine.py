@@ -48,10 +48,10 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "tools"))
-import musdb_eval as M  # noqa: E402
-from fullband_check import paired  # noqa: E402
+import musdb_eval as M
+from fullband_check import paired
 
-from cleansplit.audio.stft import STFTGrid, istft, stft  # noqa: E402
+from cleansplit.audio.stft import STFTGrid, istft, stft
 
 OUT = ROOT / "outputs" / "_benchmarks" / "musdb18hq_tile_combine.json"
 GRID = STFTGrid(n_fft=4096, hop=1024)
@@ -119,12 +119,12 @@ def main(limit: int | None, out: Path) -> None:
     print()
     any_ok = any(v["adopt"] for v in verdict.values())
     worst = min(verdict, key=lambda k: verdict[k]["delta_snr_db"])
-    print(f"  PREDICTION was: all four lose, and min_mag loses worst")
+    print("  PREDICTION was: all four lose, and min_mag loses worst")
     print(f"  -> {'** FALSIFIED **' if any_ok else 'CONFIRMED'}: "
           f"{'a combiner cleared the rule' if any_ok else 'none adopted'}; worst is {worst} "
           f"({verdict[worst]['delta_snr_db']:+.3f} dB)"
           + ("" if worst == "min_mag" else "  <- NOT min_mag: that half of the prediction is wrong"))
-    print(f"  for scale: the per-tile ORACLE that reads the truth is worth +0.38 dB (oracle_headroom.py)")
+    print("  for scale: the per-tile ORACLE that reads the truth is worth +0.38 dB (oracle_headroom.py)")
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps({"min_delta_db": MIN_DELTA_DB, "verdict": verdict,
                                "prediction_confirmed": not any_ok, "worst": worst,

@@ -48,8 +48,8 @@ class A2SBModel:
             raise FileNotFoundError(f"A2SB code not found at {repo_dir}")
         if str(repo_dir) not in sys.path:
             sys.path.insert(0, str(repo_dir))
-        from diffusion import Diffusion  # noqa: E402  (NVIDIA code, NC license)
-        from networks import AttnUNetF, SinusoidalTemporalEmbedding  # noqa: E402
+        from diffusion import Diffusion
+        from networks import AttnUNetF, SinusoidalTemporalEmbedding
 
         cfg = yaml.safe_load(open(repo_dir / "configs" / "ensemble_2split_sampling.yaml"))["model"]
         init = cfg["vf_model"]["init_args"]

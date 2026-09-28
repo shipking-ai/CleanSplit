@@ -122,7 +122,7 @@ def band_residual_db(reference, residual, grid: STFTGrid = STFTGrid(), edges=(0,
     Pe = (np.abs(stft(residual, grid, np.complex128)) ** 2).reshape(-1, grid.n_bins, grid.n_frames(residual.shape[-1])).sum(axis=(0, 2))
     f = grid.freqs()
     out = {}
-    for lo, hi in zip(edges[:-1], edges[1:]):
+    for lo, hi in zip(edges[:-1], edges[1:], strict=True):
         m = (f >= lo) & (f < hi)
         num, den = Pe[m].sum(), Pr[m].sum()
         out[f"{lo}-{hi}Hz"] = None if den <= 0 else (float("-inf") if num <= 0 else float(10 * np.log10(num / den)))

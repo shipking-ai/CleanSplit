@@ -26,7 +26,7 @@ import numpy as np
 from scipy.stats import spearmanr
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-import musdb_eval as M  # noqa: E402
+import musdb_eval as M
 
 THRESHOLD_DB = 6.0
 FAIL_SDR_DB = 3.0
@@ -40,6 +40,7 @@ def agreement_db(s: np.ndarray, d: np.ndarray) -> float:
 
 def main() -> None:
     import torch
+
     from cleansplit.metrics.signal import snr_db
 
     items = list(M.songs())[20:]

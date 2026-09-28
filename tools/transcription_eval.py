@@ -146,8 +146,9 @@ def tracks():
 
 def _separate_all(items, cache: Path):
     """Route C input: the shipped `ensemble` separator on each 16 kHz mix, upsampled to 44.1 kHz."""
-    from cleansplit.separation import registry
     import soxr
+
+    from cleansplit.separation import registry
 
     out = {}
     todo = [(name, sr, mix) for name, sr, mix in items if not (cache / f"{name}.npz").is_file()]
@@ -175,7 +176,7 @@ def _muscriptor_route(route: str, jobs, model: str = "medium"):
         return json.loads(path.read_text())
     notes, info = transcribe_many([(a, sr, inst, f"{t}|{s}") for t, s, a, sr, inst in jobs], model=model)
     res = {"info": info, "notes": {}}
-    for (t, s, *_), ns in zip(jobs, notes):
+    for (t, s, *_), ns in zip(jobs, notes, strict=True):
         res["notes"].setdefault(t, []).extend(
             [[n.onset_s, n.offset_s, n.pitch, n.instrument, n.is_drum, s] for n in ns])
     CACHE.mkdir(parents=True, exist_ok=True)
@@ -267,7 +268,7 @@ def score(data=None) -> dict:
                                   key=lambda x: x[3]),
                  "piano": _match(ref_piano, [x for x in est_p if x[3] in PIANO_GROUPS])}
             for k, v in m.items():
-                totals[r][k] = [a + b for a, b in zip(totals[r][k], v)]
+                totals[r][k] = [a + b for a, b in zip(totals[r][k], v, strict=True)]
             per_track[r][name] = _f1(*m["multi"])
     summary = {r: {k: _f1(*v) for k, v in t.items()} for r, t in totals.items()}
     wins = sum(per_track["C"][n] > per_track["A"][n] for n in per_track["A"])

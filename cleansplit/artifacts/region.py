@@ -49,7 +49,7 @@ class ArtifactRegion:
     def duration_s(self) -> float:
         return self.end_s - self.start_s
 
-    def overlaps(self, other: "ArtifactRegion", time_pad_s: float = 0.0) -> bool:
+    def overlaps(self, other: ArtifactRegion, time_pad_s: float = 0.0) -> bool:
         return (
             self.start_s - time_pad_s < other.end_s
             and other.start_s - time_pad_s < self.end_s
@@ -63,7 +63,7 @@ class ArtifactRegion:
         return d
 
     @classmethod
-    def from_dict(cls, d: dict) -> "ArtifactRegion":
+    def from_dict(cls, d: dict) -> ArtifactRegion:
         d = dict(d)
         d["detectors"] = {k: DetectorEvidence(**v) for k, v in d.get("detectors", {}).items()}
         return cls(**d)
@@ -92,7 +92,7 @@ class ArtifactMap:
         }
 
     @classmethod
-    def from_dict(cls, d: dict) -> "ArtifactMap":
+    def from_dict(cls, d: dict) -> ArtifactMap:
         if d.get("schema") != SCHEMA_VERSION:
             raise ValueError(f"unsupported artifact map schema {d.get('schema')!r} (expected {SCHEMA_VERSION})")
         return cls(
@@ -109,5 +109,5 @@ class ArtifactMap:
         Path(path).write_text(json.dumps(self.to_dict(), indent=2, allow_nan=False), encoding="utf-8")
 
     @classmethod
-    def load(cls, path: str | Path) -> "ArtifactMap":
+    def load(cls, path: str | Path) -> ArtifactMap:
         return cls.from_dict(json.loads(Path(path).read_text(encoding="utf-8")))

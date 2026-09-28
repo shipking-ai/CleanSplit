@@ -45,9 +45,9 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "tools"))
-import musdb_eval as M  # noqa: E402
+import musdb_eval as M
 
-from cleansplit.audio.stft import STFTGrid, istft, stft  # noqa: E402
+from cleansplit.audio.stft import STFTGrid, istft, stft
 
 OUT = ROOT / "outputs" / "_benchmarks" / "musdb18hq_oracle_headroom.json"
 GRID = STFTGrid(n_fft=4096, hop=1024)
@@ -105,14 +105,14 @@ def main(limit: int | None, tf: int, tt: int, out: Path) -> None:
           f"{tt * GRID.hop / M.SR * 1000:.0f} ms). Median full-band SNR")
     for k in ("sw_tta", "ep317", "average", "oracle"):
         print(f"  {k:10s} {med(k):6.2f} dB")
-    print(f"\n  paired deltas vs the shipped average (median per-song difference, songs won):")
+    print("\n  paired deltas vs the shipped average (median per-song difference, songs won):")
     for k in ("sw_tta", "ep317", "oracle"):
         d, w = paired(k, "average")
         print(f"    {k:10s} {d:+6.2f} dB  {w:2d}/{len(rows)}")
     print(f"\n  HEADROOM a perfect listener could win: {gap:+.2f} dB over what ships, on {gap_wins}/{len(rows)} songs")
-    print(f"  for scale: the entire two-model ensemble is worth +0.45 dB paired, and every generative repairer lost.")
+    print("  for scale: the entire two-model ensemble is worth +0.45 dB paired, and every generative repairer lost.")
     picks = {k: float(np.mean([r['picked'][k] for r in rows])) for k in rows[0]["picked"]}
-    print(f"  oracle picked: " + ", ".join(f"{k} {v:.0%}" for k, v in picks.items()))
+    print("  oracle picked: " + ", ".join(f"{k} {v:.0%}" for k, v in picks.items()))
     print("  NOT achievable: it reads the truth to choose, and is not charged for the seams it creates.")
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps({"tile": [tf, tt],

@@ -16,7 +16,7 @@ import numpy as np
 import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "tools"))
-from fullband_check import paired  # noqa: E402
+from fullband_check import paired
 
 
 def test_pairs_by_song_name_not_by_position():

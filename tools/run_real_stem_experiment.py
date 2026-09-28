@@ -6,7 +6,6 @@ SW groups: vocals<-vocals, drums<-drums, bass<-bass, other<-guitar+piano+other.
 Usage: python tools/run_real_stem_experiment.py <restorers> <start_s> [<start_s> ...] [--dur 30] [--max-regions 10]
 """
 import argparse
-import json
 from pathlib import Path
 
 from cleansplit.analysis.pipeline import write_json

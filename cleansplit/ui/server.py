@@ -51,7 +51,7 @@ def create_app(out_root: str = "outputs") -> FastAPI:
         try:
             return svc.submit_midi(body["variant"], body["slug"]).to_dict()
         except FileNotFoundError as e:
-            raise HTTPException(404, str(e))
+            raise HTTPException(404, str(e)) from e
 
     @app.get("/api/events")
     async def events(request: Request):
@@ -84,14 +84,14 @@ def create_app(out_root: str = "outputs") -> FastAPI:
                           ["original"] + [p.stem for p in (svc.song_dir(variant, slug) / "stems").glob("*.wav")]},
             }
         except FileNotFoundError as e:
-            raise HTTPException(404, str(e))
+            raise HTTPException(404, str(e)) from e
 
     @app.get("/api/audio/{variant}/{slug}/{stem}.wav")
     def audio(variant: str, slug: str, stem: str):
         try:
             return FileResponse(svc.audio_path(variant, slug, stem), media_type="audio/wav")
         except FileNotFoundError as e:
-            raise HTTPException(404, str(e))
+            raise HTTPException(404, str(e)) from e
 
     @app.post("/api/reveal")
     async def reveal(req: Request):

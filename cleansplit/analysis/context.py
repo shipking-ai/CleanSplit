@@ -114,7 +114,7 @@ class AnalysisContext:
     def stem_audible(self, stem: str) -> np.ndarray:
         P = self.Ps_stems[stem]
         ref = float(P.max())
-        return P > max(ref * 10 ** (-self.config.audibility_range_db / 10), self.config.abs_floor_power)
+        return max(ref * 10 ** (-self.config.audibility_range_db / 10), self.config.abs_floor_power) < P
 
     # ---- log-band pooled envelopes (for modulation / leakage) ----
     @cached_property
@@ -127,7 +127,7 @@ class AnalysisContext:
         f = self.grid.freqs()
         edges = self.band_edges_hz
         idx = []
-        for lo, hi in zip(edges[:-1], edges[1:]):
+        for lo, hi in zip(edges[:-1], edges[1:], strict=True):
             sel = np.flatnonzero((f >= lo) & (f < hi))
             if sel.size == 0:  # narrow low band: take nearest bin
                 sel = np.array([int(np.argmin(np.abs(f - (lo + hi) / 2)))])

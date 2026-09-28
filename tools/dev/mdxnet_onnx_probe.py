@@ -41,7 +41,7 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "tools"))
-import musdb_eval as M  # noqa: E402
+import musdb_eval as M
 
 ONNX = Path(r"C:\Users\wegot\AppData\Local\Programs\Ultimate Vocal Remover\models\MDX_Net_Models\UVR-MDX-NET-Inst_HQ_3.onnx")
 SHA256 = "317554b07fe1ea5279a77f2b1520a41ea4b93432560c4ffd08792c30fddf9adc"

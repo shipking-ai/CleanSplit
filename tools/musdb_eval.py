@@ -63,8 +63,9 @@ def extract() -> None:
 
 
 def songs(limit: int | None = None):
-    from cleansplit.metrics.restoration_experiment import stem_folder_songs
     import soundfile as sf
+
+    from cleansplit.metrics.restoration_experiment import stem_folder_songs
 
     dirs = sorted(p for p in TEST.iterdir() if p.is_dir())[:limit]
     for d in dirs:

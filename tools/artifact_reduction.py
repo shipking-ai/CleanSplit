@@ -37,9 +37,9 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "tools"))
-import musdb_eval as M  # noqa: E402
+import musdb_eval as M
 
-from cleansplit.audio.stft import STFTGrid, istft, stft  # noqa: E402
+from cleansplit.audio.stft import STFTGrid, istft, stft
 
 OUT = ROOT / "outputs" / "_benchmarks" / "musdb18hq_artifact_reduction.json"
 GRID = STFTGrid(n_fft=4096, hop=1024)

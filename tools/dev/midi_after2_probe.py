@@ -11,8 +11,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
-from cleansplit.audio.io import load_audio  # noqa: E402
-from cleansplit.transcription import muscriptor_backend as mus  # noqa: E402
+from cleansplit.audio.io import load_audio
+from cleansplit.transcription import muscriptor_backend as mus
 
 A, B = 60 * 44100, 120 * 44100
 items = []
@@ -30,6 +30,6 @@ items.append((x, 44100, no_drums, "ensemble/other_constrained"))
 
 notes, info = mus.transcribe_many(items, progress=lambda i, n, c, t, l: print(f"  {l} {c}/{t}", flush=True)
                                   if c == t else None)
-for (_, _, _, label), ns, sec in zip(items, notes, info["seconds"]):
+for (_, _, _, label), ns, sec in zip(items, notes, info["seconds"], strict=True):
     c = collections.Counter(n.instrument for n in ns)
     print(f"{label:34s} {len(ns):5d} notes = {len(ns) / 60:5.1f}/s in {sec:6.1f}s  {c.most_common(4)}")

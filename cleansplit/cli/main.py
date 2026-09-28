@@ -280,7 +280,7 @@ class _Parser(argparse.ArgumentParser):
     sentinel Nones exist only to tell "not given" from "given the tier's value"; nobody downstream should ever see one.
     """
 
-    def parse_args(self, args=None, namespace=None):  # noqa: D102
+    def parse_args(self, args=None, namespace=None):
         ns = super().parse_args(args, namespace)
         if hasattr(ns, "_default_separator"):
             resolve_quality(ns)

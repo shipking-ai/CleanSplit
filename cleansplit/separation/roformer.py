@@ -33,7 +33,7 @@ _TupleLoader.add_constructor("tag:yaml.org,2002:python/tuple", lambda loader, no
 
 
 def load_msst_config(path: Path) -> dict:
-    with open(path, "r", encoding="utf-8") as f:
+    with open(path, encoding="utf-8") as f:
         return yaml.load(f, Loader=_TupleLoader)
 
 

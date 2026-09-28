@@ -39,20 +39,20 @@ def banner(theme: str) -> None:
         xs = np.linspace(x0, x1, n)
         env = np.sin(np.linspace(0, np.pi, n)) ** 0.5
         v = np.convolve(rng.standard_normal(n) * amp * env, np.ones(5) / 5, mode="same")
-        d = " ".join(f"{'M' if i == 0 else 'L'}{x:.1f},{y + q:.2f}" for i, (x, q) in enumerate(zip(xs, v)))
+        d = " ".join(f"{'M' if i == 0 else 'L'}{x:.1f},{y + q:.2f}" for i, (x, q) in enumerate(zip(xs, v, strict=True)))
         return f'<path d="{d}" fill="none" stroke="{colour}" stroke-width="{width}" stroke-linecap="round"/>'
 
     mix = wave(166, 40, ink, 660, SPLIT, 170, 1.8)
     cols = (COOL, ACCENT, "#d29922", mute)
     amps = (22, 16, 12, 8)
-    lanes = "".join(wave(y, a, c, LANE_X0, LANE_X1, 210) for y, a, c in zip(LANE_Y, amps, cols))
+    lanes = "".join(wave(y, a, c, LANE_X0, LANE_X1, 210) for y, a, c in zip(LANE_Y, amps, cols, strict=True))
     fan = "".join(
         f'<path d="M{SPLIT + 4},166 C{SPLIT + 40},166 {LANE_X0 - 40},{y} {LANE_X0 - 6},{y}" '
-        f'fill="none" stroke="{c}" stroke-width="1.2" opacity="0.55"/>' for y, c in zip(LANE_Y, cols))
+        f'fill="none" stroke="{c}" stroke-width="1.2" opacity="0.55"/>' for y, c in zip(LANE_Y, cols, strict=True))
     names = ("vocals", "drums", "bass", "other")
     tags = "".join(
         f'<text x="{LANE_X1 + 10}" y="{y + 4}" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" '
-        f'font-size="11" fill="{c}" opacity="0.9">{n}</text>' for y, n, c in zip(LANE_Y, names, cols))
+        f'font-size="11" fill="{c}" opacity="0.9">{n}</text>' for y, n, c in zip(LANE_Y, names, cols, strict=True))
 
     svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="img" aria-label="CleanSplit">
 <text x="60" y="150" font-family="ui-sans-serif,-apple-system,Segoe UI,Helvetica,Arial" font-size="78" font-weight="700" fill="{ink}" letter-spacing="-2.5">CleanSplit</text>
@@ -83,9 +83,9 @@ def tiers(theme: str) -> None:
     fig, ax = plt.subplots(figsize=(8.6, 3.2), dpi=200)
     fig.patch.set_alpha(0); ax.patch.set_alpha(0)
     cols = [mute, ACCENT, COOL]
-    labels = [n + chr(10) + f"{u} units" for n, u in zip(names, units)]
+    labels = [n + chr(10) + f"{u} units" for n, u in zip(names, units, strict=True)]
     bars = ax.barh(labels, gain, color=cols, height=0.5, zorder=3)
-    for b, g, n in zip(bars, gain, names):
+    for b, g, n in zip(bars, gain, names, strict=True):
         # the baseline bar has zero length, so its annotation goes outside the axes origin rather than inside the bar
         txt = "baseline" if n == "fast" else f"+{g:.3f} dB"
         ax.text(g + 0.012, b.get_y() + b.get_height() / 2, txt, va="center",
@@ -126,7 +126,7 @@ def spectrograms(theme: str) -> None:
     cmap = plt.get_cmap("magma")
     fig, axes = plt.subplots(1, len(want), figsize=(15.0, 2.9), dpi=200)
     fig.patch.set_alpha(0)
-    for ax, (rel, title) in zip(axes, want):
+    for ax, (rel, title) in zip(axes, want, strict=True):
         x, sr = sf.read(str(base / rel), dtype="float64", always_2d=True)
         # +1e-10 keeps digital silence out of log10(0): without it those bins become -inf, render as NaN, and show
         # through the transparent background as white rectangles.

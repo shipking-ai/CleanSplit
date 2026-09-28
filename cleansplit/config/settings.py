@@ -77,7 +77,7 @@ class AnalysisConfig:
         return asdict(self)
 
     @classmethod
-    def from_dict(cls, d: dict) -> "AnalysisConfig":
+    def from_dict(cls, d: dict) -> AnalysisConfig:
         kw = {}
         names = {f.name: f for f in fields(cls)}
         for k, v in d.items():

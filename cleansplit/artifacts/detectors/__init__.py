@@ -32,4 +32,4 @@ def available() -> list[str]:
     return sorted(_REGISTRY)
 
 
-__all__ = ["Detector", "EvidenceMap", "register", "create", "available"]
+__all__ = ["Detector", "EvidenceMap", "available", "create", "register"]
