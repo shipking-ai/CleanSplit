@@ -6,7 +6,7 @@
 
 ---
 
-## Current state (2026-09-28) — git: `d1dfc6c` (first commit; working tree clean)
+## Current state (2026-09-28) — git: `e5bb887` + uncommitted paired-statistics fix
 
 | Area | State |
 |---|---|
@@ -17,8 +17,8 @@
 | Apollo codec restoration | **done and written up** (docs/04 §9). Integrated, measured, not enabled by default |
 | MDX23C InstVoc HQ | **removed from the ensemble again** after MUSDB (worse on 16/20 real songs). Still available as `--separator mdx23c_instvoc_hq` |
 | Real multitrack truth | **MUSDB18-HQ, 20 songs, done** (docs/04 §11). `ensemble` vocals +0.39 dB median vs SW, 18/20. `ensemble_demucs` worse on a typical song, useful when SW misses an instrument |
-| Artifacts vs bleed (SAR/SIR) | **measured, 20 songs** (docs/04 §14). Artifacts dominate: SIR is 10–11 dB cleaner than SAR everywhere. 4 reduction candidates **all rejected**; Wiener post-filtering fails on its own terms. **`--overlap 4` passes both gates** (§14.5) — first thing in this project to clear one. **Now the default, along with `ensemble` and TTA** (user: best quality wins over speed). ov8 measuring |
-| Tests | **85** (75 non-GPU + 10 gpu-marked). 2026-09-28: 75 non-GPU passed in 82 s AND **all 10 GPU tests passed in 47 min** on the new best-quality defaults. `PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe -m pytest -q` |
+| Artifacts vs bleed (SAR/SIR) | **measured, 20 songs** (docs/04 §14). Artifacts dominate: SIR is 10–11 dB cleaner than SAR everywhere. 4 reduction candidates **all rejected**; Wiener post-filtering fails on its own terms. **`--overlap 4` passes both gates** (§14.5) — first thing in this project to clear one. **Now the default, along with `ensemble` and TTA** (user: best quality wins over speed). **ov8 rejected on effect size, +0.01 dB for 2x the time** (§14.6) |
+| Tests | **89** (79 non-GPU + 10 gpu-marked; +4 locking the paired statistic). 2026-09-28: 75 non-GPU passed in 82 s AND **all 10 GPU tests passed in 47 min** on the new best-quality defaults. `PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe -m pytest -q` |
 
 Python: `C:\AI\CleanSplit\.venv\Scripts\python.exe` (uv-managed, **no pip** — use
 `uv pip install --python .venv/Scripts/python.exe <pkg>`). Set `PYTHONIOENCODING=utf-8` for anything that prints Δ or dB.
@@ -49,10 +49,40 @@ median**, not the +1.8…+2.1 dB that one song suggested.
 
 ## Recently changed
 
+### 2026-09-28 (6) — The mandatory gate itself was computing the wrong statistic. Fixed, and (5)'s verdict re-derived
+
+**`tools/fullband_check.py` — the filter-free gate every quality decision has had to clear since §14.4 — had two bugs,
+and one of them had already changed a reported result.**
+
+1. **Deltas were unpaired.** It printed `median(arm) - median(baseline)` while only its win counts were paired. This is
+   the exact statistic banned in §14.5 after it invented a +0.32 dB gain for ep317 — and it was sitting in the gate.
+2. **Songs were matched by list position**, not by name, so arms with different coverage were compared song-by-slot
+   instead of song-by-song. The overlap-8 arm had 9 of 20 songs cached when it was first scored, so this was live, not
+   hypothetical. These caches fill incrementally, so mismatched coverage is the normal case, not an edge case.
+
+Both fixed: the statistic is now a pure `paired()` function matched by song name, with 4 new tests in
+`cleansplit/tests/test_paired_statistics.py` — including one that fails on by-position pairing, and one where two arms
+share a median while the candidate wins 2 of 3 songs. (Writing those killed a wrong premise of mine: a candidate cannot
+win *every* song while the medians stay equal, because elementwise domination raises every order statistic.)
+
+**Entry (5) below reached the right verdict for the wrong reason.** Rescored with all three arms complete at 20 songs,
+overlap 8 is **not** "indistinguishable from overlap 4". It is consistently better — paired **+0.01 dB** on
+vocals/drums/bass, winning 12–16 of 20 — and it **passed** the gate as written. So the gate was the problem: "any
+paired gain > 0" adopts arbitrarily small gains at unbounded cost. It now carries a **+0.02 dB effect-size floor**,
+taken from the rule already pre-registered in `tools/cache_arm.py` before this run rather than invented for this
+verdict. The floor was added *after* seeing overlap 8 pass; that order is stated in the docstring and in §14.6, because
+it is the reason the verdict stands. **Overlap 8 is rejected on effect size against cost, not for being identical.**
+
+Same floor and paired form now in `tools/vocal_best_recipe.py` (its deltas were unpaired too — it is mid-run, so its
+scoring pass gets re-run from cache) and `tools/stem_ensemble_experiment.py` (queued, so it picks this up before it runs).
+
+Tests: **79 non-GPU passed.** GPU chain still serialized: vocal recipe → SCNet → TTA redundancy. The `--quality` switch
+is still deliberately unwritten; two of its three numbers are still being measured.
+
 ### 2026-09-28 (5) — Overlap 8 REJECTED (gain saturates at 4), licensing resolved, TTA redundancy queued
 User: *"do what's best for quality (and speed)"* — so these calls are mine, stated with the evidence.
 
-**Overlap 8: not adopted. The gain saturates at 4, and the unpaired statistic nearly cost 2x render time for nothing.**
+**Overlap 8: not adopted.** *(Superseded by entry (6): the verdict holds, but "the gain saturates at 4" is wrong — the gate was computing an unpaired statistic. Overlap 8 is really +0.01 dB better and is rejected on effect size against cost.)*
 On bss_eval it looked much better than 4 (vocals **+0.32** dB SAR vs +0.03). On the paired, filter-free, full-band gate
 that §14.4 makes mandatory, the two are **indistinguishable**:
 

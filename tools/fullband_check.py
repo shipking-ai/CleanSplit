@@ -11,8 +11,23 @@ stem -- a candidate must also improve the plain, filter-free, full-rate SNR.
 This is that check, and nothing else: median `snr_db` at the native 44.1 kHz over all four stems, the same metric as
 sections 3, 6, 7 and 11, no downsampling and no filter allowance. Arms are cache keys under data/musdb_cache/.
 
-GATE (fixed here, independent of any candidate's numbers): median full-band SNR must improve on the vocals, drums AND
-bass stems, and `other` is reported but not gated (it is the remainder, so it absorbs the other three's mistakes).
+GATE (fixed here, independent of any candidate's numbers): the PAIRED median full-band SNR must improve on the
+vocals, drums AND bass stems, AND the candidate must win on more than half the songs on each of those three. `other`
+is reported but not gated (it is the remainder, so it absorbs the other three's mistakes). A gain must also clear
+--min-delta, default +0.02 dB.
+
+THE FLOOR, and when it was added, because the order matters: the gate originally required only delta > 0. On the
+paired form overlap 8 then PASSED against overlap 4 -- a real, consistent +0.01 dB, winning 12-16 of 20 songs -- for
+double the GPU time. A gate with no effect-size floor will adopt any infinitesimal consistent gain, so the floor was
+added AFTER seeing that, taking +0.02 dB from the rule already pre-registered in tools/cache_arm.py before this run.
+Overlap 8 is therefore rejected on effect size against cost, NOT for being indistinguishable from overlap 4.
+
+PAIRED, and the gate depends on it: the median of one arm minus the median of another is NOT the typical per-song
+difference, because the two medians can come from different songs. That unpaired form has already manufactured two
+false results in this project (docs/04 sections 14.5, 14.6 and tools/oracle_headroom.py), so every delta here is the
+median of per-song differences over the songs BOTH arms have, and songs are matched BY NAME, never by list position:
+these caches fill incrementally, so an arm missing a song in the middle would otherwise silently compare song i of one
+arm against a different song i of the other.
 
 Output: outputs/_benchmarks/musdb18hq_fullband.json
 """
@@ -35,10 +50,24 @@ OUT = ROOT / "outputs" / "_benchmarks" / "musdb18hq_fullband.json"
 GATED = ("vocals", "drums", "bass")
 
 
-def main(arms: list[str], baseline: str, limit: int | None, out: Path) -> None:
+def paired(cand: dict[str, float], base: dict[str, float]) -> tuple[float, int, int]:
+    """Median per-song difference, wins, and the number of songs both arms scored.
+
+    Songs are matched BY NAME. Matching by list position instead is a silent corruption once arms have different
+    coverage -- and these caches fill incrementally, so that is the normal state, not an edge case.
+    """
+    shared = sorted(set(cand) & set(base))
+    if not shared:
+        return float("nan"), 0, 0
+    d = [cand[n] - base[n] for n in shared]
+    return float(np.median(d)), int(sum(x > 0 for x in d)), len(shared)
+
+
+def main(arms: list[str], baseline: str, limit: int | None, out: Path, min_delta: float) -> None:
     from cleansplit.metrics.signal import snr_db
 
-    rows: dict[str, dict[str, list[float]]] = {}
+    # arm -> stem -> {song: snr}. Keyed by song so arms with different coverage still compare correctly.
+    rows: dict[str, dict[str, dict[str, float]]] = {}
     for name, _mix, truth in M.songs(limit):
         for arm in arms:
             f = M.CACHE / arm / f"{name}.npz"
@@ -51,28 +80,40 @@ def main(arms: list[str], baseline: str, limit: int | None, out: Path) -> None:
                     continue
                 v = float(snr_db(t, s[g].astype(np.float64)))
                 if np.isfinite(v):
-                    rows.setdefault(arm, {}).setdefault(g, []).append(v)
+                    rows.setdefault(arm, {}).setdefault(g, {})[name] = v
         print(f"{name}: done", flush=True)
 
-    med = {a: {g: float(np.median(v)) for g, v in per.items()} for a, per in rows.items()}
-    base = med[baseline]
-    print(f"\nMUSDB18-HQ full band at {M.SR} Hz, filter-free SNR. Median dB, change vs {baseline}")
-    print(f"  {'arm':14s} {'songs':>5s} {'stem':7s} {'SNR':>7s} {'dSNR':>7s} {'won':>7s}")
+    if baseline not in rows:
+        raise SystemExit(f"baseline arm {baseline!r} has no scored songs in data/musdb_cache/")
+    med = {a: {g: float(np.median(list(v.values()))) for g, v in per.items()} for a, per in rows.items()}
+    print()
+    print(f"MUSDB18-HQ full band at {M.SR} Hz, filter-free SNR. PAIRED median change vs {baseline}")
+    print(f"  a gain counts only if it clears {min_delta:+.2f} dB paired and wins more than half the songs")
+    print(f"  {'arm':14s} {'n':>3s} {'stem':7s} {'SNR':>7s} {'dSNR':>7s} {'won':>7s}")
     verdict = {}
-    for arm, per in med.items():
+    for arm, per in rows.items():
+        deltas, wins, ns = {}, {}, {}
         for g in M.GROUPS:
-            if g not in per:
+            if g not in per or g not in rows[baseline]:
                 continue
-            won = sum(a > b for a, b in zip(rows[arm][g], rows[baseline][g][: len(rows[arm][g])]))
-            print(f"  {arm:14s} {len(rows[arm][g]):5d} {g:7s} {per[g]:7.2f} {per[g] - base[g]:+7.2f} "
-                  f"{won:3d}/{len(rows[arm][g]):<3d}")
-        if arm != baseline:
-            ok = all(per[g] > base[g] for g in GATED if g in per)
-            verdict[arm] = {"fullband_better_on_vocals_drums_bass": ok,
-                            "delta_db": {g: per[g] - base[g] for g in per}}
+            d_med, won, n = paired(per[g], rows[baseline][g])
+            if not n:
+                continue
+            deltas[g], wins[g], ns[g] = d_med, won, n
+            print(f"  {arm:14s} {n:3d} {g:7s} {med[arm][g]:7.2f} {d_med:+7.2f} {won:3d}/{n:<3d}")
+        if arm == baseline:
+            continue
+        gated = [g for g in GATED if g in deltas]
+        ok = bool(gated) and all(deltas[g] >= min_delta and wins[g] > ns[g] / 2 for g in gated)
+        verdict[arm] = {"fullband_better_on_vocals_drums_bass": ok, "min_delta_db": min_delta,
+                        "paired_delta_db": deltas,
+                        "won": wins, "n": ns, "median_db": med[arm],
+                        "songs_short_of_baseline": {g: len(rows[baseline][g]) - ns[g] for g in ns}}
     print()
     for arm, v in verdict.items():
-        print(f"  {arm:14s} full-band gate: {'PASS' if v['fullband_better_on_vocals_drums_bass'] else 'FAIL'}")
+        short = {g: n for g, n in v["songs_short_of_baseline"].items() if n}
+        note = f"  (compared on {min(v['n'].values())} shared songs, {max(short.values())} fewer than {baseline})" if short else ""
+        print(f"  {arm:14s} full-band gate: {'PASS' if v['fullband_better_on_vocals_drums_bass'] else 'FAIL'}{note}")
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps({"baseline": baseline, "median": med, "verdict": verdict, "rows": rows}, indent=1))
     print(f"written {out}")
@@ -84,5 +125,7 @@ if __name__ == "__main__":
     p.add_argument("--baseline", default="sw_tta")
     p.add_argument("--limit", type=int, default=20)
     p.add_argument("--out", type=Path, default=OUT)
+    p.add_argument("--min-delta", type=float, default=0.02,
+                   help="smallest paired median gain worth adopting, dB (see the module docstring)")
     a = p.parse_args()
-    main(a.arms, a.baseline, a.limit, a.out)
+    main(a.arms, a.baseline, a.limit, a.out, a.min_delta)

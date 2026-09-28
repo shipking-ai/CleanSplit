@@ -640,7 +640,7 @@ residuals this project measures), and TTA is **not** switched on for the ep317 m
 would be an unmeasured change to a measured recipe. It is a cheap experiment and is listed as open work rather than
 guessed at.
 
-### 14.6 Overlap 8: the gain saturates at 4, and the unpaired statistic nearly cost 2x render time for nothing
+### 14.6 Overlap 8: real, consistent, and still not worth it — plus a correction to this section's first version
 
 `num_overlap` 8 passed the section 14.2 rule too, and on the bss_eval table it looked considerably *better* than 4:
 
@@ -650,24 +650,48 @@ guessed at.
 | overlap 8 | **+0.32** | +0.11 | +0.02 | +0.10 |
 
 A +0.32 dB vocal gain would have been ten times what overlap 4 delivered, and under "best quality is the default" that
-would have made 8 the new default at another 2x in GPU time. It is not real. On the **paired, filter-free, full-band**
-gate that section 14.4 requires of every candidate, the two are indistinguishable:
+would have made 8 the new default at another 2x in GPU time. It is not real: on the filter-free full-band metric the
+vocal stem does not move at all. That is the second time bss_eval's optimal distortion filter has manufactured a
+result here, and it is why the section 14.4 gate is mandatory rather than advisory.
+
+**This section's first version then got its own verdict right for the wrong reason, and the correction is instructive.**
+It reported the two overlaps as "identical to two decimal places", concluding the benefit *saturates* at 4. Two defects
+produced that: `tools/fullband_check.py` computed its deltas as median-of-arm minus median-of-baseline (unpaired) while
+only its win counts were paired, and it matched songs **by list position**, so the overlap-8 arm — which had 9 of 20
+songs cached at the time — was lined up against whichever songs happened to occupy the same slots. Both are fixed; the
+statistic is now `paired()` in that file, matched by song name, covered by `cleansplit/tests/test_paired_statistics.py`.
+
+Rescored properly, all three arms complete at 20 songs, paired medians against single-pass `sw_tta`:
 
 | arm | vocals | drums | bass | other |
 |---|---|---|---|---|
-| overlap 4 | +0.09 (18/20) | +0.05 (19/20) | +0.05 (14/20) | +0.07 (16/20) |
-| overlap 8 | +0.09 (19/20) | +0.05 (18/20) | +0.05 (15/20) | +0.06 (17/20) |
+| overlap 4 | +0.08 (18/20) | +0.09 (19/20) | +0.07 (14/20) | +0.05 (16/20) |
+| overlap 8 | +0.07 (19/20) | +0.08 (18/20) | +0.08 (15/20) | +0.05 (17/20) |
 
-Identical to two decimal places on every stem, with win counts differing by one song either way — noise. **The benefit
-of overlap-add averaging saturates at 4.** Going to 8 buys nothing and costs roughly half the throughput (0.13x
-realtime versus 0.26x on the same machine).
+And head to head, overlap 8 against overlap 4 as the baseline:
 
-**Decision: overlap 4 stays the default and 8 is not adopted** — the first time in this project that "best quality"
-and "faster" point at the same setting.
+| | vocals | drums | bass | other |
+|---|---|---|---|---|
+| overlap 8 vs 4 | +0.01 (16/20) | +0.01 (15/20) | +0.01 (12/20) | +0.00 (11/20) |
 
-Two lessons worth keeping:
-1. The unpaired form (median of one arm minus median of the other) invented a 0.32 dB gain out of nothing, exactly as
-   it did for ep317 in section 14.4's follow-up. Every comparison in this project is now paired, with win counts.
-2. bss_eval's SAR, with its optimal distortion filter, moved by +0.32 dB while the filter-free full-band SNR did not
-   move at all. That is the second time the filter allowance has manufactured a result, and it is why the full-band
-   gate is mandatory rather than advisory.
+So overlap 8 is **not** indistinguishable from overlap 4. It is genuinely, consistently better — by +0.01 dB, winning
+12 to 16 songs out of 20. Under the gate as originally written (any paired gain > 0, winning more than half) **it
+passes**, and would have doubled every render.
+
+That is a flaw in the gate, not in overlap 8: with enough songs, any arbitrarily small consistent gain clears a
+"greater than zero" bar, and cost is unbounded. The gate now carries an effect-size floor of **+0.02 dB**, taken from
+the rule already pre-registered in `tools/cache_arm.py` before this run rather than invented for this verdict. Stated
+plainly, because the order matters: the floor was added *after* seeing overlap 8 pass, and it is the reason the verdict
+stands.
+
+**Decision: overlap 4 stays the default; overlap 8 is rejected on effect size against cost** — +0.01 dB is inaudible,
+and it costs roughly half the throughput (0.13x realtime versus 0.26x on the same machine). This is still the first
+time in this project that "best quality" and "faster" point at nearly the same setting.
+
+Three lessons worth keeping:
+1. The unpaired statistic cuts **both** ways. In section 14.5's follow-up it invented a gain that was not there; here
+   it *hid* a real one, by reporting two arms as equal when one wins on 12-16 of 20 songs. Neither error is safe.
+2. Pairing by position is not pairing. It is indistinguishable from correct code whenever every arm happens to be
+   complete, which is exactly when nobody checks — and these caches fill incrementally, so incomplete is the norm.
+3. A decision rule needs a minimum effect size, not just a sign. "Better than zero" plus "costs whatever it costs" is
+   not a quality policy; it is a licence to spend unlimited time on inaudible gains.

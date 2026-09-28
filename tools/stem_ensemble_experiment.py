@@ -8,7 +8,7 @@ none of it. SCNet XL IHF is the candidate partner: a four-stem CONVOLUTIONAL mod
 unlike a band-split transformer, which is the property that makes averaging cancel artifacts instead of just blurring.
 
 PRE-REGISTERED, written before the run. For each stem independently, mean(SW+TTA, SCNet) replaces SW+TTA only if:
-    (1) paired median full-band 44.1 kHz filter-free SNR improves, AND
+    (1) paired median full-band 44.1 kHz filter-free SNR improves by at least +0.02 dB, AND
     (2) it wins on more than half the songs, AND
     (3) median SAR does not drop.
 (1) and (2) are the primary gate because docs/04 section 14.4 caught a candidate that gained on bss_eval's SAR while
@@ -46,6 +46,7 @@ import musdb_eval as M  # noqa: E402
 
 OUT = ROOT / "outputs" / "_benchmarks" / "musdb18hq_stem_ensemble.json"
 STEMS = ("drums", "bass", "other", "vocals")
+MIN_DELTA_DB = 0.02  # project-wide effect-size floor; see tools/fullband_check.py
 
 
 def fill(overlap: int, limit: int | None) -> None:
@@ -122,7 +123,7 @@ def main(overlap: int, limit: int | None, sr: int, out: Path) -> None:
         d_sar = float(np.median([a - b for a, b in pairs])) if pairs else float("nan")
         sw_solo = float(np.median([x["sw_solo_snr"] for x in r]))
         sc_solo = float(np.median([x["scnet_solo_snr"] for x in r]))
-        ok = bool(d_snr > 0 and won > len(r) / 2 and (np.isnan(d_sar) or d_sar >= 0))
+        ok = bool(d_snr >= MIN_DELTA_DB and won > len(r) / 2 and (np.isnan(d_sar) or d_sar >= 0))
         verdict[g] = {"delta_snr_db": d_snr, "won": won, "n": len(r), "delta_sar_db": d_sar,
                       "sw_solo_snr": sw_solo, "scnet_solo_snr": sc_solo, "strength_gap_db": sw_solo - sc_solo,
                       "adopt": ok}

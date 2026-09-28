@@ -18,7 +18,9 @@ Candidates:
   ep317_tta_alone   ep317_tta                           a control: is the averaging doing the work, or just TTA?
 
 PRE-REGISTERED, written before the run. `both_tta` replaces the shipped recipe only if BOTH hold:
-    median full-band 44.1 kHz filter-free SNR improves on the vocal stem, AND it wins on more than half the songs.
+    the PAIRED median full-band 44.1 kHz filter-free SNR improves by at least +0.02 dB on the vocal stem, AND it wins
+    on more than half the songs. The +0.02 dB floor is the project-wide one (tools/fullband_check.py): without it, a
+    consistent but inaudible gain can justify an unbounded cost, which is how overlap 8 nearly bought 2x render time.
 The full-band filter-free metric is primary because section 14.4 caught a candidate (+mdx23c) that gained on
 bss_eval's SAR while being worse on 16/20 songs full-band; SAR is reported alongside but does not decide.
 Cost if it passes: ep317 goes from 1 pass to 3, so the ensemble goes from ~4 passes to ~6 (+50% GPU time).
@@ -43,6 +45,7 @@ import musdb_eval as M  # noqa: E402
 
 OUT = ROOT / "outputs" / "_benchmarks" / "musdb18hq_vocal_recipe.json"
 ARMS = {"ep317": dict(tta=False), "ep317_tta": dict(tta=True)}
+MIN_DELTA_DB = 0.02  # the project-wide effect-size floor; see tools/fullband_check.py
 
 
 def fill(overlap: int, limit: int | None) -> None:
@@ -99,18 +102,27 @@ def main(overlap: int, limit: int | None, sr: int, out: Path) -> None:
             per.setdefault(c, []).append({"song": name, "snr": float(snr_db(t, v)), "sar": float(sar[i])})
         print(f"{name}: done", flush=True)
 
+    # PAIRED. The median of one candidate minus the median of another is not the typical per-song difference, and the
+    # unpaired form has already manufactured two false results here (docs/04 sections 14.4, 14.6). Songs are matched by
+    # name, not by position, so a candidate scored on fewer songs cannot silently line up against the wrong ones.
     base = per["shipped"]
+    by_song = {c: {r["song"]: r for r in rows} for c, rows in per.items()}
+    base_by_song = by_song["shipped"]
     print(f"\nMUSDB18-HQ vocals, {len(base)} songs, overlap {overlap}. Full-band filter-free SNR is the deciding metric")
     print(f"  {'candidate':16s} {'SNR':>7s} {'dSNR':>7s} {'won':>7s} {'SAR':>7s} {'dSAR':>7s}")
     med = lambda rows, k: float(np.median([r[k] for r in rows]))
     verdict = {}
     for c, rows in per.items():
-        won = sum(a["snr"] > b["snr"] for a, b in zip(rows, base))
-        d_snr, d_sar = med(rows, "snr") - med(base, "snr"), med(rows, "sar") - med(base, "sar")
-        print(f"  {c:16s} {med(rows,'snr'):7.2f} {d_snr:+7.2f} {won:3d}/{len(rows):<3d} {med(rows,'sar'):7.2f} {d_sar:+7.2f}")
+        shared = sorted(set(by_song[c]) & set(base_by_song))
+        d = [(by_song[c][n]["snr"] - base_by_song[n]["snr"],
+              by_song[c][n]["sar"] - base_by_song[n]["sar"]) for n in shared]
+        d_snr = float(np.median([x for x, _ in d]))
+        d_sar = float(np.median([y for _, y in d]))
+        won = int(sum(x > 0 for x, _ in d))
+        print(f"  {c:16s} {med(rows,'snr'):7.2f} {d_snr:+7.2f} {won:3d}/{len(shared):<3d} {med(rows,'sar'):7.2f} {d_sar:+7.2f}")
         if c != "shipped":
-            verdict[c] = {"delta_snr_db": d_snr, "won": won, "n": len(rows), "delta_sar_db": d_sar,
-                          "adopt": bool(d_snr > 0 and won > len(rows) / 2)}
+            verdict[c] = {"delta_snr_db": d_snr, "won": won, "n": len(shared), "delta_sar_db": d_sar,
+                          "adopt": bool(d_snr >= MIN_DELTA_DB and won > len(shared) / 2)}
     print()
     for c, v in verdict.items():
         print(f"  {c:16s} median {v['delta_snr_db']:+.2f} dB, wins {v['won']}/{v['n']} -> "
