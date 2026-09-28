@@ -10,7 +10,7 @@
 
 [![License](https://img.shields.io/badge/license-MIT-3fb950?style=flat-square)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10%2B-58a6ff?style=flat-square)](pyproject.toml)
-[![Tests](https://img.shields.io/badge/tests-93%20passing-3fb950?style=flat-square)](cleansplit/tests)
+[![Tests](https://img.shields.io/badge/tests-100-3fb950?style=flat-square)](cleansplit/tests)
 [![Benchmark](https://img.shields.io/badge/MUSDB18--HQ-20%20songs-d29922?style=flat-square)](docs/04_results.md)
 [![VRAM](https://img.shields.io/badge/VRAM-8%20GB-8b949e?style=flat-square)](docs/02_hardware_measurements.md)
 [![Offline](https://img.shields.io/badge/inference-100%25%20local-3fb950?style=flat-square)](#requirements)
@@ -53,7 +53,9 @@ Four rules are enforced **in code**, not in prose:
 | 📊 | **Comparisons are paired** | Median-of-A minus median-of-B is banned. It manufactured two false results here before being caught ([§14.7](docs/04_results.md)) and is now blocked by [tests](cleansplit/tests/test_paired_statistics.py). |
 
 Gains below **+0.02 dB** are never adopted, however consistent. A bar of "better than zero" buys inaudible gains at
-unbounded cost — that floor is what cost overlap-8 its place in the default recipe.
+unbounded cost — that floor is what cost overlap-8 and then test-time augmentation their places in the default recipe.
+TTA never made a single song worse in 160 song-stem comparisons and was removed anyway, because reliability and
+magnitude are different questions ([§14.15](docs/04_results.md)).
 
 ## Quick start
 
@@ -76,7 +78,7 @@ Separate at the best measured quality — this is the default, you pass nothing:
 cleansplit separate "song.wav"
 ```
 
-Four times faster, keeping 95% of the vocal gain:
+Twice as fast, keeping 96% of the vocal gain:
 
 ```bash
 cleansplit separate "song.wav" --quality balanced
@@ -92,7 +94,7 @@ cleansplit ui
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="docs/assets/tiers-dark.png">
-  <img alt="Bar chart: balanced costs 4x less than best and keeps 95% of the gain" src="docs/assets/tiers-light.png" width="100%">
+  <img alt="Bar chart: balanced costs 2x less than best and keeps 96% of the gain" src="docs/assets/tiers-light.png" width="100%">
 </picture>
 
 Compute is counted in **forward passes**, never timed, so the ratios hold on any machine: `step = chunk // num_overlap`
@@ -100,9 +102,10 @@ makes cost linear in overlap, and TTA is exactly 3 passes.
 
 | `--quality` | Recipe | Compute | Vocals vs `fast` | Notes |
 |---|---|:--:|:--:|---|
-| `fast` | SW alone, overlap 2 | **2** | — | 8× cheaper than `best` |
-| `balanced` | SW + ep317, overlap 2, no TTA | **4** | **+0.442 dB** · 18/20 | **95% of best's gain.** Drums/bass identical to `fast` |
-| `best` *(default)* | SW+TTA + ep317, overlap 4 | **16** | **+0.464 dB** · 18/20 | Also +0.11 dB drums, +0.10 dB bass |
+| `fast` | SW alone, overlap 2 | **2** | — | 4× cheaper than `best` |
+| `balanced` | SW + ep317, overlap 2, no TTA | **4** | **+0.442 dB** · 18/20 | **96% of best's gain.** Drums/bass *identical* to `fast` — measured at +0.0000 dB, 0/20 |
+| `best` *(default)* | SW + ep317, overlap 4, no TTA | **8** | **+0.460 dB** · 18/20 | Also +0.095 dB drums, +0.061 dB bass |
+| `--tta` on top | SW+TTA + ep317, overlap 4 | 16 | +0.464 dB · 18/20 | Opt-in. 2× the compute for +0.008 vocals — **below the floor** ([§14.15](docs/04_results.md)) |
 
 > [!IMPORTANT]
 > No tier advertises a single dB figure, because per song it ranges from **−0.09 dB to +5.12 dB**
@@ -165,6 +168,8 @@ writing at all — which is cheaper than writing it and finding out.
 | **Wiener** post-filtering, 3 variants | −2.4 to −4.6 dB. Fails *by construction* — stems already sum to the mixture |
 | **Overlap 8** | Real, but +0.01 dB for 2× the render time. Below the adoption floor |
 | **4 truth-free tile combiners** | All rejected. Disagreement tells you *how much* error, never *which model* has it |
+| **SCNet XL** in any stem | Worse on all four stems — and it **falsified** the project's own "comparable strength helps" rule on 3 of 4 |
+| **TTA** in the default recipe | Dropped 2026-09-28. Never lost a single song in 160 comparisons, and *still* not worth 2× compute |
 
 Two were nearly adopted on bad statistics, and both near-misses are written up rather than quietly deleted.
 [§14.7](docs/04_results.md) traces a "+0.32 dB" gain that turned out to be an artefact of an unpaired median, and

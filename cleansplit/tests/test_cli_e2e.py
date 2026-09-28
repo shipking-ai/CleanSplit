@@ -60,15 +60,22 @@ def test_cli_parser_accepts_separator_choices():
 def test_defaults_are_the_best_measured_setting_not_the_fastest():
     """The user's rule: the default split mode is whichever measures best, and speed is the opt-out.
 
-    `ensemble` + overlap 4 + TTA is the best measured combination (docs/04 §11, §14.1, §14.5). These asserts exist
-    because each of them was once silently the fast-but-worse option: the CLI defaulted to single-pass SW with no TTA,
-    and `midi` built its own Namespace that pinned overlap 2 / tta False.
+    `ensemble` + overlap 4 is the best measured combination (docs/04 §11, §14.5). These asserts exist because each of
+    them was once silently the fast-but-worse option: the CLI defaulted to single-pass SW with no TTA, and `midi` built
+    its own Namespace that pinned overlap 2 / tta False.
+
+    TTA is NOT part of it as of 2026-09-28, and the distinction this test guards matters: it was dropped because it
+    FAILED the measurement gate (+0.008 vocals / +0.015 drums at overlap 4, two of three gated stems under the +0.02 dB
+    floor -- docs/04 §14.15), not because it was slow. Speed is still never the reason the default changes.
     """
-    from cleansplit.cli.main import build_parser
+    from cleansplit.cli.main import QUALITY_DEFAULT, QUALITY_TIERS, build_parser
 
     for cmd in ("separate", "analyze"):
         a = build_parser().parse_args([cmd, "x.wav"])
-        assert (a.separator, a.overlap, a.tta, a.fp16) == ("ensemble", 4, True, False), cmd
+        assert (a.separator, a.overlap, a.tta, a.fp16) == ("ensemble", 4, False, False), cmd
+        # and tied to the tier table, so the two cannot drift apart silently
+        sep, ov, tta, _, _ = QUALITY_TIERS[QUALITY_DEFAULT]
+        assert (a.separator, a.overlap, a.tta) == (sep, ov, tta), cmd
     fast = build_parser().parse_args(["separate", "x.wav", "--no-tta", "--overlap", "2", "--separator", "bs_roformer_sw"])
     assert (fast.separator, fast.overlap, fast.tta) == ("bs_roformer_sw", 2, False)  # opting out still works
     assert build_parser().parse_args(["midi", "x.wav"]).separator == "ensemble"
@@ -113,28 +120,31 @@ def test_quality_tiers_are_the_measured_recipes_and_explicit_flags_win():
     pin to single-pass SW (changing it would silently change what a published number in docs/04 means), which is why
     it does not accept --quality at all.
     """
-    from cleansplit.cli.main import QUALITY_TIERS, build_parser, resolve_quality
+    from cleansplit.cli.main import QUALITY_TIERS, build_parser, quality_note, resolve_quality
 
     def r(argv):
         a = build_parser().parse_args(argv)
         resolve_quality(a)
         return a.separator, a.overlap, a.tta
 
-    assert r(["separate", "x.wav"]) == ("ensemble", 4, True)
-    assert r(["separate", "x.wav", "--quality", "best"]) == ("ensemble", 4, True)
+    assert r(["separate", "x.wav"]) == ("ensemble", 4, False)
+    assert r(["separate", "x.wav", "--quality", "best"]) == ("ensemble", 4, False)
     assert r(["separate", "x.wav", "--quality", "fast"]) == ("bs_roformer_sw", 2, False)
     assert r(["separate", "x.wav", "--quality", "balanced"]) == ("ensemble", 2, False)
     # an explicit flag beats the tier, in both directions
     assert r(["separate", "x.wav", "--quality", "fast", "--overlap", "8"]) == ("bs_roformer_sw", 8, False)
     assert r(["separate", "x.wav", "--quality", "fast", "--tta"]) == ("bs_roformer_sw", 2, True)
-    assert r(["separate", "x.wav", "--quality", "best", "--no-tta"]) == ("ensemble", 4, False)
+    assert r(["separate", "x.wav", "--quality", "best", "--tta"]) == ("ensemble", 4, True)
     # evaluate keeps its pinned separator and refuses the tier flag
     assert r(["evaluate", "x.wav"])[0] == "bs_roformer_sw"
     with pytest.raises(SystemExit):
         build_parser().parse_args(["evaluate", "x.wav", "--quality", "fast"])
-    # the advertised compute cost is the pass count: best/fast is exactly 8x, best/balanced exactly 4x
-    assert QUALITY_TIERS["best"][3] == 8 * QUALITY_TIERS["fast"][3]
-    assert QUALITY_TIERS["best"][3] == 4 * QUALITY_TIERS["balanced"][3]
+    # the advertised compute cost is the pass count: best/fast is exactly 4x, best/balanced exactly 2x. Both halved
+    # when TTA left the default (docs/04 section 14.15); quality_note() quotes these ratios, so they are asserted.
+    assert QUALITY_TIERS["best"][3] == 4 * QUALITY_TIERS["fast"][3]
+    assert QUALITY_TIERS["best"][3] == 2 * QUALITY_TIERS["balanced"][3]
+    assert "4x cheaper than best" in quality_note("fast")
+    assert "2x cheaper than best" in quality_note("balanced")
 
 
 def test_tta_reaches_the_ensemble_so_the_balanced_tier_is_real():

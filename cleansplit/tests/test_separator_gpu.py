@@ -117,9 +117,24 @@ def test_mdx23c_separates_aligned_vocals_and_instrumental(song):
     assert M.snr_db(mix, R) > 10
 
 
+
+def _skip_without_weights():
+    """Skip when the model FILES are absent. These two tests need no GPU -- they inspect constructors and metadata --
+    but constructing a separator resolves a real checkpoint from disk, and CleanSplit does not redistribute weights, so
+    CI and a fresh clone have none. Skipping keeps `pytest` green out of the box while still running these locally,
+    where they are the only guard on the default recipe. A `gpu` mark would be wrong: nothing here touches the GPU.
+    """
+    from cleansplit.models import checkpoints
+
+    try:
+        checkpoints.find_checkpoint(checkpoints.KNOWN["bs_roformer_sw"])
+    except (FileNotFoundError, KeyError, AttributeError) as e:
+        pytest.skip(f"model weights not installed: {e}")
+
 def test_overlap_reaches_both_roformer_members_of_the_ensemble_and_the_cache_key():
     """`--overlap 4` was silently dropped for `--separator ensemble`, the default recipe, so the one artifact lever
     that passed both gates (docs/04 §14.5) could not reach the code path that ships. No GPU: constructors only."""
+    _skip_without_weights()
     from cleansplit.separation import registry
 
     ens = registry.create("ensemble", num_overlap=2)
@@ -136,6 +151,7 @@ def test_scnet_config_and_checkpoint_are_the_ones_measured():
     DIFFERENT architecture from SW; a silently swapped checkpoint would look like a working ensemble while actually
     averaging two band-split transformers, which is the thing measured NOT to help.
     """
+    _skip_without_weights()
     from cleansplit.models import checkpoints
     from cleansplit.separation import registry
 

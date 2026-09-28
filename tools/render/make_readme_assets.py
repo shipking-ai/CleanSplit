@@ -97,7 +97,7 @@ def tiers(theme: str) -> None:
     for s in ("top", "right", "left"): ax.spines[s].set_visible(False)
     ax.spines["bottom"].set_color(mute)
     ax.grid(axis="x", color=mute, alpha=0.18, zorder=0)
-    ax.set_title("balanced costs 4x less than best and keeps 95% of the gain",
+    ax.set_title("balanced costs 2x less than best and keeps 96% of the gain",
                  color=ink, fontsize=12, fontweight="bold", loc="left", pad=12)
     fig.tight_layout()
     fig.savefig(OUT / f"tiers-{theme}.png", transparent=True)

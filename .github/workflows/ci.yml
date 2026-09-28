@@ -6,43 +6,66 @@ on:
   pull_request:
   workflow_dispatch:
 
-# Least privilege: nothing here needs to write to the repository.
-permissions:
-  contents: read
+# Deny everything by default and let each job opt in to exactly what it needs. Nothing here writes to the repository.
+permissions: {}
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  # The pull_request.number suffix keeps a branch push and its open PR in separate groups, so pushing to a branch does
+  # not cancel the PR run that is about to report a status.
+  group: ${{ github.workflow }}-${{ github.ref_name }}-${{ github.event.pull_request.number || github.sha }}
   cancel-in-progress: true
 
 jobs:
   lint:
     name: ruff
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false   # otherwise the token is written into .git/config for every later step
       - uses: astral-sh/ruff-action@v3
         with:
           args: check --output-format github
 
   test:
     # Torch is an optional extra and the tests do not need it, so CI installs neither torch nor any model weights.
-    # What runs here is the 83 non-GPU tests; the 10 GPU-marked ones need an 8 GB card and local checkpoints, and are
-    # run by hand before release (see HANDOFF.md).
+    # What runs here is the non-GPU suite; the 10 GPU-marked tests need an 8 GB card, and the two that need the real
+    # checkpoint FILES skip themselves when the weights are absent (see test_separator_gpu.py::_skip_without_weights),
+    # which is why a clone with no models still gets a green `pytest`.
     name: tests ${{ matrix.os }} / py${{ matrix.python }}
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    permissions:
+      contents: read
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        # Runner images are pinned on purpose. `ubuntu-latest` becomes 26.04 during October 2026, and in a repository
+        # whose output is measurements the environment is part of the record -- it should move when we move it.
+        os: [ubuntu-24.04, windows-2025]
         python: ["3.10", "3.12"]
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - uses: astral-sh/setup-uv@v5
         with:
           enable-cache: true
-      - name: Install
-        run: uv pip install --system -e ".[dev,ui]"
+          # REQUIRED, and its absence made this matrix a lie: with no python-version, setup-uv provisions nothing and
+          # `uv pip install --system` targets whatever interpreter the image ships. Both py3.10 legs were measured
+          # running 3.12 (3.12.10 on Windows, 3.12.3 on Ubuntu), so the 3.10 floor was never actually tested.
+          python-version: ${{ matrix.python }}
+      - name: Install into a venv
+        # A venv rather than --system: Ubuntu's image Python is PEP 668 externally-managed, so `uv pip install --system`
+        # failed outright there ("The interpreter at /usr is externally managed") and both Ubuntu legs ran no tests at
+        # all while the workflow still went red for unrelated reasons. `uv venv` honours the version pinned above.
+        run: |
+          uv venv
+          uv pip install -e ".[dev,ui]"
       - name: Run the non-GPU suite
         env:
-          PYTHONIOENCODING: utf-8
-        run: pytest cleansplit/tests -q -m "not gpu"
+          PYTHONIOENCODING: utf-8   # the dB and delta output in the CLI and tests is non-ASCII
+        run: uv run --no-sync pytest cleansplit/tests -q -m "not gpu"

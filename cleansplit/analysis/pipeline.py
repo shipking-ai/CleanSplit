@@ -147,7 +147,7 @@ def analyze_separation(
     rec = reconstruct(mixture, sep.stems, sample_rate=sr, zero_dc_grid=grid if zero_dc else None)
     ctx = AnalysisContext(rec.reference, rec.stems, sr, config, sep.chunk_starts, sep.chunk_size)
 
-    regions, ev_stats, summaries = [], {}, {k: {} for k in list(rec.stems) + ["mixture"]}
+    regions, ev_stats, summaries = [], {}, {k: {} for k in [*list(rec.stems), "mixture"]}
     for det in detector_registry.create(config.enabled_detectors):
         td = time.time()
         maps = det.detect(ctx)

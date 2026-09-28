@@ -6,6 +6,7 @@ the same ``outputs/`` layout the CLI writes, so the UI and the CLI stay intercha
 
 from __future__ import annotations
 
+import contextlib
 import json
 import queue
 import threading
@@ -74,10 +75,8 @@ class Service:
     def _warm_peaks(self) -> None:
         for song in self.songs():
             for stem in ["original"] + song["stems"]:
-                try:
+                with contextlib.suppress(Exception):
                     self.peaks(song["variant"], song["slug"], stem)
-                except Exception:
-                    pass
             self._emit({"type": "peaks", "song": song["id"]})
 
     # ---- events (server-sent to the UI) ----
@@ -171,7 +170,7 @@ class Service:
             "source": str(Path(job.input_path).resolve()), "validation": rep.to_dict(),
         })
         self._progress(job, "computing waveforms")
-        for name in list(res.stems) + ["original"]:
+        for name in [*list(res.stems), "original"]:
             self.peaks(job.separator, job.slug, name)
 
     # ---- songs on disk ----
@@ -259,7 +258,6 @@ class Service:
 
     def stem_levels(self, variant: str, slug: str) -> dict:
         d = self.song_dir(variant, slug)
-        total = None
         levels = {}
         orig = self.peaks(variant, slug, "original")
         for p in sorted((d / "stems").glob("*.wav")):

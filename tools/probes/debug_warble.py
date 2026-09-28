@@ -13,7 +13,7 @@ cfg = AnalysisConfig()
 for box in [TFBox(3.0, 4.2, 800, 3000), TFBox(3.96, 5.13, 1024, 2464), TFBox(2.34, 3.27, 1278, 3967)]:
     st, gt = C.warble(stems, "vocals", box, conserve=True, sink="other", seed=5)
     ctx = AnalysisContext(mix.astype(np.float64), st, 44100, cfg)
-    em = [e for e in ModulationDetector().detect(ctx) if e.stem == "vocals"][0]
+    em = next(e for e in ModulationDetector().detect(ctx) if e.stem == "vocals")
     rows = (em.row_bounds_hz[:, 0] < box.freq_high_hz) & (em.row_bounds_hz[:, 1] > box.freq_low_hz)
     cols = (em.col_bounds_s[:, 0] < box.end_s) & (em.col_bounds_s[:, 1] > box.start_s)
     m = em.measure[np.ix_(rows, cols)]

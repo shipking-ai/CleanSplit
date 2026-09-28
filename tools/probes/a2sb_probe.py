@@ -47,7 +47,7 @@ def sha256(p: Path) -> str:
 
 def load_vf(p: Path, init: dict):
     ck = torch.load(p, map_location="cpu", weights_only=True)  # no arbitrary unpickling
-    sd = ck["state_dict"] if "state_dict" in ck else ck
+    sd = ck.get("state_dict", ck)
     vf = {k[len("vf_model."):]: v for k, v in sd.items() if k.startswith("vf_model.")}
     m = AttnUNetF(**init)
     m.load_state_dict(vf, strict=True)

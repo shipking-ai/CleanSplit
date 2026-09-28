@@ -224,7 +224,10 @@ QUALITY_TIERS = {
     # since roformer.py sets step = chunk // num_overlap. It is countable, not timed, so it holds on any machine.
     "fast": ("bs_roformer_sw", 2, False, 2, "single-pass SW at overlap 2"),
     "balanced": ("ensemble", 2, False, 4, "SW averaged with ep317 at overlap 2, no TTA"),
-    "best": ("ensemble", 4, True, 16, "SW+TTA averaged with ep317, overlap 4"),
+    # TTA was removed from `best` on 2026-09-28: at overlap 4 inside this ensemble it buys +0.008 dB vocals,
+    # +0.015 drums and +0.033 bass for 2x the compute, so two of the three gated stems sit under the +0.02 dB
+    # adoption floor and the gate fails (docs/04 section 14.15). Pass --tta to get the old 16-unit recipe back.
+    "best": ("ensemble", 4, False, 8, "SW averaged with ep317 at overlap 4, no TTA"),
 }
 QUALITY_DEFAULT = "best"
 
@@ -238,16 +241,17 @@ def quality_note(tier: str) -> str:
     """
     sep, ov, tta, passes, what = QUALITY_TIERS[tier]
     if tier == "fast":
-        return (f"quality=fast: {what}, {passes} units of compute (8x cheaper than best). "
+        return (f"quality=fast: {what}, {passes} units of compute (4x cheaper than best). "
                 f"Typically close to best, but on some songs several dB worse -- see docs/04 section 14.11.")
     if tier == "balanced":
-        return (f"quality=balanced: {what}, {passes} units -- 4x cheaper than best. Recovers 95% of best's vocal gain "
-                f"(+0.442 of +0.464 dB over fast, 18/20 songs; only 0.031 dB behind best). Drums and bass are "
-                f"IDENTICAL to fast, because the second model is a vocal model: best buys those with TTA and overlap, "
-                f"worth about 0.10 dB each (docs/04 section 14.12).")
-    return (f"quality=best: {what}, {passes} units of compute. Median +0.46 dB vocals over fast on 20 MUSDB songs "
-            f"(18/20), range about -0.09 to +5.12 dB per song; +1.12 dB vocal SAR. Also +0.11 dB drums and "
-            f"+0.10 dB bass, which balanced does not get.")
+        return (f"quality=balanced: {what}, {passes} units -- 2x cheaper than best. Recovers 96% of best's vocal gain "
+                f"(+0.442 of +0.460 dB over fast, 18/20 songs; only 0.018 dB behind best). Drums and bass are "
+                f"IDENTICAL to fast -- measured at +0.0000 dB, 0/20 songs -- because the second model is a vocal "
+                f"model: best buys those with overlap alone (docs/04 sections 14.12, 14.15).")
+    return (f"quality=best: {what}, {passes} units of compute. Median +0.460 dB vocals over fast on 20 MUSDB songs "
+            f"(18/20), range about -0.09 to +5.12 dB per song. Also +0.095 dB drums (18/20) and +0.061 dB bass "
+            f"(16/20), which balanced does not get. Adding --tta doubles this to 16 units for +0.008 vocals / "
+            f"+0.015 drums / +0.033 bass -- rejected as the default by the adoption floor (docs/04 section 14.15).")
 
 
 def resolve_quality(args) -> None:
@@ -339,9 +343,11 @@ def build_parser() -> argparse.ArgumentParser:
                              "Applies to the RoFormer models, including inside the ensembles")
         sp.add_argument("--fp16", action="store_true", help="half-precision autocast (less VRAM; adds numerical noise to residuals)")
         sp.add_argument("--tta", dest="tta", action="store_true", default=None,
-                        help="average original / channel-swapped / polarity-inverted passes. ON by default: better on "
-                             "all four stems (docs/04 sections 6 and 14.1), at 3x the GPU time. Already used for SW "
-                             "inside the ensembles, where this flag does not change the recipe")
+                        help="average original / channel-swapped / polarity-inverted passes, at 3x the GPU time. OFF by "
+                             "default since 2026-09-28: it is better on all four stems and never worse on any of 20 "
+                             "MUSDB songs, but only by +0.008 vocals / +0.015 drums / +0.033 bass at overlap 4, so two "
+                             "of the three gated stems fall under the +0.02 dB adoption floor (docs/04 section 14.15). "
+                             "Applies to SW inside the ensembles too, taking the default recipe from 8 units to 16")
         sp.add_argument("--no-tta", dest="tta", action="store_false",
                         help="single pass instead of the 3-pass average: 3x faster, slightly worse on every stem")
 

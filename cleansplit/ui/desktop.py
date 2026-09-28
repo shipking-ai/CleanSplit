@@ -5,6 +5,7 @@ No Node, no Electron, no bundler: pywebview uses the WebView2 runtime that ships
 
 from __future__ import annotations
 
+import contextlib
 import socket
 import threading
 import time
@@ -51,8 +52,6 @@ def launch(out_root: str = "outputs", port: int | None = None, dev: bool = False
         if paths:
             window.evaluate_js(f"window.cleansplitDropped({list(map(str, paths))!r})".replace("'", '"'))
 
-    try:
+    with contextlib.suppress(Exception):  # files_dropped is not supported on every webview backend
         window.events.files_dropped += on_files
-    except Exception:  # not supported on every backend
-        pass
     webview.start(debug=dev)

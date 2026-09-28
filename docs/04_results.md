@@ -967,3 +967,97 @@ direction.
 +0.04 dB on SW alone at overlap 2, +0.01 dB on ep317 inside the ensemble at overlap 4, and ~40× worse per unit of
 compute than simply averaging a second model. The remaining open question is whether TTA is worth keeping for the SW
 member at all, which is exactly what the queued `sw_ov4` arm measures.
+
+### 14.14 SCNet XL rejected on every stem — and the "comparable strength" rule is falsified
+
+`tools/experiments/stem_ensemble_experiment.py` added SCNet XL IHF to each stem of the ensemble at overlap 4. The
+pre-registered expectation came from `docs/01` §8.2: **a member more than 1–2 dB weaker than the incumbent should hurt
+the average; a member within about 1 dB should help.** SCNet's gap to SW solo was measured in the same run, so the rule
+had a number to be tested against rather than a vibe.
+
+| stem | SW solo | SCNet | gap | paired ΔSNR | won | ΔSAR | rule predicted | happened |
+|---|---|---|---|---|---|---|---|---|
+| drums | 12.43 | 11.52 | 0.91 | **−0.07** | 9/20 | +0.15 | help | **hurt** ❌ |
+| bass | 10.80 | 6.73 | 4.07 | **−0.15** | 7/20 | +0.11 | hurt | hurt ✔ |
+| other | 9.05 | 7.79 | 1.25 | **−0.13** | 8/20 | +0.25 | help | **hurt** ❌ |
+| vocals | 12.92 | 11.86 | 1.06 | **−0.06** | 2/20 | −0.01 | help | **hurt** ❌ |
+
+**Rejected on all four stems, and the rule that predicted otherwise is contradicted on three of four.** Only bass — the
+member with a 4 dB deficit — behaved as written.
+
+So the rule is half right, and it is worth being precise about which half, because the surviving half is still load
+bearing. Its *upper* branch holds: a member several dB weaker does drag the average down. Its *lower* branch is false:
+being within ~1 dB does **not** predict that a member helps. Strength parity turns out to be necessary but nowhere near
+sufficient.
+
+The reason is that averaging does not pay for strength, it pays for **decorrelated error**. Two models of identical
+strength whose mistakes coincide average to the same mistake; ep317 earns its +0.42 dB (§14.8) because its errors are
+independent of SW's, not because it scores similarly. Nothing in the §8.2 rule measured independence, so it was never
+able to predict this, and a comparable-strength screen cannot be used to decide which model to try next. That is a real
+limitation of the project's model-selection heuristic, not of SCNet.
+
+**The SAR column is the third independent confirmation that the full-band gate is mandatory.** SCNet *improves* SAR on
+drums (+0.15), bass (+0.11) and other (+0.25) while making all three genuinely worse full-band. Exactly the signature
+§14.4 was written for and §14.7 traced to its real cause. A SAR-only reading of this table would have adopted SCNet on
+three stems.
+
+`scnet_xl_ihf` remains available as a standalone separator — it is a competent model, it is simply not complementary to
+SW.
+
+### 14.15 TTA leaves the default recipe: the same 2× that cost overlap 8 its place
+
+§14.13 closed with the last open question — whether the 3-pass TTA on the SW member is worth keeping at all. It is not.
+
+Two arms answer it. `tools/render/cache_arm.py` filled `sw_ov4` on the GPU to compare SW with and without TTA at
+overlap 4. Then `tools/eval/synth_arm.py` priced the recipe that actually **ships**, with no GPU at all: because the
+ensemble averages only vocals and `other` is the exact remainder, an arm is fully determined by its members, and the
+mixture cancels out of the algebra (`other = other_sw + (vocals_sw − vocals_ep317)/2`).
+
+That reconstruction is validated rather than assumed: the synthesised `ens_tta_ov4` scores a vocals median of
+**13.61 dB**, reproducing §14.13's independently rendered `shipped` arm to the digit.
+
+The verdict below is committed as `outputs/_benchmarks/musdb18hq_tta_in_ensemble.json`, in its own file rather than the
+shared default, because `fullband_check.py` keys a verdict by arm but not by baseline: a later ladder run against `fast`
+overwrote this one in place, and since `ens_tta_ov4` *passes* against `fast` the surviving file said PASS where this
+section says FAIL. Nothing was published from it, `cleansplit/tests/test_docs_match_measurements.py` now asserts the
+pair, and the script's `--out` help records the hazard.
+
+| | vocals | drums | bass | other |
+|---|:--:|:--:|:--:|:--:|
+| TTA on **SW alone** (`sw_ov4` → `sw_tta_ov4`) | +0.027 · 19/20 | +0.015 · 16/20 | +0.033 · 17/20 | +0.016 · 20/20 |
+| TTA inside the **shipped ensemble** (`ens_ov4` → `ens_tta_ov4`) | **+0.008** · 18/20 | **+0.015** · 16/20 | **+0.033** · 17/20 | +0.014 · 19/20 |
+| clears the +0.02 dB floor? | no | no | **yes** | — |
+
+**Gate: FAIL.** Two of the three gated stems sit below the adoption floor.
+
+Two details make this more than a threshold reading, and both were predicted before the arms were scored:
+
+- **Drums is +0.015 in both rows, the same number twice**, because drums in the ensemble *is* the SW member, untouched
+  by the averaging. Nothing dilutes it, so nothing changes.
+- **Vocals halves, +0.027 → +0.008.** Averaging TTA'd vocals with a non-TTA ep317 gives away half of TTA's
+  contribution. `synth_arm.py` predicted "about +0.013 dB" by exactly that argument; the measurement came in slightly
+  lower still.
+
+**The two pre-registered rules conflict, and the conflict is the interesting part.** `cache_arm.py`'s rule, written for
+the SW-solo question, asked for the floor plus a majority on *at least two* of vocals/drums/bass — and SW solo passes
+it, on vocals and bass. `synth_arm.py`'s rule, written for the shipping decision, asks for all three. Applied to the
+ensemble, **cache_arm.py's own two-of-three rule also fails** (bass alone). So both rules agree about the recipe that
+ships; the only configuration that passed anything is SW solo, which is not what anybody runs. Neither rule was edited
+after the fact — they were written for different questions, and reporting that they disagree is cheaper than pretending
+a single rule covered both.
+
+**What dropping TTA actually costs, stated plainly: bass.** +0.033 dB on bass clears the floor and wins 17 of 20 songs.
+That is a real loss, and it is the reason this section exists rather than a one-line changelog. The price of keeping it
+is 2× compute on *every* render — 16 forward passes instead of 8 — to improve one stem of four. At **+0.033 dB per
+doubling of compute** it lands at the bottom of §14.8's ranking, beside overlap 8's +0.01, and it is rejected on the
+identical standard that rejected overlap 8. Applying the floor to overlap 8 and waiving it for TTA would make the floor
+decorative.
+
+**TTA never made a single song worse.** `songs_short_of_baseline` is 0 on all four stems in both experiments — 80
+song-stem comparisons without one regression. This is the sharpest statement of what the floor is for that the project
+has produced: a change can be *perfectly* reliable, never worse anywhere, measured on real studio truth, and still not
+be worth its price. Reliability and magnitude are different questions, and only the gate asks both.
+
+**Consequence — the default is now 8 forward passes instead of 16.** `best` becomes mean(SW, ep317) at overlap 4, no
+TTA, and TTA is available with an explicit `--tta`. This is the third decision the effect-size floor has changed
+(§14.6, §14.13), and the third time in the same direction.

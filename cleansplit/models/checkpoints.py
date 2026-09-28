@@ -6,6 +6,7 @@ already has (e.g. inside Ultimate Vocal Remover) and verifies them against pinne
 
 from __future__ import annotations
 
+import contextlib
 import hashlib
 import json
 import os
@@ -207,10 +208,8 @@ def sha256_file(path: Path, use_cache: bool = True) -> str:
     digest = h.hexdigest()
     if use_cache:
         cache[key] = digest
-        try:
+        with contextlib.suppress(OSError):
             cache_file.write_text(json.dumps(cache, indent=1))
-        except OSError:
-            pass
     return digest
 
 

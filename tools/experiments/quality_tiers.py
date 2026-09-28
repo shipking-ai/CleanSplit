@@ -46,7 +46,10 @@ from fullband_check import paired
 
 OUT = ROOT / "outputs" / "_benchmarks" / "musdb18hq_quality_tiers.json"
 STEMS = ("vocals", "drums", "bass", "other")
-UNITS = {"fast": 2, "balanced": 4, "best": 16}
+# `best` is 8, not 16: test-time augmentation was removed from the default on 2026-09-28 after failing the gate
+# against this very ladder's own `best` arm minus TTA (docs/04 section 14.15). The `best` arm below is therefore
+# sw_ov4, NOT sw_tta_ov4 -- if you change one you must change the other, or the chart prices a recipe nobody runs.
+UNITS = {"fast": 2, "balanced": 4, "best": 8}
 RECOVERY_FLOOR = 0.70
 
 
@@ -55,13 +58,13 @@ def main(limit: int | None, out: Path) -> None:
 
     snr: dict[str, dict[str, dict[str, float]]] = {t: {} for t in UNITS}
     for name, mix, truth in M.songs(limit):
-        f = {k: M.CACHE / k / f"{name}.npz" for k in ("sw", "ep317", "sw_tta_ov4", "ep317_ov4")}
+        f = {k: M.CACHE / k / f"{name}.npz" for k in ("sw", "ep317", "sw_ov4", "ep317_ov4")}
         if not all(v.is_file() for v in f.values()):
             print(f"{name}: skipped (missing {[k for k, v in f.items() if not v.is_file()]})", flush=True)
             continue
         sw = {k: v.astype(np.float64) for k, v in np.load(f["sw"]).items()}
         ep = np.load(f["ep317"])["vocals"].astype(np.float64)
-        sw4 = {k: v.astype(np.float64) for k, v in np.load(f["sw_tta_ov4"]).items()}
+        sw4 = {k: v.astype(np.float64) for k, v in np.load(f["sw_ov4"]).items()}
         ep4 = np.load(f["ep317_ov4"])["vocals"].astype(np.float64)
         mixf = mix.astype(np.float64)
 

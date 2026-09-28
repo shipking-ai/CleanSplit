@@ -29,7 +29,9 @@ median of per-song differences over the songs BOTH arms have, and songs are matc
 these caches fill incrementally, so an arm missing a song in the middle would otherwise silently compare song i of one
 arm against a different song i of the other.
 
-Output: outputs/_benchmarks/musdb18hq_fullband.json
+Output: outputs/_benchmarks/musdb18hq_fullband.json, or --out. Note that the default path is shared across runs and a
+verdict is keyed by arm but NOT by baseline, so `--baseline X` then `--baseline Y` leaves only the second on disk even
+though both are true. Anything cited in docs/ should be written to its own --out file.
 """
 
 from __future__ import annotations
@@ -124,7 +126,13 @@ if __name__ == "__main__":
     p.add_argument("arms", nargs="+")
     p.add_argument("--baseline", default="sw_tta")
     p.add_argument("--limit", type=int, default=20)
-    p.add_argument("--out", type=Path, default=OUT)
+    p.add_argument("--out", type=Path, default=OUT,
+                   help="where to write the verdict. The DEFAULT PATH IS SHARED by every run of this script, and the "
+                        "verdicts it writes are keyed by arm name but not by baseline -- so re-running with a different "
+                        "--baseline silently replaces an earlier verdict for the same arm with one that answers a "
+                        "different question. Pass --out for any run whose result is going to be cited. This already "
+                        "happened once: a ladder run against `sw` overwrote the TTA verdict against `ens_ov4`, which is "
+                        "why docs/04 section 14.15's numbers live in musdb18hq_tta_in_ensemble.json")
     p.add_argument("--min-delta", type=float, default=0.02,
                    help="smallest paired median gain worth adopting, dB (see the module docstring)")
     a = p.parse_args()

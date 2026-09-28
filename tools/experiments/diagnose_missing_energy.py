@@ -76,7 +76,7 @@ for name, mix, truth in songs:
     def band_sel(lo, hi):
         return ((f >= lo) & (f < hi))[:, None]
 
-    for (lo, hi) in bands + [(0, 22050)]:
+    for (lo, hi) in [*bands, (0, 22050)]:
         sel = band_sel(lo, hi)
         base = sum(float(np.sum(strategies["none"][k] * sel)) for k in groups)
         row = {}

@@ -1,0 +1,36 @@
+name: zizmor
+
+# Static analysis of the workflows themselves. Added because the CI workflow had been quietly wrong for a while --
+# a matrix that pinned two Python versions and tested one, and an install step that failed outright on Ubuntu -- and
+# because a workflow is the one file in the repository that runs with a credential attached. zizmor covers the class of
+# mistake that review misses: template injection from ${{ github.event.* }}, tokens persisted into .git/config,
+# over-broad permissions, dangerous triggers. It is what ruff, uv, pydantic and black all run.
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref_name }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: true
+
+jobs:
+  zizmor:
+    name: workflow security audit
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: zizmorcore/zizmor-action@cc914d7f3750a2d13d75c7f184a1060aa0e9d482 # v0.6.4
+        with:
+          # No SARIF upload: that writes to the Security tab, which needs GitHub Code Security on a private
+          # repository. Findings go to the job log instead. Turn this on, and add `security-events: write` above,
+          # when the repository goes public.
+          advanced-security: false

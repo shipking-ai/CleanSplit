@@ -80,9 +80,8 @@ class A2SBModel:
             p = ckpt_dir / name
             if not p.is_file():
                 raise FileNotFoundError(f"A2SB checkpoint missing: {p}")
-            if verify:
-                if p.stat().st_size != A2SB_SIZE_BYTES or sha256_file(p) != A2SB_SHA256[name]:
-                    raise ValueError(f"A2SB checkpoint {p} failed size/SHA-256 verification")
+            if verify and (p.stat().st_size != A2SB_SIZE_BYTES or sha256_file(p) != A2SB_SHA256[name]):
+                raise ValueError(f"A2SB checkpoint {p} failed size/SHA-256 verification")
             sd = torch.load(p, map_location="cpu", weights_only=True)["state_dict"]
             net = AttnUNetF(**init)
             net.load_state_dict({k[len("vf_model."):]: v for k, v in sd.items() if k.startswith("vf_model.")}, strict=True)
@@ -190,7 +189,7 @@ class A2SBConsistentRestorer(Restorer):
                 P[k] = uniform_filter((np.abs(S) ** 2).sum(axis=0), size=(5, 9), mode="nearest")
             tot = sum(P.values()) + 1e-20
             new = {k: istft((P[k] / tot) * O, g, b - a) for k in context.stems}
-            out.append(RestorationProposal(prop.region, new, (a, b), self.name, prop.notes + ["allocation from A2SB prior, stems = Wiener split of O_ref"]))
+            out.append(RestorationProposal(prop.region, new, (a, b), self.name, [*prop.notes, "allocation from A2SB prior, stems = Wiener split of O_ref"]))
         return out
 
 

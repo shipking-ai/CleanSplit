@@ -70,6 +70,8 @@ ignore = [
     "SIM115",  # the probes deliberately hold a handle open across a long-running measurement
     "RUF059",  # unpacking and ignoring a field documents the shape of what a function returns
     "B007",    # an unused loop variable is often the clearest way to say "repeat n times"
+    "RUF001",  # the UI labels and docs deliberately use real typography -- x, -, <= are the ASCII lookalikes, not
+               # the other way round, and "2x faster" in a user-facing string should render as the multiplication sign
 ]
 
 # B905 (zip without explicit strict=) is deliberately NOT ignored. Silent truncation to the shorter sequence is exactly
@@ -81,3 +83,6 @@ ignore = [
 "cleansplit/tests/*" = ["B017", "SIM117"]   # tests deliberately assert on broad exceptions and nest context managers
 "tools/*" = ["E402"]                        # experiment scripts must set sys.path before importing the package
 "tools/dev/*" = ["E402"]
+# The asset generator is dense plotting code where one statement per axis reads better as one line than as three;
+# it produces no library API and nothing imports it.
+"tools/render/make_readme_assets.py" = ["E701", "E702"]

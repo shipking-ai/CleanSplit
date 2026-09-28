@@ -33,7 +33,7 @@ def probe() -> DeviceInfo:
     name = cap = total = free = None
     if cuda:
         name = torch.cuda.get_device_name(0)
-        cap = "%d.%d" % torch.cuda.get_device_capability(0)
+        cap = "{}.{}".format(*torch.cuda.get_device_capability(0))
         free_b, total_b = torch.cuda.mem_get_info(0)
         total, free = total_b / 2**20, free_b / 2**20
     return DeviceInfo(

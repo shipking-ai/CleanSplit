@@ -6,6 +6,78 @@
 
 ---
 
+## 2026-09-28 — TTA removed from the default; SCNet rejected; CI was testing less than it claimed
+
+**Two queued verdicts landed, and both changed something.**
+
+**1. SCNet XL rejected on all four stems (docs/04 §14.14).** Adding it to each stem of the ensemble at overlap 4 gave
+-0.07 drums / -0.15 bass / -0.13 other / -0.06 vocals. The interesting part is that it **falsified docs/01 §8.2's
+"comparable strength helps" rule on 3 of 4 stems**: drums, other and vocals all had gaps near 1 dB, which the rule
+predicted would help, and all three hurt. Only bass (4 dB gap) behaved as written. Averaging pays for decorrelated
+error, not comparable strength, and the rule never measured independence -- so it cannot be used to pick the next model
+to try. Also the third confirmation that the full-band gate is mandatory: SCNet *improved* SAR on drums, bass and other
+while making all three worse.
+
+**2. TTA is out of the default recipe (docs/04 §14.15). `best` went from 16 forward passes to 8.**
+`tools/eval/synth_arm.py` (new) prices an ensemble recipe from already-cached member arms with **no GPU** -- the
+ensemble averages only vocals and `other` is the exact remainder, so `other = other_sw + (vocals_sw - vocals_ep317)/2`
+and the mixture cancels. Validated, not assumed: the synthesised arm reproduces §14.13's independently rendered
+`shipped` vocals median of 13.61 dB exactly.
+
+TTA inside the shipped ensemble buys **+0.008 vocals / +0.015 drums / +0.033 bass** for 2x compute. Two of three gated
+stems are under the +0.02 dB floor, so the gate fails. Mechanism confirmed as predicted: drums is +0.015 in both the
+SW-solo and ensemble measurements (identical, because ensemble drums *is* the SW member), and vocals halves from +0.027
+to +0.008 (averaging with a non-TTA member dilutes it).
+
+**TTA never made a single song worse -- 0 regressions in 160 song-stem comparisons -- and was dropped anyway.** That is
+the sharpest case for the floor the project has: reliability and magnitude are different questions. Third decision the
+floor has changed (§14.6, §14.13, §14.15), all in the same direction.
+
+The two pre-registered rules disagreed, which is reported rather than smoothed over: `cache_arm.py` asked for two of
+three stems (SW solo passes), `synth_arm.py` asked for all three (the ensemble fails). Applied to the ensemble,
+cache_arm's own two-of-three rule also fails. Neither was edited after the fact.
+
+**New tier ladder, all re-measured from cache, no GPU:**
+
+| tier | recipe | units | vocals vs fast | drums | bass |
+|---|---|:--:|:--:|:--:|:--:|
+| fast | SW, ov2 | 2 | — | — | — |
+| balanced | mean(SW, ep317), ov2 | 4 | +0.442 · 18/20 | +0.000 · 0/20 | +0.000 · 0/20 |
+| **best** | mean(SW, ep317), ov4 | **8** | **+0.460 · 18/20** | +0.095 · 18/20 | +0.061 · 16/20 |
+| `--tta` | + 3-pass TTA on SW | 16 | +0.464 · 18/20 | +0.106 | +0.099 |
+
+**CI was green-washing three separate things, all now fixed.** It had never actually passed; the first real look at the
+logs showed:
+- **The Python matrix was a lie.** No `python-version` anywhere, so `setup-uv` provisioned nothing and both `py3.10`
+  legs ran 3.12 (3.12.10 Windows, 3.12.3 Ubuntu). The 3.10 floor had never been tested.
+- **Both Ubuntu legs ran zero tests.** `uv pip install --system` hits PEP 668 on the image Python: *"The interpreter at
+  /usr is externally managed"*. Now `uv venv` + `uv run`.
+- **26 ruff violations**, because the ruff config was added without ever running it. Fixed 14 properly (including a dead
+  `total = None` in `ui/service.py`); `RUF001` and two `E70x` are now ignored **with reasons** -- the UI deliberately
+  writes real typography, and the asset generator is dense plotting code.
+- **Two tests needing checkpoint FILES were unmarked**, so they failed on any machine without weights. They need no GPU,
+  so a `gpu` mark would be wrong; they now skip themselves when the weights are absent, verified in both directions.
+
+**`cleansplit/tests/test_docs_match_measurements.py` (new, 7 tests): the prose must match the committed JSON.** Cheapest
+guard in the repo against its worst failure mode -- a stale number reads exactly like a fabricated one. It caught a real
+problem on its first run: **`fullband_check.py` keys a verdict by arm but not by baseline and writes to one shared
+path**, so a later ladder run against `fast` silently overwrote the TTA verdict against `ens_ov4`. Since
+`ens_tta_ov4` *passes* against `fast`, the surviving file said PASS where §14.15 says FAIL. Nothing had been published
+from it. The verdict now lives in its own `musdb18hq_tta_in_ensemble.json`, the test asserts both files, and `--out`'s
+help records the hazard.
+
+**Also:** `.github/workflows/zizmor.yml` (new) audits the workflows themselves -- pinned to a SHA, `advanced-security:
+false` while the repo is private. CI now uses `permissions: {}` with per-job grants, `persist-credentials: false`,
+pinned runner images (`ubuntu-24.04`, `windows-2025`) and `timeout-minutes`.
+
+**Verified:** ruff clean; **90 passed, 10 deselected** locally. The user-song render completed all three songs (the
+earlier exit-code-1 was a trailing `tail` on a wrong log path, not the render).
+
+**Open:** confirm CI green on this commit; two Dependabot PRs (`checkout@v7`, `setup-uv@v7`) were failing only because
+of the ruff/test problems above and should be mergeable now; remaining 30 MUSDB test songs; repo still private.
+
+---
+
 ## Current state (2026-09-28) — git: pushed to github.com/shipking-ai/CleanSplit (private)
 
 | Area | State |
