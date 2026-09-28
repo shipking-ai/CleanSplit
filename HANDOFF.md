@@ -6,7 +6,7 @@
 
 ---
 
-## Current state (2026-09-28) — git: `4bd9440` + §14.10-14.11 (audio rendered, selector routes closed)
+## Current state (2026-09-28) — git: `eb1abdc` + CLI separator choices fix
 
 | Area | State |
 |---|---|
@@ -48,6 +48,29 @@ median**, not the +1.8…+2.1 dB that one song suggested.
 ---
 
 ## Recently changed
+
+### 2026-09-28 (11) — SCNet was registered but unreachable from the CLI, and the cost claim in --separator help was wrong
+
+Two things found while preparing to re-render the user's own songs at the current best settings.
+
+1. **`scnet_xl_ihf` was hardcoded out of the CLI.** It was vendored, registered, tested and measured, but
+   `sep_opts` carried a literal `choices=[...]` list that never got it, so no user could name it. `--separator` choices
+   now come from `separator_choices()`, derived from the registry, excluding only `stem_folder` (an evaluation helper
+   that reads pre-separated stems from a directory). New test asserts registry and CLI choices agree, so registering a
+   separator is now sufficient to expose it.
+2. **The help text's cost claim was wrong.** It said the ensemble is "about 4 model passes, so roughly 4x slower than
+   bs_roformer_sw". Those are not the same comparison: 4 passes per chunk is correct, but `bs_roformer_sw` also defaults
+   to TTA, so at equal flags the ensemble is ~1.3x, and 8x only against the fully fast setting
+   (`--separator bs_roformer_sw --no-tta --overlap 2`). Rewritten with §14.8's pass counts, and it now states §14.11's
+   spread rather than implying a fixed cost.
+
+**Source audio for the user's own songs is not in the repo**, but every old run saved its input: `outputs/*/original.wav`
+— Concrete Crown 4.06 min, After 2 3.86 min, Too Much On My Plate 3.16 min, all 44.1 kHz float. ~11 min of audio,
+roughly an hour of GPU at the best settings. Deliberately queued to run AFTER the vocal-recipe verdict (3 songs away)
+so it is not rendered twice if `both_tta` is adopted. SCNet could still change drums/bass/other later; that re-render
+cost is known and accepted.
+
+Tests: CLI suite 5 passed.
 
 ### 2026-09-28 (10) — There is listenable audio again, and the medians were hiding a 5 dB spread
 

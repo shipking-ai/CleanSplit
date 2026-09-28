@@ -84,3 +84,22 @@ def test_compare_identical(tmp_path, song, capsys):
     assert main(["compare", str(tmp_path / "a.wav"), str(tmp_path / "b.wav")]) == 0
     res = json.loads(capsys.readouterr().out)
     assert res["identical"] is True and res["snr_db"] == "inf"
+
+
+def test_every_registered_separator_is_selectable_from_the_cli():
+    """SCNet XL IHF was registered and integrated but hardcoded out of the CLI's choices, so nobody could name it.
+
+    Deriving the choices from the registry means registering a separator is enough to expose it. `stem_folder` is the
+    one deliberate exclusion: it reads pre-separated stems from a directory, for evaluation, and takes no audio input.
+    """
+    from cleansplit.cli.main import build_parser, separator_choices
+    from cleansplit.separation import registry
+
+    names = registry.names() if hasattr(registry, "names") else list(registry._FACTORIES)
+    assert set(separator_choices()) == {n for n in names if n != "stem_folder"}
+    assert "scnet_xl_ihf" in separator_choices()
+
+    p = build_parser()
+    for name in separator_choices():
+        args = p.parse_args(["separate", "song.wav", "--separator", name])
+        assert args.separator == name

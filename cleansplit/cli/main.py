@@ -215,21 +215,38 @@ def cmd_compare(args):
     return 0
 
 
+def separator_choices() -> list[str]:
+    """Every registered separator a user can actually name, so registering one is enough to expose it.
+
+    This was hardcoded, and SCNet XL IHF was consequently unreachable from the command line for as long as it had been
+    registered. `stem_folder` is excluded because it reads pre-separated stems from a directory and is an evaluation
+    helper, not a separator.
+    """
+    from cleansplit.separation import registry
+
+    names = registry.names() if hasattr(registry, "names") else list(registry._FACTORIES)
+    return [n for n in sorted(names) if n != "stem_folder"]
+
+
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(prog="cleansplit", description="Stem separation + artifact-aware, mixture-consistent analysis")
     p.add_argument("-v", "--verbose", action="store_true")
     sub = p.add_subparsers(dest="cmd", required=True)
 
     def sep_opts(sp, default_separator="ensemble"):
-        sp.add_argument("--separator", default=default_separator,
-                        choices=["bs_roformer_sw", "ensemble", "ensemble_demucs", "bs_roformer_ep317", "htdemucs_ft", "mdx23c_instvoc_hq"],
+        sp.add_argument("--separator", default=default_separator, choices=separator_choices(),
                         help="ensemble (default): vocals=mean(SW+TTA, ep317), other=remainder. The best measured "
                              "quality (MUSDB18-HQ, 20 songs: +0.45 dB vocals paired median vs SW, better on 18/20; "
                              "+1.12 dB vocal SAR, the largest artifact gain measured -- docs/04 sections 11 and 14). "
-                             "About 4 model passes, so roughly 4x slower than bs_roformer_sw, which is the fast "
-                             "single-pass option; ensemble_demucs also averages drums/bass with HTDemucs_ft and is "
-                             "measurably WORSE on both axes (drums -0.55 dB SNR on 20/20 songs, -1.08 dB SAR) except "
-                             "as insurance when SW misses an instrument outright")
+                             "Cost, counting forward passes per chunk (docs/04 section 14.8): the ensemble is 4 "
+                             "passes (SW three times for TTA, plus ep317 once), so at the same --overlap and --tta it "
+                             "is about 1.3x bs_roformer_sw, and about 8x the fastest setting "
+                             "(--separator bs_roformer_sw --no-tta --overlap 2). Per-song quality differs far more "
+                             "than the median suggests: usually near-identical to the fast path, up to 5 dB better on "
+                             "some songs (section 14.11). ensemble_demucs also averages drums/bass with HTDemucs_ft "
+                             "and is measurably WORSE on both axes (drums -0.55 dB SNR on 20/20 songs, -1.08 dB SAR) "
+                             "except as insurance when SW misses an instrument outright; scnet_xl_ihf is a four-stem "
+                             "convolutional model kept available for comparison")
         sp.add_argument("--checkpoint", help="path to BS-Rofo-SW-Fixed.ckpt (default: search UVR install)")
         sp.add_argument("--device", default="auto", help="auto | cpu | cuda | cuda:N")
         sp.add_argument("--chunk-size", type=int, default=None, help="samples per inference chunk (default: model config, 588800)")
