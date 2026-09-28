@@ -1,0 +1,776 @@
+{
+ "overlap": 4,
+ "sample_rate_sar": 16000,
+ "verdict": {
+  "drums": {
+   "delta_snr_db": -0.07058587012231055,
+   "won": 9,
+   "n": 20,
+   "delta_sar_db": 0.15372621047819646,
+   "sw_solo_snr": 12.430085546937503,
+   "scnet_solo_snr": 11.521906624499998,
+   "strength_gap_db": 0.9081789224375054,
+   "adopt": false
+  },
+  "bass": {
+   "delta_snr_db": -0.149193841048453,
+   "won": 7,
+   "n": 20,
+   "delta_sar_db": 0.1136551116581569,
+   "sw_solo_snr": 10.803306526014815,
+   "scnet_solo_snr": 6.733084806822745,
+   "strength_gap_db": 4.0702217191920695,
+   "adopt": false
+  },
+  "other": {
+   "delta_snr_db": -0.13288922661632263,
+   "won": 8,
+   "n": 20,
+   "delta_sar_db": 0.24708492453881314,
+   "sw_solo_snr": 9.048287134851293,
+   "scnet_solo_snr": 7.794735260120893,
+   "strength_gap_db": 1.2535518747304,
+   "adopt": false
+  },
+  "vocals": {
+   "delta_snr_db": -0.06062390167947296,
+   "won": 2,
+   "n": 20,
+   "delta_sar_db": -0.0058843101917327445,
+   "sw_solo_snr": 12.919747401884282,
+   "scnet_solo_snr": 11.858556541831021,
+   "strength_gap_db": 1.0611908600532605,
+   "adopt": false
+  }
+ },
+ "rows": {
+  "drums": [
+   {
+    "song": "Al James - Schoolboy Facination",
+    "base_snr": 9.911609183272262,
+    "cand_snr": 9.72628395377627,
+    "scnet_solo_snr": 8.732556012248272,
+    "sw_solo_snr": 9.911609183272262,
+    "base_sar": 11.260210476704781,
+    "cand_sar": 11.243791950325427
+   },
+   {
+    "song": "AM Contra - Heart Peripheral",
+    "base_snr": 11.354893095874093,
+    "cand_snr": 11.888168440494075,
+    "scnet_solo_snr": 11.393403238414773,
+    "sw_solo_snr": 11.354893095874093,
+    "base_sar": 11.563055633618974,
+    "cand_sar": 12.481022702479144
+   },
+   {
+    "song": "Angels In Amplifiers - I'm Alright",
+    "base_snr": 11.263381810174913,
+    "cand_snr": 10.987645843366938,
+    "scnet_solo_snr": 9.81066083393404,
+    "sw_solo_snr": 11.263381810174913,
+    "base_sar": 12.97407928599844,
+    "cand_sar": 13.139273911433072
+   },
+   {
+    "song": "Arise - Run Run Run",
+    "base_snr": 4.774481590739429,
+    "cand_snr": 5.1194952473790964,
+    "scnet_solo_snr": 5.132876241042014,
+    "sw_solo_snr": 4.774481590739429,
+    "base_sar": 8.323847879070069,
+    "cand_sar": 8.611183296243649
+   },
+   {
+    "song": "Ben Carrigan - We'll Talk About It All Tonight",
+    "base_snr": 16.901574731470934,
+    "cand_snr": 16.739954117725592,
+    "scnet_solo_snr": 15.394390647806071,
+    "sw_solo_snr": 16.901574731470934,
+    "base_sar": 19.98465620614413,
+    "cand_sar": 19.92188526999997
+   },
+   {
+    "song": "BKS - Bulldozer",
+    "base_snr": 13.37755869200582,
+    "cand_snr": 13.27411121490211,
+    "scnet_solo_snr": 12.576888339952879,
+    "sw_solo_snr": 13.37755869200582,
+    "base_sar": 15.032764071287861,
+    "cand_sar": 15.054808782424097
+   },
+   {
+    "song": "BKS - Too Much",
+    "base_snr": 13.206317843102493,
+    "cand_snr": 13.107026860157118,
+    "scnet_solo_snr": 12.271520474918262,
+    "sw_solo_snr": 13.206317843102493,
+    "base_sar": 14.379578954791043,
+    "cand_sar": 14.490759546617554
+   },
+   {
+    "song": "Bobby Nobody - Stitch Up",
+    "base_snr": 10.985599412518468,
+    "cand_snr": 10.595472816514546,
+    "scnet_solo_snr": 9.337798793222294,
+    "sw_solo_snr": 10.985599412518468,
+    "base_sar": 11.235252607554614,
+    "cand_sar": 11.006883818616323
+   },
+   {
+    "song": "Buitraker - Revo X",
+    "base_snr": 18.049600053178207,
+    "cand_snr": 17.88599740583993,
+    "scnet_solo_snr": 16.972207196163374,
+    "sw_solo_snr": 18.049600053178207,
+    "base_sar": 20.38809014572466,
+    "cand_sar": 20.555216216803668
+   },
+   {
+    "song": "Carlos Gonzalez - A Place For Us",
+    "base_snr": 9.223039937894354,
+    "cand_snr": 9.269802541711726,
+    "scnet_solo_snr": 8.853170307636507,
+    "sw_solo_snr": 9.223039937894354,
+    "base_sar": 10.255724313834646,
+    "cand_sar": 10.427992158344942
+   },
+   {
+    "song": "Cristina Vane - So Easy",
+    "base_snr": 16.632053264031757,
+    "cand_snr": 16.998640908602866,
+    "scnet_solo_snr": 16.25574751459838,
+    "sw_solo_snr": 16.632053264031757,
+    "base_sar": 17.826157139970828,
+    "cand_sar": 18.323418652032814
+   },
+   {
+    "song": "Detsky Sad - Walkie Talkie",
+    "base_snr": 6.573077194885586,
+    "cand_snr": 6.6987055449047155,
+    "scnet_solo_snr": 6.425245644569674,
+    "sw_solo_snr": 6.573077194885586,
+    "base_sar": 8.697961334801004,
+    "cand_sar": 8.931265107336287
+   },
+   {
+    "song": "Enda Reilly - Cur An Long Ag Seol",
+    "base_snr": 18.24352378154225,
+    "cand_snr": 18.350721362594278,
+    "scnet_solo_snr": 17.15342205973873,
+    "sw_solo_snr": 18.24352378154225,
+    "base_sar": 18.877793096407707,
+    "cand_sar": 18.983579470699475
+   },
+   {
+    "song": "Forkupines - Semantics",
+    "base_snr": 12.033527061595162,
+    "cand_snr": 12.060692600569688,
+    "scnet_solo_snr": 11.650410010585222,
+    "sw_solo_snr": 12.033527061595162,
+    "base_sar": 14.27227995315915,
+    "cand_sar": 14.459334854908521
+   },
+   {
+    "song": "Georgia Wonder - Siren",
+    "base_snr": 12.826644032279845,
+    "cand_snr": 12.63950157625599,
+    "scnet_solo_snr": 11.771818558266375,
+    "sw_solo_snr": 12.826644032279845,
+    "base_sar": 14.048557865671267,
+    "cand_sar": 14.098828540197756
+   },
+   {
+    "song": "Girls Under Glass - We Feel Alright",
+    "base_snr": 12.965613246781086,
+    "cand_snr": 10.802147804460816,
+    "scnet_solo_snr": 7.480709602430703,
+    "sw_solo_snr": 12.965613246781086,
+    "base_sar": 14.234034316882456,
+    "cand_sar": 13.80780022114769
+   },
+   {
+    "song": "Hollow Ground - Ill Fate",
+    "base_snr": 8.73849176534408,
+    "cand_snr": 8.923814887452554,
+    "scnet_solo_snr": 8.40645632634921,
+    "sw_solo_snr": 8.73849176534408,
+    "base_sar": 9.781179884323493,
+    "cand_sar": 10.010523682718734
+   },
+   {
+    "song": "James Elder & Mark M Thompson - The English Actor",
+    "base_snr": 10.837203436071668,
+    "cand_snr": 10.861194847783517,
+    "scnet_solo_snr": 10.299992855578214,
+    "sw_solo_snr": 10.837203436071668,
+    "base_sar": 12.180127437544886,
+    "cand_sar": 12.349968187221114
+   },
+   {
+    "song": "Juliet's Rescue - Heartbeats",
+    "base_snr": 17.378696768702927,
+    "cand_snr": 17.33681601140368,
+    "scnet_solo_snr": 16.631252663336674,
+    "sw_solo_snr": 17.378696768702927,
+    "base_sar": 19.32963832215532,
+    "cand_sar": 19.47189611767708
+   },
+   {
+    "song": "Little Chicago's Finest - My Own",
+    "base_snr": 22.051446379364567,
+    "cand_snr": 18.53028573695132,
+    "scnet_solo_snr": 15.118086680718559,
+    "sw_solo_snr": 22.051446379364567,
+    "base_sar": 21.229996142060166,
+    "cand_sar": 20.620552822760544
+   }
+  ],
+  "bass": [
+   {
+    "song": "Al James - Schoolboy Facination",
+    "base_snr": 12.973647245033106,
+    "cand_snr": 12.617377508331824,
+    "scnet_solo_snr": 11.2470210893869,
+    "sw_solo_snr": 12.973647245033106,
+    "base_sar": 14.351010802799081,
+    "cand_sar": 14.435753888704054
+   },
+   {
+    "song": "AM Contra - Heart Peripheral",
+    "base_snr": 1.6950421570414473,
+    "cand_snr": 1.8793313902938302,
+    "scnet_solo_snr": 1.8460669748266594,
+    "sw_solo_snr": 1.6950421570414473,
+    "base_sar": 11.197369378954331,
+    "cand_sar": 12.083574122536312
+   },
+   {
+    "song": "Angels In Amplifiers - I'm Alright",
+    "base_snr": 11.905291777327117,
+    "cand_snr": 11.023345699762361,
+    "scnet_solo_snr": 9.073001189368243,
+    "sw_solo_snr": 11.905291777327117,
+    "base_sar": 13.191893260987113,
+    "cand_sar": 13.295656789398002
+   },
+   {
+    "song": "Arise - Run Run Run",
+    "base_snr": 0.8074947397971932,
+    "cand_snr": 0.8092889899064797,
+    "scnet_solo_snr": 0.7831672984153804,
+    "sw_solo_snr": 0.8074947397971932,
+    "base_sar": 12.9206316444896,
+    "cand_sar": 13.169481171020665
+   },
+   {
+    "song": "Ben Carrigan - We'll Talk About It All Tonight",
+    "base_snr": 16.76846887044921,
+    "cand_snr": 5.862837354838669,
+    "scnet_solo_snr": 0.06652531675837506,
+    "sw_solo_snr": 16.76846887044921,
+    "base_sar": 25.014843378389344,
+    "cand_sar": 24.38292699188567
+   },
+   {
+    "song": "BKS - Bulldozer",
+    "base_snr": 12.31000446318374,
+    "cand_snr": 12.306554047022079,
+    "scnet_solo_snr": 11.38951588226865,
+    "sw_solo_snr": 12.31000446318374,
+    "base_sar": 13.082065771071342,
+    "cand_sar": 13.33832945689645
+   },
+   {
+    "song": "BKS - Too Much",
+    "base_snr": 15.647532916803424,
+    "cand_snr": 15.637120700681262,
+    "scnet_solo_snr": 14.663578006096289,
+    "sw_solo_snr": 15.647532916803424,
+    "base_sar": 16.881140122735033,
+    "cand_sar": 17.264400135382214
+   },
+   {
+    "song": "Bobby Nobody - Stitch Up",
+    "base_snr": 11.200199413622855,
+    "cand_snr": 9.59543227582934,
+    "scnet_solo_snr": 6.773200303445308,
+    "sw_solo_snr": 11.200199413622855,
+    "base_sar": 11.95005952449816,
+    "cand_sar": 11.313475853832442
+   },
+   {
+    "song": "Buitraker - Revo X",
+    "base_snr": 13.304067715190103,
+    "cand_snr": 13.469952863646864,
+    "scnet_solo_snr": 12.901326943669824,
+    "sw_solo_snr": 13.304067715190103,
+    "base_sar": 15.23621414094308,
+    "cand_sar": 15.647966059279108
+   },
+   {
+    "song": "Carlos Gonzalez - A Place For Us",
+    "base_snr": 2.803448336539174,
+    "cand_snr": 2.72555556796317,
+    "scnet_solo_snr": 2.08351872198155,
+    "sw_solo_snr": 2.803448336539174,
+    "base_sar": 2.3398013341249575,
+    "cand_sar": 2.4288266496022675
+   },
+   {
+    "song": "Cristina Vane - So Easy",
+    "base_snr": 10.406413638406775,
+    "cand_snr": 9.226601314349887,
+    "scnet_solo_snr": 6.692969310200182,
+    "sw_solo_snr": 10.406413638406775,
+    "base_sar": 11.21855631305139,
+    "cand_sar": 11.432852148523857
+   },
+   {
+    "song": "Detsky Sad - Walkie Talkie",
+    "base_snr": 8.092241446988028,
+    "cand_snr": 5.888379489795589,
+    "scnet_solo_snr": 2.8869909254653554,
+    "sw_solo_snr": 8.092241446988028,
+    "base_sar": 9.12509187565007,
+    "cand_sar": 7.760308540242169
+   },
+   {
+    "song": "Enda Reilly - Cur An Long Ag Seol",
+    "base_snr": 15.356448978840266,
+    "cand_snr": 15.135954065319364,
+    "scnet_solo_snr": 13.742317902990376,
+    "sw_solo_snr": 15.356448978840266,
+    "base_sar": 16.259592641172787,
+    "cand_sar": 16.269958638719743
+   },
+   {
+    "song": "Forkupines - Semantics",
+    "base_snr": 9.606166001743826,
+    "cand_snr": 9.654309480051811,
+    "scnet_solo_snr": 9.220368697282675,
+    "sw_solo_snr": 9.606166001743826,
+    "base_sar": 11.05899485137675,
+    "cand_sar": 11.30114207363188
+   },
+   {
+    "song": "Georgia Wonder - Siren",
+    "base_snr": 13.512041944036987,
+    "cand_snr": 13.019445038194773,
+    "scnet_solo_snr": 11.738504661870202,
+    "sw_solo_snr": 13.512041944036987,
+    "base_sar": 15.654622811647442,
+    "cand_sar": 15.748161261750361
+   },
+   {
+    "song": "Girls Under Glass - We Feel Alright",
+    "base_snr": 4.326794688703731,
+    "cand_snr": 4.992936638047968,
+    "scnet_solo_snr": 4.294549243786741,
+    "sw_solo_snr": 4.326794688703731,
+    "base_sar": 3.9362994724594835,
+    "cand_sar": 6.533472151634598
+   },
+   {
+    "song": "Hollow Ground - Ill Fate",
+    "base_snr": 2.289675465217348,
+    "cand_snr": 3.559440515039225,
+    "scnet_solo_snr": 3.7304261433427266,
+    "sw_solo_snr": 2.289675465217348,
+    "base_sar": 1.1684359984934782,
+    "cand_sar": 5.340951703052157
+   },
+   {
+    "song": "James Elder & Mark M Thompson - The English Actor",
+    "base_snr": 8.538215222422291,
+    "cand_snr": 7.84169483933405,
+    "scnet_solo_snr": 6.409586797365653,
+    "sw_solo_snr": 8.538215222422291,
+    "base_sar": 10.690603483333174,
+    "cand_sar": 10.419891797155259
+   },
+   {
+    "song": "Juliet's Rescue - Heartbeats",
+    "base_snr": -0.7624386235131269,
+    "cand_snr": 0.6986467178001192,
+    "scnet_solo_snr": 0.47119576676940056,
+    "sw_solo_snr": -0.7624386235131269,
+    "base_sar": 1.0526750966064327,
+    "cand_sar": 1.1762217915118574
+   },
+   {
+    "song": "Little Chicago's Finest - My Own",
+    "base_snr": 20.53027987533366,
+    "cand_snr": 19.148363533739975,
+    "scnet_solo_snr": 16.571951804191126,
+    "sw_solo_snr": 20.53027987533366,
+    "base_sar": 24.04842375371509,
+    "cand_sar": 22.963608980853856
+   }
+  ],
+  "other": [
+   {
+    "song": "Al James - Schoolboy Facination",
+    "base_snr": 8.054951165869904,
+    "cand_snr": 7.763677067993401,
+    "scnet_solo_snr": 6.778786703853133,
+    "sw_solo_snr": 8.054951165869904,
+    "base_sar": 7.18312337988799,
+    "cand_sar": 7.252020121395205
+   },
+   {
+    "song": "AM Contra - Heart Peripheral",
+    "base_snr": 0.3695748273016708,
+    "cand_snr": 0.3841369764843865,
+    "scnet_solo_snr": 0.38188622393893784,
+    "sw_solo_snr": 0.3695748273016708,
+    "base_sar": 1.413273612125169,
+    "cand_sar": 1.7029671658605596
+   },
+   {
+    "song": "Angels In Amplifiers - I'm Alright",
+    "base_snr": 11.387969250852692,
+    "cand_snr": 10.872336910160875,
+    "scnet_solo_snr": 9.363507939801199,
+    "sw_solo_snr": 11.387969250852692,
+    "base_sar": 10.894374300863578,
+    "cand_sar": 10.940108938569937
+   },
+   {
+    "song": "Arise - Run Run Run",
+    "base_snr": 0.6728088809229572,
+    "cand_snr": 0.7175923505540276,
+    "scnet_solo_snr": 0.7249016019649107,
+    "sw_solo_snr": 0.6728088809229572,
+    "base_sar": -1.9616647135329437,
+    "cand_sar": -1.461355151020317
+   },
+   {
+    "song": "Ben Carrigan - We'll Talk About It All Tonight",
+    "base_snr": 16.33136879374137,
+    "cand_snr": 13.457105779661147,
+    "scnet_solo_snr": 9.289373537009562,
+    "sw_solo_snr": 16.33136879374137,
+    "base_sar": 17.13914232674494,
+    "cand_sar": 17.44845544509699
+   },
+   {
+    "song": "BKS - Bulldozer",
+    "base_snr": 8.60365067496997,
+    "cand_snr": 8.476748768796108,
+    "scnet_solo_snr": 7.661666778211705,
+    "sw_solo_snr": 8.60365067496997,
+    "base_sar": 9.301931269351947,
+    "cand_sar": 9.384800346502363
+   },
+   {
+    "song": "BKS - Too Much",
+    "base_snr": 9.623533898093083,
+    "cand_snr": 9.484657351034299,
+    "scnet_solo_snr": 8.731811599840265,
+    "sw_solo_snr": 9.623533898093083,
+    "base_sar": 9.59789986321669,
+    "cand_sar": 9.802376158558925
+   },
+   {
+    "song": "Bobby Nobody - Stitch Up",
+    "base_snr": 11.837160331154601,
+    "cand_snr": 10.744992404278706,
+    "scnet_solo_snr": 8.447267151480677,
+    "sw_solo_snr": 11.837160331154601,
+    "base_sar": 12.593844998082242,
+    "cand_sar": 11.91459307918885
+   },
+   {
+    "song": "Buitraker - Revo X",
+    "base_snr": 9.891694419531804,
+    "cand_snr": 9.978342054176277,
+    "scnet_solo_snr": 9.443625826491116,
+    "sw_solo_snr": 9.891694419531804,
+    "base_sar": 8.527602088447752,
+    "cand_sar": 8.987518277436976
+   },
+   {
+    "song": "Carlos Gonzalez - A Place For Us",
+    "base_snr": 9.492923594732618,
+    "cand_snr": 9.839431732008062,
+    "scnet_solo_snr": 9.399444804749166,
+    "sw_solo_snr": 9.492923594732618,
+    "base_sar": 10.546312717993336,
+    "cand_sar": 10.91078879524973
+   },
+   {
+    "song": "Cristina Vane - So Easy",
+    "base_snr": 10.102348584770864,
+    "cand_snr": 9.35613026019541,
+    "scnet_solo_snr": 7.19961526931714,
+    "sw_solo_snr": 10.102348584770864,
+    "base_sar": 10.729009295291858,
+    "cand_sar": 11.626350010967297
+   },
+   {
+    "song": "Detsky Sad - Walkie Talkie",
+    "base_snr": 1.7014114781952174,
+    "cand_snr": 2.098961706606855,
+    "scnet_solo_snr": 1.8606555654481896,
+    "sw_solo_snr": 1.7014114781952174,
+    "base_sar": 5.468694873900662,
+    "cand_sar": 5.916972458509328
+   },
+   {
+    "song": "Enda Reilly - Cur An Long Ag Seol",
+    "base_snr": 15.066223719642162,
+    "cand_snr": 14.504800629003249,
+    "scnet_solo_snr": 12.84162430915085,
+    "sw_solo_snr": 15.066223719642162,
+    "base_sar": 15.230697838932315,
+    "cand_sar": 14.793958202365513
+   },
+   {
+    "song": "Forkupines - Semantics",
+    "base_snr": 8.283644561159708,
+    "cand_snr": 8.208284983615822,
+    "scnet_solo_snr": 7.604184599434285,
+    "sw_solo_snr": 8.283644561159708,
+    "base_sar": 9.106177559346353,
+    "cand_sar": 9.2398929347991
+   },
+   {
+    "song": "Georgia Wonder - Siren",
+    "base_snr": 8.256317849222636,
+    "cand_snr": 8.085747211482872,
+    "scnet_solo_snr": 7.3327013982300375,
+    "sw_solo_snr": 8.256317849222636,
+    "base_sar": 9.786623138735775,
+    "cand_sar": 9.91482592808959
+   },
+   {
+    "song": "Girls Under Glass - We Feel Alright",
+    "base_snr": 4.567112603094634,
+    "cand_snr": 6.303052093497305,
+    "scnet_solo_snr": 6.852405405947245,
+    "sw_solo_snr": 4.567112603094634,
+    "base_sar": 7.155526050394638,
+    "cand_sar": 9.027039435752789
+   },
+   {
+    "song": "Hollow Ground - Ill Fate",
+    "base_snr": 5.7848421040929034,
+    "cand_snr": 6.788338593868184,
+    "scnet_solo_snr": 6.763065203576616,
+    "sw_solo_snr": 5.7848421040929034,
+    "base_sar": 10.039258011484577,
+    "cand_sar": 10.972366221354736
+   },
+   {
+    "song": "James Elder & Mark M Thompson - The English Actor",
+    "base_snr": 9.936294082283672,
+    "cand_snr": 9.664236344921513,
+    "scnet_solo_snr": 8.880330612545709,
+    "sw_solo_snr": 9.936294082283672,
+    "base_sar": 11.72472156192801,
+    "cand_sar": 11.780812239213944
+   },
+   {
+    "song": "Juliet's Rescue - Heartbeats",
+    "base_snr": 7.02391027695746,
+    "cand_snr": 8.253117484925239,
+    "scnet_solo_snr": 7.927803742030081,
+    "sw_solo_snr": 7.02391027695746,
+    "base_sar": 7.812028021054777,
+    "cand_sar": 11.184311044866242
+   },
+   {
+    "song": "Little Chicago's Finest - My Own",
+    "base_snr": 12.456517844413149,
+    "cand_snr": 11.465861900450339,
+    "scnet_solo_snr": 9.375818861459985,
+    "sw_solo_snr": 12.456517844413149,
+    "base_sar": 12.009192100484388,
+    "cand_sar": 11.612537740240004
+   }
+  ],
+  "vocals": [
+   {
+    "song": "Al James - Schoolboy Facination",
+    "base_snr": 13.15440795031144,
+    "cand_snr": 13.026108068142504,
+    "scnet_solo_snr": 11.78910070810726,
+    "sw_solo_snr": 12.87375706095348,
+    "base_sar": 14.139320029398913,
+    "cand_sar": 14.12274940872509
+   },
+   {
+    "song": "AM Contra - Heart Peripheral",
+    "base_snr": 14.395946610063316,
+    "cand_snr": 14.28308346709007,
+    "scnet_solo_snr": 13.413993178100956,
+    "sw_solo_snr": 14.28324358772209,
+    "base_sar": 16.49603804123575,
+    "cand_sar": 16.51956490486922
+   },
+   {
+    "song": "Angels In Amplifiers - I'm Alright",
+    "base_snr": 14.838434587742842,
+    "cand_snr": 14.823224230089311,
+    "scnet_solo_snr": 13.823928721264894,
+    "sw_solo_snr": 14.450949794637573,
+    "base_sar": 16.129739642222177,
+    "cand_sar": 16.14334514609478
+   },
+   {
+    "song": "Arise - Run Run Run",
+    "base_snr": 19.144798681358196,
+    "cand_snr": 19.112890887955437,
+    "scnet_solo_snr": 17.42212172666979,
+    "sw_solo_snr": 17.444144972667324,
+    "base_sar": 19.65814354777714,
+    "cand_sar": 19.597881811219086
+   },
+   {
+    "song": "Ben Carrigan - We'll Talk About It All Tonight",
+    "base_snr": 20.344511925470332,
+    "cand_snr": 20.015812140510164,
+    "scnet_solo_snr": 17.978165682089067,
+    "sw_solo_snr": 19.85907763746409,
+    "base_sar": 21.838526732220043,
+    "cand_sar": 21.706429994265527
+   },
+   {
+    "song": "BKS - Bulldozer",
+    "base_snr": 13.250387633670568,
+    "cand_snr": 13.116828794295367,
+    "scnet_solo_snr": 11.928012375554783,
+    "sw_solo_snr": 12.965737742815083,
+    "base_sar": 8.784750667161278,
+    "cand_sar": 8.70214986021817
+   },
+   {
+    "song": "BKS - Too Much",
+    "base_snr": 14.856778951251382,
+    "cand_snr": 14.776805583199708,
+    "scnet_solo_snr": 13.798608363949425,
+    "sw_solo_snr": 14.343577131059458,
+    "base_sar": 16.09093287464671,
+    "cand_sar": 16.074055724914665
+   },
+   {
+    "song": "Bobby Nobody - Stitch Up",
+    "base_snr": 14.676189023138251,
+    "cand_snr": 14.564898914855833,
+    "scnet_solo_snr": 13.37513043286275,
+    "sw_solo_snr": 14.24223114663768,
+    "base_sar": 14.82587323166279,
+    "cand_sar": 14.731005611480219
+   },
+   {
+    "song": "Buitraker - Revo X",
+    "base_snr": 9.833666074663853,
+    "cand_snr": 9.79239163935658,
+    "scnet_solo_snr": 8.887310996829896,
+    "sw_solo_snr": 8.879157661651153,
+    "base_sar": 11.342875001578872,
+    "cand_sar": 11.376029077262174
+   },
+   {
+    "song": "Carlos Gonzalez - A Place For Us",
+    "base_snr": 10.381890124600666,
+    "cand_snr": 10.362039638771183,
+    "scnet_solo_snr": 9.552030088372614,
+    "sw_solo_snr": 10.187107278434475,
+    "base_sar": 11.033406787522448,
+    "cand_sar": 11.063172731681494
+   },
+   {
+    "song": "Cristina Vane - So Easy",
+    "base_snr": 19.302309370196042,
+    "cand_snr": 19.28978980545327,
+    "scnet_solo_snr": 17.962084968655304,
+    "sw_solo_snr": 18.24999597492109,
+    "base_sar": 20.214928833471404,
+    "cand_sar": 20.219730833761762
+   },
+   {
+    "song": "Detsky Sad - Walkie Talkie",
+    "base_snr": 13.993743989920006,
+    "cand_snr": 13.323728014077371,
+    "scnet_solo_snr": 9.759342196235131,
+    "sw_solo_snr": 11.116733698343001,
+    "base_sar": 15.229598102392538,
+    "cand_sar": 14.522447599622934
+   },
+   {
+    "song": "Enda Reilly - Cur An Long Ag Seol",
+    "base_snr": 19.465937550424186,
+    "cand_snr": 19.434503234686467,
+    "scnet_solo_snr": 17.90985812324506,
+    "sw_solo_snr": 18.927279207183336,
+    "base_sar": 20.029633751285072,
+    "cand_sar": 20.074434131653334
+   },
+   {
+    "song": "Forkupines - Semantics",
+    "base_snr": 10.754205657846658,
+    "cand_snr": 10.742841360561592,
+    "scnet_solo_snr": 9.9968766237655,
+    "sw_solo_snr": 10.87191763156094,
+    "base_sar": 11.57168000037516,
+    "cand_sar": 11.61343850543097
+   },
+   {
+    "song": "Georgia Wonder - Siren",
+    "base_snr": 7.826280805468465,
+    "cand_snr": 7.8682460056119155,
+    "scnet_solo_snr": 7.217917018123635,
+    "sw_solo_snr": 7.965711714201172,
+    "base_sar": 8.630287392221582,
+    "cand_sar": 8.884293648259373
+   },
+   {
+    "song": "Girls Under Glass - We Feel Alright",
+    "base_snr": 7.43993169443227,
+    "cand_snr": 7.412583866946165,
+    "scnet_solo_snr": 6.864567563446461,
+    "sw_solo_snr": 7.0574145762288225,
+    "base_sar": 7.98108297618119,
+    "cand_sar": 8.003520006797702
+   },
+   {
+    "song": "Hollow Ground - Ill Fate",
+    "base_snr": 8.80395543133918,
+    "cand_snr": 8.81644828382784,
+    "scnet_solo_snr": 8.42926642006737,
+    "sw_solo_snr": 8.683857536715784,
+    "base_sar": 9.614504761713755,
+    "cand_sar": 9.704724409823845
+   },
+   {
+    "song": "James Elder & Mark M Thompson - The English Actor",
+    "base_snr": 11.027714620980213,
+    "cand_snr": 10.911077588044584,
+    "scnet_solo_snr": 10.265089164102433,
+    "sw_solo_snr": 10.862338589237517,
+    "base_sar": 12.42541420270378,
+    "cand_sar": 12.33820002685296
+   },
+   {
+    "song": "Juliet's Rescue - Heartbeats",
+    "base_snr": 12.26006234730654,
+    "cand_snr": 12.08722775792707,
+    "scnet_solo_snr": 10.97637035297097,
+    "sw_solo_snr": 11.932830382587538,
+    "base_sar": 12.54629767721432,
+    "cand_sar": 12.451166111731244
+   },
+   {
+    "song": "Little Chicago's Finest - My Own",
+    "base_snr": 19.21082133358069,
+    "cand_snr": 18.947021933658664,
+    "scnet_solo_snr": 17.01077646870756,
+    "sw_solo_snr": 18.7370699470326,
+    "base_sar": 21.01488702909908,
+    "cand_sar": 20.812035873774605
+   }
+  ]
+ }
+}

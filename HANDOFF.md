@@ -49,6 +49,32 @@ median**, not the +1.8…+2.1 dB that one song suggested.
 
 ## Recently changed
 
+### 2026-09-28 (13) — Repo reorganised, CI added, and CI immediately found a broken package
+
+**CI's first run found that `cleansplit/models/` was never in the repository.** `.gitignore` line 8 was an unanchored
+`models/`, written to exclude weight directories; it also matched `cleansplit/models/`, which is **source**. So
+`__init__.py`, `checkpoints.py` and `device.py` had never been committed and **every clone produced a package that
+could not import**. Invisible locally, because the files exist on disk. Pattern is now anchored (`/models/`,
+`/data/models/`) with the reason recorded inline. Ten minutes of CI paid for itself.
+
+**tools/ reorganised** from 26 flat scripts plus a `dev/` grab-bag into: `eval/` (reusable harnesses), `experiments/`
+(pre-registered, decision rule in the docstring), `render/` (audio and figures), `probes/` (one-off), `queues/` (GPU
+serialisation). `tools/README.md` explains the eval-vs-experiments split. All 18 moved scripts had `parents[1]` →
+`parents[2]` and their `sys.path` insert repointed to `tools/eval`; 43 files had path references rewritten; one
+relocated tool was run end to end to prove it.
+
+**Two model directories merged.** 6.4 GB of A2SB weights sat in a root-level `models/` while everything else was in
+`data/models/`. Now `data/models/a2sb`, with `_a2sb_ckpt_dir()` still honouring the legacy path so existing installs
+keep working. Stray run logs → `outputs/_logs/`.
+
+**Lint:** explicit ruff config (there was none). **B905 deliberately NOT ignored** — a silently truncating `zip` is the
+same failure as the by-position pairing bug (§14.7), so every first-party `zip` now passes `strict=True`. One sed
+flipped a docstring describing *upstream's* behaviour; caught and reverted.
+
+**`.github/`:** CI (ruff + the non-GPU suite on Linux and Windows, py3.10/3.12, no torch and no weights — verified in a
+torch-free venv first: 75 passed, 8 skipped), dependabot, issue templates including **"Challenge a measurement"**, a PR
+template carrying the measurement bar, CODEOWNERS, SECURITY.md, CONTRIBUTING.md.
+
 ### 2026-09-28 (12) — Vocal recipe verdict, GitHub repo live, README rebuilt with generated assets
 
 **VERDICT: `both_tta` REJECTED** (docs/04 §14.13). Giving ep317 its own TTA gains **+0.01 dB winning 16/20** — real and
