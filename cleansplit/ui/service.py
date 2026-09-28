@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import contextlib
 import json
+import os
 import queue
 import threading
 import time
@@ -240,7 +241,10 @@ class Service:
         stem = self._stem_name(stem)   # this one WRITES a cache file, so an unchecked name would create it anywhere
         cache = d / "peaks" / f"{stem}.{buckets}.json"
         if cache.is_file():
-            return json.loads(cache.read_text())
+            try:
+                return json.loads(cache.read_text(encoding="utf-8"))
+            except (json.JSONDecodeError, UnicodeDecodeError):
+                pass   # truncated or half-written: fall through and recompute, then replace it atomically below
         x = load_audio(self.audio_path(variant, slug, stem)).audio.astype(np.float32)
         mono = x.mean(axis=0)
         n = mono.size
@@ -258,7 +262,23 @@ class Service:
             "rms": [round(float(v), 4) for v in rms],
         }
         cache.parent.mkdir(parents=True, exist_ok=True)
-        cache.write_text(json.dumps(data))
+        # Atomically, via a temp file in the same directory and os.replace. `write_text` creates the file and then
+        # fills it, so a concurrent reader that got past `is_file()` above could read nothing or half of the ~58 kB
+        # this produces -- and FastAPI serves these handlers from a threadpool, so two requests for the same song do
+        # overlap. A flaky `json.decoder.JSONDecodeError: Expecting value` on the ubuntu/py3.10 CI leg (run
+        # 36480845648, green on rerun) is what pointed here. os.replace is atomic on both POSIX and Windows, so a
+        # reader now sees either the previous complete file or the new one.
+        tmp = cache.with_name(f"{cache.name}.{os.getpid()}.{threading.get_ident()}.tmp")
+        try:
+            tmp.write_text(json.dumps(data), encoding="utf-8")
+            # Windows refuses os.replace onto a path any other handle has open (WinError 5), which a concurrent
+            # reader, an antivirus scan or the search indexer can all cause. Losing this race costs nothing: these
+            # peaks are a pure function of (audio, buckets), so whatever is or ends up in the cache equals `data`.
+            # The caller still gets the freshly computed value, which is the part that has to be correct.
+            with contextlib.suppress(OSError):
+                os.replace(tmp, cache)
+        finally:
+            tmp.unlink(missing_ok=True)
         return data
 
     def analysis(self, variant: str, slug: str) -> dict:

@@ -76,12 +76,40 @@ def test_a_stem_name_cannot_reach_a_file_that_actually_exists_outside_the_song(o
     # variant -> out_root to get out. A shallower `../../` only reaches the variant folder and would make this test
     # pass against the vulnerable code too -- which is the exact mistake the test above made.
     svc = Service(out_root)
-    for bad in ("../../../../secret", "..\..\..\..\secret", "..", ".", ""):
+    for bad in ("../../../../secret", r"..\..\..\..\secret", "..", ".", ""):
         with pytest.raises(FileNotFoundError):
             svc.audio_path("ensemble", "Test_Song", bad)
         with pytest.raises(FileNotFoundError):
             svc.peaks("ensemble", "Test_Song", bad)      # this one would otherwise WRITE a cache file outside
     assert svc.audio_path("ensemble", "Test_Song", "vocals").is_file()   # the legitimate name still works
+
+
+def test_a_half_written_peaks_cache_is_recomputed_rather_than_raising(out_root):
+    """The cache read must not trust `is_file()`.
+
+    `peaks` wrote its ~58 kB of JSON with `write_text`, which creates the file and then fills it, so a concurrent
+    reader past `is_file()` could see an empty or truncated file and die on `json.loads`. That is what the flaky
+    `JSONDecodeError: Expecting value` on CI's ubuntu/py3.10 leg was. Simulated here by planting the damage directly,
+    which is deterministic where a real race is not.
+    """
+    svc = Service(out_root)
+    good = svc.peaks("ensemble", "Test_Song", "vocals", buckets=200)
+    cache = out_root / "ensemble" / "Test_Song" / "peaks" / "vocals.200.json"
+    for damage in ("", '{"duration": 1.0, "max": [0.1, 0.'):       # empty, and truncated mid-array
+        cache.write_text(damage, encoding="utf-8")
+        assert svc.peaks("ensemble", "Test_Song", "vocals", buckets=200) == good   # recomputed, not an exception
+        assert json.loads(cache.read_text(encoding="utf-8")) == good               # and the cache was repaired
+
+
+def test_concurrent_peaks_requests_never_observe_a_partial_cache(out_root):
+    """Eight threads racing on a cold cache: with a non-atomic write this is where the flake came from."""
+    import concurrent.futures as cf
+
+    svc = Service(out_root)
+    with cf.ThreadPoolExecutor(max_workers=8) as ex:
+        results = [f.result() for f in [ex.submit(svc.peaks, "ensemble", "Test_Song", "vocals", 300) for _ in range(8)]]
+    assert all(r == results[0] for r in results)
+    assert len(list((out_root / "ensemble" / "Test_Song" / "peaks").glob("*.tmp"))) == 0   # no temp files left behind
 
 
 def test_analysis_is_absent_until_it_has_been_measured(out_root):
