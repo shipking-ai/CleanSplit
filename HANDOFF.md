@@ -66,9 +66,20 @@ path**, so a later ladder run against `fast` silently overwrote the TTA verdict 
 from it. The verdict now lives in its own `musdb18hq_tta_in_ensemble.json`, the test asserts both files, and `--out`'s
 help records the hazard.
 
-**Also:** `.github/workflows/zizmor.yml` (new) audits the workflows themselves -- pinned to a SHA, `advanced-security:
-false` while the repo is private. CI now uses `permissions: {}` with per-job grants, `persist-credentials: false`,
-pinned runner images (`ubuntu-24.04`, `windows-2025`) and `timeout-minutes`.
+**Also:** `.github/workflows/zizmor.yml` (new) audits the workflows themselves -- pinned to a SHA,
+`advanced-security: false` while the repo is private. CI now uses `permissions: {}` with per-job grants,
+`persist-credentials: false`, pinned runner images (`ubuntu-24.04`, `windows-2025`) and `timeout-minutes`.
+
+**zizmor's first run found 7 issues and all 7 were real:** five unpinned action references and two Dependabot blocks
+with no cooldown. Every action is now pinned to a release SHA with the version in a trailing comment (checkout v7.0.1,
+ruff-action v4.1.0, setup-uv v10.2.0, zizmor-action v0.6.4), and `cooldown` + `groups` are set. Pinning also cleared a
+Node 20 deprecation warning -- worth recording that those majors were being **force-run on Node 24**, not failing, so
+the claim that Node-20 actions are dead as of 2026-09-23 is wrong; they warn.
+
+**Then the Ubuntu legs failed on their first genuinely-executing run**, with `A virtual environment already exists at:
+.venv`: `setup-uv` creates `.venv` itself when it provisions an interpreter, so a bare `uv venv` aborts. Windows did not
+hit it. Now `uv venv --clear`, and the step prints the interpreter so the matrix is checkable from the log rather than
+trusted -- which is what hid the fake matrix in the first place.
 
 **Verified:** ruff clean; **90 passed, 10 deselected** locally. The user-song render completed all three songs (the
 earlier exit-code-1 was a trailing `tail` on a wrong log path, not the render).
