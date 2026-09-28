@@ -40,7 +40,10 @@ def _make_separator(args):
     if getattr(args, "stems_dir", None):
         return registry.create("stem_folder", folder=args.stems_dir)
     if args.separator in ("ensemble", "ensemble_demucs"):
-        return registry.create(args.separator, device=args.device, num_overlap=args.overlap)
+        # tta must be forwarded: it controls whether the ensemble's SW member runs 3 passes or 1, which is the whole
+        # difference between the `best` and `balanced` quality tiers. It was omitted here, so --no-tta was silently
+        # ignored for the default separator -- the same bug --overlap had (docs/04 section 14.5).
+        return registry.create(args.separator, device=args.device, num_overlap=args.overlap, tta=args.tta)
     if args.separator == "htdemucs_ft":
         return registry.create("htdemucs_ft", device=args.device)
     if args.separator == "mdx23c_instvoc_hq":  # vocals + instrumental only; SW's chunk/fp16/tta options do not apply
@@ -215,6 +218,75 @@ def cmd_compare(args):
     return 0
 
 
+QUALITY_TIERS = {
+    # name: (separator, num_overlap, tta, passes_per_chunk * overlap, one-line description)
+    # `passes` is the exact relative cost from docs/04 section 14.8: forward passes per chunk times the overlap factor,
+    # since roformer.py sets step = chunk // num_overlap. It is countable, not timed, so it holds on any machine.
+    "fast": ("bs_roformer_sw", 2, False, 2, "single-pass SW at overlap 2"),
+    "balanced": ("ensemble", 2, False, 4, "SW averaged with ep317 at overlap 2, no TTA"),
+    "best": ("ensemble", 4, True, 16, "SW+TTA averaged with ep317, overlap 4"),
+}
+QUALITY_DEFAULT = "best"
+
+
+def quality_note(tier: str) -> str:
+    """What each tier actually costs and actually buys, in measured terms only.
+
+    Deliberately does NOT promise a fixed dB difference. docs/04 section 14.11: best-vs-fast on vocals ranges from
+    about -0.09 dB to +5.12 dB across 20 MUSDB songs, so a single number on a tier label would be misleading on most
+    songs in both directions. The median is given as a median and the range is given as a range.
+    """
+    sep, ov, tta, passes, what = QUALITY_TIERS[tier]
+    if tier == "fast":
+        return (f"quality=fast: {what}, {passes} units of compute (8x cheaper than best). "
+                f"Typically close to best, but on some songs several dB worse -- see docs/04 section 14.11.")
+    if tier == "balanced":
+        return (f"quality=balanced: {what}, {passes} units -- 4x cheaper than best. Recovers 95% of best's vocal gain "
+                f"(+0.442 of +0.464 dB over fast, 18/20 songs; only 0.031 dB behind best). Drums and bass are "
+                f"IDENTICAL to fast, because the second model is a vocal model: best buys those with TTA and overlap, "
+                f"worth about 0.10 dB each (docs/04 section 14.12).")
+    return (f"quality=best: {what}, {passes} units of compute. Median +0.46 dB vocals over fast on 20 MUSDB songs "
+            f"(18/20), range about -0.09 to +5.12 dB per song; +1.12 dB vocal SAR. Also +0.11 dB drums and "
+            f"+0.10 dB bass, which balanced does not get.")
+
+
+def resolve_quality(args) -> None:
+    """Apply the --quality tier, but only where the user did not say otherwise.
+
+    `--separator`, `--overlap` and `--tta/--no-tta` all default to None so that "not given" is distinguishable from
+    "given the same value as the tier". An explicit flag therefore always wins over the tier, and a subcommand that
+    pins a separator for protocol reasons (evaluate) keeps its pin when no tier is requested.
+    """
+    tier = getattr(args, "quality", None)
+    base_sep = getattr(args, "_default_separator", QUALITY_TIERS[QUALITY_DEFAULT][0])
+    if tier:
+        sep, ov, tta, _passes, _what = QUALITY_TIERS[tier]
+    else:
+        _, ov, tta, _, _ = QUALITY_TIERS[QUALITY_DEFAULT]
+        sep = base_sep
+    if getattr(args, "separator", None) is None:
+        args.separator = sep
+    if getattr(args, "overlap", None) is None:
+        args.overlap = ov
+    if getattr(args, "tta", None) is None:
+        args.tta = tta
+
+
+class _Parser(argparse.ArgumentParser):
+    """Resolves --quality as part of parsing, so a parsed Namespace always carries the EFFECTIVE settings.
+
+    Without this, `--separator/--overlap/--tta` would read back as None to every caller that parses without going
+    through main() -- including cmd_analyze, which rebuilds a Namespace to run separation itself, and every test. The
+    sentinel Nones exist only to tell "not given" from "given the tier's value"; nobody downstream should ever see one.
+    """
+
+    def parse_args(self, args=None, namespace=None):  # noqa: D102
+        ns = super().parse_args(args, namespace)
+        if hasattr(ns, "_default_separator"):
+            resolve_quality(ns)
+        return ns
+
+
 def separator_choices() -> list[str]:
     """Every registered separator a user can actually name, so registering one is enough to expose it.
 
@@ -229,12 +301,21 @@ def separator_choices() -> list[str]:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    p = argparse.ArgumentParser(prog="cleansplit", description="Stem separation + artifact-aware, mixture-consistent analysis")
+    p = _Parser(prog="cleansplit", description="Stem separation + artifact-aware, mixture-consistent analysis")
     p.add_argument("-v", "--verbose", action="store_true")
     sub = p.add_subparsers(dest="cmd", required=True)
 
-    def sep_opts(sp, default_separator="ensemble"):
-        sp.add_argument("--separator", default=default_separator, choices=separator_choices(),
+    def sep_opts(sp, default_separator="ensemble", allow_quality=True):
+        sp.set_defaults(_default_separator=default_separator)
+        if allow_quality:
+            sp.add_argument("--quality", choices=sorted(QUALITY_TIERS), default=None,
+                            help="pick a measured speed/quality point instead of setting the flags by hand. "
+                                 "best (the default behaviour): ensemble + TTA at overlap 4, 16 units of compute. "
+                                 "fast: single-pass SW at overlap 2, 2 units, so 8x cheaper. Compute is counted in "
+                                 "forward passes, not timed (docs/04 section 14.8). No tier advertises a fixed dB "
+                                 "cost, because best-vs-fast ranges from -0.09 to +5.12 dB per song (section 14.11). "
+                                 "Any explicit --separator/--overlap/--tta overrides the tier")
+        sp.add_argument("--separator", default=None, choices=separator_choices(),
                         help="ensemble (default): vocals=mean(SW+TTA, ep317), other=remainder. The best measured "
                              "quality (MUSDB18-HQ, 20 songs: +0.45 dB vocals paired median vs SW, better on 18/20; "
                              "+1.12 dB vocal SAR, the largest artifact gain measured -- docs/04 sections 11 and 14). "
@@ -250,14 +331,14 @@ def build_parser() -> argparse.ArgumentParser:
         sp.add_argument("--checkpoint", help="path to BS-Rofo-SW-Fixed.ckpt (default: search UVR install)")
         sp.add_argument("--device", default="auto", help="auto | cpu | cuda | cuda:N")
         sp.add_argument("--chunk-size", type=int, default=None, help="samples per inference chunk (default: model config, 588800)")
-        sp.add_argument("--overlap", type=int, default=4,
+        sp.add_argument("--overlap", type=int, default=None,
                         help="chunk overlap factor (step = chunk/overlap); default 4, the best measured. Cleaner on "
                              "every stem than the old default of 2 (MUSDB18-HQ 20 songs: +0.05..+0.09 dB full-band "
                              "SNR, better on 14-19/20 songs, and +0.03..+0.09 dB SAR -- docs/04 section 14.5) for "
                              "about 2x the GPU time. Pass --overlap 2 to halve the time for a sub-0.1 dB loss. "
                              "Applies to the RoFormer models, including inside the ensembles")
         sp.add_argument("--fp16", action="store_true", help="half-precision autocast (less VRAM; adds numerical noise to residuals)")
-        sp.add_argument("--tta", dest="tta", action="store_true", default=True,
+        sp.add_argument("--tta", dest="tta", action="store_true", default=None,
                         help="average original / channel-swapped / polarity-inverted passes. ON by default: better on "
                              "all four stems (docs/04 sections 6 and 14.1), at 3x the GPU time. Already used for SW "
                              "inside the ensembles, where this flag does not change the recipe")
@@ -306,7 +387,7 @@ def build_parser() -> argparse.ArgumentParser:
     sp.add_argument("--out", default="outputs")
     sp.add_argument("--config")
     sp.add_argument("--detectors")
-    sep_opts(sp, default_separator="bs_roformer_sw")  # the experiment protocols in docs/04 were run on single-pass SW; changing this default would silently change what a published number means
+    sep_opts(sp, default_separator="bs_roformer_sw", allow_quality=False)  # the experiment protocols in docs/04 were run on single-pass SW; changing this default would silently change what a published number means
     sp.set_defaults(fn=cmd_evaluate)
 
     sp = sub.add_parser("ui", help="open the CleanSplit desktop app")
@@ -337,7 +418,9 @@ def build_parser() -> argparse.ArgumentParser:
 
 
 def main(argv=None) -> int:
-    args = build_parser().parse_args(argv)
+    args = build_parser().parse_args(argv)   # _Parser has already applied any --quality tier
+    if getattr(args, "quality", None):
+        print(quality_note(args.quality), file=sys.stderr)
     logging.basicConfig(level=logging.INFO if args.verbose else logging.WARNING, format="%(levelname)s %(name)s: %(message)s")
     return int(args.fn(args) or 0)
 

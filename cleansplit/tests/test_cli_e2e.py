@@ -3,6 +3,7 @@
 import json
 
 import numpy as np
+import pytest
 
 from cleansplit.artifacts import corruptions as C
 from cleansplit.artifacts.region import ArtifactMap
@@ -103,3 +104,76 @@ def test_every_registered_separator_is_selectable_from_the_cli():
     for name in separator_choices():
         args = p.parse_args(["separate", "song.wav", "--separator", name])
         assert args.separator == name
+
+
+def test_quality_tiers_are_the_measured_recipes_and_explicit_flags_win():
+    """--quality is sugar over measured flag combinations; it must never silently beat what the user typed.
+
+    The three defaults asserted here are the ones docs/04 sections 14.5 and 14.8 measured, and `evaluate` must keep its
+    pin to single-pass SW (changing it would silently change what a published number in docs/04 means), which is why
+    it does not accept --quality at all.
+    """
+    from cleansplit.cli.main import QUALITY_TIERS, build_parser, resolve_quality
+
+    def r(argv):
+        a = build_parser().parse_args(argv)
+        resolve_quality(a)
+        return a.separator, a.overlap, a.tta
+
+    assert r(["separate", "x.wav"]) == ("ensemble", 4, True)
+    assert r(["separate", "x.wav", "--quality", "best"]) == ("ensemble", 4, True)
+    assert r(["separate", "x.wav", "--quality", "fast"]) == ("bs_roformer_sw", 2, False)
+    assert r(["separate", "x.wav", "--quality", "balanced"]) == ("ensemble", 2, False)
+    # an explicit flag beats the tier, in both directions
+    assert r(["separate", "x.wav", "--quality", "fast", "--overlap", "8"]) == ("bs_roformer_sw", 8, False)
+    assert r(["separate", "x.wav", "--quality", "fast", "--tta"]) == ("bs_roformer_sw", 2, True)
+    assert r(["separate", "x.wav", "--quality", "best", "--no-tta"]) == ("ensemble", 4, False)
+    # evaluate keeps its pinned separator and refuses the tier flag
+    assert r(["evaluate", "x.wav"])[0] == "bs_roformer_sw"
+    with pytest.raises(SystemExit):
+        build_parser().parse_args(["evaluate", "x.wav", "--quality", "fast"])
+    # the advertised compute cost is the pass count: best/fast is exactly 8x, best/balanced exactly 4x
+    assert QUALITY_TIERS["best"][3] == 8 * QUALITY_TIERS["fast"][3]
+    assert QUALITY_TIERS["best"][3] == 4 * QUALITY_TIERS["balanced"][3]
+
+
+def test_tta_reaches_the_ensemble_so_the_balanced_tier_is_real():
+    """--no-tta was silently dropped for `ensemble`, exactly as --overlap once was (docs/04 section 14.5).
+
+    That bug would have made the `balanced` tier a false advertisement: it would have reported 4 units of compute while
+    actually running SW three times, at 16. This asserts the flag reaches the constructed separator.
+    """
+    import argparse
+
+    from cleansplit.cli.main import _make_separator
+
+    seen = {}
+
+    def fake_create(name, **kw):
+        seen.update({"name": name, **kw})
+        return object()
+
+    from cleansplit.separation import registry
+
+    real = registry.create
+    registry.create = fake_create
+    try:
+        for tta in (True, False):
+            seen.clear()
+            _make_separator(argparse.Namespace(
+                separator="ensemble", device="cpu", overlap=2, tta=tta, checkpoint=None,
+                chunk_size=None, fp16=False, stems_dir=None))
+            assert seen["name"] == "ensemble"
+            assert seen["num_overlap"] == 2
+            assert seen["tta"] is tta, f"tta={tta} did not reach the ensemble"
+    finally:
+        registry.create = real
+
+
+def test_quality_note_states_a_range_not_a_single_db_number():
+    """docs/04 section 14.11: best-vs-fast runs from about -0.09 to +5.12 dB per song, so a fixed figure would mislead."""
+    from cleansplit.cli.main import quality_note
+
+    best, fast = quality_note("best"), quality_note("fast")
+    assert "5.12" in best and "-0.09" in best and "median" in best.lower()
+    assert "14.11" in fast

@@ -892,3 +892,49 @@ every §14 result lived in `.npz` arrays. `tools/render_audio.py` writes the *sa
 re-render — as `mixture / truth / best / fast / error_best / error_fast` plus `_loud` copies of the error normalised to
 −3 dBFS. The error signal is the useful artefact: a stem can sound acceptable soloed and still carry everything these
 numbers track, and `error_best_loud/vocals.wav` is that damage in isolation.
+
+### 14.12 A `balanced` tier: 4x cheaper than best, and it keeps 95% of the vocal gain
+
+User question: the best recipe takes about 30 minutes a song — is there something much faster that is still almost as
+good? §14.8's cost ranking says exactly where to look. Ensembling a second model is ~40x better value per unit of
+compute than TTA and ~12x better than doubling the overlap, so the cheap-but-good recipe is **the ensemble without
+TTA**: keep the lever that pays, drop the two that barely do.
+
+Testing it cost no GPU time, because every arm was already cached. Compute is in forward-pass units (§14.8):
+
+| tier | recipe | units |
+|---|---|---|
+| `fast` | SW alone, overlap 2, no TTA | 2 |
+| `balanced` | mean(SW, ep317), overlap 2, no TTA | **4** |
+| `best` | mean(SW+TTA, ep317), overlap 4 | 16 |
+
+Pre-registered rule, fixed before the numbers were seen: ship `balanced` only if it recovers **≥70%** of best's vocal
+gain over fast. Paired medians, 20 songs:
+
+| stem | best − fast | balanced − fast | won | recovered | still behind best by |
+|---|---|---|---|---|---|
+| **vocals** | +0.464 | **+0.442** | 18/20 | **95%** | **0.031** |
+| drums | +0.106 | +0.000 | 0/20 | 0% | 0.106 |
+| bass | +0.099 | +0.000 | 0/20 | 0% | 0.099 |
+| other | +0.152 | +0.045 | 17/20 | 29% | 0.061 |
+
+**`balanced` recovers 95% of the vocal gain at a quarter of the compute, landing 0.031 dB behind `best`.** The rule is
+cleared comfortably. The prediction in the docstring said 70–75%, so the *rule* is confirmed but my *point estimate was
+too pessimistic* — I assumed TTA and overlap would contribute inside the ensemble roughly what they contribute to SW
+alone, and on vocals they contribute much less, because averaging a second model has already removed the error they
+target. That is the same saturation seen in §14.6, and it is evidence for the §14.8 ranking rather than against it.
+
+**The honest catch, which the tier's help text states plainly: drums and bass are bit-for-bit what `fast` produces.**
+ep317 is a vocal model, so it does nothing for them; every drum and bass gain in `best` comes from TTA and overlap, at
+0.10 dB each. If vocals are what matter — and they are the flagship stem — `balanced` is close to free quality. If you
+need the best drums, you need `best`.
+
+There is an obvious fourth tier at **8 units** (ensemble at overlap 4, no TTA), which would buy the overlap gains for
+drums and bass while keeping the ensemble vocals. It is not measurable from the current caches because no `sw_ov4`
+arm exists without TTA — that arm is precisely what the pending TTA-redundancy experiment creates, so this tier gets
+measured for free when that lands.
+
+**A bug this work exposed.** `--no-tta` was silently ignored for `--separator ensemble`: `_make_separator` never
+forwarded `tta` to the ensemble factory, exactly as it once failed to forward `--overlap` (§14.5). The `balanced` tier
+would therefore have advertised 4 units while actually running SW three times at 16 — a tier that lied about its own
+cost. Fixed, with a test asserting the flag reaches the constructed separator.
