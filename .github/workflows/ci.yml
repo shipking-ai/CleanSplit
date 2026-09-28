@@ -23,7 +23,7 @@ jobs:
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false   # otherwise the token is written into .git/config for every later step
       - uses: astral-sh/ruff-action@v3
@@ -48,7 +48,7 @@ jobs:
         os: [ubuntu-24.04, windows-2025]
         python: ["3.10", "3.12"]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false
       - uses: astral-sh/setup-uv@v5
