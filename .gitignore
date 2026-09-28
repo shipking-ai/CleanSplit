@@ -5,7 +5,11 @@
 *.th
 *.onnx
 *.safetensors
-models/
+# Anchored to the repo root on purpose. An unanchored `models/` also matches cleansplit/models/, which is
+# SOURCE -- that silently kept checkpoints.py, device.py and __init__.py out of the repository entirely, so a
+# clone could not import the package. CI caught it; the pattern stays anchored.
+/models/
+/data/models/
 
 # Datasets and caches. data/ is 42 GB (MUSDB18-HQ, redistribution not permitted) and the separation cache.
 data/
