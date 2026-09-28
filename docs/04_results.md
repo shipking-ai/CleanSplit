@@ -753,3 +753,47 @@ The general lesson, and the reason this section exists rather than a quiet edit:
 exactly like an error in the *measurement*, and it is much cheaper to check. Three different explanations were offered
 for these anomalies across §14.3, §14.4 and §14.6 before the actual cause was found, and the actual cause was one line
 of arithmetic in the comparison, sitting in the tool that was supposed to be the safeguard.
+
+### 14.8 Ranking every quality lever by what it costs: ensembling is ~40x more compute-efficient than TTA
+
+§14.5–14.7 measured levers one at a time against a fixed baseline, which answers "does it help?" but not "is it the
+best use of the next doubling of GPU time?" — the actual question behind a `--quality` switch. This section normalises
+every measured lever by its cost.
+
+**Cost is countable exactly, not timed.** `roformer.py` sets `step = chunk // num_overlap`, so the number of forward
+passes is linear in `num_overlap`; TTA is exactly 3 passes; each ensemble member is its own pass. So relative compute is
+`models x num_overlap x (3 if TTA else 1)` in units of one chunk-forward. The shipped default is SW+TTA at overlap 4
+(3x4 = 12) plus ep317 at overlap 4 (1x4 = 4) — **16 units**. Only overlap 8's wall-clock was ever measured
+(0.129x realtime), so wall-clock is deliberately not used here; pass counts are exact and machine-independent.
+
+All gains below are **paired medians on vocals** with win counts, re-derived in §14.7 from the committed benchmark JSON:
+
+| lever | compute | gain (vocals, paired) | won | dB per doubling of compute |
+|---|---|---|---|---|
+| **add ep317 (the ensemble)** | 12 → 16 (**1.33x**) | **+0.42** vs SW+TTA | 18/20 | **+1.01** |
+| overlap 2 → 4 | 6 → 12 (2x) | +0.08 | 18/20 | +0.08 |
+| TTA, at overlap 2 | 2 → 6 (3x) | +0.04 | 20/20 | +0.025 |
+| overlap 4 → 8 | 12 → 24 (2x) | +0.01 | 16/20 | +0.01 |
+
+**Averaging a second, architecturally different model is roughly 40x more compute-efficient than test-time augmentation
+and 12x more than doubling the overlap.** It is not close. This is the same conclusion as §14.1's +1.12 dB SAR and
+docs/01 §8.2's comparable-strength rule, but stated in the unit that matters when choosing where to spend time.
+
+Two honest qualifications:
+
+1. **ep317's gain is vocals-only.** It is a vocal model; it contributes nothing to drums, bass or `other`. Overlap and
+   TTA help every stem. So the ranking above is the vocal-stem ranking, and it is the flagship stem — but the reason
+   drums and bass have no equivalent lever is precisely that they have no ensemble partner, which is what the SCNet
+   experiment (§14.9, pending) is testing.
+2. **The gains are measured against different baselines and are not additive.** TTA's +0.04 dB was measured at overlap
+   2; overlap and TTA plausibly cancel the same uncorrelated error, which is the pending question below.
+
+**A falsifiable prediction, recorded before the running experiment finishes.** If overlap and TTA remove overlapping
+error, then TTA's +0.04 dB at overlap 2 must **shrink** at overlap 4, because overlap 4 has already removed part of
+what TTA was removing. Prediction: **at overlap 4, TTA's paired median gain on vocals is below +0.04 dB, and below the
++0.02 dB adoption floor.** Falsification: TTA gains ≥ +0.04 dB at overlap 4, which would mean the two mechanisms are
+independent and TTA is simply underpriced at 3x. Either way the cost ranking above already says TTA is the worst-value
+component of the default recipe apart from overlap 8, which is not in it.
+
+**This is the table the `--quality` tiers will be built from**, once the TTA and SCNet verdicts land — so that each tier
+carries a real measured cost in passes and a real measured dB, rather than an adjective.

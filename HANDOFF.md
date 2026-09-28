@@ -6,7 +6,7 @@
 
 ---
 
-## Current state (2026-09-28) — git: `d93a9c3` + §14.7 paired re-derivation
+## Current state (2026-09-28) — git: `3705f6f` + §14.8 cost-normalised lever ranking
 
 | Area | State |
 |---|---|
@@ -16,7 +16,7 @@
 | Desktop UI (`cleansplit ui`) | works: lanes, solo/mute, A/B compare, inspector, flagged spots |
 | Apollo codec restoration | **done and written up** (docs/04 §9). Integrated, measured, not enabled by default |
 | MDX23C InstVoc HQ | **removed from the ensemble again** after MUSDB (worse on 16/20 real songs). Still available as `--separator mdx23c_instvoc_hq` |
-| Real multitrack truth | **MUSDB18-HQ, 20 songs, done** (docs/04 §11). `ensemble` vocals +0.39 dB median vs SW, 18/20. `ensemble_demucs` worse on a typical song, useful when SW misses an instrument |
+| Real multitrack truth | **MUSDB18-HQ, 20 songs, done** (docs/04 §11). `ensemble` vocals **+0.45 dB paired** median vs SW, 18/20 (§14.8; the +0.39 dB in §11 was the unpaired form, i.e. understated). `ensemble_demucs` worse on a typical song, useful when SW misses an instrument |
 | Artifacts vs bleed (SAR/SIR) | **measured, 20 songs** (docs/04 §14). Artifacts dominate: SIR is 10–11 dB cleaner than SAR everywhere. 4 reduction candidates **all rejected**; Wiener post-filtering fails on its own terms. **`--overlap 4` passes both gates** (§14.5) — first thing in this project to clear one. **Now the default, along with `ensemble` and TTA** (user: best quality wins over speed). **ov8 rejected on effect size, +0.01 dB for 2x the time** (§14.6) |
 | Tests | **89** (79 non-GPU + 10 gpu-marked; +4 locking the paired statistic). 2026-09-28: 75 non-GPU passed in 82 s AND **all 10 GPU tests passed in 47 min** on the new best-quality defaults. `PYTHONIOENCODING=utf-8 .venv/Scripts/python.exe -m pytest -q` |
 
@@ -48,6 +48,38 @@ median**, not the +1.8…+2.1 dB that one song suggested.
 ---
 
 ## Recently changed
+
+### 2026-09-28 (8) — §11's headline number was UNDERSTATED, and ensembling is ~40x better value than TTA
+
+Re-derived the four pre-registered MUSDB answers and the shipped recipe's headline claim paired, from
+`outputs/_benchmarks/musdb18hq_test.json`, no GPU. `musdb_eval.py` already paired its *win counts* by song name (unlike
+`artifact_reduction.py`), but its reported delta was still a difference of medians.
+
+* **All four pre-registered answers (Q1–Q4) hold paired. No sign flips.**
+* **The flagship claim was understated.** Shipped `ensemble` vocals vs single-pass SW: docs said +0.39 dB (unpaired);
+  paired it is **+0.45 dB, 18/20**. Against SW+TTA it is **+0.42 dB, 18/20**.
+* **Free partial answer on the pending TTA question:** `sw_tta` vs `sw` on vocals is **+0.04 dB, winning 20/20** — at
+  overlap 2. Perfectly consistent, and tiny for 3x the compute.
+
+**docs/04 §14.8 (new) ranks every lever by cost.** Compute is countable exactly rather than timed: `roformer.py` sets
+`step = chunk // num_overlap`, so passes are linear in overlap; TTA is exactly 3 passes; each ensemble member is one.
+The default is 16 units (SW+TTA@ov4 = 12, ep317@ov4 = 4).
+
+| lever | compute | vocals (paired) | won | dB per doubling |
+|---|---|---|---|---|
+| **add ep317** | 1.33x | **+0.42** | 18/20 | **+1.01** |
+| overlap 2 → 4 | 2x | +0.08 | 18/20 | +0.08 |
+| TTA @ov2 | 3x | +0.04 | 20/20 | +0.025 |
+| overlap 4 → 8 | 2x | +0.01 | 16/20 | +0.01 |
+
+**Averaging a second architecturally-different model is ~40x more compute-efficient than TTA and ~12x more than
+doubling overlap.** Qualified honestly in §14.8: ep317 helps vocals only, and the gains are not additive.
+
+**Pre-registered prediction, written before the running experiment finishes:** if overlap and TTA cancel the same
+uncorrelated error, TTA's +0.04 dB at overlap 2 must shrink at overlap 4 — predicted **below the +0.02 dB floor**.
+Falsified if TTA gains ≥ +0.04 dB at overlap 4.
+
+`tools/paired_rescore.py` is the tool for all of this; it re-derives any benchmark JSON with a `song` field per row.
 
 ### 2026-09-28 (7) — It was never bss_eval's filter. It was the unpaired statistic, and I blamed the wrong thing twice
 
