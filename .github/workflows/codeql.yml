@@ -46,7 +46,13 @@ jobs:
         uses: github/codeql-action/init@2892aa5e19bbd11bc0cff5427e3b750a04d9e3c2 # v4
         with:
           languages: ${{ matrix.language }}
-          queries: security-and-quality
+          # security-extended, NOT security-and-quality. The broader suite adds code-QUALITY queries, and on this
+          # repository they reported things the project has already decided on record: py/file-not-closed on the
+          # probes is the same pattern ruff's SIM115 is deliberately ignored for (pyproject: "the probes deliberately
+          # hold a handle open across a long-running measurement"), and py/empty-except / py/unnecessary-lambda are
+          # style, not vulnerabilities. Mixing them into the Security tab buries anything that matters. Style is
+          # ruff's job and it runs on every push.
+          queries: security-extended
           # Vendored upstream model code is kept byte-for-byte so it can be diffed against its source (see LICENSE);
           # findings in it are not ours to fix and would drown anything that is.
           config: |
