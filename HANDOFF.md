@@ -481,7 +481,7 @@ training project, (4) source quality gates all of it. Items 1 and 2 need downloa
 User wants the absolute best split, so: what else is already installed that could join the vocal average (the one
 mechanism in this project that measurably works, +1.12 dB SAR)?
 
-`C:\Users\wegot\AppData\Local\Programs\Ultimate Vocal Remover\models` holds:
+`C:\Users\<user>\AppData\Local\Programs\Ultimate Vocal Remover\models` holds:
 
 | file | size | status |
 |---|---|---|

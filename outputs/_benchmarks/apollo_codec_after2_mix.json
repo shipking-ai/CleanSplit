@@ -1,5 +1,5 @@
 {
-  "reference": "C:\\Users\\wegot\\Music\\After 2.wav",
+  "reference": "C:\\Users\\<user>\\Music\\After 2.wav",
   "seconds": 60.0,
   "offset_s": 60.0,
   "bitrates": {
@@ -223,14 +223,14 @@
   "models": {
     "mp3_enhancer": {
       "variant": "mp3_enhancer",
-      "checkpoint": "C:\\Users\\wegot\\AppData\\Local\\Programs\\Ultimate Vocal Remover\\models\\Apollo_Models\\Default_Model.bin",
+      "checkpoint": "C:\\Users\\<user>\\AppData\\Local\\Programs\\Ultimate Vocal Remover\\models\\Apollo_Models\\Default_Model.bin",
       "sha256": "99d9af7f1ff20e63c393035513a655392818d66b4d7fc23d658175c1f15e8d76",
       "params_m": 16.539,
       "license": "CC BY-SA 4.0. Attribution required; derivatives must share alike."
     },
     "vocal_restore": {
       "variant": "vocal_restore",
-      "checkpoint": "C:\\Users\\wegot\\AppData\\Local\\Programs\\Ultimate Vocal Remover\\models\\Apollo_Models\\Vocal_Restore.ckpt",
+      "checkpoint": "C:\\Users\\<user>\\AppData\\Local\\Programs\\Ultimate Vocal Remover\\models\\Apollo_Models\\Vocal_Restore.ckpt",
       "sha256": "61b93332da9cde13925b2726b0b31167b05bc20030271b19a583ccf76d69354b",
       "params_m": 16.539,
       "license": "Derivative of Apollo: CC BY-SA 4.0."

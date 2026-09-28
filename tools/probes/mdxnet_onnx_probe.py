@@ -33,6 +33,7 @@ in tools/experiments/vocal_best_recipe.py with a pre-registered rule, and only i
 from __future__ import annotations
 
 import argparse
+import os
 import sys
 from pathlib import Path
 
@@ -43,7 +44,12 @@ sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "tools" / "eval"))
 import musdb_eval as M
 
-ONNX = Path(r"C:\Users\wegot\AppData\Local\Programs\Ultimate Vocal Remover\models\MDX_Net_Models\UVR-MDX-NET-Inst_HQ_3.onnx")
+# Derived from the home directory rather than hardcoded, so it resolves for any user and carries no account name.
+# Override with CLEANSPLIT_MDXNET_ONNX if the UVR install lives somewhere else.
+ONNX = Path(os.environ.get(
+    "CLEANSPLIT_MDXNET_ONNX",
+    Path.home() / "AppData/Local/Programs/Ultimate Vocal Remover/models/MDX_Net_Models/UVR-MDX-NET-Inst_HQ_3.onnx",
+))
 SHA256 = "317554b07fe1ea5279a77f2b1520a41ea4b93432560c4ffd08792c30fddf9adc"
 DIM_F, DIM_T, HOP = 3072, 256, 1024
 

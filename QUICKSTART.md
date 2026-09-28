@@ -16,14 +16,14 @@ You should see your graphics card, ffmpeg, and `sha256_verified` for the model. 
 
 ## 2. Split a song
 ```
-.venv\Scripts\cleansplit.exe separate "C:\Users\wegot\Music\My Song.wav" --out outputs\best
+.venv\Scripts\cleansplit.exe separate "C:\Users\<user>\Music\My Song.wav" --out outputs\best
 ```
 That is the best quality this project can produce — you do not have to ask for it. The defaults are the best
 *measured* settings (`--separator ensemble`, `--overlap 4`, TTA on), not the fastest ones.
 
 **If you are in a hurry:**
 ```
-.venv\Scripts\cleansplit.exe separate "C:\Users\wegot\Music\My Song.wav" --separator bs_roformer_sw --no-tta --overlap 2 --out outputs\fast
+.venv\Scripts\cleansplit.exe separate "C:\Users\<user>\Music\My Song.wav" --separator bs_roformer_sw --no-tta --overlap 2 --out outputs\fast
 ```
 - Put the song path in quotes. WAV, FLAC and MP3 all work.
 - The 6 files land in `outputs\...\My_Song\stems\` (spaces in the name become `_`).
@@ -44,7 +44,7 @@ Use a different `--out` folder per option so results don't overwrite each other.
 
 ## 3. Check the quality of a split
 ```
-.venv\Scripts\cleansplit.exe analyze "C:\Users\wegot\Music\My Song.wav" --separator ensemble --out outputs\ensemble
+.venv\Scripts\cleansplit.exe analyze "C:\Users\<user>\Music\My Song.wav" --separator ensemble --out outputs\ensemble
 ```
 It reuses stems it already made, so it won't split again. It writes:
 - `reconstruction\residual.wav`: what's missing when the stems are added back together. The quieter, the better.
@@ -53,7 +53,7 @@ It reuses stems it already made, so it won't split again. It writes:
 
 Already have stems from UVR? Analyze those instead:
 ```
-.venv\Scripts\cleansplit.exe analyze "C:\Users\wegot\Music\My Song.wav" --stems-dir "C:\path\to\uvr\stems" --out outputs\uvr
+.venv\Scripts\cleansplit.exe analyze "C:\Users\<user>\Music\My Song.wav" --stems-dir "C:\path\to\uvr\stems" --out outputs\uvr
 ```
 
 ## 4. Compare two audio files
@@ -64,7 +64,7 @@ Shows how different they are (dB numbers). Your ears are still the best judge.
 
 ## 5. "Restore": experimental, not recommended
 ```
-.venv\Scripts\cleansplit.exe restore "C:\Users\wegot\Music\My Song.wav" --out outputs\sw
+.venv\Scripts\cleansplit.exe restore "C:\Users\<user>\Music\My Song.wav" --out outputs\sw
 ```
 It runs, but tests showed it makes stems **less** accurate. Kept only for experiments.
 
