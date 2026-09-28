@@ -834,3 +834,61 @@ Two things fall out of the curve for free:
   hurt, but by showing the optimal mixing weight sits at the midpoint.
 * **ep317 alone (w = 0, −0.344 dB) beats SW+TTA alone (w = 1, −0.417 dB)** on vocals by about 0.07 dB, while both lose
   heavily to the average. The averaging does the work, not either member — consistent with §14.1's +1.12 dB SAR.
+
+### 14.10 No truth-free combiner reaches the oracle's +0.38 dB: disagreement says how much error, not whose
+
+§14.9 closed the weighting axis at 0.013 dB. The per-TF-tile **selector** axis is different: `oracle_headroom.py` measured
+a ceiling of **+0.38 dB paired, 20/20 songs** — most of the +0.45 dB the entire two-model ensemble is worth. That is a
+budget worth attacking, and it is the measurable form of "have an AI listen to the stems and fix the bad parts".
+
+`tools/tile_combine.py` tries to collect it without the truth. Every combiner is a fixed, parameter-free formula on the
+two complex STFTs, so nothing is fitted to these songs and no held-out split is needed, and all cost nothing at
+inference because both models already run.
+
+| combiner | ΔSNR vocals | won | Δ`other` | verdict |
+|---|---|---|---|---|
+| `min_mag` — take the quieter claim per bin | **−0.376** | 1/20 | −0.156 | no |
+| `mag_mean_phase` — mean magnitude, average's phase | +0.002 | 14/20 | +0.001 | no |
+| `geo_mag` — geometric-mean magnitude | −0.023 | 4/20 | −0.004 | no |
+| `consensus_gate` — shrink where the models disagree | −0.007 | 2/20 | −0.001 | no |
+
+**Prediction CONFIRMED: all four rejected, and `min_mag` loses worst** (−0.376 dB), exactly as predicted — systematically
+preferring the quieter estimate biases the stem's energy downward. `mag_mean_phase` is the interesting near-miss: it wins
+14 of 20 songs, but by +0.002 dB, a hundredth of the adoption floor. Consistent and worthless, which is precisely what
+the floor exists to reject.
+
+**The conclusion is sharper than "these four failed."** All four use the only truth-free signal available from two
+models: their **disagreement**. Disagreement measures *how much* error is present in a tile; it carries no information
+about *which* model is carrying it. The average is already the minimum-variance combination for two uncorrelated errors
+of equal size (§14.9 established the two models are of near-equal strength), so any reweighting driven by disagreement
+alone must lose. The oracle's +0.38 dB is real but it is not reachable from the models' outputs — it requires knowing
+which estimate is right, which means an external acoustic prior, which means training. That is exactly the Sony MIMO
+architecture in docs/01 §8.4: an in-separator discriminator, trained, not a post-hoc formula.
+
+So the user's "listening AI" idea is **not** dead — the ceiling is a third of the project's biggest win — but every
+cheap route to it is now measured and closed. The remaining route is a trained selector, and its ceiling is +0.38 dB.
+
+### 14.11 The medians hide the spread: on one song in twenty, the fast path is 5 dB worse
+
+Writing the caches out as audio (`tools/render_audio.py`) exposed something the median never showed. Per-song, current
+default versus the fast opt-out, vocals:
+
+| song | best | fast | difference |
+|---|---|---|---|
+| Detsky Sad — Walkie Talkie | 13.97 | 8.85 | **+5.12** |
+| Ben Carrigan — We'll Talk About It All Tonight | 20.35 | 19.66 | +0.69 |
+| Girls Under Glass — We Feel Alright | 7.44 | 7.00 | +0.44 |
+
+The headline is a median of +0.45 dB, and it is honest, but the distribution runs from about **−0.09 dB to +5.12 dB**.
+On most songs the fast path really is nearly as good; on a minority it collapses, and the median cannot tell you which
+song you have. That is the actual answer to "is the fast version good enough": *usually yes, occasionally not remotely*,
+and the only way to know is to render both.
+
+It also revises how the `--quality` switch should be described. A tier label cannot promise "0.45 dB worse" — the honest
+claim is "the same on most material, up to several dB worse on some", which is a different and more useful statement.
+
+**Audio is now produced, not just numbers.** Nothing listenable had reflected the current defaults for eleven days;
+every §14 result lived in `.npz` arrays. `tools/render_audio.py` writes the *same arrays that were scored* — not a
+re-render — as `mixture / truth / best / fast / error_best / error_fast` plus `_loud` copies of the error normalised to
+−3 dBFS. The error signal is the useful artefact: a stem can sound acceptable soloed and still carry everything these
+numbers track, and `error_best_loud/vocals.wav` is that damage in isolation.

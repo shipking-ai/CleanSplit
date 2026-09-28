@@ -6,7 +6,7 @@
 
 ---
 
-## Current state (2026-09-28) — git: `6f0794b` + §14.9 weighting axis closed
+## Current state (2026-09-28) — git: `4bd9440` + §14.10-14.11 (audio rendered, selector routes closed)
 
 | Area | State |
 |---|---|
@@ -48,6 +48,47 @@ median**, not the +1.8…+2.1 dB that one song suggested.
 ---
 
 ## Recently changed
+
+### 2026-09-28 (10) — There is listenable audio again, and the medians were hiding a 5 dB spread
+
+**User asked what they could hear. The honest answer was: nothing current.** The newest audio in `outputs/` was from
+2026-09-17 — eleven days old, rendered with the OLD defaults. Every §14 result lived in `data/musdb_cache/*.npz` and was
+never written out.
+
+`tools/render_audio.py` (new) fixes that **with no GPU time**, because the caches already hold the separated audio. It
+writes the *same arrays that were scored* — not a re-render — per song: `mixture`, `truth/`, `best/` (current default:
+ensemble at overlap 4), `fast/` (single-pass SW at overlap 2, no TTA), `error_best/`, `error_fast/`, plus `_loud` copies
+of each error normalised to −3 dBFS. 30 s excerpts, the fixed protocol midpoint. Default picks the worst, median and
+best song by vocal SNR so both ends are audible. Written to `outputs/listen/` (gitignored, 879 MB for 3 songs).
+
+**The finding this exposed — and it changes how the `--quality` switch must be described.** Per song, best vs fast on
+vocals: Detsky Sad **+5.12 dB**, Ben Carrigan +0.69, Girls Under Glass +0.44 (and on that last one drums/bass/other are
+*slightly negative*, −0.01/−0.07/−0.09). The headline median of +0.45 dB is honest but the spread runs roughly **−0.09 to
++5.12 dB**. A tier label cannot promise "0.45 dB worse"; the true claim is "the same on most material, up to several dB
+worse on some". Written up as **docs/04 §14.11**.
+
+### 2026-09-28 (10b) — The oracle selector's +0.38 dB is real but unreachable from the models' outputs
+
+`tools/tile_combine.py` (new) tested whether any TRUTH-FREE per-TF-bin combiner captures part of the +0.38 dB ceiling
+`oracle_headroom.py` measured. All parameter-free formulas, so nothing is fitted; all free at inference.
+
+| combiner | ΔSNR | won | verdict |
+|---|---|---|---|
+| `min_mag` | **−0.376** | 1/20 | no |
+| `mag_mean_phase` | +0.002 | 14/20 | no |
+| `geo_mag` | −0.023 | 4/20 | no |
+| `consensus_gate` | −0.007 | 2/20 | no |
+
+**Prediction CONFIRMED** — all four rejected, `min_mag` worst as predicted. `mag_mean_phase` is the instructive
+near-miss: wins 14/20 but by +0.002 dB, a hundredth of the floor. Consistent and worthless, which is what the floor is
+for.
+
+The sharp conclusion: all four use the only truth-free signal two models offer — their **disagreement** — which says
+*how much* error a tile holds but not *which* model holds it. The average is already minimum-variance for two
+uncorrelated equal-strength errors (§14.9), so disagreement-driven reweighting must lose. **The user's listening-AI idea
+is not dead — its ceiling is +0.38 dB, a third of the project's biggest win — but every cheap route to it is now
+measured and closed.** What remains is a trained selector (Sony MIMO's in-separator discriminator, docs/01 §8.4).
+Written up as **docs/04 §14.10**.
 
 ### 2026-09-28 (9) — The free quality lever does not exist: equal weighting is exactly optimal (axis worth ≤0.013 dB)
 
