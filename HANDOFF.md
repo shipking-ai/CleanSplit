@@ -49,6 +49,50 @@ median**, not the +1.8…+2.1 dB that one song suggested.
 
 ## Recently changed
 
+### 2026-09-28 (5) — Overlap 8 REJECTED (gain saturates at 4), licensing resolved, TTA redundancy queued
+User: *"do what's best for quality (and speed)"* — so these calls are mine, stated with the evidence.
+
+**Overlap 8: not adopted. The gain saturates at 4, and the unpaired statistic nearly cost 2x render time for nothing.**
+On bss_eval it looked much better than 4 (vocals **+0.32** dB SAR vs +0.03). On the paired, filter-free, full-band gate
+that §14.4 makes mandatory, the two are **indistinguishable**:
+
+| arm | vocals | drums | bass | other |
+|---|---|---|---|---|
+| overlap 4 | +0.09 (18/20) | +0.05 (19/20) | +0.05 (14/20) | +0.07 (16/20) |
+| overlap 8 | +0.09 (19/20) | +0.05 (18/20) | +0.05 (15/20) | +0.06 (17/20) |
+
+Identical to two decimals, win counts differing by one song — noise. Overlap 8 costs ~half the throughput (0.13x vs
+0.26x realtime) for nothing. **First time in this project that "best quality" and "faster" agreed.** docs/04 §14.6.
+Second time bss_eval's filter allowance has manufactured a result, and the second time the unpaired median has; both
+are now banned in favour of paired medians with win counts.
+
+**Licensing resolved for a public release — Apollo KEPT, not deleted.** New top-level `LICENSE`: MIT for our code with
+a plain statement of the non-MIT directories. I said last entry that deleting `third_party/apollo` was the clean fix;
+on reflection that was wrong. A repo may carry third-party directories under their own licences when it is explicit and
+the licence text travels with them, and CleanSplit *imports* Apollo rather than deriving from it. Deleting it would
+remove the code behind a published negative result (§9, worse than doing nothing 24/24) and the two documented edits
+mean a re-clone would not reproduce it. **Reproducibility of a negative result beats licence tidiness**; anyone who
+cannot accept share-alike can delete the directory, and the LICENSE says so. Also fixed: `wavesurfer.esm.js` was
+vendored with **no copyright notice**, which BSD-3 requires — its LICENSE now sits beside it. `pyproject.toml` updated.
+
+**New question queued, and it is the biggest SPEED lever available: is TTA redundant with overlap 4?**
+Both do the same thing — TTA averages 3 passes over transformed copies, overlap-add averages every sample over
+`num_overlap` independently denoised chunks. Both cancel error that is uncorrelated between passes. Sizes are
+suspiciously similar (TTA at overlap 2: +0.06/+0.02..0.05 dB; overlap 4 alone: +0.09/+0.05/+0.05) and overlap 8 added
+nothing on top of 4, which is what saturation looks like. If they cancel the *same* error we are paying 3x for a
+benefit already bought at 2x.
+- `tools/cache_arm.py` — new, generic: fills one named cache arm with one named separator configuration, so any two
+  configurations can be compared paired without a hand-rolled script that accidentally differs in more than one
+  variable. Carries the pre-registered rule.
+- **RULE: TTA stays only if, at overlap 4, it gives a paired median gain ≥ +0.02 dB AND wins on more than half of the
+  20 songs, on at least two of vocals/drums/bass.** Otherwise it is dropped as redundant and the default separation
+  gets **~3x faster at no measured cost.**
+- Queued last (`tools/dev/tta_queue.sh`) behind the vocal-recipe and SCNet runs; one GPU job at a time.
+
+GPU chain now: vocal recipe (ep317 TTA asymmetry) -> SCNet across 20 songs -> TTA redundancy. The `--quality` switch is
+deliberately still unwritten: its tiers must carry real dB costs, and three of the numbers are still being measured.
+
+
 ### 2026-09-28 (4) — Answers acted on: committed, SCNet XL IHF integrated, licence audit
 User answered the popup: download **SCNet XL + MelBand drums**; **"I do want to make this project public"**; time budget
 **"1 and 3"** (whatever it takes AND give me a quality switch); **commit everything now**.
