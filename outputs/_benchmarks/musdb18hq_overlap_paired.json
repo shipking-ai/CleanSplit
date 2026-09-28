@@ -1,0 +1,123 @@
+{
+ "source": "musdb18hq_overlap.json",
+ "baseline": "sw_tta",
+ "paired": {
+  "sw_tta_ov4": {
+   "vocals": {
+    "sar": {
+     "unpaired_delta_db": 0.02825931857500308,
+     "paired_delta_db": 0.08875466651347708,
+     "won": 18,
+     "n": 20
+    },
+    "sdr": {
+     "unpaired_delta_db": 0.029474061733626655,
+     "paired_delta_db": 0.08493784863462306,
+     "won": 18,
+     "n": 20
+    }
+   },
+   "drums": {
+    "sar": {
+     "unpaired_delta_db": 0.07660940856392351,
+     "paired_delta_db": 0.1350118601458794,
+     "won": 20,
+     "n": 20
+    },
+    "sdr": {
+     "unpaired_delta_db": 0.07078128915704696,
+     "paired_delta_db": 0.12087264191308122,
+     "won": 19,
+     "n": 20
+    }
+   },
+   "bass": {
+    "sar": {
+     "unpaired_delta_db": 0.03080050102167675,
+     "paired_delta_db": 0.10960501558260738,
+     "won": 17,
+     "n": 20
+    },
+    "sdr": {
+     "unpaired_delta_db": 0.08198474866938987,
+     "paired_delta_db": 0.10678044865381064,
+     "won": 15,
+     "n": 20
+    }
+   },
+   "other": {
+    "sar": {
+     "unpaired_delta_db": 0.09465493984250983,
+     "paired_delta_db": 0.09439558061899378,
+     "won": 17,
+     "n": 20
+    },
+    "sdr": {
+     "unpaired_delta_db": 0.09142361704938295,
+     "paired_delta_db": 0.08355945118514985,
+     "won": 18,
+     "n": 20
+    }
+   }
+  },
+  "sw_tta_ov8": {
+   "vocals": {
+    "sar": {
+     "unpaired_delta_db": 0.32389429494942235,
+     "paired_delta_db": 0.0984432720850128,
+     "won": 19,
+     "n": 20
+    },
+    "sdr": {
+     "unpaired_delta_db": 0.14259968997733807,
+     "paired_delta_db": 0.09357786231497567,
+     "won": 19,
+     "n": 20
+    }
+   },
+   "drums": {
+    "sar": {
+     "unpaired_delta_db": 0.10922421129966331,
+     "paired_delta_db": 0.13409274895923673,
+     "won": 20,
+     "n": 20
+    },
+    "sdr": {
+     "unpaired_delta_db": 0.07643476055419463,
+     "paired_delta_db": 0.13954628017226867,
+     "won": 19,
+     "n": 20
+    }
+   },
+   "bass": {
+    "sar": {
+     "unpaired_delta_db": 0.023858334497063538,
+     "paired_delta_db": 0.11835432547418012,
+     "won": 17,
+     "n": 20
+    },
+    "sdr": {
+     "unpaired_delta_db": 0.09284938885076777,
+     "paired_delta_db": 0.0940792363796562,
+     "won": 15,
+     "n": 20
+    }
+   },
+   "other": {
+    "sar": {
+     "unpaired_delta_db": 0.09621166567569972,
+     "paired_delta_db": 0.10169882041685518,
+     "won": 17,
+     "n": 20
+    },
+    "sdr": {
+     "unpaired_delta_db": 0.08095928290383014,
+     "paired_delta_db": 0.08191970595066156,
+     "won": 18,
+     "n": 20
+    }
+   }
+  }
+ },
+ "sign_flips": []
+}

@@ -6,7 +6,7 @@
 
 ---
 
-## Current state (2026-09-28) — git: `e5bb887` + uncommitted paired-statistics fix
+## Current state (2026-09-28) — git: `d93a9c3` + §14.7 paired re-derivation
 
 | Area | State |
 |---|---|
@@ -48,6 +48,36 @@ median**, not the +1.8…+2.1 dB that one song suggested.
 ---
 
 ## Recently changed
+
+### 2026-09-28 (7) — It was never bss_eval's filter. It was the unpaired statistic, and I blamed the wrong thing twice
+
+`tools/paired_rescore.py` (new) re-derives any existing benchmark JSON as a paired statistic **with no GPU work** —
+`artifact_reduction.py` and `overlap_experiment.py` both recorded a `song` field on every row, so the per-song pairing
+was recoverable from files already on disk. Both of those tools decided their verdicts on `median(cand) - median(base)`
+with **no win counts at all**, and between them they produced §14.2's four rejections and §14.5's overlap adoption.
+
+Re-derived from the **same bss_eval SAR numbers**:
+
+| candidate | stem | unpaired ΔSAR | paired ΔSAR | won |
+|---|---|---|---|---|
+| `+mdx23c` | vocals | **+0.22** | **−0.04** | 6/20 |
+| overlap 8 | vocals | **+0.32** | **+0.10** | 19/20 |
+| overlap 4 | vocals | +0.03 | +0.09 | 18/20 |
+
+Both of the anomalies I attributed to bss_eval's 512-tap distortion filter — in §14.4 and again in §14.6, and twice to
+the user in conversation — were the unpaired median instead. The +0.22 flips sign; the +0.32 becomes +0.10, which is
+overlap 4's +0.09. **Once paired, bss_eval SAR and the filter-free full-band SNR agree on every case tested.** The two
+metrics never disagreed; a bad statistic was making one look untrustworthy.
+
+Written up as **docs/04 §14.7**, with §14.4's explanation explicitly withdrawn as the cause and §14.6 rewritten.
+
+What holds: **all four §14.2 rejections stand** (paired, every candidate is negative on every stem; the Wiener variants
+by 2.4–4.6 dB). No verdict in §14 flips. The full-band gate stays — it was right in both disputed cases — but its
+justification is now "an independent filter-free check is worth having", not "bss_eval manufactured a result".
+
+The honest lesson, recorded because it will recur: I offered three explanations across §14.3, §14.4 and §14.6 for
+anomalies whose cause was one line of arithmetic in the comparison, inside the tool meant to be the safeguard. An error
+in the statistic looks exactly like an error in the measurement and is far cheaper to check. Check it first.
 
 ### 2026-09-28 (6) — The mandatory gate itself was computing the wrong statistic. Fixed, and (5)'s verdict re-derived
 

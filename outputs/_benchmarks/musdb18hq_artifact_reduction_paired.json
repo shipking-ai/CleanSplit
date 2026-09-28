@@ -1,0 +1,267 @@
+{
+ "source": "musdb18hq_artifact_reduction.json",
+ "baseline": "ensemble",
+ "paired": {
+  "+mdx23c": {
+   "vocals": {
+    "sar": {
+     "unpaired_delta_db": 0.22107353009123898,
+     "paired_delta_db": -0.03629994569205586,
+     "won": 6,
+     "n": 20
+    },
+    "sdr": {
+     "unpaired_delta_db": 0.1269882414608432,
+     "paired_delta_db": -0.07383635554677781,
+     "won": 4,
+     "n": 20
+    }
+   },
+   "drums": {
+    "sar": {
+     "unpaired_delta_db": 0.0,
+     "paired_delta_db": 0.0,
+     "won": 0,
+     "n": 20
+    },
+    "sdr": {
+     "unpaired_delta_db": 0.0,
+     "paired_delta_db": 0.0,
+     "won": 0,
+     "n": 20
+    }
+   },
+   "bass": {
+    "sar": {
+     "unpaired_delta_db": 0.0,
+     "paired_delta_db": 0.0,
+     "won": 0,
+     "n": 20
+    },
+    "sdr": {
+     "unpaired_delta_db": 0.0,
+     "paired_delta_db": 0.0,
+     "won": 0,
+     "n": 20
+    }
+   },
+   "other": {
+    "sar": {
+     "unpaired_delta_db": 0.008391785026283571,
+     "paired_delta_db": -0.029855714365656816,
+     "won": 3,
+     "n": 20
+    },
+    "sdr": {
+     "unpaired_delta_db": -0.00440789067613423,
+     "paired_delta_db": -0.033546450990183274,
+     "won": 2,
+     "n": 20
+    }
+   }
+  },
+  "wiener1": {
+   "vocals": {
+    "sar": {
+     "unpaired_delta_db": -2.909872398975093,
+     "paired_delta_db": -2.366837694465195,
+     "won": 0,
+     "n": 20
+    },
+    "sdr": {
+     "unpaired_delta_db": -3.296635396626277,
+     "paired_delta_db": -2.7388209440455817,
+     "won": 0,
+     "n": 20
+    }
+   },
+   "drums": {
+    "sar": {
+     "unpaired_delta_db": -4.292920761439136,
+     "paired_delta_db": -3.330244707731744,
+     "won": 0,
+     "n": 20
+    },
+    "sdr": {
+     "unpaired_delta_db": -5.459355001122255,
+     "paired_delta_db": -4.579167084131024,
+     "won": 0,
+     "n": 20
+    }
+   },
+   "bass": {
+    "sar": {
+     "unpaired_delta_db": -3.135471855257144,
+     "paired_delta_db": -3.0218526429481507,
+     "won": 2,
+     "n": 20
+    },
+    "sdr": {
+     "unpaired_delta_db": -5.000368629298661,
+     "paired_delta_db": -5.214312071188278,
+     "won": 0,
+     "n": 20
+    }
+   },
+   "other": {
+    "sar": {
+     "unpaired_delta_db": -0.918367968799874,
+     "paired_delta_db": -0.693179649734716,
+     "won": 5,
+     "n": 20
+    },
+    "sdr": {
+     "unpaired_delta_db": -2.5125659636133086,
+     "paired_delta_db": -2.158995791989255,
+     "won": 2,
+     "n": 20
+    }
+   }
+  },
+  "wiener2": {
+   "vocals": {
+    "sar": {
+     "unpaired_delta_db": -3.071050102453288,
+     "paired_delta_db": -2.5186461737602492,
+     "won": 0,
+     "n": 20
+    },
+    "sdr": {
+     "unpaired_delta_db": -3.0874982336323686,
+     "paired_delta_db": -2.613327874589726,
+     "won": 0,
+     "n": 20
+    }
+   },
+   "drums": {
+    "sar": {
+     "unpaired_delta_db": -4.743937852798078,
+     "paired_delta_db": -3.445828414771385,
+     "won": 0,
+     "n": 20
+    },
+    "sdr": {
+     "unpaired_delta_db": -4.854982592043672,
+     "paired_delta_db": -4.048494290958091,
+     "won": 0,
+     "n": 20
+    }
+   },
+   "bass": {
+    "sar": {
+     "unpaired_delta_db": -3.58778956009974,
+     "paired_delta_db": -3.3443517843749757,
+     "won": 0,
+     "n": 20
+    },
+    "sdr": {
+     "unpaired_delta_db": -4.227947863338537,
+     "paired_delta_db": -4.349003735894967,
+     "won": 0,
+     "n": 20
+    }
+   },
+   "other": {
+    "sar": {
+     "unpaired_delta_db": -1.6778404341011566,
+     "paired_delta_db": -1.4670934695277715,
+     "won": 2,
+     "n": 20
+    },
+    "sdr": {
+     "unpaired_delta_db": -2.1889927779237217,
+     "paired_delta_db": -1.7452926363416426,
+     "won": 2,
+     "n": 20
+    }
+   }
+  },
+  "wiener2_smooth": {
+   "vocals": {
+    "sar": {
+     "unpaired_delta_db": -3.5950542235139924,
+     "paired_delta_db": -3.2646778135274275,
+     "won": 0,
+     "n": 20
+    },
+    "sdr": {
+     "unpaired_delta_db": -3.7454372165460033,
+     "paired_delta_db": -3.45518591533431,
+     "won": 0,
+     "n": 20
+    }
+   },
+   "drums": {
+    "sar": {
+     "unpaired_delta_db": -5.53382497295919,
+     "paired_delta_db": -4.411336292799813,
+     "won": 0,
+     "n": 20
+    },
+    "sdr": {
+     "unpaired_delta_db": -6.367065791315555,
+     "paired_delta_db": -5.290396279660421,
+     "won": 0,
+     "n": 20
+    }
+   },
+   "bass": {
+    "sar": {
+     "unpaired_delta_db": -4.289314248855334,
+     "paired_delta_db": -4.551277220018228,
+     "won": 0,
+     "n": 20
+    },
+    "sdr": {
+     "unpaired_delta_db": -4.991041996786739,
+     "paired_delta_db": -5.172605441389481,
+     "won": 0,
+     "n": 20
+    }
+   },
+   "other": {
+    "sar": {
+     "unpaired_delta_db": -2.059881106835123,
+     "paired_delta_db": -1.8011413909004776,
+     "won": 2,
+     "n": 20
+    },
+    "sdr": {
+     "unpaired_delta_db": -2.785691343101127,
+     "paired_delta_db": -2.221624870206676,
+     "won": 2,
+     "n": 20
+    }
+   }
+  }
+ },
+ "sign_flips": [
+  {
+   "arm": "+mdx23c",
+   "stem": "vocals",
+   "metric": "sar",
+   "unpaired": 0.22107353009123898,
+   "paired": -0.03629994569205586,
+   "won": 6,
+   "n": 20
+  },
+  {
+   "arm": "+mdx23c",
+   "stem": "vocals",
+   "metric": "sdr",
+   "unpaired": 0.1269882414608432,
+   "paired": -0.07383635554677781,
+   "won": 4,
+   "n": 20
+  },
+  {
+   "arm": "+mdx23c",
+   "stem": "other",
+   "metric": "sar",
+   "unpaired": 0.008391785026283571,
+   "paired": -0.029855714365656816,
+   "won": 3,
+   "n": 20
+  }
+ ]
+}

@@ -558,11 +558,14 @@ Adding MDX23C to the 2-model vocal average:
 evenly across the spectrum, on 16 of 20 songs, exactly as §11 found. The removal decision in §11 is confirmed by an
 independent measurement and the §14.3 explanation I offered for the disagreement was wrong.
 
-So the +0.22 dB SAR in §14.2 comes from the other difference: **`bss_eval` fits an optimal distortion filter (a
-512-tap projection onto filtered versions of the true sources) before scoring.** Any error that looks like an EQ
-curve is absorbed into the "target" term instead of being charged as distortion. A candidate whose spectral balance
-is systematically off can therefore score better on SAR while being further from the truth by every filter-free
-measure.
+So the +0.22 dB SAR in §14.2 comes from somewhere else. The explanation offered here originally was that **`bss_eval`
+fits an optimal distortion filter (a 512-tap projection onto filtered versions of the true sources) before scoring**,
+absorbing EQ-shaped error into the "target" term instead of charging it as distortion. That mechanism is real and worth
+knowing about.
+
+> **Correction (§14.7).** It was not the cause here. The +0.22 dB was an artefact of the *unpaired* statistic, not of
+> the filter: re-derived paired from the same `bss_eval` numbers, `+mdx23c` is **−0.04 dB on vocals, winning 6 of 20
+> songs**. The filter allowance has not been shown to change any verdict in this project. See §14.7.
 
 **How to read §14 from here on:**
 
@@ -573,7 +576,8 @@ measure.
 * A **SAR-only gain with no full-band confirmation is not evidence of an audibly cleaner stem.** Any future candidate
   that passes the §14.2 rule must also clear a filter-free full-band check before it ships. That requirement is added
   now, after a falsified prediction — it makes adoption harder, not easier, so it is not a re-tuning of the bar in
-  the candidate's favour.
+  the candidate's favour. It is still worth keeping for that reason, even though §14.7 shows the specific anomaly that
+  motivated it had a different cause.
 
 ### 14.5 Chunk overlap: the first artifact lever that works (2026-09-28)
 
@@ -695,3 +699,57 @@ Three lessons worth keeping:
    complete, which is exactly when nobody checks — and these caches fill incrementally, so incomplete is the norm.
 3. A decision rule needs a minimum effect size, not just a sign. "Better than zero" plus "costs whatever it costs" is
    not a quality policy; it is a licence to spend unlimited time on inaudible gains.
+
+### 14.7 One root cause, blamed on the wrong thing twice: it was the unpaired statistic, not bss_eval's filter
+
+Two anomalies in §14 were reported as evidence that `bss_eval`'s optimal distortion filter manufactures results:
+
+* `+mdx23c` gaining **+0.22 dB** vocal SAR while being worse full-band (§14.2, §14.4);
+* overlap 8 gaining **+0.32 dB** vocal SAR while the full-band metric did not move (§14.6, first version).
+
+Both attributions were wrong, and the real cause is the same in both cases: the **unpaired** statistic. Every row in
+`tools/artifact_reduction.py` and `tools/overlap_experiment.py` carries its song name, so the pairing can be recovered
+from the JSON they already wrote, with no GPU work — `tools/paired_rescore.py` does exactly that. Re-derived from the
+**same `bss_eval` SAR numbers**, matched per song:
+
+| candidate | stem | unpaired ΔSAR | paired ΔSAR | won |
+|---|---|---|---|---|
+| `+mdx23c` | vocals | **+0.22** | **−0.04** | 6/20 |
+| `+mdx23c` | vocals (SDR) | +0.13 | −0.07 | 4/20 |
+| `+mdx23c` | other | +0.01 | −0.03 | 3/20 |
+| overlap 4 | vocals | +0.03 | +0.09 | 18/20 |
+| overlap 8 | vocals | **+0.32** | **+0.10** | 19/20 |
+| overlap 8 | drums | +0.11 | +0.13 | 20/20 |
+| overlap 8 | bass | +0.02 | +0.12 | 17/20 |
+
+Three sign flips, all of them `+mdx23c`, all in the direction that had made a bad candidate look good. And overlap 8's
+notorious +0.32 dB is **+0.10 dB** once paired — indistinguishable from overlap 4's +0.09, which is what the full-band
+gate was saying all along.
+
+**The consequence is a simplification.** Once every comparison is paired, `bss_eval`'s SAR and the filter-free
+full-band SNR **agree on every case tested here**:
+
+| | paired ΔSAR (vocals) | paired Δfull-band SNR (vocals) |
+|---|---|---|
+| overlap 4 vs single-pass | +0.09 | +0.08 |
+| overlap 8 vs single-pass | +0.10 | +0.07 |
+| `+mdx23c` | −0.04 | worse, 16/20 |
+
+The two metrics never actually disagreed. An unpaired median was making one of them look untrustworthy.
+
+**What this does and does not change.**
+
+* **All four §14.2 rejections stand.** Paired, every candidate is negative on every stem — the Wiener variants by
+  2.4–4.6 dB. No verdict in §14 flips.
+* **The §14.4 filter explanation is withdrawn as the cause.** The filter allowance is a real property of `bss_eval` and
+  a documented hazard, but it has not been shown to change a single verdict in this project. Claiming it did, twice, was
+  a misattribution on my part: I reached for the sophisticated explanation and did not check the boring one first.
+* **The filter-free full-band gate stays.** It was right in both disputed cases, it is the metric that tracks what a
+  listener hears, and an independent check is worth keeping regardless of which mechanism motivated it.
+* **Paired statistics are now enforced in code, not policy** — `paired()` in `tools/fullband_check.py`, matched by song
+  name, with `cleansplit/tests/test_paired_statistics.py` failing on both the unpaired and the by-position forms.
+
+The general lesson, and the reason this section exists rather than a quiet edit: an error in the *statistic* looks
+exactly like an error in the *measurement*, and it is much cheaper to check. Three different explanations were offered
+for these anomalies across §14.3, §14.4 and §14.6 before the actual cause was found, and the actual cause was one line
+of arithmetic in the comparison, sitting in the tool that was supposed to be the safeguard.
