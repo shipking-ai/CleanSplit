@@ -6,7 +6,7 @@
 
 ---
 
-## Current state (2026-09-28) — git: `eb1abdc` + CLI separator choices fix
+## Current state (2026-09-28) — git: pushed to github.com/shipking-ai/CleanSplit (private)
 
 | Area | State |
 |---|---|
@@ -48,6 +48,31 @@ median**, not the +1.8…+2.1 dB that one song suggested.
 ---
 
 ## Recently changed
+
+### 2026-09-28 (12) — Vocal recipe verdict, GitHub repo live, README rebuilt with generated assets
+
+**VERDICT: `both_tta` REJECTED** (docs/04 §14.13). Giving ep317 its own TTA gains **+0.01 dB winning 16/20** — real and
+consistent — for **+50% GPU time** on every render (the ensemble goes 4 passes to 6). Below the +0.02 dB floor, so it
+does not ship. **Second time the floor has changed a decision, both times the same way: a consistent gain not worth its
+cost.** Win counts measure reliability, not size. The control `ep317_tta_alone` is −0.28 dB (3/20), confirming the
+averaging does the work, not the augmentation. TTA now has three independent confirmations as the worst-value lever.
+
+**Repo is live: https://github.com/shipking-ai/CleanSplit — PRIVATE**, per the user's answer. NOTE: `gh` has two
+accounts authenticated (`shipking-ai` active, `mattycigemp-crypto`); the active one was used. 189 files, 557 KB packed,
+no weights and no audio (both gitignored).
+
+**README rebuilt** after researching what well-regarded repos actually do (awesome-readme, demucs, uv). Devices adopted:
+centred HTML header, `<picture>` with `prefers-color-scheme` so nothing looks broken in dark mode, one tight badge row,
+quick-start above the fold, `<details>` collapsible for the cost ranking, GitHub `> [!IMPORTANT]` callout.
+
+`tools/dev/make_readme_assets.py` (new) generates every figure from measured data — nothing illustrative:
+* `banner-{light,dark}.svg` — hand-written SVG, one mixture waveform fanning into four stem lanes.
+* `tiers-{light,dark}.png` — from `musdb18hq_quality_tiers.json`.
+* `spectrograms-{light,dark}.png` — from the rendered audio that was actually scored: mixture, vocals, drums, bass, and
+  the **true-scale** error. The error panel is labelled "14 dB down" because on a 100 dB colour scale a 14 dB gap still
+  looks bright, and an unlabelled panel would read as "the error is as big as the signal".
+
+**Commits no longer carry Claude attribution footers** (user instruction, 2026-09-28; saved to memory).
 
 ### 2026-09-28 (11) — SCNet was registered but unreachable from the CLI, and the cost claim in --separator help was wrong
 

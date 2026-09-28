@@ -938,3 +938,32 @@ measured for free when that lands.
 forwarded `tta` to the ensemble factory, exactly as it once failed to forward `--overlap` (§14.5). The `balanced` tier
 would therefore have advertised 4 units while actually running SW three times at 16 — a tier that lied about its own
 cost. Fixed, with a test asserting the flag reaches the constructed separator.
+
+### 14.13 The vocal recipe's asymmetry costs nothing: ep317 does not need TTA
+
+The shipped ensemble runs SW with 3-pass TTA and ep317 with a single pass. Nobody had measured whether that asymmetry
+was costing the flagship stem — §14.5 listed it as open work rather than guessing. `tools/vocal_best_recipe.py` ran all
+three arms at overlap 4, so overlap is not a confound.
+
+| candidate | SNR | paired ΔSNR | won | SAR | ΔSAR |
+|---|---|---|---|---|---|
+| `shipped` — mean(SW+TTA, ep317) | 13.61 | — | — | 14.49 | — |
+| `both_tta` — mean(SW+TTA, ep317+TTA) | 13.59 | **+0.01** | 16/20 | 14.49 | +0.01 |
+| `ep317_tta_alone` | 13.49 | **−0.28** | 3/20 | 13.92 | −0.37 |
+
+**`both_tta` is rejected, and this is the clearest case yet for the effect-size floor.** It gains on 16 of 20 songs —
+a consistent, real improvement by any sign test — of **+0.01 dB**, for a 50% increase in GPU time on every render
+(ep317 goes from 1 pass to 3, so the ensemble goes from 4 passes to 6). Under the pre-registered rule it needs +0.02 dB,
+and it does not clear it. Without the floor this would have been adopted on its win count alone.
+
+That is the second time the floor has changed a decision (§14.6 was the first), and both times in the same direction:
+**a consistent gain that is not worth its cost.** Win counts measure reliability, not size; a rule needs both.
+
+`ep317_tta_alone` is the control, and it lands where §14.9 predicted: 0.28 dB *below* the shipped average despite having
+TTA. The averaging does the work, not the augmentation — the same conclusion the weighting curve reached from the other
+direction.
+
+**The ranking in §14.8 now has three independent confirmations.** TTA is the worst-value lever in the recipe: worth
++0.04 dB on SW alone at overlap 2, +0.01 dB on ep317 inside the ensemble at overlap 4, and ~40× worse per unit of
+compute than simply averaging a second model. The remaining open question is whether TTA is worth keeping for the SW
+member at all, which is exactly what the queued `sw_ov4` arm measures.
