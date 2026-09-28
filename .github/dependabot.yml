@@ -4,11 +4,22 @@ updates:
     directory: "/"
     schedule: { interval: monthly }
     commit-message: { prefix: "ci" }
+    # Every action is pinned to a release SHA, so Dependabot is the only thing that moves them -- which makes the
+    # cooldown load bearing rather than cosmetic. A compromised release is usually yanked within days, and waiting a
+    # week before opening the PR means this repository never rushes to adopt one. zizmor's dependabot-cooldown audit
+    # flagged the absence of this block.
+    cooldown: { default-days: 7 }
+    groups:
+      actions: { patterns: ["*"] }
+
   - package-ecosystem: pip
     directory: "/"
     schedule: { interval: monthly }
     commit-message: { prefix: "deps" }
     open-pull-requests-limit: 5
+    cooldown: { default-days: 7, semver-major-days: 14 }
+    groups:
+      python: { patterns: ["*"] }
     # Torch is pinned to a CUDA wheel index locally and is not what CI installs; bumping it from a PR would be noise.
     ignore:
       - dependency-name: torch
