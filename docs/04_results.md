@@ -572,7 +572,7 @@ knowing about.
 * The **qualitative** conclusion stands: SIR and SAR are computed inside the same framework on the same audio, so
   "bleed is 10–11 dB cleaner than artifacts" is a valid comparison, and artifacts remain the right target.
 * The **ensemble's +1.12 dB SAR** stands, because it is corroborated full-band and filter-free by §11
-  (+0.39 dB median SNR vs SW, 18/20 songs). Two independent metrics, same direction.
+  (+0.45 dB paired median SNR vs SW, 18/20 songs; see 14.8). Two independent metrics, same direction.
 * A **SAR-only gain with no full-band confirmation is not evidence of an audibly cleaner stem.** Any future candidate
   that passes the §14.2 rule must also clear a filter-free full-band check before it ships. That requirement is added
   now, after a falsified prediction — it makes adoption harder, not easier, so it is not a re-tuning of the bar in
@@ -623,7 +623,7 @@ prompted this:
 
 | default | was | now | measured gain | cost |
 |---|---|---|---|---|
-| `--separator` | `bs_roformer_sw` | **`ensemble`** | **+1.12 dB vocal SAR**, +0.39 dB SNR, 18/20 songs (§11, §14.1) | ~4 model passes |
+| `--separator` | `bs_roformer_sw` | **`ensemble`** | **+1.12 dB vocal SAR**, +0.45 dB paired SNR, 18/20 songs (§11, §14.1, §14.8) | ~4 model passes |
 | `--overlap` | 2 | **4** | +0.03…+0.09 dB SAR, 14–19/20 songs (§14.5) | ~2× |
 | `--tta` | off | **on** (`--no-tta` to disable) | better on all four stems (§6, §14.1) | 3× on the SW pass |
 
@@ -797,3 +797,40 @@ component of the default recipe apart from overlap 8, which is not in it.
 
 **This is the table the `--quality` tiers will be built from**, once the TTA and SCNet verdicts land — so that each tier
 carries a real measured cost in passes and a real measured dB, rather than an adjective.
+
+### 14.9 The free lever is not there: equal weighting is exactly optimal, and the whole axis is worth ≤0.013 dB
+
+Every lever in §14.8 buys quality with compute. The blend **weight** buys it with nothing: `vocals = (sw + ep317) / 2`
+is one constant, and 0.5 was chosen because it is the obvious value, never because it measured best.
+
+`tools/ensemble_weight.py`, pre-registered with a **held-out split** before any weight was scored, because choosing a
+weight to maximise a score on the same 20 songs this project reports against is fitting the test set: fit on the first
+10 songs in the fixed alphabetical order, choose the weight there only, then check it on the untouched last 10.
+
+Paired median full-band vocal SNR against w = 0.50, on the fit half (w is the weight on SW+TTA):
+
+| w | 0.00 | 0.25 | 0.40 | 0.45 | **0.50** | 0.55 | 0.60 | 0.75 | 1.00 |
+|---|---|---|---|---|---|---|---|---|---|
+| ΔSNR | −0.344 | −0.094 | −0.016 | −0.004 | **0.000** | −0.003 | −0.016 | −0.112 | −0.417 |
+| won | 2/10 | 3/10 | 3/10 | 5/10 | — | 5/10 | 3/10 | 2/10 | 0/10 |
+
+**w\* = 0.50 exactly.** Every other weight on a 0.05 grid is worse, the curve is smooth and symmetric, and the optimum
+is flat: ±0.05 costs 0.003–0.004 dB and splits the songs 5/10. Held-out check: nothing to check, since the fit half
+chose the incumbent. **The prediction recorded in the docstring — w\* in [0.4, 0.6] and no held-out gain — is CONFIRMED.**
+
+The decisive number is the ceiling. Allowing a **different weight per song, chosen by reading the truth**:
+
+> **oracle per-song weight: +0.013 dB paired median.**
+
+So the entire weighting axis — fixed, per-song, or any adaptive scheme anyone could build — is worth at most
+**0.013 dB**, about a seventh of the +0.09 dB that doubling the overlap delivers and a thirtieth of adding ep317. This
+closes the axis permanently rather than merely failing one candidate, which is the useful shape for a negative result:
+no future weighting idea needs measuring.
+
+Two things fall out of the curve for free:
+
+* **The two models are of near-equal strength**, which is why 0.5 is optimal and why the curve is symmetric. That is
+  docs/01 §8.2's comparable-strength rule confirmed from a new direction — not by adding a weak model and watching it
+  hurt, but by showing the optimal mixing weight sits at the midpoint.
+* **ep317 alone (w = 0, −0.344 dB) beats SW+TTA alone (w = 1, −0.417 dB)** on vocals by about 0.07 dB, while both lose
+  heavily to the average. The averaging does the work, not either member — consistent with §14.1's +1.12 dB SAR.

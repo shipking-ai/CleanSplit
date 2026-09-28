@@ -224,7 +224,7 @@ def build_parser() -> argparse.ArgumentParser:
         sp.add_argument("--separator", default=default_separator,
                         choices=["bs_roformer_sw", "ensemble", "ensemble_demucs", "bs_roformer_ep317", "htdemucs_ft", "mdx23c_instvoc_hq"],
                         help="ensemble (default): vocals=mean(SW+TTA, ep317), other=remainder. The best measured "
-                             "quality (MUSDB18-HQ, 20 songs: +0.39 dB vocals median vs SW, better on 18/20; "
+                             "quality (MUSDB18-HQ, 20 songs: +0.45 dB vocals paired median vs SW, better on 18/20; "
                              "+1.12 dB vocal SAR, the largest artifact gain measured -- docs/04 sections 11 and 14). "
                              "About 4 model passes, so roughly 4x slower than bs_roformer_sw, which is the fast "
                              "single-pass option; ensemble_demucs also averages drums/bass with HTDemucs_ft and is "

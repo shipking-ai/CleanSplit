@@ -6,7 +6,7 @@
 
 ---
 
-## Current state (2026-09-28) — git: `3705f6f` + §14.8 cost-normalised lever ranking
+## Current state (2026-09-28) — git: `6f0794b` + §14.9 weighting axis closed
 
 | Area | State |
 |---|---|
@@ -48,6 +48,29 @@ median**, not the +1.8…+2.1 dB that one song suggested.
 ---
 
 ## Recently changed
+
+### 2026-09-28 (9) — The free quality lever does not exist: equal weighting is exactly optimal (axis worth ≤0.013 dB)
+
+`tools/ensemble_weight.py` (new). Every lever in §14.8 buys quality with compute; the vocal blend **weight** would buy
+it with nothing, and 0.5 was picked because it is obvious, never because it measured best. Pre-registered with a
+**held-out split** — fit on the first 10 songs, choose the weight there only, check on the untouched last 10 — because
+tuning a weight on the same 20 songs this project reports against is fitting the test set.
+
+**w\* = 0.50 exactly.** Every other weight on a 0.05 grid is worse; the curve is symmetric and flat (±0.05 costs
+0.003–0.004 dB, splits songs 5/10); w=0 is −0.344 dB and w=1 is −0.417 dB. Prediction in the docstring (w\* in
+[0.4, 0.6], no held-out gain) **CONFIRMED**.
+
+**The number that closes the axis: the oracle per-song weight, reading the truth, is worth +0.013 dB.** So any
+weighting scheme at all — fixed, per-song, adaptive — is capped at 0.013 dB, a seventh of doubling the overlap and a
+thirtieth of adding ep317. Written up as **docs/04 §14.9**. No future weighting idea needs measuring.
+
+Two free findings from the curve: the two models are of near-equal strength (which is *why* 0.5 is optimal — docs/01
+§8.2's comparable-strength rule confirmed from a new direction), and **ep317 alone beats SW+TTA alone on vocals** by
+~0.07 dB while both lose heavily to their average, so the averaging does the work, not either member.
+
+Also corrected the understated headline number in the places that state it as a live claim (CLI `--separator` help,
+`ensemble.py` docstring, §14.4's corroboration line, both defaults tables, `oracle_headroom.py`): **+0.45 dB paired**,
+not +0.39 dB unpaired. §11's own narrative is left as written, with §14.8 explaining the difference.
 
 ### 2026-09-28 (8) — §11's headline number was UNDERSTATED, and ensembling is ~40x better value than TTA
 
@@ -320,7 +343,7 @@ overlap at 2, and it exposed something bigger than the overlap question.
 
 | default | was | now | measured gain | cost |
 |---|---|---|---|---|
-| `--separator` | `bs_roformer_sw` | **`ensemble`** | **+1.12 dB vocal SAR**, +0.39 dB SNR, 18/20 songs | ~4 model passes |
+| `--separator` | `bs_roformer_sw` | **`ensemble`** | **+1.12 dB vocal SAR**, +0.45 dB paired SNR, 18/20 songs | ~4 model passes |
 | `--overlap` | 2 | **4** | +0.03…+0.09 dB SAR, 14–19/20 songs | ~2× |
 | `--tta` | off | **on**, `--no-tta` to disable | better on all four stems | 3× on the SW pass |
 

@@ -9,7 +9,7 @@
 Evidence (docs/04_results.md sections 7 and 10; real music with known stems, equal weights, nothing tuned):
   default:     vocals +2.14 / +1.83 dB, other group +0.69 / +1.11 dB, drums and bass within +-0.01 dB vs single-pass SW
                on one song (BUH, separator-made reference).
-  MUSDB18-HQ, 20 real multitracks (docs/04 section 11): vocals +0.39 dB median vs single-pass SW, better on 18/20
+  MUSDB18-HQ, 20 real multitracks (docs/04 sections 11, 14.8): vocals +0.45 dB PAIRED median vs single-pass SW, 18/20
                songs. Much smaller than the BUH number, and the one that counts.
   MDX23C was added as a third vocal model on the strength of five BUH excerpts (section 10) and REMOVED again after
                MUSDB: the two-model average beat the three-model one on 16/20 songs (median +0.09 dB). It remains

@@ -110,7 +110,7 @@ def main(limit: int | None, tf: int, tt: int, out: Path) -> None:
         d, w = paired(k, "average")
         print(f"    {k:10s} {d:+6.2f} dB  {w:2d}/{len(rows)}")
     print(f"\n  HEADROOM a perfect listener could win: {gap:+.2f} dB over what ships, on {gap_wins}/{len(rows)} songs")
-    print(f"  for scale: the entire two-model ensemble is worth +0.39 dB, and every generative repairer tested lost.")
+    print(f"  for scale: the entire two-model ensemble is worth +0.45 dB paired, and every generative repairer lost.")
     picks = {k: float(np.mean([r['picked'][k] for r in rows])) for k in rows[0]["picked"]}
     print(f"  oracle picked: " + ", ".join(f"{k} {v:.0%}" for k, v in picks.items()))
     print("  NOT achievable: it reads the truth to choose, and is not charged for the seams it creates.")
