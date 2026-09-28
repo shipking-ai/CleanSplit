@@ -28,6 +28,14 @@ tracked). Two different claims, so two different reasons:
 If a genuine alert ever appears it will now be the only thing in that tab. Re-open any of these with the API if the
 reasoning stops holding.
 
+**A dismissal is bound to a location fingerprint, so editing a flagged function re-files it.** Worth knowing before
+touching `service.py` again: the rescan after f9b307a marked 16 of those 18 dismissals **"fixed"** and opened 7 new
+alerts on the shifted lines of `peaks()` — including three on code that did not exist before (the temp file and
+`os.replace`). Those 7 were dismissed with their own comments; the tab is empty again, at **25 dismissed, 16 fixed,
+0 open**. The recurring cost is real and it lands on whoever edits `peaks()` or `audio_path()` next: expect to write
+fresh dismissals rather than for the old ones to carry over. The alternative is routing every path through one helper
+CodeQL recognises as a sanitiser, which was considered and not done.
+
 **A flaky CI failure turned out to be a real bug in the shipped UI** (f9b307a). The ubuntu/py3.10 leg of run
 36480845648 failed with `json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)` from
 `peaks()` and passed on rerun. The empty string it decoded was the point: `peaks` wrote ~58 kB of JSON with
