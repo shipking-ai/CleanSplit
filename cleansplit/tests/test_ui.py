@@ -61,6 +61,29 @@ def test_song_dir_refuses_paths_outside_the_output_root(out_root):
         svc.audio_path("ensemble", "Test_Song", "../../original")
 
 
+def test_a_stem_name_cannot_reach_a_file_that_actually_exists_outside_the_song(out_root, tmp_path):
+    """The traversal test above passed for the wrong reason, which is worth a test of its own.
+
+    It asserted FileNotFoundError for `../../original` -- and got one, because no such file existed. `audio_path`
+    checked `is_file()` but never checked WHERE the path landed, so a stem name that pointed at a real file outside the
+    song folder would have been served. This plants such a file first, so the assertion can only pass if the name is
+    rejected. CodeQL's py/path-injection is what prompted the second look.
+    """
+    secret = out_root.parent / "secret.wav"
+    save_audio(secret, np.zeros((2, 1000), dtype=np.float32), 44100)
+    assert secret.is_file()                     # the target is real, so is_file() alone would let it through
+    # FOUR levels, counted rather than guessed: from <out_root>/<variant>/<slug>/stems/ it takes stems -> slug ->
+    # variant -> out_root to get out. A shallower `../../` only reaches the variant folder and would make this test
+    # pass against the vulnerable code too -- which is the exact mistake the test above made.
+    svc = Service(out_root)
+    for bad in ("../../../../secret", "..\..\..\..\secret", "..", ".", ""):
+        with pytest.raises(FileNotFoundError):
+            svc.audio_path("ensemble", "Test_Song", bad)
+        with pytest.raises(FileNotFoundError):
+            svc.peaks("ensemble", "Test_Song", bad)      # this one would otherwise WRITE a cache file outside
+    assert svc.audio_path("ensemble", "Test_Song", "vocals").is_file()   # the legitimate name still works
+
+
 def test_analysis_is_absent_until_it_has_been_measured(out_root):
     svc = Service(out_root)
     assert svc.analysis("ensemble", "Test_Song") == {"available": False, "regions": [], "metrics": {}}

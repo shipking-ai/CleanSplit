@@ -43,7 +43,7 @@ jobs:
           persist-credentials: false
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@7999b86c43a865dc79d8923397f35af22de63401 # v4
+        uses: github/codeql-action/init@2892aa5e19bbd11bc0cff5427e3b750a04d9e3c2 # v4
         with:
           languages: ${{ matrix.language }}
           queries: security-and-quality
@@ -59,6 +59,6 @@ jobs:
       # No autobuild step: Python and Actions are interpreted, so there is nothing to compile. Leaving autobuild in is
       # a common copy-paste that just adds a minute per run.
       - name: Perform CodeQL analysis
-        uses: github/codeql-action/analyze@7999b86c43a865dc79d8923397f35af22de63401 # v4
+        uses: github/codeql-action/analyze@2892aa5e19bbd11bc0cff5427e3b750a04d9e3c2 # v4
         with:
           category: /language:${{ matrix.language }}

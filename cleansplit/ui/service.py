@@ -209,9 +209,27 @@ class Service:
             raise FileNotFoundError(f"unknown song {variant}/{slug}")
         return p
 
+    @staticmethod
+    def _stem_name(stem: str) -> str:
+        """A stem name that is safe to interpolate into a path, or an error.
+
+        `song_dir` already confines variant and slug, but `stem` reached `d / "stems" / f"{stem}.wav"` unchecked, so
+        a value containing `..` escaped the song folder and `is_file()` happily confirmed whatever it landed on.
+        Reaching it needs a literal `/` or `\\` to survive routing, which Starlette's path parameters do not pass
+        through -- so this was a latent hole rather than a live one, and it is closed here rather than left depending
+        on the router's escaping. `service.py` is a plain Python API; something other than that one route will call it.
+        Found by CodeQL's py/path-injection on 2026-09-28, the first day code scanning could run on this repository.
+        """
+        if not stem or stem != Path(stem).name or stem in (".", "..") or any(c in stem for c in '/\\:'):
+            raise FileNotFoundError(f"invalid stem name {stem!r}")
+        return stem
+
     def audio_path(self, variant: str, slug: str, stem: str) -> Path:
         d = self.song_dir(variant, slug)
+        stem = self._stem_name(stem)
         p = (d / "original.wav") if stem == "original" else (d / "stems" / f"{stem}.wav")
+        if not p.resolve().is_relative_to(d):   # belt and braces: a symlink inside stems/ could still point out
+            raise FileNotFoundError(f"{stem} resolves outside {d}")
         if not p.is_file():
             raise FileNotFoundError(p)
         return p
@@ -219,6 +237,7 @@ class Service:
     # ---- waveform peaks (min/max per bucket), cached on disk ----
     def peaks(self, variant: str, slug: str, stem: str, buckets: int = 2400) -> dict:
         d = self.song_dir(variant, slug)
+        stem = self._stem_name(stem)   # this one WRITES a cache file, so an unchecked name would create it anywhere
         cache = d / "peaks" / f"{stem}.{buckets}.json"
         if cache.is_file():
             return json.loads(cache.read_text())
