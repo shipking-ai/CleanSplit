@@ -6,6 +6,33 @@
 
 ---
 
+## 2026-09-29 (later) — the CLI now writes the layout the app reads
+
+**Found by using the tool, not by reading it.** A real song was separated from the command line and then did not appear
+in the app at all. `separate`, `analyze` and `evaluate` wrote `<out>/<slug>`; `ui/service.py` writes and scans
+`<out>/<variant>/<slug>`. `cleansplit midi` already assumed the nested layout and worked around the difference by
+rewriting `out` to `<out>/<separator>` before calling `cmd_separate` — proof the inconsistency was known and awkward.
+
+`variant_root()` / `song_out_dir()` in `cli/main.py` are now the single source of the layout, and **every** command uses
+them: separate, analyze, evaluate, restore, midi. The midi workaround is gone (it would double-nest now).
+
+Three things worth keeping:
+- **`--stems-dir` runs are filed under `stem_folder`, not the named separator.** `_make_separator` ignores
+  `--separator` entirely when `--stems-dir` is given, so filing under `ensemble` would attribute someone else's stems
+  to a model that never ran — in the folder name the app shows as the variant.
+- **`restore` gained `--separator`**, including `stem_folder` in its choices although `separator_choices()` excludes it.
+  For restore the flag names a folder to work in, not a model to run; without it a run started from pre-separated stems
+  could not be restored at all.
+- **`cmd_midi` was forcing `tta=True`** in the Namespace it built for implicit separation — the 16-unit recipe section
+  14.15 rejected as the default. Now read from `QUALITY_TIERS[QUALITY_DEFAULT]` like everything else.
+
+**This is a breaking layout change.** Commands that read a song (`evaluate`, `restore`) detect the old flat folder and
+fail with the exact `mv` command instead of a bare not-found; silently falling back would keep two layouts alive and
+make "where is my song" unanswerable. `test_the_cli_writes_the_layout_the_app_reads` plants what `separate` writes and
+asserts `Service.songs()` lists it, so the two halves cannot drift apart again.
+
+---
+
 ## 2026-09-29 — one path helper CodeQL can actually see, and two stale CLI help strings
 
 **Why the old guard was invisible, from the query source rather than from guesswork.** `py/path-injection` is a

@@ -23,7 +23,10 @@ def test_analyze_restore_compare_e2e(tmp_path, song, capsys):
 
     assert main(["analyze", str(tmp_path / "My Song.wav"), "--stems-dir", str(stem_dir), "--out", str(out)]) == 0
     summary = json.loads(capsys.readouterr().out)
-    song_dir = out / "My_Song"
+    # <out>/<separator>/<slug>, the layout the app scans -- and the separator folder is `stem_folder`, not the default
+    # `ensemble`, because --stems-dir replaced the separator. Filing it under a model that never ran would misattribute
+    # these stems. Changed 2026-09-29 when the CLI stopped writing <out>/<slug> flat.
+    song_dir = out / "stem_folder" / "My_Song"
     for rel in [
         "original.wav", "stems/vocals.wav", "stems/other.wav", "reconstruction/reconstructed.wav",
         "reconstruction/residual.wav", "analysis/artifact_map.json", "analysis/metrics.json", "analysis/report.json",
@@ -36,7 +39,8 @@ def test_analyze_restore_compare_e2e(tmp_path, song, capsys):
     # residual file equals the removed piano content (float32 WAV)
     np.testing.assert_allclose(residual, stems["piano"] - corrupted["piano"], atol=1e-5)
 
-    assert main(["restore", str(tmp_path / "My Song.wav"), "--out", str(out)]) == 0
+    # restore does no separation, so it has to be told which variant folder to work in.
+    assert main(["restore", str(tmp_path / "My Song.wav"), "--out", str(out), "--separator", "stem_folder"]) == 0
     rsum = json.loads(capsys.readouterr().out)
     assert rsum["reconstruction"]["after"]["residual_rel_db"] < rsum["reconstruction"]["before"]["residual_rel_db"]
     rdir = song_dir / "restoration" / "residual_reallocation"
@@ -178,6 +182,43 @@ def test_tta_reaches_the_ensemble_so_the_balanced_tier_is_real():
             assert seen["tta"] is tta, f"tta={tta} did not reach the ensemble"
     finally:
         registry.create = real
+
+
+def test_the_cli_writes_the_layout_the_app_reads(tmp_path) -> None:
+    """The CLI's output folder and the app's song scanner must agree, because they used to not.
+
+    `separate`/`analyze`/`evaluate` wrote `<out>/<slug>` while `ui/service.py` scans `<out>/<variant>/<slug>`, so a
+    split made from the command line was invisible in the app -- found on 2026-09-29 by separating a real song and
+    seeing it absent from the UI listing. This asserts the two agree by construction rather than by inspection:
+    `song_out_dir` is what every command writes to, and `Service.songs()` is what the app lists.
+    """
+    import numpy as np
+
+    from cleansplit.audio.io import save_audio
+    from cleansplit.cli.main import build_parser, song_out_dir, variant_name
+    from cleansplit.ui.service import Service
+
+    args = build_parser().parse_args(["separate", str(tmp_path / "Some Song.wav"), "--out", str(tmp_path / "outputs")])
+    d = song_out_dir(args)
+    assert d.parent.name == variant_name(args) == "ensemble"     # <out>/<separator>/<slug>
+    assert d.name == "Some_Song"
+
+    # Plant exactly what `separate` writes, then let the app try to find it.
+    save_audio(d / "original.wav", np.zeros((2, 4410), dtype=np.float32), 44100)
+    save_audio(d / "stems" / "vocals.wav", np.zeros((2, 4410), dtype=np.float32), 44100)
+    (d / "stems" / "manifest.json").write_text('{"separator": "ensemble", "source": "x"}', encoding="utf-8")
+    listed = [s["id"] for s in Service(tmp_path / "outputs").songs()]
+    assert listed == ["ensemble/Some_Song"], listed
+
+
+def test_stems_dir_runs_are_filed_under_stem_folder(tmp_path) -> None:
+    """`--stems-dir` replaces the separator, so the folder must say so rather than naming a model that never ran."""
+    from cleansplit.cli.main import build_parser, song_out_dir, variant_name
+
+    args = build_parser().parse_args(
+        ["analyze", str(tmp_path / "s.wav"), "--stems-dir", str(tmp_path / "uvr"), "--out", str(tmp_path / "o")])
+    assert variant_name(args) == "stem_folder"          # NOT the default `ensemble`
+    assert song_out_dir(args).parent.name == "stem_folder"
 
 
 def test_the_quality_flag_help_matches_the_tier_table() -> None:

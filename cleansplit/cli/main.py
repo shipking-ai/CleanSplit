@@ -80,8 +80,56 @@ def cmd_doctor(args):
     return 0
 
 
+def variant_root(args) -> Path:
+    """The folder holding one separator's songs: `<out>/<separator>`.
+
+    The app has always used this layout -- `ui/service.py` passes `out_root / separator` into `run_analyze`, and
+    `songs()` scans `<out>/<variant>/<slug>` -- and `cleansplit midi` already assumed it. `separate`, `analyze` and
+    `evaluate` wrote `<out>/<slug>` instead, so a split made from the command line was invisible in the app and the two
+    halves of the project disagreed about where a song lives. Nested is now the single layout everywhere.
+    """
+    return Path(args.out) / variant_name(args)
+
+
+def variant_name(args) -> str:
+    """The separator sub-folder's name: the separator that ACTUALLY ran, not merely the one named on the flag.
+
+    `--stems-dir` replaces the separator entirely -- `_make_separator` returns the `stem_folder` reader and ignores
+    `--separator` -- so filing such a run under `ensemble` would attribute someone else's stems to a model that never
+    ran, in the folder name the app displays as the variant.
+    """
+    return "stem_folder" if getattr(args, "stems_dir", None) else args.separator
+
+
+def song_out_dir(args) -> Path:
+    """`<out>/<separator>/<slug>` for this invocation's input."""
+    from ..analysis.pipeline import song_slug
+
+    return variant_root(args) / song_slug(args.input)
+
+
+def _existing_song_dir(args) -> Path:
+    """`song_out_dir`, but name the pre-2026-09-29 flat folder explicitly if that is where the song actually is.
+
+    Silently falling back would leave two layouts alive forever and make "where is my song" unanswerable; an error that
+    prints the exact move command is more useful than either that or a bare not-found.
+    """
+    from ..analysis.pipeline import song_slug
+
+    d = song_out_dir(args)
+    if (d / "stems").is_dir():
+        return d
+    legacy = Path(args.out) / song_slug(args.input)
+    if (legacy / "stems").is_dir():
+        raise SystemExit(
+            f"{d} not found, but {legacy} exists.\n"
+            f"Songs now live under <out>/<separator>/<slug> so the CLI and the app agree. Move it with:\n"
+            f'  mv "{legacy}" "{d}"')
+    return d
+
+
 def cmd_separate(args):
-    from ..analysis.pipeline import audio_digest, song_slug, write_json
+    from ..analysis.pipeline import audio_digest, write_json
     from ..audio.conform import validate_and_conform
     from ..audio.io import load_audio, save_audio
 
@@ -89,7 +137,7 @@ def cmd_separate(args):
     d = load_audio(args.input)
     O, rep = validate_and_conform(d.audio, d.sample_rate, sep.sample_rate, sep.channels)
     res = sep.separate(O, sep.sample_rate)
-    out = Path(args.out) / song_slug(args.input)
+    out = song_out_dir(args)
     save_audio(out / "original.wav", O, sep.sample_rate)
     for name, s in res.stems.items():
         save_audio(out / "stems" / f"{name}.wav", s, sep.sample_rate)
@@ -108,7 +156,7 @@ def cmd_analyze(args):
     cfg = _load_config(args.config)
     if args.detectors:
         cfg.enabled_detectors = tuple(args.detectors.split(","))
-    result = run_analyze(args.input, args.out, sep, cfg, reuse_stems=not args.no_reuse)
+    result = run_analyze(args.input, variant_root(args), sep, cfg, reuse_stems=not args.no_reuse)
     rep = result["report"]
     summary = {
         "output_dir": result["output_dir"],
@@ -127,7 +175,7 @@ def cmd_restore(args):
     from ..restoration.pipeline import run_restore
 
     result = run_restore(
-        args.input, args.out, restorer_name=args.restorer, min_confidence=args.min_confidence,
+        args.input, variant_root(args), restorer_name=args.restorer, min_confidence=args.min_confidence,
         tolerance_db=args.tolerance_db, max_iterations=args.max_iterations, max_regions=args.max_regions,
     )
     _print_json(result)
@@ -135,7 +183,7 @@ def cmd_restore(args):
 
 
 def cmd_evaluate(args):
-    from ..analysis.pipeline import song_slug, write_json
+    from ..analysis.pipeline import write_json
 
     if args.synthetic:
         from ..metrics.detection_benchmark import run_benchmark
@@ -173,7 +221,7 @@ def cmd_evaluate(args):
         return 2
     from ..metrics.reference_eval import evaluate_against_reference
 
-    out = Path(args.out) / song_slug(args.input)
+    out = _existing_song_dir(args)
     res = evaluate_against_reference(out / "stems", args.reference_stems)
     write_json(out / "analysis" / "reference_evaluation.json", res)
     _print_json(res)
@@ -195,14 +243,18 @@ def cmd_ui(args):
 
 def cmd_midi(args):
     """Separate (or reuse the cached split), then transcribe to MIDI."""
-    from ..analysis.pipeline import song_slug
     from ..transcription.pipeline import transcribe_split
 
-    song_dir = Path(args.out) / args.separator / song_slug(args.input)
+    song_dir = song_out_dir(args)
     if not (song_dir / "stems").is_dir() or not (song_dir / "original.wav").is_file():
         print(f"no split at {song_dir}; separating with {args.separator} first", file=sys.stderr)
-        sep_args = argparse.Namespace(**{**vars(args), "out": str(Path(args.out) / args.separator), "stems_dir": None,
-                                         "checkpoint": None, "chunk_size": None, "overlap": 4, "fp16": False, "tta": True})
+        # `out` is passed through unchanged now that cmd_separate nests by separator itself; the old call rewrote it to
+        # `<out>/<separator>` to compensate for the flat layout, which would double-nest today.
+        # overlap and tta come from the tier table rather than being written out: this used to hardcode tta=True, so
+        # `midi` silently separated with the 16-unit recipe that section 14.15 rejected as the default.
+        _, ov, tta, _, _ = QUALITY_TIERS[QUALITY_DEFAULT]
+        sep_args = argparse.Namespace(**{**vars(args), "stems_dir": None, "checkpoint": None,
+                                         "chunk_size": None, "overlap": ov, "fp16": False, "tta": tta})
         cmd_separate(sep_args)
     report = transcribe_split(song_dir, mode=args.mode, model=args.model, piano=args.piano,
                               log=lambda m: print(m, file=sys.stderr, flush=True))
@@ -230,6 +282,10 @@ QUALITY_TIERS = {
     "best": ("ensemble", 4, False, 8, "SW averaged with ep317 at overlap 4, no TTA"),
 }
 QUALITY_DEFAULT = "best"
+
+# Every command that reads or writes a song uses `<out>/<separator>/<slug>`, which is the layout the app scans. Said
+# once here because six subparsers repeat the flag.
+OUT_HELP = "root output folder; songs are written to <out>/<separator>/<slug>, the layout the app reads"
 
 
 def quality_note(tier: str) -> str:
@@ -357,13 +413,13 @@ def build_parser() -> argparse.ArgumentParser:
 
     sp = sub.add_parser("separate", help="six-stem separation only")
     sp.add_argument("input")
-    sp.add_argument("--out", default="outputs")
+    sp.add_argument("--out", default="outputs", help=OUT_HELP)
     sep_opts(sp)
     sp.set_defaults(fn=cmd_separate)
 
     sp = sub.add_parser("analyze", help="separate (or load stems), reconstruct, residual, artifact map, report")
     sp.add_argument("input")
-    sp.add_argument("--out", default="outputs")
+    sp.add_argument("--out", default="outputs", help=OUT_HELP)
     sp.add_argument("--stems-dir", help="analyze existing stems (e.g. exported from UVR) instead of separating")
     sp.add_argument("--no-reuse", action="store_true", help="re-run separation even if cached stems match")
     sp.add_argument("--config", help="JSON file with AnalysisConfig overrides")
@@ -373,7 +429,15 @@ def build_parser() -> argparse.ArgumentParser:
 
     sp = sub.add_parser("restore", help="region-restricted restoration with mixture-consistency acceptance test")
     sp.add_argument("input")
-    sp.add_argument("--out", default="outputs")
+    sp.add_argument("--out", default="outputs", help=OUT_HELP)
+    # restore reads what `analyze` wrote, so it has to be told which separator's folder to look in. It does no
+    # separation of its own, which is why it takes only this one flag from the separation set.
+    # `stem_folder` is in these choices although it is not in separator_choices(): for restore the flag names a
+    # FOLDER to work in, not a model to run, and `analyze --stems-dir` files its output under exactly that name.
+    # Without it, a run started from pre-separated stems could not be restored at all.
+    sp.add_argument("--separator", default=QUALITY_TIERS[QUALITY_DEFAULT][0],
+                    choices=sorted([*separator_choices(), "stem_folder"]),
+                    help="which separator's output folder to restore in; must match the `analyze` run")
     sp.add_argument("--restorer", default="residual_reallocation")
     sp.add_argument("--min-confidence", type=float, default=0.6)
     sp.add_argument("--tolerance-db", type=float, default=0.05, help="max allowed increase of local mixture error (dB)")
@@ -390,7 +454,7 @@ def build_parser() -> argparse.ArgumentParser:
     sp.add_argument("--max-regions", type=int, default=200)
     sp.add_argument("--seeds", type=int, nargs="+", default=[0, 1, 2])
     sp.add_argument("--reference-stems")
-    sp.add_argument("--out", default="outputs")
+    sp.add_argument("--out", default="outputs", help=OUT_HELP)
     sp.add_argument("--config")
     sp.add_argument("--detectors")
     sep_opts(sp, default_separator="bs_roformer_sw", allow_quality=False)  # the experiment protocols in docs/04 were run on single-pass SW; changing this default would silently change what a published number means
@@ -405,7 +469,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     sp = sub.add_parser("midi", help="audio -> MIDI: separate, then transcribe each stem (MuScriptor; Transkun for piano)")
     sp.add_argument("input")
-    sp.add_argument("--out", default="outputs")
+    sp.add_argument("--out", default="outputs", help=OUT_HELP)
     sp.add_argument("--separator", default="ensemble", choices=["ensemble", "ensemble_demucs", "bs_roformer_sw"])
     sp.add_argument("--device", default="auto")
     sp.add_argument("--mode", default="stems", choices=["stems", "mix"],
