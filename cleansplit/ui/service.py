@@ -10,6 +10,7 @@ import contextlib
 import json
 import os
 import queue
+import tempfile
 import threading
 import time
 import uuid
@@ -305,9 +306,13 @@ class Service:
         # overlap. A flaky `json.decoder.JSONDecodeError: Expecting value` on the ubuntu/py3.10 CI leg (run
         # 36480845648, green on rerun) is what pointed here. os.replace is atomic on both POSIX and Windows, so a
         # reader now sees either the previous complete file or the new one.
-        tmp = cache.with_name(f"{cache.name}.{os.getpid()}.{threading.get_ident()}.tmp")
+        # mkstemp rather than a name built from pid and thread id: the OS guarantees uniqueness, so no collision
+        # theory is needed to explain a stray file.
+        fd, tmp_name = tempfile.mkstemp(dir=str(cache.parent), prefix=f"{cache.name}.", suffix=".tmp")
+        tmp = Path(tmp_name)
         try:
-            tmp.write_text(json.dumps(data), encoding="utf-8")
+            with os.fdopen(fd, "w", encoding="utf-8") as fh:
+                fh.write(json.dumps(data))
             # Windows refuses os.replace onto a path any other handle has open (WinError 5), which a concurrent
             # reader, an antivirus scan or the search indexer can all cause. Losing this race costs nothing: these
             # peaks are a pure function of (audio, buckets), so whatever is or ends up in the cache equals `data`.
@@ -315,7 +320,10 @@ class Service:
             with contextlib.suppress(OSError):
                 os.replace(tmp, cache)
         finally:
-            tmp.unlink(missing_ok=True)
+            # Also suppressed, and for the same Windows reason: a scanner holding the temp file makes the delete fail,
+            # and failing the whole request over a stray cache temp file would be a worse outcome than leaving it.
+            with contextlib.suppress(OSError):
+                tmp.unlink(missing_ok=True)
         return data
 
     def analysis(self, variant: str, slug: str) -> dict:

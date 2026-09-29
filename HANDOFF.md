@@ -56,6 +56,22 @@ Repeat with:
     codeql database create <db> --language=python --source-root=.
     codeql database analyze <db> --format=csv --output=r.csv codeql/python-queries:codeql-suites/python-security-extended.qls
 
+**Two more windows/py3.10 failures, both real, both caught by the same 8-thread test.** Worth reading as a pair,
+because the lesson is the same twice: a containment or cleanup step must not depend on a syscall that can fail
+transiently.
+1. `realpath` in the containment check (above) — fixed with `normpath`.
+2. A leftover `.tmp` in the peaks folder (run 36589401540). Not reproducible locally in 40 trials at 16 threads on
+   py3.11, so it was fixed by removing the weaknesses it pointed at rather than by chasing the timing: the temp file
+   now comes from `tempfile.mkstemp` (OS-guaranteed unique, so no collision theory is needed), and the cleanup
+   `unlink` is wrapped in `suppress(OSError)` — failing a whole request over a stray cache temp file is worse than
+   leaving it. The assertion now **polls** for up to 5 s, because on Windows a deleted file stays enumerable until the
+   last handle closes, so a scanner can keep it listed briefly after `unlink` returned. The property worth asserting
+   is that nothing is left behind *durably*.
+
+**Confirmed while fixing this: `Service.__init__` starts a `_warm_peaks` daemon thread** (service.py:75). That is the
+concurrency the original `JSONDecodeError` flake came from — the peaks cache really was being read by a request while
+the warmer wrote it. The race was in the shipped app, not an artefact of the test.
+
 **Social preview card is done** — uploaded by the maintainer, so that item is closed.
 
 ---

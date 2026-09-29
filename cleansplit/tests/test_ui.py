@@ -2,6 +2,7 @@
 
 import json
 import os
+import time
 
 import numpy as np
 import pytest
@@ -137,7 +138,16 @@ def test_concurrent_peaks_requests_never_observe_a_partial_cache(out_root):
     with cf.ThreadPoolExecutor(max_workers=8) as ex:
         results = [f.result() for f in [ex.submit(svc.peaks, "ensemble", "Test_Song", "vocals", 300) for _ in range(8)]]
     assert all(r == results[0] for r in results)
-    assert len(list((out_root / "ensemble" / "Test_Song" / "peaks").glob("*.tmp"))) == 0   # no temp files left behind
+
+    # Polled rather than asserted outright. On Windows a deleted file stays enumerable until the last handle closes,
+    # so an antivirus or indexer scan of the just-written temp file can keep it in the directory listing for a moment
+    # after unlink returned. That made this assertion fail on the windows/py3.10 CI leg (run 36589401540) while the
+    # code was behaving correctly. The property worth testing is that nothing is left behind DURABLY.
+    peaks_dir = out_root / "ensemble" / "Test_Song" / "peaks"
+    deadline = time.monotonic() + 5.0
+    while list(peaks_dir.glob("*.tmp")) and time.monotonic() < deadline:
+        time.sleep(0.05)
+    assert list(peaks_dir.glob("*.tmp")) == []
 
 
 def test_analysis_is_absent_until_it_has_been_measured(out_root):
