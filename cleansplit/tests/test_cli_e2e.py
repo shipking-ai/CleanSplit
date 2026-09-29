@@ -180,6 +180,33 @@ def test_tta_reaches_the_ensemble_so_the_balanced_tier_is_real():
         registry.create = real
 
 
+def test_the_quality_flag_help_matches_the_tier_table() -> None:
+    """argparse help is prose about measurements, so it drifts like any other prose.
+
+    It did: after TTA left the default on 2026-09-28 the --quality help still advertised "ensemble + TTA at overlap 4,
+    16 units" and "8x cheaper", and --separator still described vocals=mean(SW+TTA, ep317). quality_note() was updated
+    and tested; this text was not, and nothing checked it. The unit counts below are read from QUALITY_TIERS rather
+    than written out, so the table stays the single source of truth.
+    """
+    from cleansplit.cli.main import QUALITY_TIERS, build_parser
+
+    help_text = _quality_help(build_parser())
+    best, fast = QUALITY_TIERS["best"][3], QUALITY_TIERS["fast"][3]
+    assert f"{best} units of compute" in help_text
+    assert f"{fast} units" in help_text
+    assert f"{best // fast}x cheaper" in help_text
+    # The default recipe has TTA off, so the help must not advertise it as part of the default.
+    assert QUALITY_TIERS["best"][2] is False
+    assert "+ TTA" not in help_text
+
+
+def _quality_help(parser) -> str:
+    """The --quality and --separator help strings from the `separate` subparser, concatenated."""
+    sub = next(a for a in parser._actions if hasattr(a, "choices") and isinstance(a.choices, dict))
+    sep_parser = sub.choices["separate"]
+    return " ".join(a.help or "" for a in sep_parser._actions if a.dest in ("quality", "separator"))
+
+
 def test_quality_note_states_a_range_not_a_single_db_number():
     """docs/04 section 14.11: best-vs-fast runs from about -0.09 to +5.12 dB per song, so a fixed figure would mislead."""
     from cleansplit.cli.main import quality_note

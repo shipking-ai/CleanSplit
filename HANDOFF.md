@@ -6,6 +6,47 @@
 
 ---
 
+## 2026-09-29 — one path helper CodeQL can actually see, and two stale CLI help strings
+
+**Why the old guard was invisible, from the query source rather than from guesswork.** `py/path-injection` is a
+two-state flow (`PathInjectionQuery.qll`): a tainted path starts `NotNormalized`; **only** a call to
+`os.path.normpath` / `abspath` / `realpath` moves it to `NormalizedUnchecked` (`Stdlib.qll`, three
+`Path::PathNormalization::Range` classes); **only** a `.startswith(...)` call on its true branch clears it
+(`Path::SafeAccessCheck::Range`, one class). `Path.resolve()` and `Path.is_relative_to()` model **neither step**, so the
+previous guard could never have been recognised no matter how correct it was. That is worth knowing before anyone
+"improves" this back to pathlib.
+
+`Service._confine(root, *parts)` is now the single place any request-derived path is built, written in `os.path` for
+exactly that reason. `song_dir`, `audio_path`, `peaks`, `analysis` and `stem_levels` all go through it. Two new methods,
+`stem_names()` and `reveal_dir()`, exist so **`server.py` builds no paths at all** — the `/api/song` route used to glob
+`song_dir(...) / "stems"` itself, a second construction site outside the helper.
+
+**The prefix is `root + os.sep`, not `root`.** A bare `startswith(root)` would have satisfied CodeQL while accepting
+`<root>-evil` as a child of `<root>` — a sibling-prefix hole. Pleasing the analyser is not the goal; the trailing
+separator is what makes the check mean "strictly inside". `realpath` also resolves symlinks, which is what the old
+`is_relative_to` line did, kept rather than lost.
+
+**Two stale CLI help strings, from the TTA removal a day earlier.** `--quality` still advertised "ensemble + TTA at
+overlap 4, 16 units of compute" and "8x cheaper"; `--separator` still said `vocals=mean(SW+TTA, ep317)`. `quality_note()`
+had been updated and tested, this text had not, and nothing checked it. Now corrected to 8 units / 4x cheaper /
+`mean(SW, ep317)`, and `test_the_quality_flag_help_matches_the_tier_table` reads the unit counts **from
+`QUALITY_TIERS`** so the table stays the single source of truth. Verified by restoring the stale text and watching the
+test fail on it.
+
+**Verified locally before pushing, not by guessing at CI.** CodeQL CLI 2.27.1 plus the `codeql/python-queries` pack,
+database built from the working tree, `python-security-extended.qls` run over it: **18 path-injection alerts down to 1**.
+The survivor is `server.py:41` (`create_job`), already dismissed as "won't fix" on a line this change did not move, so
+that dismissal stands. `io.py:87` and `region.py:113` cleared too — their taint arrived through the UI flow, so
+confining that flow removed them as well, which is better than the "cannot be fixed, only dismissed" reading of them.
+Repeat with:
+
+    codeql database create <db> --language=python --source-root=.
+    codeql database analyze <db> --format=csv --output=r.csv codeql/python-queries:codeql-suites/python-security-extended.qls
+
+**Social preview card is done** — uploaded by the maintainer, so that item is closed.
+
+---
+
 ## 2026-09-28 (latest) — CodeQL suite narrowed, 18 alerts dismissed with reasons, and a real cache race fixed
 
 **Security tab is now empty, and that is a claim about 18 written justifications, not about silence.**

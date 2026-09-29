@@ -1,6 +1,7 @@
 """UI layer: what the app shows must come from the files on disk, and nothing outside them."""
 
 import json
+import os
 
 import numpy as np
 import pytest
@@ -82,6 +83,33 @@ def test_a_stem_name_cannot_reach_a_file_that_actually_exists_outside_the_song(o
         with pytest.raises(FileNotFoundError):
             svc.peaks("ensemble", "Test_Song", bad)      # this one would otherwise WRITE a cache file outside
     assert svc.audio_path("ensemble", "Test_Song", "vocals").is_file()   # the legitimate name still works
+
+
+def test_confine_rejects_a_sibling_directory_with_the_same_prefix(tmp_path):
+    """The trailing `os.sep` in `_confine`'s prefix check is load bearing, so it gets its own test.
+
+    `_confine` uses `full.startswith(root + os.sep)` because that is the one shape CodeQL's py/path-injection query
+    recognises as a safe-access check. The obvious spelling, `startswith(root)`, would satisfy the analyser just as
+    well while treating `<root>-evil` as a child of `<root>` -- a real hole traded for a green Security tab. This
+    asserts both halves: that the naive check would have been fooled, and that the real one is not.
+    """
+    root = tmp_path / "outputs"
+    (root / "ensemble" / "Song").mkdir(parents=True)
+    evil = tmp_path / "outputs-evil"
+    evil.mkdir()
+    secret = evil / "secret.wav"
+    save_audio(secret, np.zeros((2, 1000), dtype=np.float32), 44100)
+
+    root_s = os.path.realpath(root)
+    assert os.path.realpath(secret).startswith(root_s)                 # the naive check IS fooled
+    assert not os.path.realpath(secret).startswith(root_s + os.sep)    # the real one is not
+
+    svc = Service(root)
+    assert svc._confine(root, "ensemble", "Song").is_dir()             # a genuine child still resolves
+    for parts in [("..", "outputs-evil", "secret.wav"), ("ensemble", "../../outputs-evil/secret.wav"),
+                  ("",), (".",), ("..",)]:
+        with pytest.raises(FileNotFoundError):
+            svc._confine(root, *parts)
 
 
 def test_a_half_written_peaks_cache_is_recomputed_rather_than_raising(out_root):

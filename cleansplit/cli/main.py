@@ -314,13 +314,13 @@ def build_parser() -> argparse.ArgumentParser:
         if allow_quality:
             sp.add_argument("--quality", choices=sorted(QUALITY_TIERS), default=None,
                             help="pick a measured speed/quality point instead of setting the flags by hand. "
-                                 "best (the default behaviour): ensemble + TTA at overlap 4, 16 units of compute. "
-                                 "fast: single-pass SW at overlap 2, 2 units, so 8x cheaper. Compute is counted in "
+                                 "best (the default): the ensemble at overlap 4, no TTA, 8 units of compute. "
+                                 "fast: single-pass SW at overlap 2, 2 units, so 4x cheaper. Compute is counted in "
                                  "forward passes, not timed (docs/04 section 14.8). No tier advertises a fixed dB "
                                  "cost, because best-vs-fast ranges from -0.09 to +5.12 dB per song (section 14.11). "
                                  "Any explicit --separator/--overlap/--tta overrides the tier")
         sp.add_argument("--separator", default=None, choices=separator_choices(),
-                        help="ensemble (default): vocals=mean(SW+TTA, ep317), other=remainder. The best measured "
+                        help="ensemble (default): vocals=mean(SW, ep317), other=remainder. The best measured "
                              "quality (MUSDB18-HQ, 20 songs: +0.45 dB vocals paired median vs SW, better on 18/20; "
                              "+1.12 dB vocal SAR, the largest artifact gain measured -- docs/04 sections 11 and 14). "
                              "Cost, counting forward passes per chunk (docs/04 section 14.8): the ensemble is 4 "

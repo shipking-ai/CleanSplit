@@ -204,9 +204,36 @@ class Service:
                 })
         return sorted(out, key=lambda s: -s["created"])
 
+    # ---- the one path helper: every request-derived filesystem path in this class is built here ----
+    #
+    # Deliberately written with os.path rather than pathlib, to the shape CodeQL's py/path-injection query actually
+    # recognises. That query is a two-state flow (PathInjectionQuery.qll): a tainted path starts NotNormalized, ONLY a
+    # call to os.path.normpath / abspath / realpath moves it to NormalizedUnchecked, and ONLY a `.startswith(...)`
+    # guard on its true branch clears it. `Path.resolve()` and `Path.is_relative_to()` model neither step, so the
+    # guard that used to live here was invisible to the analyser however correct it was -- 18 alerts dismissed by hand,
+    # re-filed every time these lines moved. One helper means one flow to reason about instead of a dozen.
+    #
+    # The prefix is `root + os.sep`, NOT `root`. A bare `startswith(root)` would satisfy CodeQL while accepting
+    # `<root>-evil` as a child of `<root>`; the trailing separator is what makes this mean "strictly inside". realpath
+    # also resolves symlinks, so a link planted inside the tree cannot point out of it -- which is what the old
+    # `is_relative_to` line was for, kept rather than lost in the rewrite.
+    @staticmethod
+    def _confine(root: Path, *parts: str) -> Path:
+        """`root` joined with `parts`, guaranteed to land strictly inside `root`, or FileNotFoundError.
+
+        Every part is treated as untrusted. Callers that additionally need a single path COMPONENT -- no separators at
+        all, because the value is interpolated into a filename -- call `_stem_name` first; this promises containment
+        only.
+        """
+        root_s = os.path.realpath(root)
+        full = os.path.realpath(os.path.join(root_s, *parts))
+        if not full.startswith(root_s + os.sep):
+            raise FileNotFoundError(f"{'/'.join(parts)!r} resolves outside {root_s}")
+        return Path(full)
+
     def song_dir(self, variant: str, slug: str) -> Path:
-        p = (self.out_root / variant / slug).resolve()
-        if not p.is_relative_to(self.out_root.resolve()) or not p.is_dir():
+        p = self._confine(self.out_root, variant, slug)
+        if not p.is_dir():
             raise FileNotFoundError(f"unknown song {variant}/{slug}")
         return p
 
@@ -228,9 +255,7 @@ class Service:
     def audio_path(self, variant: str, slug: str, stem: str) -> Path:
         d = self.song_dir(variant, slug)
         stem = self._stem_name(stem)
-        p = (d / "original.wav") if stem == "original" else (d / "stems" / f"{stem}.wav")
-        if not p.resolve().is_relative_to(d):   # belt and braces: a symlink inside stems/ could still point out
-            raise FileNotFoundError(f"{stem} resolves outside {d}")
+        p = self._confine(d, "original.wav") if stem == "original" else self._confine(d, "stems", f"{stem}.wav")
         if not p.is_file():
             raise FileNotFoundError(p)
         return p
@@ -239,7 +264,7 @@ class Service:
     def peaks(self, variant: str, slug: str, stem: str, buckets: int = 2400) -> dict:
         d = self.song_dir(variant, slug)
         stem = self._stem_name(stem)   # this one WRITES a cache file, so an unchecked name would create it anywhere
-        cache = d / "peaks" / f"{stem}.{buckets}.json"
+        cache = self._confine(d, "peaks", f"{stem}.{buckets}.json")
         if cache.is_file():
             try:
                 return json.loads(cache.read_text(encoding="utf-8"))
@@ -283,11 +308,12 @@ class Service:
 
     def analysis(self, variant: str, slug: str) -> dict:
         d = self.song_dir(variant, slug)
-        amap_path = d / "analysis" / "artifact_map.json"
+        amap_path = self._confine(d, "analysis", "artifact_map.json")
         if not amap_path.is_file():
             return {"available": False, "regions": [], "metrics": {}}
         amap = ArtifactMap.load(amap_path)
-        metrics = json.loads((d / "analysis" / "metrics.json").read_text(encoding="utf-8")) if (d / "analysis" / "metrics.json").is_file() else {}
+        metrics_path = self._confine(d, "analysis", "metrics.json")
+        metrics = json.loads(metrics_path.read_text(encoding="utf-8")) if metrics_path.is_file() else {}
         return {
             "available": True,
             "regions": [r.to_dict() for r in sorted(amap.regions, key=lambda r: r.start_s)],
@@ -295,11 +321,30 @@ class Service:
             "metrics": metrics,
         }
 
+    def stem_names(self, variant: str, slug: str) -> list[str]:
+        """The stems on disk for a song, display order first.
+
+        Exists so `server.py` never builds a path of its own -- the route used to glob
+        `svc.song_dir(...) / "stems"` itself, which put a second path-construction site outside `_confine`.
+        """
+        d = self.song_dir(variant, slug)
+        names = [p.stem for p in self._confine(d, "stems").glob("*.wav")]
+        return sorted(names, key=lambda s: (STEM_ORDER.index(s) if s in STEM_ORDER else 99, s))
+
+    def reveal_dir(self, variant: str, slug: str, sub: str | None = None) -> Path:
+        """The folder to open in the file manager: a song, or one of three named subfolders of it."""
+        d = self.song_dir(variant, slug)
+        if sub in ("midi", "stems", "analysis"):
+            p = self._confine(d, sub)
+            if p.is_dir():
+                return p
+        return d
+
     def stem_levels(self, variant: str, slug: str) -> dict:
         d = self.song_dir(variant, slug)
         levels = {}
         orig = self.peaks(variant, slug, "original")
-        for p in sorted((d / "stems").glob("*.wav")):
+        for p in sorted(self._confine(d, "stems").glob("*.wav")):
             pk = self.peaks(variant, slug, p.stem)
             levels[p.stem] = {"rms_dbfs": pk["rms_dbfs"], "peak": pk["peak"], "rel_song_db": pk["rms_dbfs"] - orig["rms_dbfs"]}
         return levels

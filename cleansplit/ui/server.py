@@ -80,8 +80,8 @@ def create_app(out_root: str = "outputs") -> FastAPI:
             return {
                 "levels": svc.stem_levels(variant, slug),
                 "analysis": svc.analysis(variant, slug),
-                "peaks": {stem: svc.peaks(variant, slug, stem) for stem in
-                          ["original"] + [p.stem for p in (svc.song_dir(variant, slug) / "stems").glob("*.wav")]},
+                "peaks": {stem: svc.peaks(variant, slug, stem)
+                          for stem in ["original", *svc.stem_names(variant, slug)]},
             }
         except FileNotFoundError as e:
             raise HTTPException(404, str(e)) from e
@@ -99,9 +99,7 @@ def create_app(out_root: str = "outputs") -> FastAPI:
         import subprocess
 
         body = await req.json()
-        d = svc.song_dir(body["variant"], body["slug"])
-        if body.get("sub") in ("midi", "stems", "analysis") and (d / body["sub"]).is_dir():
-            d = d / body["sub"]
+        d = svc.reveal_dir(body["variant"], body["slug"], body.get("sub"))
         subprocess.Popen(["explorer", str(d)])
         return {"opened": str(d)}
 
