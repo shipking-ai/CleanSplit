@@ -214,19 +214,31 @@ class Service:
     # re-filed every time these lines moved. One helper means one flow to reason about instead of a dozen.
     #
     # The prefix is `root + os.sep`, NOT `root`. A bare `startswith(root)` would satisfy CodeQL while accepting
-    # `<root>-evil` as a child of `<root>`; the trailing separator is what makes this mean "strictly inside". realpath
-    # also resolves symlinks, so a link planted inside the tree cannot point out of it -- which is what the old
-    # `is_relative_to` line was for, kept rather than lost in the rewrite.
+    # `<root>-evil` as a child of `<root>`; the trailing separator is what makes this mean "strictly inside".
+    #
+    # The joined path is normalised with `normpath`, NOT `realpath`, and that distinction is load bearing. realpath
+    # touches the filesystem, and on Windows it resolves an existing path by a different route than a missing one, so
+    # racing it against a concurrent `os.replace` made the windows/py3.10 CI leg reject `peaks/vocals.300.json` as
+    # outside a directory it was plainly inside (run 36588347468, caught by the 8-thread test below). normpath is pure
+    # string arithmetic: it collapses `..` without a syscall, so it cannot race and cannot vary by platform or version.
+    # Containment must never depend on a call that can fail transiently. `root` itself still gets realpath, once --
+    # it always exists, so that call is stable.
+    #
+    # What this therefore enforces is LEXICAL containment, which is what defeats a `..` traversal arriving in a
+    # request. It does not resolve symlinks, so a link planted inside the output tree that points out of it is not
+    # caught here; doing that needs local write access to `outputs/`, which is the operator who already owns the disk.
+    # The old `is_relative_to` line nominally covered that case, and dropping it is a deliberate trade against a
+    # race that broke real runs -- stated plainly rather than quietly lost.
     @staticmethod
     def _confine(root: Path, *parts: str) -> Path:
-        """`root` joined with `parts`, guaranteed to land strictly inside `root`, or FileNotFoundError.
+        """`root` joined with `parts`, guaranteed to land lexically inside `root`, or FileNotFoundError.
 
         Every part is treated as untrusted. Callers that additionally need a single path COMPONENT -- no separators at
         all, because the value is interpolated into a filename -- call `_stem_name` first; this promises containment
         only.
         """
         root_s = os.path.realpath(root)
-        full = os.path.realpath(os.path.join(root_s, *parts))
+        full = os.path.normpath(os.path.join(root_s, *parts))
         if not full.startswith(root_s + os.sep):
             raise FileNotFoundError(f"{'/'.join(parts)!r} resolves outside {root_s}")
         return Path(full)

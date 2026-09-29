@@ -21,6 +21,19 @@ exactly that reason. `song_dir`, `audio_path`, `peaks`, `analysis` and `stem_lev
 `stem_names()` and `reveal_dir()`, exist so **`server.py` builds no paths at all** — the `/api/song` route used to glob
 `song_dir(...) / "stems"` itself, a second construction site outside the helper.
 
+**Containment is checked with `normpath`, not `realpath`, and that distinction cost a CI failure to learn.** The first
+version of `_confine` used `realpath` on the joined path. realpath touches the filesystem, and on Windows it resolves an
+existing path by a different route than a missing one, so racing it against a concurrent `os.replace` made the
+**windows/py3.10** leg reject `peaks/vocals.300.json` as outside a directory it was plainly inside (run 36588347468).
+The 8-thread concurrency test added the day before is what caught it. `normpath` is pure string arithmetic — no syscall,
+so it cannot race or vary by platform. **Containment must never depend on a call that can fail transiently.** `root`
+itself still gets one `realpath`, since it always exists.
+
+The trade this makes, stated rather than quietly lost: what is enforced is **lexical** containment, which is what stops
+a `..` traversal arriving in a request. Symlinks in the tail are no longer resolved, so a link planted inside
+`outputs/` pointing out of it is not caught — that needs local write access to the output tree, i.e. the operator who
+already owns the disk. The old `is_relative_to` line nominally covered it.
+
 **The prefix is `root + os.sep`, not `root`.** A bare `startswith(root)` would have satisfied CodeQL while accepting
 `<root>-evil` as a child of `<root>` — a sibling-prefix hole. Pleasing the analyser is not the goal; the trailing
 separator is what makes the check mean "strictly inside". `realpath` also resolves symlinks, which is what the old
