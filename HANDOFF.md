@@ -6,6 +6,42 @@
 
 ---
 
+## 2026-10-05 — research pass on generative stems: [docs/06](docs/06_generative_stems_research.md)
+
+Asked whether CleanSplit could have its own generative model that writes a song stem by stem and labels each stem by
+instrument. Answered with primary sources, no code written. Full report in
+[docs/06_generative_stems_research.md](docs/06_generative_stems_research.md); the four findings that change what we
+should do:
+
+1. **The labelling half of the question is free.** Generate stem by stem and the label IS the generator called. A
+   classifier is only needed on the worse pipeline (generate a mixture, separate it, guess).
+2. **`BabySlakh` being 16 kHz is a property of the 20-track debug subset, not of Slakh.** Full **Slakh2100 is 44.1 kHz**,
+   2,100 tracks, same CC BY 4.0 (Zenodo 4599666) — so two of the three limitations docs/04 §13 records against our
+   transcription benchmark retire for a 104 GB download and **no new code**. It stays **mono** and still has no singing.
+   This is the cheapest real win available and it is not a generative project at all.
+3. **The symbolic layer is copyright-encumbered, per its own authors.** The Anticipatory Music Transformer is Apache-2.0,
+   but its model card says under *Copyright*: "The Lakh MIDI dataset contains large quantities of copyrighted music. The
+   copyright status of models trained on this data—and music sampled from these models—is an open legal question." The
+   encumbrance is upstream of Slakh too, which is rendered from Lakh. Using it to make **redistributable** benchmark
+   audio would contradict the standard this repo already applies to model weights (docs/01 §1.1, the MuScriptor CC BY-NC
+   caveat).
+4. **A clean-room render path does exist**: `sfizz` / `sfizz-render` (BSD-2-Clause) plus **VSCO 2 CE** and **VCSL**
+   (both **CC0**, 44.1 kHz, SFZ) — per-instrument rendering gives stems that are exactly separated and exactly labelled.
+   Weak spot is honest: CC0 coverage for pop/rock kit, electric bass and electric guitar is thin, and **there is no
+   singing**, so a generator built this way reproduces Slakh's own blind spot.
+
+**Verdict: do not build a generative model.** Take the Slakh2100 win; build tier 1 only if novel ground truth is still
+wanted after that, and only as a measurement tool with the pre-registered rule in §6.1 (Spearman ρ ≥ 0.6 against
+MUSDB18-HQ stem rankings, predicted to fail on guitar and piano first). Mixing/mastering remains the better investment
+because mastering has measurable targets and generation has none.
+
+**Also recorded:** MoisesDB (240 real multitracks **with vocals**, ISMIR 2023) would answer the mono/no-singing gaps,
+but its licence is reported **two different ways** — CC BY 4.0 on Zenodo 10265363, CC BY-NC-SA 4.0 in the maintainers'
+own `moises-ai/moises-db`. Treat as non-commercial research only until resolved against music.ai's download terms.
+§7 lists what was deliberately **not** verified, including whether `MusicGen-Stem` exists at all.
+
+---
+
 ## 2026-09-29 (later) — the CLI now writes the layout the app reads
 
 **Found by using the tool, not by reading it.** A real song was separated from the command line and then did not appear
